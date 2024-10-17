@@ -4,7 +4,7 @@ import {
   useController,
 } from "react-hook-form";
 
-import { TextArea } from "@atpradical/picopico-ui-kit";
+import { TextArea, TextAreaProps } from "@atpradical/picopico-ui-kit";
 
 export type ControlledTextAreaProps<T extends FieldValues> = Omit<
   TextAreaProps,
