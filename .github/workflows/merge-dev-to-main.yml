@@ -1,0 +1,19 @@
+name: Merge dev to main
+on:
+  push:
+    branches:
+      - 'dev'
+jobs:
+  merge-dev-to-main:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout 🛎️
+        uses: actions/checkout@v2.3.1
+
+      - name: Merge dev -> main 🚀
+        uses: devmasx/merge-branch@1.4.0
+        with:
+          type: now
+          from_branch: dev
+          target_branch: main
+          github_token: ${{ github.token }}
