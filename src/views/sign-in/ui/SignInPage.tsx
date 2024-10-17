@@ -2,7 +2,7 @@ import { Paths } from "@/shared/enums";
 import { useTranslation } from "@/shared/hooks/useTranslations";
 import { getLayout } from "@/shared/ui/layout";
 import { Page } from "@/shared/ui/layout/page";
-import { SignInForm } from "@/views/sign-in/ui/SignInForm";
+// import { SignInForm } from "@/views/sign-in/ui/SignInForm";
 import { OAuthIcons } from "@/views/sign-in/ui/oAuthIcons/OAuthIcons";
 import { Button, Card, Typography } from "@atpradical/picopico-ui-kit";
 import Link from "next/link";
@@ -20,7 +20,7 @@ function SignInPage() {
           {pageTitle}
         </Typography>
         <OAuthIcons />
-        <SignInForm />
+        {/*<SignInForm />*/}
         <Typography className={s.paragraph} variant={"regular_16"}>
           {accountExistsQuestion}
         </Typography>
