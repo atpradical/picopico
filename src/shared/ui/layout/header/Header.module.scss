@@ -1,0 +1,36 @@
+.wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+
+  display: flex;
+  justify-content: space-between;
+
+  width: 100%;
+  height: var(--header-height);
+  padding: 12px 60px;
+
+  background-color: var(--color-dark-700);
+  border-bottom: 1px solid var(--color-dark-300);
+}
+
+.buttonContainer {
+  display: flex;
+  justify-content: center;
+  gap: 24px;
+}
+
+.container {
+  display: flex;
+  gap: 36px;
+  align-items: center;
+  justify-content: center;
+}
+
+.buttonBell {
+  margin-right: 12px;
+}
+
+.button {
+  text-wrap: nowrap;
+}

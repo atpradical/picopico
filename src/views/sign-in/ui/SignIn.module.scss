@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  justify-content: center;
+}
+
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+
+  width: 100%;
+  max-width: 380px;
+  height: 505px;
+  padding: 24px;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  gap: 24px;
+}
+
+.passwordLink {
+  align-self: end;
+  margin: 12px;
+}
+
+.paragraph {
+  margin: 18px 0 6px;
+}

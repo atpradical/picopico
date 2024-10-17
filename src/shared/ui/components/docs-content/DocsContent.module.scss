@@ -1,0 +1,31 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: flex-start;
+
+  width: 100%;
+}
+
+.docsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  width: 100%;
+  max-width: 960px;
+  margin: 0 auto;
+}
+
+.content {
+  text-align: center;
+  white-space: pre-wrap;
+}
+
+.button {
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-400);
+  line-height: var(--line-height-m);
+  color: var(--color-light-100);
+}
