@@ -5,14 +5,14 @@ import { useTranslation } from "@/shared/hooks";
 import { getLayout } from "@/shared/ui/layout";
 import { Page } from "@/shared/ui/layout/page";
 import { getErrorMessageData } from "@/shared/utils/get-error-message-data";
-import { ConfirmedEmail } from "@/views/confirm-email/ui/ConfirmedEmail";
-import { LinkExpired } from "@/views/confirm-email/ui/LinkExpired";
+import { ConfirmedEmail } from "@/views/registration-confirmation/ui/ConfirmedEmail";
+import { LinkExpired } from "@/views/registration-confirmation/ui/LinkExpired";
 import { toaster } from "@atpradical/picopico-ui-kit";
 import { useRouter } from "next/router";
 
-import s from "./ConfirmEmailPage.module.scss";
+import s from "./RegistrationConfirmationPage.module.scss";
 
-function ConfirmEmailPage() {
+function RegistrationConfirmationPage() {
   const { t } = useTranslation();
   const { emailConfirmed, linkExpired } = t.confirmEmailPage;
 
@@ -25,14 +25,14 @@ function ConfirmEmailPage() {
     : router.query.code;
 
   useEffect(() => {
-    debugger;
     if (code) {
-      confirmEmail({ code })
+      confirmEmail({ confirmationCode: code })
         .unwrap()
         .catch((e) => {
           const errors = getErrorMessageData(e);
 
           if (typeof errors !== "string") {
+            // todo: вынести в отдельную функцию и переиспользовать в других местах обработки ошибок.
             errors.forEach((el) => {
               toaster({
                 text: el.message,
@@ -62,5 +62,5 @@ function ConfirmEmailPage() {
   );
 }
 
-ConfirmEmailPage.getLayout = getLayout;
-export default ConfirmEmailPage;
+RegistrationConfirmationPage.getLayout = getLayout;
+export default RegistrationConfirmationPage;

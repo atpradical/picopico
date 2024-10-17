@@ -7,8 +7,8 @@ import { wrapper } from "@/lib/store";
 import { useLoader } from "@/shared/hooks";
 import { NextPage } from "next";
 
-import "@atpradical/picopico-ui-kit/dist/style.css";
 import "@/styles/index.scss";
+import "@atpradical/picopico-ui-kit/dist/style.css";
 
 export type NextPageWithLayout<P = object> = {
   getLayout?: (page: ReactElement) => ReactNode;

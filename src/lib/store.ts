@@ -1,4 +1,4 @@
-import { inctagramApi } from "@/shared/api/inctagram.api";
+import { picoApi } from "@/shared/api/picoApi";
 import {
   Action,
   ThunkAction,
@@ -11,8 +11,8 @@ const makeStore = () =>
   configureStore({
     devTools: true,
     middleware: (getDefaultMiddleware) =>
-      getDefaultMiddleware().concat(inctagramApi.middleware),
-    reducer: combineSlices(inctagramApi),
+      getDefaultMiddleware().concat(picoApi.middleware),
+    reducer: combineSlices(picoApi),
   });
 
 export type AppStore = ReturnType<typeof makeStore>;

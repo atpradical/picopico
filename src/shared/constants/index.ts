@@ -10,6 +10,3 @@ export const USERNAME_REGEX = /^[a-zA-Z0-9_-]*$/;
 
 export const PASSWORD_REGEX =
   /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,\-.:;<=>?@[\]^_`{|}~])/;
-
-// api constants:
-export const INCTAGRAM_BASE_URL = process.env.NEXT_PUBLIC_INCTAGRAM_BASE_URL;

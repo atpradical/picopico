@@ -1,4 +1,4 @@
-import { inctagramApi } from "@/shared/api/inctagram.api";
+import { picoApi } from "@/shared/api/picoApi";
 
 import {
   ConfirmEmailArgs,
@@ -8,7 +8,7 @@ import {
   ResponseLogin,
 } from "./auth.types";
 
-export const authApi = inctagramApi.injectEndpoints({
+export const authApi = picoApi.injectEndpoints({
   endpoints: (builder) => {
     return {
       confirmEmail: builder.mutation<void, ConfirmEmailArgs>({

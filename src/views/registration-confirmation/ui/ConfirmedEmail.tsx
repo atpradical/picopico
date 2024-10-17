@@ -7,7 +7,7 @@ import {
 } from "@atpradical/picopico-ui-kit";
 import link from "next/link";
 
-import s from "@/views/confirm-email/ui/ConfirmEmailPage.module.scss";
+import s from "@/views/registration-confirmation/ui/RegistrationConfirmationPage.module.scss";
 
 type ConfirmEmailProps = {
   t: LocaleEmailConfirmed;

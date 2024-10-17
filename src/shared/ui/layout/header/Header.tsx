@@ -19,7 +19,7 @@ export const Header = ({ countNotification, isAuth = false }: HeaderProps) => {
   return (
     <div className={s.wrapper}>
       <Typography as={"h1"} variant={"large"}>
-        Inctagram
+        PicoPico
       </Typography>
       <div className={s.container}>
         {isAuth && (

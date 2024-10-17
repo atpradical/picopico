@@ -4,22 +4,29 @@ import { useResendRegistrationEmailMutation } from "@/shared/api/auth/auth.api";
 import { useTranslation } from "@/shared/hooks";
 import { ControlledTextField } from "@/shared/ui/form-components/controlled-text-field";
 import { getErrorMessageData } from "@/shared/utils/get-error-message-data";
-import { resendRegistrationEmailSchemeCreator } from "@/views/confirm-email/model/resend-registration-email-scheme-creator";
-import { ResendLinkFields } from "@/views/confirm-email/model/types";
+import { resendRegistrationEmailSchemeCreator } from "@/views/registration-confirmation/model/resend-registration-email-scheme-creator";
+import { ResendLinkFields } from "@/views/registration-confirmation/model/types";
 import { Button, toaster } from "@atpradical/picopico-ui-kit";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useRouter } from "next/router";
 
 import s from "./ResendLinkForm.module.scss";
 
 export const ResendLinkForm = () => {
   const { t } = useTranslation();
 
+  const router = useRouter();
+
+  const email = Array.isArray(router.query.email)
+    ? router.query.email[0]
+    : router.query.email;
+
   const { button, label, placeholder, successMessage } =
     t.confirmEmailPage.resendLinkForm;
 
   const { control, handleSubmit, setError } = useForm<ResendLinkFields>({
     defaultValues: {
-      email: "",
+      email,
     },
     mode: "onTouched",
     resolver: zodResolver(resendRegistrationEmailSchemeCreator(t.validation)),
@@ -36,6 +43,7 @@ export const ResendLinkForm = () => {
     } catch (e) {
       const errors = getErrorMessageData(e);
 
+      // todo: переиспользовать функцию обработки ошибок и для показа тоастов.
       if (typeof errors !== "string") {
         errors.forEach((el) => {
           setError(el.field as keyof ResendLinkFields, { message: el.message });

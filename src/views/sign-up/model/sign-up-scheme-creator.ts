@@ -34,17 +34,17 @@ export const signUpSchemeCreator = (t: LocaleValidation) => {
 
   return z
     .object({
-      agreement: z.boolean().default(false),
+      TOS: z.boolean().default(false),
       confirmPassword: confirmPasswordScheme,
       email: emailScheme(t.email),
       password: passwordScheme(t.password),
-      username: userNameScheme(t.userName),
+      userName: userNameScheme(t.userName),
     })
     .refine((val) => val.password === val.confirmPassword, {
       message: t.passwordsMatch,
       path: ["confirmPassword"],
     })
-    .refine((val) => val.agreement, {
+    .refine((val) => val.TOS, {
       message: t.agreeToTerms,
       path: ["termsAgreement"],
     });

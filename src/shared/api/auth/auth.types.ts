@@ -1,12 +1,13 @@
 export type CreateUserArgs = {
-  agreement: boolean;
+  TOS?: boolean;
+  baseUrl?: string;
   email: string;
   password: string;
-  username: string;
+  userName: string;
 };
 
 export type ConfirmEmailArgs = {
-  code: string;
+  confirmationCode: string;
 };
 export type ResendRegistrationArgs = {
   email: string;

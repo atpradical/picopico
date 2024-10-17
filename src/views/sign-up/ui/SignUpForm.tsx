@@ -39,11 +39,11 @@ export const SignUpForm = () => {
     setError,
   } = useForm<SignUpFields>({
     defaultValues: {
-      agreement: false,
+      TOS: false,
       confirmPassword: "",
       email: "",
       password: "",
-      username: "",
+      userName: "",
     },
     mode: "onTouched",
     reValidateMode: "onSubmit",
@@ -63,6 +63,8 @@ export const SignUpForm = () => {
 
   const isSubmitDisabled = !isValid || !isDirty;
 
+  console.log("isSubmitDisabled is ", isSubmitDisabled);
+
   const formHandler = handleSubmit(async (data) => {
     setEmail(data.email);
     try {
@@ -77,6 +79,7 @@ export const SignUpForm = () => {
           setError(el.field as keyof SignUpFields, { message: el.message });
         });
       }
+      //todo: add toaster for other possible error which returns as string.
     }
   });
 
@@ -87,7 +90,7 @@ export const SignUpForm = () => {
           <ControlledTextField
             control={control}
             label={labels.name}
-            name={"username"}
+            name={"userName"}
             placeholder={placeholders.addUsername}
           />
           <ControlledTextField
@@ -120,7 +123,7 @@ export const SignUpForm = () => {
               termsAgreement={termsAgreement}
             />
           }
-          name={"agreement"}
+          name={"TOS"}
         />
         <Button disabled={isSubmitDisabled} type={"submit"}>
           {submitButton}

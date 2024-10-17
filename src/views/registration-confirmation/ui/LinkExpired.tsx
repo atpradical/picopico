@@ -1,14 +1,14 @@
 import { useState } from "react";
 
 import { LocaleLinkExpired } from "@/locales/en";
-import { ResendLinkForm } from "@/views/confirm-email/ui/ResendLinkForm";
+import { ResendLinkForm } from "@/views/registration-confirmation/ui/ResendLinkForm";
 import {
   Button,
   SignUpConfirmedIllustration,
   Typography,
 } from "@atpradical/picopico-ui-kit";
 
-import s from "@/views/confirm-email/ui/ConfirmEmailPage.module.scss";
+import s from "@/views/registration-confirmation/ui/RegistrationConfirmationPage.module.scss";
 
 type LinkExpiredProps = {
   t: LocaleLinkExpired;
