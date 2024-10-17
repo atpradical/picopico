@@ -6,13 +6,13 @@ import { useTranslation } from "@/shared/hooks";
 import { ControlledCheckbox } from "@/shared/ui/form-components/controlled-checkbox";
 import { ControlledTextField } from "@/shared/ui/form-components/controlled-text-field";
 import { getErrorMessageData } from "@/shared/utils/get-error-message-data";
-// import { signUpSchemeCreator } from "@/views/sign-up/model/sign-up-scheme-creator";
+import { signUpSchemeCreator } from "@/views/sign-up/model/sign-up-scheme-creator";
 import { SignUpFields } from "@/views/sign-up/model/types";
 import { SentEmailDialog } from "@/views/sign-up/ui/SentEmailDialog";
 import { TermsAgreementLabel } from "@/views/sign-up/ui/TermsAgreementLabel";
 import { Button } from "@atpradical/picopico-ui-kit";
+import { zodResolver } from "@hookform/resolvers/zod";
 
-// import { zodResolver } from "@hookform/resolvers/zod";
 import s from "./SignUpFrom.module.scss";
 
 export const SignUpForm = () => {
@@ -47,8 +47,7 @@ export const SignUpForm = () => {
     },
     mode: "onTouched",
     reValidateMode: "onSubmit",
-    //todo: complete zodResolver
-    // resolver: zodResolver(signUpSchemeCreator(t.validation)),
+    resolver: zodResolver(signUpSchemeCreator(t.validation)),
   });
 
   const password = useWatch({ control, name: "password" });

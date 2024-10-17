@@ -4,25 +4,25 @@ import { useResendRegistrationEmailMutation } from "@/shared/api/auth/auth.api";
 import { useTranslation } from "@/shared/hooks";
 import { ControlledTextField } from "@/shared/ui/form-components/controlled-text-field";
 import { getErrorMessageData } from "@/shared/utils/get-error-message-data";
+import { resendRegistrationEmailSchemeCreator } from "@/views/confirm-email/model/resend-registration-email-scheme-creator";
 import { ResendLinkFields } from "@/views/confirm-email/model/types";
-import { Button } from "@atpradical/picopico-ui-kit";
+import { Button, toaster } from "@atpradical/picopico-ui-kit";
+import { zodResolver } from "@hookform/resolvers/zod";
 
 import s from "./ResendLinkForm.module.scss";
-
-// import { zodResolver } from "@hookform/resolvers/zod";
 
 export const ResendLinkForm = () => {
   const { t } = useTranslation();
 
-  const { button, label, placeholder } = t.confirmEmailPage.resendLinkForm;
+  const { button, label, placeholder, successMessage } =
+    t.confirmEmailPage.resendLinkForm;
 
   const { control, handleSubmit, setError } = useForm<ResendLinkFields>({
     defaultValues: {
       email: "",
     },
     mode: "onTouched",
-    //todo: install zodResolver
-    // resolver: zodResolver(resendRegistrationEmailSchemeCreator(t.validation)),
+    resolver: zodResolver(resendRegistrationEmailSchemeCreator(t.validation)),
   });
 
   const [resendRegistrationEmail] = useResendRegistrationEmailMutation();
@@ -30,10 +30,9 @@ export const ResendLinkForm = () => {
   const formHandler = handleSubmit(async (data) => {
     try {
       await resendRegistrationEmail(data).unwrap();
-      //todo: add toaster from ui-kit
-      // showToast({
-      //   message: `${successMessage} ${data.email}`,
-      // });
+      toaster({
+        text: `${successMessage} ${data.email}`,
+      });
     } catch (e) {
       const errors = getErrorMessageData(e);
 

@@ -11,6 +11,7 @@ import {
   DialogRoot,
   DialogTitle,
   Typography,
+  toaster,
 } from "@atpradical/picopico-ui-kit";
 import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
 import { useRouter } from "next/router";
@@ -51,14 +52,10 @@ export function LogoutConfirmation({ isOpen, onOpenChange }: Props) {
 
         if (typeof error !== "string") {
           error.forEach((el) => {
-            console.log(el);
-            //todo: add toaster from ui-kit
-            // showToast({ message: el.message, variant: 'error' })
+            toaster({ text: el.message, variant: "error" });
           });
         } else {
-          console.log("else");
-          // todo: add toaster from ui-kit
-          // showToast({ message: error, variant: 'error' })
+          toaster({ text: error, variant: "error" });
         }
       })
       .finally(() => {

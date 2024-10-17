@@ -1,13 +1,12 @@
-// import Recaptcha from "react-google-recaptcha";
-// import { zodResolver } from "@hookform/resolvers/zod";
-
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Paths } from "@/shared/enums";
 import { useTranslation } from "@/shared/hooks";
 import { ControlledTextField } from "@/shared/ui/form-components/controlled-text-field";
+import { forgotPasswordSchemeCreator } from "@/views/forgot-password/model/forgot-password-scheme-creator";
 import { Button, Typography } from "@atpradical/picopico-ui-kit";
+import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";
 
 import s from "./ForgotPasswordForm.module.scss";
@@ -36,8 +35,7 @@ export const ForgotPasswordForm = ({ setIsModal }: ForgotPasswordFormProps) => {
       tokenRecaptcha: "",
     },
     mode: "onChange",
-    // todo: install zodResolver
-    // resolver: zodResolver(forgotPasswordSchemeCreator(t.validation)),
+    resolver: zodResolver(forgotPasswordSchemeCreator(t.validation)),
   });
   const formHandler = handleSubmit((data: ForgotPasswordFields) => {
     console.log(data);

@@ -16,8 +16,7 @@ export const ControlledTextField = <T extends FieldValues>({
   control,
   defaultValue,
   disabled,
-  // todo: rename prop in ui-kit
-  errorMessage,
+  errorText,
   name,
   rules,
   shouldUnregister,
@@ -38,7 +37,7 @@ export const ControlledTextField = <T extends FieldValues>({
   return (
     <TextField
       {...props}
-      errorMessage={errorMessage ?? error?.message}
+      errorText={errorText ?? error?.message}
       onBlur={onBlur}
       onChange={onChange}
       ref={ref}

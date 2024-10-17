@@ -3,13 +3,13 @@ import { useForm } from "react-hook-form";
 import { Paths } from "@/shared/enums";
 import { useTranslation } from "@/shared/hooks";
 import { ControlledTextField } from "@/shared/ui/form-components/controlled-text-field";
+import { createNewPasswordSchemeCreator } from "@/views/create-new-password/model/create-new-password-scheme-creator";
+import { CreatePWDFields } from "@/views/create-new-password/model/types";
 import { Button, Typography } from "@atpradical/picopico-ui-kit";
-// import { zodResolver } from "@hookform/resolvers/zod";
+import { zodResolver } from "@hookform/resolvers/zod";
 import { useRouter } from "next/router";
 
 import styles from "./CreateNewPasswordForm.module.scss";
-
-import { CreatePWDFields } from "../model/types";
 
 export const CreateNewPasswordForm = () => {
   const { t } = useTranslation();
@@ -35,8 +35,7 @@ export const CreateNewPasswordForm = () => {
     },
     mode: "onChange",
     reValidateMode: "onSubmit",
-    //todo: install zodResolver
-    // resolver: zodResolver(createNewPasswordSchemeCreator(t.validation)),
+    resolver: zodResolver(createNewPasswordSchemeCreator(t.validation)),
   });
 
   const formHandler = handleSubmit((data) => {
