@@ -16,7 +16,7 @@ export const ControlledTextArea = <T extends FieldValues>({
   control,
   defaultValue,
   disabled,
-  errorMessage,
+  errorText,
   name,
   rules,
   shouldUnregister,
@@ -35,10 +35,6 @@ export const ControlledTextArea = <T extends FieldValues>({
   });
 
   return (
-    <TextArea
-      errorMessage={errorMessage ?? error?.message}
-      {...props}
-      {...field}
-    />
+    <TextArea errorText={errorText ?? error?.message} {...props} {...field} />
   );
 };
