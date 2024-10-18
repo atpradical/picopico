@@ -7,10 +7,12 @@ import { NextPage } from "next";
 import "@atpradical/picopico-ui-kit/dist/style.css";
 
 import s from "./Layout.module.scss";
+import { HeadMeta } from "@/shared/ui/layout/head-meta/HeadMeta";
 
 export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <>
+      <HeadMeta />
       <Header />
       <main className={s.layout}>{children}</main>
       <CustomToastContainer />
