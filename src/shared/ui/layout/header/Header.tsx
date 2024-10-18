@@ -24,7 +24,7 @@ export const Header = ({ countNotification, isAuth = false }: HeaderProps) => {
         href={Paths.home}
         variant={"link"}
         className={s.logoWrapper}
-        tabindex={-1}
+        tabIndex={-1}
       >
         <LogoLight className={s.logo} />
         <Typography as={"h1"} variant={"large"}>
