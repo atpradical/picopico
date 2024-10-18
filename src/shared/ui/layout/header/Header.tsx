@@ -4,6 +4,7 @@ import {
   Badge,
   BellOutlineIcon,
   Button,
+  LogoLight,
   Typography,
 } from "@atpradical/picopico-ui-kit";
 import Link from "next/link";
@@ -18,9 +19,18 @@ export type HeaderProps = {
 export const Header = ({ countNotification, isAuth = false }: HeaderProps) => {
   return (
     <div className={s.wrapper}>
-      <Typography as={"h1"} variant={"large"}>
-        PicoPico
-      </Typography>
+      <Button
+        as={Link}
+        href={Paths.home}
+        variant={"link"}
+        className={s.logoWrapper}
+        tabindex={-1}
+      >
+        <LogoLight className={s.logo} />
+        <Typography as={"h1"} variant={"large"}>
+          PicoPico
+        </Typography>
+      </Button>
       <div className={s.container}>
         {isAuth && (
           <Button className={s.buttonBell} variant={"icon"}>

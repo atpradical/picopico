@@ -14,10 +14,24 @@
   border-bottom: 1px solid var(--color-dark-300);
 }
 
+.logoWrapper {
+  &:hover,
+  &:active,
+  &:focus {
+    color: var(--color-light-100);
+    outline: none;
+  }
+}
+
+.logo {
+  width: 40px;
+  height: 40px;
+}
+
 .buttonContainer {
   display: flex;
-  justify-content: center;
   gap: 24px;
+  justify-content: center;
 }
 
 .container {

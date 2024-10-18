@@ -10,7 +10,7 @@
     "lint": "eslint src --ext .jsx,.js,.tsx,.ts  --no-error-on-unmatched-pattern --fix && stylelint --fix src/{,*/}*.{scss,css} --allow-empty-input"
   },
   "dependencies": {
-    "@atpradical/picopico-ui-kit": "^0.13.6",
+    "@atpradical/picopico-ui-kit": "^0.13.8",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-visually-hidden": "^1.1.0",
     "@reduxjs/toolkit": "^2.3.0",
