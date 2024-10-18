@@ -4,7 +4,7 @@ export type FormErrorData = { field: string; message: string };
 
 export type ServerErrorData = {
   error: string;
-  messages: FormErrorData[];
+  messages: FormErrorData[] | string;
   statusCode: number;
 };
 

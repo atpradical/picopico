@@ -1,16 +1,16 @@
 export const signInPage = {
-  accountExistsQuestion: "У вас уже есть аккаунт?",
-  linkToSignUp: "Регистрация",
+  isAccount: "У вас нет аккаунта?",
+  signUpLink: "Зарегистрироваться",
   pageTitle: "Войти",
   signInForm: {
-    forgotPassword: "Забыли пароль",
+    forgotPassword: "Забыл пароль",
     labels: {
-      email: "Электронная почта",
+      email: "Email",
       password: "Пароль",
     },
     placeholders: {
-      addEmail: "укажите электронную почту",
-      addPassword: "укажите пароль",
+      addEmail: "введите email",
+      addPassword: "введите пароль",
     },
     submitButton: "Войти",
   },

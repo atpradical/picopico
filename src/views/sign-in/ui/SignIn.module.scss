@@ -6,26 +6,36 @@
 .card {
   display: flex;
   flex-direction: column;
+  gap: 12px;
   align-items: center;
+  justify-content: center;
 
   width: 100%;
   max-width: 380px;
-  height: 505px;
-  padding: 24px;
 }
 
 .form {
   display: flex;
   flex-direction: column;
-  width: 100%;
   gap: 24px;
+
+  width: 100%;
+  margin-bottom: 6px;
 }
 
-.passwordLink {
-  align-self: end;
-  margin: 12px;
-}
+.forgotPassword {
+  align-self: flex-end;
+  color: var(--color-light-900);
 
-.paragraph {
-  margin: 18px 0 6px;
+  &:hover {
+    color: var(--color-light-100);
+  }
+
+  &:active {
+    color: var(--color-accent-700);
+  }
+
+  &:focus-visible {
+    color: var(--color-light-500);
+  }
 }

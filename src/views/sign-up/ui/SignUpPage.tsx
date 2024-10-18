@@ -11,7 +11,7 @@ import s from "./SignUpPage.module.scss";
 
 function SignUpPage() {
   const { t } = useTranslation();
-  const { accountExistsQuestion, linkToSignIn, pageTitle } = t.signUpPage;
+  const { isAccount, linkToSignIn, pageTitle } = t.signUpPage;
 
   return (
     <Page>
@@ -23,10 +23,8 @@ function SignUpPage() {
           <OAuthIcons />
           <SignUpForm />
           <div className={s.footer}>
-            <Typography variant={"regular_16"}>
-              {accountExistsQuestion}
-            </Typography>
-            <Button as={Link} href={Paths.logIn} variant={"link"}>
+            <Typography variant={"regular_16"}>{isAccount}</Typography>
+            <Button as={Link} href={Paths.logIn} variant={"nb-outlined"}>
               {linkToSignIn}
             </Button>
           </div>

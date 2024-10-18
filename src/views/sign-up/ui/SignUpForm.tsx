@@ -10,7 +10,7 @@ import { signUpSchemeCreator } from "@/views/sign-up/model/sign-up-scheme-creato
 import { SignUpFields } from "@/views/sign-up/model/types";
 import { SentEmailDialog } from "@/views/sign-up/ui/SentEmailDialog";
 import { TermsAgreementLabel } from "@/views/sign-up/ui/TermsAgreementLabel";
-import { Button } from "@atpradical/picopico-ui-kit";
+import { Button, toaster } from "@atpradical/picopico-ui-kit";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import s from "./SignUpFrom.module.scss";
@@ -78,8 +78,9 @@ export const SignUpForm = () => {
         errors.forEach((el) => {
           setError(el.field as keyof SignUpFields, { message: el.message });
         });
+      } else {
+        toaster({ text: errors, variant: "error" });
       }
-      //todo: add toaster for other possible error which returns as string.
     }
   });
 

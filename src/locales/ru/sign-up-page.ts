@@ -1,5 +1,5 @@
 export const signUpPage = {
-  accountExistsQuestion: "У вас уже есть аккаунт?",
+  isAccount: "У вас уже есть аккаунт?",
   githubButton: "Создайте аккаунт через GitHub",
   googleButton: "Создайте аккаунт через Google",
   linkToSignIn: "Войти",
@@ -19,8 +19,8 @@ export const signUpPage = {
       password: "Пароль",
     },
     placeholders: {
-      addEmail: "укажите email",
-      addUsername: "укажите имя",
+      addEmail: "введите email",
+      addUsername: "введите имя",
       createPassword: "создайте надежный пароль",
       repeatPassword: "повторите пароль",
     },
