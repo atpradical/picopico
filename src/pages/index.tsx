@@ -1,4 +1,4 @@
-import { getLayout } from "@/shared/ui/layout";
+import { getLayout } from '@/shared/ui/layout'
 
 export default function Home() {
   return (
@@ -65,7 +65,7 @@ export default function Home() {
       {/*</Head>*/}
       <main></main>
     </>
-  );
+  )
 }
 
-Home.getLayout = getLayout;
+Home.getLayout = getLayout

@@ -28,7 +28,6 @@ export const authApi = picoApi.injectEndpoints({
       }),
       login: builder.mutation<ResponseLogin, LoginData>({
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
-          debugger
           try {
             const { data } = await queryFulfilled
 

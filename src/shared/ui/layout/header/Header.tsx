@@ -1,5 +1,6 @@
-import { useEffect } from 'react'
+import { useContext } from 'react'
 
+import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
 import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
@@ -10,17 +11,14 @@ import s from './Header.module.scss'
 
 export type HeaderProps = {
   countNotification?: number
-  isAuth: boolean
+  // isAuth: boolean
 }
 
-export const Header = ({ countNotification, isAuth }: HeaderProps) => {
+export const Header = ({ countNotification }: HeaderProps) => {
   const router = useRouter()
+  const { isAuth } = useContext(AuthContext)
 
-  useEffect(() => {
-    if (isAuth) {
-      router.replace(Paths.logIn)
-    }
-  }, [isAuth])
+  console.log('isAuth is', isAuth)
 
   return (
     <div className={s.wrapper}>

@@ -1,9 +1,9 @@
-import { getSidebarLayout } from "@/shared/ui/layout";
-import { Page } from "@/shared/ui/layout/page";
+import { getSidebarLayout } from '@/shared/ui/layout'
+import { Page } from '@/shared/ui/layout/page'
 
 function ProfilePage() {
-  return <Page>Profile page</Page>;
+  return <Page>Profile page</Page>
 }
 
-ProfilePage.getLayout = getSidebarLayout;
-export default ProfilePage;
+ProfilePage.getLayout = getSidebarLayout
+export default ProfilePage
