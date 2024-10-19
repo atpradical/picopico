@@ -1,56 +1,53 @@
-import { useForm } from "react-hook-form";
+import { useForm } from 'react-hook-form'
 
-import { useResendRegistrationEmailMutation } from "@/shared/api/auth/auth.api";
-import { useTranslation } from "@/shared/hooks";
-import { ControlledTextField } from "@/shared/ui/form-components/controlled-text-field";
-import { getErrorMessageData } from "@/shared/utils/get-error-message-data";
-import { resendRegistrationEmailSchemeCreator } from "@/views/registration-confirmation/model/resend-registration-email-scheme-creator";
-import { ResendLinkFields } from "@/views/registration-confirmation/model/types";
-import { Button, toaster } from "@atpradical/picopico-ui-kit";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { useRouter } from "next/router";
+import { useResendRegistrationEmailMutation } from '@/shared/api/auth/auth.api'
+import { useTranslation } from '@/shared/hooks'
+import { ControlledTextField } from '@/shared/ui/form-components/controlled-text-field'
+import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
+import { resendRegistrationEmailSchemeCreator } from '@/views/registration-confirmation/model/resend-registration-email-scheme-creator'
+import { ResendLinkFields } from '@/views/registration-confirmation/model/types'
+import { Button, toaster } from '@atpradical/picopico-ui-kit'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/router'
 
-import s from "./ResendLinkForm.module.scss";
+import s from './ResendLinkForm.module.scss'
 
 export const ResendLinkForm = () => {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
-  const router = useRouter();
+  const router = useRouter()
 
-  const email = Array.isArray(router.query.email)
-    ? router.query.email[0]
-    : router.query.email;
+  const email = Array.isArray(router.query.email) ? router.query.email[0] : router.query.email
 
-  const { button, label, placeholder, successMessage } =
-    t.confirmEmailPage.resendLinkForm;
+  const { button, label, placeholder, successMessage } = t.confirmEmailPage.resendLinkForm
 
   const { control, handleSubmit, setError } = useForm<ResendLinkFields>({
     defaultValues: {
       email,
     },
-    mode: "onTouched",
+    mode: 'onTouched',
     resolver: zodResolver(resendRegistrationEmailSchemeCreator(t.validation)),
-  });
+  })
 
-  const [resendRegistrationEmail] = useResendRegistrationEmailMutation();
+  const [resendRegistrationEmail] = useResendRegistrationEmailMutation()
 
-  const formHandler = handleSubmit(async (data) => {
+  const formHandler = handleSubmit(async data => {
     try {
-      await resendRegistrationEmail(data).unwrap();
+      await resendRegistrationEmail(data).unwrap()
       toaster({
         text: `${successMessage} ${data.email}`,
-      });
+      })
     } catch (e) {
-      const errors = getErrorMessageData(e);
+      const errors = getErrorMessageData(e)
 
       // todo: переиспользовать функцию обработки ошибок и для показа тоастов.
-      if (typeof errors !== "string") {
-        errors.forEach((el) => {
-          setError(el.field as keyof ResendLinkFields, { message: el.message });
-        });
+      if (typeof errors !== 'string') {
+        errors.forEach(el => {
+          setError(el.field as keyof ResendLinkFields, { message: el.message })
+        })
       }
     }
-  });
+  })
 
   return (
     <>
@@ -58,11 +55,11 @@ export const ResendLinkForm = () => {
         <ControlledTextField
           control={control}
           label={label}
-          name={"email"}
+          name={'email'}
           placeholder={placeholder}
         />
-        <Button type={"submit"}>{button}</Button>
+        <Button type={'submit'}>{button}</Button>
       </form>
     </>
-  );
-};
+  )
+}

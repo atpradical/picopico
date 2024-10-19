@@ -13,7 +13,7 @@ export type ResendRegistrationArgs = {
   email: string
 }
 
-export type LoginData = {
+export type LoginArgs = {
   email: string
   password: string
 }
@@ -26,4 +26,10 @@ export type ResponseMe = {
   isBlocked: boolean
   userId: number
   userName: string
+}
+
+export type PasswordRecoveryArgs = {
+  baseUrl?: string
+  email: string
+  recaptcha: string
 }

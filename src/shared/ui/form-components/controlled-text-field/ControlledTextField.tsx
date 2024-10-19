@@ -1,16 +1,12 @@
-import {
-  FieldValues,
-  UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import { TextField, TextFieldProps } from "@atpradical/picopico-ui-kit";
+import { TextField, TextFieldProps } from '@atpradical/picopico-ui-kit'
 
 type ControlledTextFieldProps<T extends FieldValues> = Omit<
   TextFieldProps,
-  "disabled" | "onBlur" | "onChange" | "ref" | "value"
+  'disabled' | 'onBlur' | 'onChange' | 'ref' | 'value'
 > &
-  UseControllerProps<T>;
+  UseControllerProps<T>
 
 export const ControlledTextField = <T extends FieldValues>({
   control,
@@ -32,7 +28,7 @@ export const ControlledTextField = <T extends FieldValues>({
     name,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <TextField
@@ -41,8 +37,8 @@ export const ControlledTextField = <T extends FieldValues>({
       onBlur={onBlur}
       onChange={onChange}
       ref={ref}
-      value={value ?? ""}
+      value={value ?? ''}
       {...field}
     />
-  );
-};
+  )
+}

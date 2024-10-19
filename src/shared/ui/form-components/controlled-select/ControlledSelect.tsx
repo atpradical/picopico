@@ -1,16 +1,11 @@
-import {
-  Control,
-  FieldValues,
-  UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { Control, FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import { Select, SelectProps } from "@atpradical/picopico-ui-kit";
+import { Select, SelectProps } from '@atpradical/picopico-ui-kit'
 
 export type ControlledSelectProps<T extends FieldValues> = {
-  control: Control<T>;
-} & Omit<SelectProps, "onBlur" | "onChange" | "onValueChange" | "value"> &
-  Omit<UseControllerProps<T>, "control" | "defaultValue" | "rules">;
+  control: Control<T>
+} & Omit<SelectProps, 'onBlur' | 'onChange' | 'onValueChange' | 'value'> &
+  Omit<UseControllerProps<T>, 'control' | 'defaultValue' | 'rules'>
 
 export const ControlledSelect = <T extends FieldValues>({
   control,
@@ -26,9 +21,7 @@ export const ControlledSelect = <T extends FieldValues>({
     disabled,
     name, //поле за которым будем следить
     shouldUnregister,
-  });
+  })
 
-  return (
-    <Select {...props} onValueChange={onChange} value={value} {...field} />
-  );
-};
+  return <Select {...props} onValueChange={onChange} value={value} {...field} />
+}

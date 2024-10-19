@@ -3,7 +3,8 @@ import { picoApi } from '@/shared/api/picoApi'
 import {
   ConfirmEmailArgs,
   CreateUserArgs,
-  LoginData,
+  LoginArgs,
+  PasswordRecoveryArgs,
   ResendRegistrationArgs,
   ResponseLogin,
   ResponseMe,
@@ -26,7 +27,7 @@ export const authApi = picoApi.injectEndpoints({
           url: '/v1/auth/registration',
         }),
       }),
-      login: builder.mutation<ResponseLogin, LoginData>({
+      login: builder.mutation<ResponseLogin, LoginArgs>({
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           try {
             const { data } = await queryFulfilled
@@ -54,6 +55,13 @@ export const authApi = picoApi.injectEndpoints({
         providesTags: ['Me'],
         query: () => `v1/auth/me`,
       }),
+      passwordRecovery: builder.mutation<void, PasswordRecoveryArgs>({
+        query: args => ({
+          body: { ...args },
+          method: 'POST',
+          url: '/v1/auth/password-recovery',
+        }),
+      }),
       resendRegistrationEmail: builder.mutation<void, ResendRegistrationArgs>({
         query: args => ({
           body: { ...args },
@@ -71,5 +79,6 @@ export const {
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
+  usePasswordRecoveryMutation,
   useResendRegistrationEmailMutation,
 } = authApi

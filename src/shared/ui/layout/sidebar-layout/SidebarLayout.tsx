@@ -1,8 +1,8 @@
-import { PropsWithChildren, ReactElement } from "react";
+import { PropsWithChildren, ReactElement } from 'react'
 
-import { Layout } from "@/shared/ui/layout";
-import { SideBar } from "@/shared/ui/layout/sidebar";
-import { NextPage } from "next";
+import { Layout } from '@/shared/ui/layout'
+import { SideBar } from '@/shared/ui/layout/sidebar'
+import { NextPage } from 'next'
 
 export const SidebarLayout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
@@ -10,9 +10,9 @@ export const SidebarLayout: NextPage<PropsWithChildren> = ({ children }) => {
       <SideBar />
       {children}
     </Layout>
-  );
-};
+  )
+}
 
 export function getSidebarLayout(page: ReactElement) {
-  return <SidebarLayout>{page}</SidebarLayout>;
+  return <SidebarLayout>{page}</SidebarLayout>
 }

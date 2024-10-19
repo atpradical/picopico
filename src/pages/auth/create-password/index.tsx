@@ -1,1 +1,1 @@
-export { default } from "@/views/create-new-password";
+export { default } from '@/views/create-new-password'

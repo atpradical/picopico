@@ -1,26 +1,12 @@
-import {
-  FieldValues,
-  UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import {
-  DatePickerRange,
-  DatePickerRangeProps,
-} from "@atpradical/picopico-ui-kit";
+import { DatePickerRange, DatePickerRangeProps } from '@atpradical/picopico-ui-kit'
 
 export type ControlledDatePickerRangeProps<T extends FieldValues> = Omit<
   DatePickerRangeProps,
-  | "disabled"
-  | "name"
-  | "onBlur"
-  | "onChange"
-  | "onSelectRangeDate"
-  | "ref"
-  | "selected"
-  | "value"
+  'disabled' | 'name' | 'onBlur' | 'onChange' | 'onSelectRangeDate' | 'ref' | 'selected' | 'value'
 > &
-  UseControllerProps<T>;
+  UseControllerProps<T>
 
 export const ControlledDatePickerRange = <T extends FieldValues>({
   control,
@@ -40,14 +26,7 @@ export const ControlledDatePickerRange = <T extends FieldValues>({
     name,
     rules,
     shouldUnregister,
-  });
+  })
 
-  return (
-    <DatePickerRange
-      onSelectRangeDate={onChange}
-      selected={value}
-      {...field}
-      {...rest}
-    />
-  );
-};
+  return <DatePickerRange onSelectRangeDate={onChange} selected={value} {...field} {...rest} />
+}

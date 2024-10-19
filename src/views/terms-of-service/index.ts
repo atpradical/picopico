@@ -1,1 +1,1 @@
-export { default } from "./ui/TermsOfServicePage";
+export { default } from './ui/TermsOfServicePage'

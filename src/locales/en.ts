@@ -18,11 +18,11 @@ export type LocaleLogoutDialog = typeof en.logoutDialog
 
 export const en = {
   confirmEmailPage: confirmEmailPage,
-  logoutDialog: logoutDialog,
   language: {
     en: 'English',
     ru: ' Russian',
   },
+  logoutDialog: logoutDialog,
   passwordRecoveryPage: passwordRecoveryPage,
   privacyPolicyPage: privacyPolicyPage,
   signInPage: signInPage,

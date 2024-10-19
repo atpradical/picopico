@@ -11,14 +11,11 @@ import s from './Header.module.scss'
 
 export type HeaderProps = {
   countNotification?: number
-  // isAuth: boolean
 }
 
 export const Header = ({ countNotification }: HeaderProps) => {
   const router = useRouter()
   const { isAuth } = useContext(AuthContext)
-
-  console.log('isAuth is', isAuth)
 
   return (
     <div className={s.wrapper}>

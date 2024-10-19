@@ -1,1 +1,1 @@
-export * from "./ControlledDatePickerRange";
+export * from './ControlledDatePickerRange'

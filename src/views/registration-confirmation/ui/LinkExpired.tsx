@@ -1,32 +1,28 @@
-import { useState } from "react";
+import { useState } from 'react'
 
-import { LocaleLinkExpired } from "@/locales/en";
-import { ResendLinkForm } from "@/views/registration-confirmation/ui/ResendLinkForm";
-import {
-  Button,
-  SignUpConfirmedIllustration,
-  Typography,
-} from "@atpradical/picopico-ui-kit";
+import { LocaleLinkExpired } from '@/locales/en'
+import { ResendLinkForm } from '@/views/registration-confirmation/ui/ResendLinkForm'
+import { Button, SignUpConfirmedIllustration, Typography } from '@atpradical/picopico-ui-kit'
 
-import s from "@/views/registration-confirmation/ui/RegistrationConfirmationPage.module.scss";
+import s from '@/views/registration-confirmation/ui/RegistrationConfirmationPage.module.scss'
 
 type LinkExpiredProps = {
-  t: LocaleLinkExpired;
-};
+  t: LocaleLinkExpired
+}
 export const LinkExpired = ({ t }: LinkExpiredProps) => {
-  const { caption, resendButton, title } = t;
-  const [showEmailForm, setShowEmailForm] = useState(false);
+  const { caption, resendButton, title } = t
+  const [showEmailForm, setShowEmailForm] = useState(false)
 
   const resendEmailButtonHandler = () => {
-    setShowEmailForm(true);
-  };
+    setShowEmailForm(true)
+  }
 
   return (
     <>
-      <Typography as={"h1"} className={s.title} variant={"h1"}>
+      <Typography as={'h1'} className={s.title} variant={'h1'}>
         {title}
       </Typography>
-      <Typography className={s.caption} variant={"regular_16"}>
+      <Typography className={s.caption} variant={'regular_16'}>
         {caption}
       </Typography>
       {!showEmailForm ? (
@@ -38,5 +34,5 @@ export const LinkExpired = ({ t }: LinkExpiredProps) => {
       )}
       <SignUpConfirmedIllustration className={s.image} />
     </>
-  );
-};
+  )
+}

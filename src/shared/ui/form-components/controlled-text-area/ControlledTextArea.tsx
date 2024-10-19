@@ -1,16 +1,12 @@
-import {
-  FieldValues,
-  UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import { TextArea, TextAreaProps } from "@atpradical/picopico-ui-kit";
+import { TextArea, TextAreaProps } from '@atpradical/picopico-ui-kit'
 
 export type ControlledTextAreaProps<T extends FieldValues> = Omit<
   TextAreaProps,
-  "defaultValue" | "name" | "onBlur" | "onChange" | "value"
+  'defaultValue' | 'name' | 'onBlur' | 'onChange' | 'value'
 > &
-  UseControllerProps<T>;
+  UseControllerProps<T>
 
 export const ControlledTextArea = <T extends FieldValues>({
   control,
@@ -32,9 +28,7 @@ export const ControlledTextArea = <T extends FieldValues>({
     name,
     rules,
     shouldUnregister,
-  });
+  })
 
-  return (
-    <TextArea errorText={errorText ?? error?.message} {...props} {...field} />
-  );
-};
+  return <TextArea errorText={errorText ?? error?.message} {...props} {...field} />
+}

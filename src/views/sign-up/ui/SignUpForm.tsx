@@ -1,35 +1,28 @@
-import { useEffect, useState } from "react";
-import { useForm, useWatch } from "react-hook-form";
+import { useEffect, useState } from 'react'
+import { useForm, useWatch } from 'react-hook-form'
 
-import { useCreateUserMutation } from "@/shared/api/auth/auth.api";
-import { useTranslation } from "@/shared/hooks";
-import { ControlledCheckbox } from "@/shared/ui/form-components/controlled-checkbox";
-import { ControlledTextField } from "@/shared/ui/form-components/controlled-text-field";
-import { getErrorMessageData } from "@/shared/utils/get-error-message-data";
-import { signUpSchemeCreator } from "@/views/sign-up/model/sign-up-scheme-creator";
-import { SignUpFields } from "@/views/sign-up/model/types";
-import { SentEmailDialog } from "@/views/sign-up/ui/SentEmailDialog";
-import { TermsAgreementLabel } from "@/views/sign-up/ui/TermsAgreementLabel";
-import { Button, toaster } from "@atpradical/picopico-ui-kit";
-import { zodResolver } from "@hookform/resolvers/zod";
+import { useCreateUserMutation } from '@/shared/api/auth/auth.api'
+import { useTranslation } from '@/shared/hooks'
+import { ControlledCheckbox } from '@/shared/ui/form-components/controlled-checkbox'
+import { ControlledTextField } from '@/shared/ui/form-components/controlled-text-field'
+import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
+import { signUpSchemeCreator } from '@/views/sign-up/model/sign-up-scheme-creator'
+import { SignUpFields } from '@/views/sign-up/model/types'
+import { SentEmailDialog } from '@/views/sign-up/ui/SentEmailDialog'
+import { TermsAgreementLabel } from '@/views/sign-up/ui/TermsAgreementLabel'
+import { Button, toaster } from '@atpradical/picopico-ui-kit'
+import { zodResolver } from '@hookform/resolvers/zod'
 
-import s from "./SignUpFrom.module.scss";
+import s from './SignUpFrom.module.scss'
 
 export const SignUpForm = () => {
-  const { t } = useTranslation();
-  const {
-    emailSentDialog,
-    labels,
-    placeholders,
-    policy,
-    submitButton,
-    terms,
-    termsAgreement,
-  } = t.signUpPage.signUpForm;
+  const { t } = useTranslation()
+  const { emailSentDialog, labels, placeholders, policy, submitButton, terms, termsAgreement } =
+    t.signUpPage.signUpForm
 
-  const [showDialog, setShowDialog] = useState(false);
-  const [email, setEmail] = useState("");
-  const [createUser] = useCreateUserMutation();
+  const [showDialog, setShowDialog] = useState(false)
+  const [email, setEmail] = useState('')
+  const [createUser] = useCreateUserMutation()
 
   const {
     control,
@@ -40,49 +33,47 @@ export const SignUpForm = () => {
   } = useForm<SignUpFields>({
     defaultValues: {
       TOS: false,
-      confirmPassword: "",
-      email: "",
-      password: "",
-      userName: "",
+      confirmPassword: '',
+      email: '',
+      password: '',
+      userName: '',
     },
-    mode: "onTouched",
-    reValidateMode: "onSubmit",
+    mode: 'onTouched',
+    reValidateMode: 'onSubmit',
     resolver: zodResolver(signUpSchemeCreator(t.validation)),
-  });
+  })
 
-  const password = useWatch({ control, name: "password" });
-  const confirmPassword = useWatch({ control, name: "confirmPassword" });
+  const password = useWatch({ control, name: 'password' })
+  const confirmPassword = useWatch({ control, name: 'confirmPassword' })
 
   useEffect(() => {
     if (password && confirmPassword && password !== confirmPassword) {
-      setError("confirmPassword", { message: t.validation.passwordsMatch });
+      setError('confirmPassword', { message: t.validation.passwordsMatch })
     } else {
-      setError("confirmPassword", { message: "" });
+      setError('confirmPassword', { message: '' })
     }
-  }, [password, confirmPassword, setError, t.validation.passwordsMatch]);
+  }, [password, confirmPassword, setError, t.validation.passwordsMatch])
 
-  const isSubmitDisabled = !isValid || !isDirty;
+  const isSubmitDisabled = !isValid || !isDirty
 
-  console.log("isSubmitDisabled is ", isSubmitDisabled);
-
-  const formHandler = handleSubmit(async (data) => {
-    setEmail(data.email);
+  const formHandler = handleSubmit(async data => {
+    setEmail(data.email)
     try {
-      await createUser(data).unwrap();
-      setShowDialog(true);
-      reset();
+      await createUser(data).unwrap()
+      setShowDialog(true)
+      reset()
     } catch (e) {
-      const errors = getErrorMessageData(e);
+      const errors = getErrorMessageData(e)
 
-      if (typeof errors !== "string") {
-        errors.forEach((el) => {
-          setError(el.field as keyof SignUpFields, { message: el.message });
-        });
+      if (typeof errors !== 'string') {
+        errors.forEach(el => {
+          setError(el.field as keyof SignUpFields, { message: el.message })
+        })
       } else {
-        toaster({ text: errors, variant: "error" });
+        toaster({ text: errors, variant: 'error' })
       }
     }
-  });
+  })
 
   return (
     <>
@@ -91,42 +82,38 @@ export const SignUpForm = () => {
           <ControlledTextField
             control={control}
             label={labels.name}
-            name={"userName"}
+            name={'userName'}
             placeholder={placeholders.addUsername}
           />
           <ControlledTextField
             control={control}
             label={labels.email}
-            name={"email"}
+            name={'email'}
             placeholder={placeholders.addEmail}
           />
           <ControlledTextField
             control={control}
             label={labels.password}
-            name={"password"}
+            name={'password'}
             placeholder={placeholders.createPassword}
-            variant={"password"}
+            variant={'password'}
           />
           <ControlledTextField
             control={control}
             label={labels.confirmPassword}
-            name={"confirmPassword"}
+            name={'confirmPassword'}
             placeholder={placeholders.repeatPassword}
-            variant={"password"}
+            variant={'password'}
           />
         </div>
         <ControlledCheckbox
           control={control}
           label={
-            <TermsAgreementLabel
-              policy={policy}
-              terms={terms}
-              termsAgreement={termsAgreement}
-            />
+            <TermsAgreementLabel policy={policy} terms={terms} termsAgreement={termsAgreement} />
           }
-          name={"TOS"}
+          name={'TOS'}
         />
-        <Button disabled={isSubmitDisabled} type={"submit"}>
+        <Button disabled={isSubmitDisabled} type={'submit'}>
           {submitButton}
         </Button>
       </form>
@@ -137,5 +124,5 @@ export const SignUpForm = () => {
         t={emailSentDialog}
       />
     </>
-  );
-};
+  )
+}

@@ -1,24 +1,20 @@
-import {
-  FieldValues,
-  UseControllerProps,
-  useController,
-} from "react-hook-form";
+import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
-import { Checkbox, CheckboxProps } from "@atpradical/picopico-ui-kit";
+import { Checkbox, CheckboxProps } from '@atpradical/picopico-ui-kit'
 
 export type ControlledCheckboxProps<T extends FieldValues> = Omit<
   CheckboxProps,
-  | "checked"
-  | "defaultValue"
-  | "disabled"
-  | "name"
-  | "onBlur"
-  | "onChange"
-  | "onCheckedChange"
-  | "ref"
-  | "value"
+  | 'checked'
+  | 'defaultValue'
+  | 'disabled'
+  | 'name'
+  | 'onBlur'
+  | 'onChange'
+  | 'onCheckedChange'
+  | 'ref'
+  | 'value'
 > &
-  UseControllerProps<T>;
+  UseControllerProps<T>
 
 export const ControlledCheckbox = <T extends FieldValues>({
   control,
@@ -39,7 +35,7 @@ export const ControlledCheckbox = <T extends FieldValues>({
     name,
     rules,
     shouldUnregister,
-  });
+  })
 
   return (
     <Checkbox
@@ -49,5 +45,5 @@ export const ControlledCheckbox = <T extends FieldValues>({
       onCheckedChange={onChange}
       {...field}
     />
-  );
-};
+  )
+}

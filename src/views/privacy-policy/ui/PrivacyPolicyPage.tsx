@@ -1,11 +1,11 @@
-import { Paths } from "@/shared/enums";
-import { useTranslation } from "@/shared/hooks";
-import { DocsContent } from "@/shared/ui/components";
-import { getLayout } from "@/shared/ui/layout";
-import { Page } from "@/shared/ui/layout/page";
+import { Paths } from '@/shared/enums'
+import { useTranslation } from '@/shared/hooks'
+import { DocsContent } from '@/shared/ui/components'
+import { getLayout } from '@/shared/ui/layout'
+import { Page } from '@/shared/ui/layout/page'
 
 function PrivacyPolicyPage() {
-  const { t } = useTranslation();
+  const { t } = useTranslation()
 
   return (
     <Page>
@@ -16,8 +16,8 @@ function PrivacyPolicyPage() {
         title={t.privacyPolicyPage.pageTitle}
       />
     </Page>
-  );
+  )
 }
 
-PrivacyPolicyPage.getLayout = getLayout;
-export default PrivacyPolicyPage;
+PrivacyPolicyPage.getLayout = getLayout
+export default PrivacyPolicyPage

@@ -1,1 +1,1 @@
-export { default } from "@/views/privacy-policy";
+export { default } from '@/views/privacy-policy'

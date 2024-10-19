@@ -1,4 +1,4 @@
-import { Paths } from "@/shared/enums";
+import { Paths } from '@/shared/enums'
 import {
   BookmarkIcon,
   BookmarkOutlineIcon,
@@ -14,49 +14,49 @@ import {
   SearchOutlineIcon,
   TrendingUpIcon,
   TrendingUpOutlineIcon,
-} from "@atpradical/picopico-ui-kit";
+} from '@atpradical/picopico-ui-kit'
 
 export const menuItems = [
   {
     Icon: HomeIcon,
     OutlineIcon: HomeOutlineIcon,
-    label: "Home",
+    label: 'Home',
     path: Paths.home,
   },
   {
     Icon: PlusSquareIcon,
     OutlineIcon: PlusSquareOutlineIcon,
-    label: "Create",
+    label: 'Create',
     path: Paths.create,
   },
   {
     Icon: PersonIcon,
     OutlineIcon: PersonOutlineIcon,
-    label: "My Profile",
+    label: 'My Profile',
     path: Paths.profile,
   },
   {
     Icon: MessageCircleIcon,
     OutlineIcon: MessageCircleOutlineIcon,
-    label: "Messenger",
+    label: 'Messenger',
     path: Paths.messages,
   },
   {
     Icon: SearchIcon,
     OutlineIcon: SearchOutlineIcon,
-    label: "Search",
+    label: 'Search',
     path: Paths.search,
   },
   {
     Icon: TrendingUpIcon,
     OutlineIcon: TrendingUpOutlineIcon,
-    label: "Statistics",
+    label: 'Statistics',
     path: Paths.statistics,
   },
   {
     Icon: BookmarkIcon,
     OutlineIcon: BookmarkOutlineIcon,
-    label: "Favourites",
+    label: 'Favourites',
     path: Paths.favourites,
   },
-];
+]
