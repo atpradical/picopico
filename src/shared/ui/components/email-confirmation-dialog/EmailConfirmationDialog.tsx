@@ -1,4 +1,4 @@
-import { LocaleEmailSentDialog } from '@/locales/en'
+import { LocaleEmailConfirmationDialog } from '@/locales/en'
 import {
   Button,
   CloseOutlineIcon,
@@ -14,15 +14,20 @@ import {
 } from '@atpradical/picopico-ui-kit'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
-import s from './SentEmailDialog.module.scss'
+import s from './EmailConfirmationDialog.module.scss'
 
-type SentEmailDialogProps = {
+type EmailConfirmationDialogProps = {
   email: string
   isOpen: boolean
   onOpenChange: (isOpen: boolean) => void
-  t: LocaleEmailSentDialog
+  t: LocaleEmailConfirmationDialog
 }
-export const SentEmailDialog = ({ email, isOpen, onOpenChange, t }: SentEmailDialogProps) => {
+export const EmailConfirmationDialog = ({
+  email,
+  isOpen,
+  onOpenChange,
+  t,
+}: EmailConfirmationDialogProps) => {
   const confirmButtonHandler = () => {
     onOpenChange(false)
   }

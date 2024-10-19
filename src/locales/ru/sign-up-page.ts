@@ -5,13 +5,6 @@ export const signUpPage = {
   linkToSignIn: 'Войти',
   pageTitle: 'Регистрация',
   signUpForm: {
-    emailSentDialog: {
-      accessibilityDescription: 'Уведомление о том, что письмо отправлено',
-      accessibilityTitle: 'Заголовок уведомления о письме',
-      confirmButton: 'Ок',
-      visibleBodyText: 'Мы отправили ссылку для подтверждения email на адрес',
-      visibleTitle: 'Email отправлен',
-    },
     labels: {
       confirmPassword: 'Подтвердите пароль',
       email: 'Email',

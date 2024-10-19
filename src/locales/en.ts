@@ -1,4 +1,5 @@
 import { confirmEmailPage } from '@/locales/en/confirm-email-page'
+import { emailConfirmationDialog } from '@/locales/en/email-confirmation-dialog'
 import { forgotPasswordPage } from '@/locales/en/forgot-password-page'
 import { logoutDialog } from '@/locales/en/logout-dialog'
 import { passwordRecoveryForm } from '@/locales/en/password-recovery-form'
@@ -12,13 +13,14 @@ export type LocaleType = typeof en
 export type LocaleValidation = typeof en.validation
 export type LocaleValidationUserName = typeof en.validation.userName
 export type LocaleValidationPassword = typeof en.validation.password
-export type LocaleEmailSentDialog = typeof en.signUpPage.signUpForm.emailSentDialog
+export type LocaleEmailConfirmationDialog = typeof en.emailConfirmationDialog
 export type LocaleEmailConfirmed = typeof en.confirmEmailPage.emailConfirmed
 export type LocaleLinkExpired = typeof en.confirmEmailPage.linkExpired
 export type LocaleLogoutDialog = typeof en.logoutDialog
 
 export const en = {
   confirmEmailPage: confirmEmailPage,
+  emailConfirmationDialog: emailConfirmationDialog,
   forgotPasswordPage: forgotPasswordPage,
   language: {
     en: 'English',

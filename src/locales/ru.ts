@@ -1,5 +1,6 @@
 import { LocaleType } from '@/locales/en'
 import { confirmEmailPage } from '@/locales/ru/confirm-email-page'
+import { emailConfirmationDialog } from '@/locales/ru/email-confirmation-dialog'
 import { forgotPasswordPage } from '@/locales/ru/forgot-password-page'
 import { logoutDialog } from '@/locales/ru/logout-dialog'
 import { passwordRecoveryForm } from '@/locales/ru/password-recovery-form'
@@ -11,6 +12,7 @@ import { validation } from '@/locales/ru/validation'
 
 export const ru: LocaleType = {
   confirmEmailPage: confirmEmailPage,
+  emailConfirmationDialog: emailConfirmationDialog,
   forgotPasswordPage: forgotPasswordPage,
   language: {
     en: 'Английский',

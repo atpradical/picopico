@@ -1,10 +1,12 @@
-import { useState } from 'react'
+import { useRef, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
 import { usePasswordRecoveryMutation } from '@/shared/api'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
+import { Nullable } from '@/shared/types'
+import { EmailConfirmationDialog } from '@/shared/ui/components'
 import { ControlledTextField } from '@/shared/ui/form-components'
 import { getErrorMessageData } from '@/shared/utils'
 import { ForgotPasswordFields, forgotPasswordSchemeCreator } from '@/views/forgot-password/model'
@@ -16,9 +18,12 @@ import Link from 'next/link'
 import s from './ForgotPasswordForm.module.scss'
 
 export const ForgotPasswordForm = () => {
-  const [isLinkSent, setIsLinkSent] = useState<boolean>(false)
-  const { t } = useTranslation()
-  const { formContent, pageLink, sentLinkText, submitButton, successToast } = t.forgotPasswordPage
+  const [isLinkSent, setIsLinkSent] = useState(false)
+  const [showDialog, setShowDialog] = useState(false)
+  const emailRef = useRef('')
+  const recaptchaRef = useRef<Nullable<ReCAPTCHA>>(null)
+  const { locale, t } = useTranslation()
+  const { formContent, pageLink, sentLinkText, submitButton } = t.forgotPasswordPage
 
   const [passwordRecovery] = usePasswordRecoveryMutation()
 
@@ -40,12 +45,13 @@ export const ForgotPasswordForm = () => {
   })
 
   const formHandler = handleSubmit(async (data: ForgotPasswordFields) => {
+    emailRef.current = ''
     try {
       await passwordRecovery(data).unwrap()
       setIsLinkSent(true)
-      toaster({ text: `${successToast} ${data.email}` })
+      emailRef.current = data.email
+      setShowDialog(true)
     } catch (e) {
-      debugger
       const errors = getErrorMessageData(e)
 
       //todo: Toaster заменить на универсальный функционал
@@ -55,6 +61,10 @@ export const ForgotPasswordForm = () => {
         })
       } else {
         toaster({ text: errors, variant: 'error' })
+      }
+    } finally {
+      if (recaptchaRef.current) {
+        recaptchaRef.current.reset()
       }
     }
   })
@@ -88,13 +98,20 @@ export const ForgotPasswordForm = () => {
       </Button>
       <div className={clsx(s.recaptcha, !!errors.recaptcha && s.recaptchaError)}>
         <ReCAPTCHA
-          hl={'en'}
+          hl={locale}
           onChange={onRecaptchaChangeHandler}
+          ref={recaptchaRef}
           sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY ?? ''}
           theme={'dark'}
         />
         {errors.recaptcha && <Typography variant={'error'}>{errors.recaptcha.message}</Typography>}
       </div>
+      <EmailConfirmationDialog
+        email={emailRef.current}
+        isOpen={showDialog}
+        onOpenChange={setShowDialog}
+        t={t.emailConfirmationDialog}
+      />
     </form>
   )
 }

@@ -1,14 +1,14 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { useCreateUserMutation } from '@/shared/api/auth/auth.api'
 import { useTranslation } from '@/shared/hooks'
+import { EmailConfirmationDialog } from '@/shared/ui/components'
 import { ControlledCheckbox } from '@/shared/ui/form-components/controlled-checkbox'
 import { ControlledTextField } from '@/shared/ui/form-components/controlled-text-field'
 import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
 import { signUpSchemeCreator } from '@/views/sign-up/model/sign-up-scheme-creator'
 import { SignUpFields } from '@/views/sign-up/model/types'
-import { SentEmailDialog } from '@/views/sign-up/ui/SentEmailDialog'
 import { TermsAgreementLabel } from '@/views/sign-up/ui/TermsAgreementLabel'
 import { Button, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
@@ -17,12 +17,12 @@ import s from './SignUpFrom.module.scss'
 
 export const SignUpForm = () => {
   const { t } = useTranslation()
-  const { emailSentDialog, labels, placeholders, policy, submitButton, terms, termsAgreement } =
+  const { labels, placeholders, policy, submitButton, terms, termsAgreement } =
     t.signUpPage.signUpForm
 
   const [showDialog, setShowDialog] = useState(false)
-  const [email, setEmail] = useState('')
-  const [createUser] = useCreateUserMutation()
+  const emailRef = useRef('')
+  const [createUser, isLoading] = useCreateUserMutation()
 
   const {
     control,
@@ -54,17 +54,19 @@ export const SignUpForm = () => {
     }
   }, [password, confirmPassword, setError, t.validation.passwordsMatch])
 
-  const isSubmitDisabled = !isValid || !isDirty
+  const isSubmitDisabled = !isValid || !isDirty || isLoading
 
   const formHandler = handleSubmit(async data => {
-    setEmail(data.email)
+    emailRef.current = ''
     try {
       await createUser(data).unwrap()
+      emailRef.current = data.email
       setShowDialog(true)
       reset()
     } catch (e) {
       const errors = getErrorMessageData(e)
 
+      //todo: создать универсальную функцию для отображения ошибок в форме и тоасте
       if (typeof errors !== 'string') {
         errors.forEach(el => {
           setError(el.field as keyof SignUpFields, { message: el.message })
@@ -117,11 +119,11 @@ export const SignUpForm = () => {
           {submitButton}
         </Button>
       </form>
-      <SentEmailDialog
-        email={email}
+      <EmailConfirmationDialog
+        email={emailRef.current}
         isOpen={showDialog}
         onOpenChange={setShowDialog}
-        t={emailSentDialog}
+        t={t.emailConfirmationDialog}
       />
     </>
   )
