@@ -2,11 +2,11 @@ import { useEffect, useState } from 'react'
 
 import { useConfirmEmailMutation } from '@/shared/api/auth/auth.api'
 import { useTranslation } from '@/shared/hooks'
+import { LinkExpired } from '@/shared/ui/components/link-expired/LinkExpired'
 import { getLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
 import { ConfirmedEmail } from '@/views/registration-confirmation/ui/ConfirmedEmail'
-import { LinkExpired } from '@/views/registration-confirmation/ui/LinkExpired'
 import { toaster } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
 

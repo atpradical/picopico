@@ -1,1 +1,2 @@
-export { default } from './ui/PasswordRecoveryPage'
+export * from './model'
+export * from './ui'

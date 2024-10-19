@@ -33,3 +33,11 @@ export type PasswordRecoveryArgs = {
   email: string
   recaptcha: string
 }
+
+export type RecoveryCodeArgs = {
+  recoveryCode: string
+}
+
+export type ResponseRecoveryCode = {
+  email: string
+}

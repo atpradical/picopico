@@ -4,7 +4,7 @@ import { LocaleLinkExpired } from '@/locales/en'
 import { ResendLinkForm } from '@/views/registration-confirmation/ui/ResendLinkForm'
 import { Button, SignUpConfirmedIllustration, Typography } from '@atpradical/picopico-ui-kit'
 
-import s from '@/views/registration-confirmation/ui/RegistrationConfirmationPage.module.scss'
+import s from './LinkExpired.module.scss'
 
 type LinkExpiredProps = {
   t: LocaleLinkExpired

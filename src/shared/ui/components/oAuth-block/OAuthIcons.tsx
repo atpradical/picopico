@@ -4,7 +4,8 @@ import { useRouter } from 'next/router'
 
 import s from './OAuthIcons.module.scss'
 
-export const OAuthIcons = () => {
+//todo: запросить ключи для google и github
+export const OAuthBlock = () => {
   const router = useRouter()
   const { t } = useTranslation()
   const { githubButton, googleButton } = t.signUpPage

@@ -5,14 +5,23 @@ import {
   CreateUserArgs,
   LoginArgs,
   PasswordRecoveryArgs,
+  RecoveryCodeArgs,
   ResendRegistrationArgs,
   ResponseLogin,
   ResponseMe,
+  ResponseRecoveryCode,
 } from './auth.types'
 
 export const authApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
+      checkRecoveryCode: builder.mutation<ResponseRecoveryCode, RecoveryCodeArgs>({
+        query: args => ({
+          body: { ...args },
+          method: 'POST',
+          url: '/v1/auth/check-recovery-code',
+        }),
+      }),
       confirmEmail: builder.mutation<void, ConfirmEmailArgs>({
         query: args => ({
           body: { ...args },
@@ -74,6 +83,7 @@ export const authApi = picoApi.injectEndpoints({
 })
 
 export const {
+  useCheckRecoveryCodeMutation,
   useConfirmEmailMutation,
   useCreateUserMutation,
   useLoginMutation,

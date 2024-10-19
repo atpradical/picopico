@@ -18,8 +18,7 @@ import s from './ForgotPasswordForm.module.scss'
 export const ForgotPasswordForm = () => {
   const [isLinkSent, setIsLinkSent] = useState<boolean>(false)
   const { t } = useTranslation()
-  const { formContent, pageLink, sentLinkText, submitButton, successToast } =
-    t.passwordRecoveryPage.forgotPasswordPage
+  const { formContent, pageLink, sentLinkText, submitButton, successToast } = t.forgotPasswordPage
 
   const [passwordRecovery] = usePasswordRecoveryMutation()
 

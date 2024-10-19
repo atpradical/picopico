@@ -6,7 +6,7 @@ export enum Paths {
   home = '/',
   logIn = '/auth/sign-in',
   messages = '/messages',
-  passwordRecovery = '/auth/password-recovery',
+  passwordRecovery = '/auth/recovery',
   privacyPolicy = '/docs/privacy-policy',
   profile = '/profile',
   search = '/search',

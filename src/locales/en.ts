@@ -1,6 +1,7 @@
 import { confirmEmailPage } from '@/locales/en/confirm-email-page'
+import { forgotPasswordPage } from '@/locales/en/forgot-password-page'
 import { logoutDialog } from '@/locales/en/logout-dialog'
-import { passwordRecoveryPage } from '@/locales/en/password-recovery-page'
+import { passwordRecoveryForm } from '@/locales/en/password-recovery-form'
 import { privacyPolicyPage } from '@/locales/en/privacy-policy-page'
 import { signInPage } from '@/locales/en/sign-in-page'
 import { signUpPage } from '@/locales/en/sign-up-page'
@@ -18,12 +19,13 @@ export type LocaleLogoutDialog = typeof en.logoutDialog
 
 export const en = {
   confirmEmailPage: confirmEmailPage,
+  forgotPasswordPage: forgotPasswordPage,
   language: {
     en: 'English',
     ru: ' Russian',
   },
   logoutDialog: logoutDialog,
-  passwordRecoveryPage: passwordRecoveryPage,
+  passwordRecoveryForm: passwordRecoveryForm,
   privacyPolicyPage: privacyPolicyPage,
   signInPage: signInPage,
   signUpPage: signUpPage,
