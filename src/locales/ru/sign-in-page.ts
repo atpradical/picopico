@@ -1,6 +1,5 @@
 export const signInPage = {
   isAccount: 'У вас нет аккаунта?',
-  signUpLink: 'Зарегистрироваться',
   pageTitle: 'Войти',
   signInForm: {
     forgotPassword: 'Забыл пароль',
@@ -14,4 +13,5 @@ export const signInPage = {
     },
     submitButton: 'Войти',
   },
+  signUpLink: 'Зарегистрироваться',
 }
