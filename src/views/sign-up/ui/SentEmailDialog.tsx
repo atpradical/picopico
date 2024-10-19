@@ -1,4 +1,4 @@
-import { LocaleEmailSentDialog } from "@/locales/en";
+import { LocaleEmailSentDialog } from '@/locales/en'
 import {
   Button,
   CloseOutlineIcon,
@@ -11,26 +11,21 @@ import {
   DialogRoot,
   DialogTitle,
   Typography,
-} from "@atpradical/picopico-ui-kit";
-import { VisuallyHidden } from "@radix-ui/react-visually-hidden";
+} from '@atpradical/picopico-ui-kit'
+import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
-import s from "./SentEmailDialog.module.scss";
+import s from './SentEmailDialog.module.scss'
 
 type SentEmailDialogProps = {
-  email: string;
-  isOpen: boolean;
-  onOpenChange: (isOpen: boolean) => void;
-  t: LocaleEmailSentDialog;
-};
-export const SentEmailDialog = ({
-  email,
-  isOpen,
-  onOpenChange,
-  t,
-}: SentEmailDialogProps) => {
+  email: string
+  isOpen: boolean
+  onOpenChange: (isOpen: boolean) => void
+  t: LocaleEmailSentDialog
+}
+export const SentEmailDialog = ({ email, isOpen, onOpenChange, t }: SentEmailDialogProps) => {
   const confirmButtonHandler = () => {
-    onOpenChange(false);
-  };
+    onOpenChange(false)
+  }
 
   return (
     <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
@@ -42,30 +37,24 @@ export const SentEmailDialog = ({
           <DialogDescription>{t.accessibilityDescription}</DialogDescription>
         </VisuallyHidden>
         <DialogHeader className={s.header}>
-          <Typography as={"h3"} variant={"h3"}>
+          <Typography as={'h3'} variant={'h3'}>
             {t.visibleTitle}
           </Typography>
           <DialogClose asChild>
-            <Button title={"close"} variant={"icon"}>
+            <Button title={'close'} variant={'icon'}>
               <CloseOutlineIcon />
             </Button>
           </DialogClose>
         </DialogHeader>
         <DialogBody>
-          <Typography
-            variant={"regular_14"}
-          >{`${t.visibleBodyText} ${email}`}</Typography>
+          <Typography variant={'regular_14'}>{`${t.visibleBodyText} ${email}`}</Typography>
         </DialogBody>
         <DialogFooter className={s.footer}>
-          <Button
-            className={s.button}
-            onClick={confirmButtonHandler}
-            variant={"primary"}
-          >
+          <Button className={s.button} onClick={confirmButtonHandler} variant={'primary'}>
             {t.confirmButton}
           </Button>
         </DialogFooter>
       </DialogContent>
     </DialogRoot>
-  );
-};
+  )
+}

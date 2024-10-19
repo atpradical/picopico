@@ -1,22 +1,29 @@
 export type CreateUserArgs = {
-  TOS?: boolean;
-  baseUrl?: string;
-  email: string;
-  password: string;
-  userName: string;
-};
+  TOS?: boolean
+  baseUrl?: string
+  email: string
+  password: string
+  userName: string
+}
 
 export type ConfirmEmailArgs = {
-  confirmationCode: string;
-};
+  confirmationCode: string
+}
 export type ResendRegistrationArgs = {
-  email: string;
-};
+  email: string
+}
 
 export type LoginData = {
-  email: string;
-  password: string;
-};
+  email: string
+  password: string
+}
 export type ResponseLogin = {
-  accessToken: string;
-};
+  accessToken: string
+}
+
+export type ResponseMe = {
+  email: string
+  isBlocked: boolean
+  userId: number
+  userName: string
+}

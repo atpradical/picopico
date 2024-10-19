@@ -1,39 +1,38 @@
-import { Paths } from "@/shared/enums";
-import { SelectLanguage } from "@/shared/ui/components/select-language";
-import {
-  Badge,
-  BellOutlineIcon,
-  Button,
-  LogoLight,
-  Typography,
-} from "@atpradical/picopico-ui-kit";
-import Link from "next/link";
+import { useEffect } from 'react'
 
-import s from "./Header.module.scss";
+import { Paths } from '@/shared/enums'
+import { SelectLanguage } from '@/shared/ui/components/select-language'
+import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
+import Link from 'next/link'
+import { useRouter } from 'next/router'
+
+import s from './Header.module.scss'
 
 export type HeaderProps = {
-  countNotification?: number;
-  isAuth?: boolean;
-};
+  countNotification?: number
+  isAuth: boolean
+}
 
-export const Header = ({ countNotification, isAuth = false }: HeaderProps) => {
+export const Header = ({ countNotification, isAuth }: HeaderProps) => {
+  const router = useRouter()
+
+  useEffect(() => {
+    if (isAuth) {
+      router.replace(Paths.logIn)
+    }
+  }, [isAuth])
+
   return (
     <div className={s.wrapper}>
-      <Button
-        as={Link}
-        href={Paths.home}
-        variant={"link"}
-        className={s.logoWrapper}
-        tabIndex={-1}
-      >
+      <Button as={Link} className={s.logoWrapper} href={Paths.home} tabIndex={-1} variant={'link'}>
         <LogoLight className={s.logo} />
-        <Typography as={"h1"} variant={"large"}>
+        <Typography as={'h1'} variant={'large'}>
           PicoPico
         </Typography>
       </Button>
       <div className={s.container}>
         {isAuth && (
-          <Button className={s.buttonBell} variant={"icon"}>
+          <Button className={s.buttonBell} variant={'icon'}>
             <Badge count={countNotification}>
               <BellOutlineIcon />
             </Badge>
@@ -42,25 +41,15 @@ export const Header = ({ countNotification, isAuth = false }: HeaderProps) => {
         <SelectLanguage />
         {!isAuth && (
           <div className={s.buttonContainer}>
-            <Button
-              as={Link}
-              className={s.button}
-              href={Paths.logIn}
-              variant={"nb-outlined"}
-            >
+            <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
               Log in
             </Button>
-            <Button
-              as={Link}
-              className={s.button}
-              href={Paths.signUp}
-              variant={"primary"}
-            >
+            <Button as={Link} className={s.button} href={Paths.signUp} variant={'primary'}>
               Sign up
             </Button>
           </div>
         )}
       </div>
     </div>
-  );
-};
+  )
+}

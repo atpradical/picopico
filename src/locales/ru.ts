@@ -1,19 +1,19 @@
-import { LocaleType } from "@/locales/en";
-import { confirmEmailPage } from "@/locales/ru/confirm-email-page";
-import { confirmLogoutPage } from "@/locales/ru/confirm-logout-page";
-import { passwordRecoveryPage } from "@/locales/ru/password-recovery-page";
-import { privacyPolicyPage } from "@/locales/ru/privacy-policy-page";
-import { signInPage } from "@/locales/ru/sign-in-page";
-import { signUpPage } from "@/locales/ru/sign-up-page";
-import { termsOfServicePage } from "@/locales/ru/terms-of-service-page";
-import { validation } from "@/locales/ru/validation";
+import { LocaleType } from '@/locales/en'
+import { confirmEmailPage } from '@/locales/ru/confirm-email-page'
+import { logoutDialog } from '@/locales/ru/logout-dialog'
+import { passwordRecoveryPage } from '@/locales/ru/password-recovery-page'
+import { privacyPolicyPage } from '@/locales/ru/privacy-policy-page'
+import { signInPage } from '@/locales/ru/sign-in-page'
+import { signUpPage } from '@/locales/ru/sign-up-page'
+import { termsOfServicePage } from '@/locales/ru/terms-of-service-page'
+import { validation } from '@/locales/ru/validation'
 
 export const ru: LocaleType = {
   confirmEmailPage: confirmEmailPage,
-  confirmLogoutPage: confirmLogoutPage,
+  logoutDialog: logoutDialog,
   language: {
-    en: "Английский",
-    ru: " Русский",
+    en: 'Английский',
+    ru: ' Русский',
   },
   passwordRecoveryPage: passwordRecoveryPage,
   privacyPolicyPage: privacyPolicyPage,
@@ -21,4 +21,4 @@ export const ru: LocaleType = {
   signUpPage: signUpPage,
   termsOfServicePage: termsOfServicePage,
   validation: validation,
-};
+}

@@ -1,9 +1,9 @@
-import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { baseQueryWithReauth } from '@/shared/api/pico-base-query'
+import { createApi } from '@reduxjs/toolkit/query/react'
 
 export const picoApi = createApi({
-  baseQuery: fetchBaseQuery({
-    baseUrl: process.env.NEXT_PUBLIC_PICO_BASE_URL,
-  }),
+  baseQuery: baseQueryWithReauth,
   endpoints: () => ({}),
-  reducerPath: "picoApi",
-});
+  reducerPath: 'picoApi',
+  tagTypes: ['Me'],
+})

@@ -1,1 +1,2 @@
-export { default } from "./ui/SignUpPage";
+export * from './model'
+export * from './ui'
