@@ -1,6 +1,5 @@
 export const signInPage = {
   isAccount: "Don't have an account?",
-  signUpLink: 'Sign Up',
   pageTitle: 'Sign In',
   signInForm: {
     forgotPassword: 'Forgot Password',
@@ -14,4 +13,5 @@ export const signInPage = {
     },
     submitButton: 'Sign In',
   },
+  signUpLink: 'Sign Up',
 }

@@ -1,7 +1,7 @@
 export const signUpPage = {
-  isAccount: 'Do you have an account?',
   githubButton: 'Create an account via GitHub',
   googleButton: 'Create an account via Google',
+  isAccount: 'Do you have an account?',
   linkToSignIn: 'Sign In',
   pageTitle: 'Sign Up',
   signUpForm: {

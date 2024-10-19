@@ -10,11 +10,11 @@ import { validation } from '@/locales/ru/validation'
 
 export const ru: LocaleType = {
   confirmEmailPage: confirmEmailPage,
-  logoutDialog: logoutDialog,
   language: {
     en: 'Английский',
     ru: ' Русский',
   },
+  logoutDialog: logoutDialog,
   passwordRecoveryPage: passwordRecoveryPage,
   privacyPolicyPage: privacyPolicyPage,
   signInPage: signInPage,
