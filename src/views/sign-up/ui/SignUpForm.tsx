@@ -52,7 +52,7 @@ export const SignUpForm = () => {
     validationMessage: t.validation.passwordsMatch,
   })
 
-  const isSubmitDisabled = !isValid || !isDirty || isLoading
+  const isSubmitDisabled = !isValid || !isDirty
 
   const formHandler = handleSubmit(async data => {
     emailRef.current = ''

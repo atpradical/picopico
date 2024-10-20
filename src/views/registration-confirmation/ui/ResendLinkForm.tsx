@@ -3,6 +3,7 @@ import { useForm } from 'react-hook-form'
 import { useResendRegistrationEmailMutation } from '@/shared/api/auth/auth.api'
 import { useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components/controlled-text-field'
+import { setFormErrors } from '@/shared/utils'
 import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
 import { resendRegistrationEmailSchemeCreator } from '@/views/registration-confirmation/model/resend-registration-email-scheme-creator'
 import { ResendLinkFields } from '@/views/registration-confirmation/model/types'
@@ -40,12 +41,11 @@ export const ResendLinkForm = () => {
     } catch (e) {
       const errors = getErrorMessageData(e)
 
-      // todo: переиспользовать функцию обработки ошибок и для показа тоастов.
-      if (typeof errors !== 'string') {
-        errors.forEach(el => {
-          setError(el.field as keyof ResendLinkFields, { message: el.message })
-        })
-      }
+      setFormErrors({
+        errors,
+        fields: [...(Object.keys(data) as (keyof ResendLinkFields)[])],
+        setError,
+      })
     }
   })
 

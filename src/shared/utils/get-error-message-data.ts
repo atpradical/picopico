@@ -15,14 +15,11 @@ export type CustomerError = {
 
 export function getErrorMessageData(error: unknown) {
   if (isFetchBaseQueryError(error)) {
-    debugger
     if ('data' in error) {
       const errorData = error as CustomerError
 
       if ('messages' in errorData.data) {
         if (errorData.data.messages.length) {
-          console.log(errorData.data.messages)
-
           return errorData.data.messages
         } else {
           // in case if messages is empty []

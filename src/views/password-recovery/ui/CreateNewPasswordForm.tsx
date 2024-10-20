@@ -1,83 +1,87 @@
 import { useForm, useWatch } from 'react-hook-form'
 
+import { LocaleCreateNewPasswordForm } from '@/locales/en'
+import { useCreatNewPasswordMutation } from '@/shared/api'
 import { Paths } from '@/shared/enums'
 import { useCheckPasswordsMatch, useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components'
-import { CreatePWDFields, createNewPasswordSchemeCreator } from '@/views/password-recovery'
-import { Button, Card, Typography } from '@atpradical/picopico-ui-kit'
-import { zodResolver } from '@hookform/resolvers/zod'
+import { getErrorMessageData, setFormErrors } from '@/shared/utils'
+import { CreatePWDFields } from '@/views/password-recovery'
+import { Button, Card, Typography, toaster } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
 
 import s from './CreateNewPasswordForm.module.scss'
 
-export const CreateNewPasswordForm = () => {
-  const { t } = useTranslation()
-  const {
-    captionText,
-    formTitle,
-    labels: { labelConfirmPassword, labelPassword },
-    placeholders: { placeholderConfirmPassword, placeholderPassword },
-    submitButton,
-  } = t.passwordRecoveryForm
-  const router = useRouter()
+type CreateNewPasswordFormProps = {
+  t: LocaleCreateNewPasswordForm
+}
 
-  const {
-    control,
-    formState: { isValid },
-    handleSubmit,
-    reset,
-    setError,
-  } = useForm<CreatePWDFields>({
+export const CreateNewPasswordForm = ({ t }: CreateNewPasswordFormProps) => {
+  const router = useRouter()
+  const code = Array.isArray(router.query.code) ? router.query.code[0] : router.query.code
+  const { t: trans } = useTranslation()
+  const [createNewPassword] = useCreatNewPasswordMutation()
+
+  const { control, handleSubmit, setError } = useForm<CreatePWDFields>({
     defaultValues: {
       confirmPassword: '',
-      password: '',
+      newPassword: '',
     },
     mode: 'onChange',
     reValidateMode: 'onSubmit',
-    resolver: zodResolver(createNewPasswordSchemeCreator(t.validation)),
+    // resolver: zodResolver(createNewPasswordSchemeCreator(t.validation)),
   })
 
-  const formHandler = handleSubmit(data => {
-    if (isValid) {
-      reset()
+  const formHandler = handleSubmit(async (data: CreatePWDFields) => {
+    try {
+      await createNewPassword({ newPassword: data.newPassword, recoveryCode: code ?? '' }).unwrap()
       router.push(Paths.logIn)
+      toaster({ text: t.successNotification })
+    } catch (e) {
+      const errors = getErrorMessageData(e)
+
+      setFormErrors({
+        errors,
+        fields: [...(Object.keys(data) as (keyof CreatePWDFields)[])],
+        setError,
+      })
     }
   })
 
-  const password = useWatch({ control, name: 'password' })
+  const password = useWatch({ control, name: 'newPassword' })
   const confirmPassword = useWatch({ control, name: 'confirmPassword' })
 
   useCheckPasswordsMatch({
     confirmPassword,
     password,
     setError,
-    validationMessage: t.validation.passwordsMatch,
+    validationMessage: trans.validation.passwordsMatch,
   })
 
   return (
     <Card className={s.card}>
       <Typography className={s.title} variant={'h1'}>
-        {formTitle}
+        {t.formTitle}
       </Typography>
       <form className={s.form} onSubmit={formHandler}>
         <ControlledTextField
           control={control}
-          label={labelPassword}
-          name={'password'}
-          placeholder={placeholderPassword}
+          label={t.labels.newPassword}
+          name={'newPassword'}
+          placeholder={t.placeholders.newPassword}
           variant={'password'}
         />
         <ControlledTextField
           control={control}
-          label={labelConfirmPassword}
+          label={t.labels.confirmPassword}
           name={'confirmPassword'}
-          placeholder={placeholderConfirmPassword}
+          placeholder={t.placeholders.confirmPassword}
           variant={'password'}
         />
         <Typography className={s.caption} variant={'regular_14'}>
-          {captionText}
+          {t.captionText}
         </Typography>
-        <Button type={'submit'}>{submitButton}</Button>
+        <Button type={'submit'}>{t.submitButton}</Button>
       </form>
     </Card>
   )

@@ -5,16 +5,15 @@ import { useTranslation } from '@/shared/hooks'
 import { LinkExpired } from '@/shared/ui/components/link-expired/LinkExpired'
 import { getLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
+import { showErrorToast } from '@/shared/utils'
 import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
 import { ConfirmedEmail } from '@/views/registration-confirmation/ui/ConfirmedEmail'
-import { toaster } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
 
 import s from './RegistrationConfirmationPage.module.scss'
 
 function RegistrationConfirmationPage() {
   const { t } = useTranslation()
-  const { emailConfirmed, linkExpired } = t.confirmEmailPage
 
   const [isRequestCompleted, setIsRequestCompleted] = useState(false)
   const [confirmEmail, { isSuccess }] = useConfirmEmailMutation()
@@ -29,15 +28,7 @@ function RegistrationConfirmationPage() {
         .catch(e => {
           const errors = getErrorMessageData(e)
 
-          if (typeof errors !== 'string') {
-            // todo: вынести в отдельную функцию и переиспользовать в других местах обработки ошибок.
-            errors.forEach(el => {
-              toaster({
-                text: el.message,
-                variant: 'error',
-              })
-            })
-          }
+          showErrorToast(errors)
         })
         .finally(() => setIsRequestCompleted(true))
     }
@@ -50,7 +41,11 @@ function RegistrationConfirmationPage() {
   return (
     <Page mt={'36px'}>
       <div className={s.container}>
-        {isSuccess ? <ConfirmedEmail t={emailConfirmed} /> : <LinkExpired t={linkExpired} />}
+        {isSuccess ? (
+          <ConfirmedEmail t={t.confirmEmailPage.emailConfirmed} />
+        ) : (
+          <LinkExpired t={t.expiredLink} variant={'email'} />
+        )}
       </div>
     </Page>
   )

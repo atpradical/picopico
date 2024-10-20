@@ -8,12 +8,13 @@ import s from './LinkExpired.module.scss'
 
 type LinkExpiredProps = {
   t: LocaleLinkExpired
+  variant: 'email' | 'password'
 }
-export const LinkExpired = ({ t }: LinkExpiredProps) => {
+export const LinkExpired = ({ t, variant }: LinkExpiredProps) => {
   const { caption, resendButton, title } = t
   const [showEmailForm, setShowEmailForm] = useState(false)
 
-  const resendEmailButtonHandler = () => {
+  const resendEmailButtonHandler = (data: any) => {
     setShowEmailForm(true)
   }
 
@@ -25,13 +26,14 @@ export const LinkExpired = ({ t }: LinkExpiredProps) => {
       <Typography className={s.caption} variant={'regular_16'}>
         {caption}
       </Typography>
-      {!showEmailForm ? (
-        <Button className={s.button} onClick={resendEmailButtonHandler}>
-          {resendButton}
-        </Button>
-      ) : (
-        <ResendLinkForm />
-      )}
+      {variant === 'email' &&
+        (!showEmailForm ? (
+          <Button className={s.button} onClick={resendEmailButtonHandler}>
+            {resendButton}
+          </Button>
+        ) : (
+          <ResendLinkForm />
+        ))}
       <SignUpConfirmedIllustration className={s.image} />
     </div>
   )

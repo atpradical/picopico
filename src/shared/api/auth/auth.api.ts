@@ -2,6 +2,7 @@ import { picoApi } from '@/shared/api/picoApi'
 
 import {
   ConfirmEmailArgs,
+  CreateNewPasswordArgs,
   CreateUserArgs,
   LoginArgs,
   PasswordRecoveryArgs,
@@ -27,6 +28,13 @@ export const authApi = picoApi.injectEndpoints({
           body: { ...args },
           method: 'POST',
           url: '/v1/auth/registration-confirmation',
+        }),
+      }),
+      creatNewPassword: builder.mutation<void, CreateNewPasswordArgs>({
+        query: args => ({
+          body: { ...args },
+          method: 'POST',
+          url: '/v1/auth/new-password',
         }),
       }),
       createUser: builder.mutation<void, CreateUserArgs>({
@@ -85,6 +93,7 @@ export const authApi = picoApi.injectEndpoints({
 export const {
   useCheckRecoveryCodeMutation,
   useConfirmEmailMutation,
+  useCreatNewPasswordMutation,
   useCreateUserMutation,
   useLoginMutation,
   useLogoutMutation,

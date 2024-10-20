@@ -6,9 +6,9 @@ export const createNewPasswordSchemeCreator = (t: LocaleValidation) => {
   return z
     .object({
       confirmPassword: confirmPasswordScheme,
-      password: passwordScheme(t.password),
+      newPassword: passwordScheme(t.password),
     })
-    .refine(val => val.password === val.confirmPassword, {
+    .refine(val => val.newPassword === val.confirmPassword, {
       message: t.passwordsMatch,
       path: ['confirmPassword'],
     })
