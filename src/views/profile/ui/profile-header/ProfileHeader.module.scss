@@ -1,0 +1,32 @@
+.container {
+  display: flex;
+  gap: 40px;
+  align-items: center;
+  justify-content: space-between;
+
+  width: 100%;
+
+}
+
+.avatar {
+  flex-shrink: 0;
+}
+
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+
+}
+
+.titleBlock {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+
+}
