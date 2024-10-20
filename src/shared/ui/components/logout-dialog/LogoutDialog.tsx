@@ -1,6 +1,7 @@
 import { LocaleLogoutDialog } from '@/locales/en'
 import { useLogoutMutation } from '@/shared/api/auth/auth.api'
 import { Paths } from '@/shared/enums'
+import { showErrorToast } from '@/shared/utils'
 import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
 import {
   Button,
@@ -14,7 +15,6 @@ import {
   DialogRoot,
   DialogTitle,
   Typography,
-  toaster,
 } from '@atpradical/picopico-ui-kit'
 import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { useRouter } from 'next/router'
@@ -40,14 +40,7 @@ export function LogoutDialog({ email, isOpen, onOpenChange, t }: LogoutDialogPro
     } catch (e) {
       const error = getErrorMessageData(e)
 
-      //todo: вынести в отдельную функцию и переиспользовать в других местах обработки ошибок.
-      if (typeof error !== 'string') {
-        error.forEach(el => {
-          toaster({ text: el.message, variant: 'error' })
-        })
-      } else {
-        toaster({ text: error, variant: 'error' })
-      }
+      showErrorToast(error)
     }
   }
 

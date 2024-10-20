@@ -9,8 +9,9 @@ import { Nullable } from '@/shared/types'
 import { EmailConfirmationDialog } from '@/shared/ui/components'
 import { ControlledTextField } from '@/shared/ui/form-components'
 import { getErrorMessageData } from '@/shared/utils'
+import { setFormErrors } from '@/shared/utils/set-form-errors'
 import { ForgotPasswordFields, forgotPasswordSchemeCreator } from '@/views/forgot-password/model'
-import { Button, Typography, toaster } from '@atpradical/picopico-ui-kit'
+import { Button, Typography } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -54,14 +55,11 @@ export const ForgotPasswordForm = () => {
     } catch (e) {
       const errors = getErrorMessageData(e)
 
-      //todo: Toaster заменить на универсальный функционал
-      if (typeof errors !== 'string') {
-        errors.forEach(el => {
-          setError(el.field as keyof ForgotPasswordFields, { message: el.message })
-        })
-      } else {
-        toaster({ text: errors, variant: 'error' })
-      }
+      setFormErrors({
+        errors,
+        fields: [...(Object.keys(data) as (keyof ForgotPasswordFields)[])],
+        setError,
+      })
     } finally {
       if (recaptchaRef.current) {
         recaptchaRef.current.reset()
@@ -96,7 +94,7 @@ export const ForgotPasswordForm = () => {
       <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
         {pageLink}
       </Button>
-      <div className={clsx(s.recaptcha, !!errors.recaptcha && s.recaptchaError)}>
+      <div className={clsx(s.recaptcha, errors.recaptcha && s.recaptchaError)}>
         <ReCAPTCHA
           hl={locale}
           onChange={onRecaptchaChangeHandler}

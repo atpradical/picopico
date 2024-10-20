@@ -7,8 +7,9 @@ import { useCheckPasswordsMatch } from '@/shared/hooks/useCheckPasswordsMatch'
 import { EmailConfirmationDialog } from '@/shared/ui/components'
 import { ControlledCheckbox, ControlledTextField } from '@/shared/ui/form-components'
 import { getErrorMessageData } from '@/shared/utils'
+import { setFormErrors } from '@/shared/utils/set-form-errors'
 import { SignUpFields, TermsAgreementLabel, signUpSchemeCreator } from '@/views/sign-up'
-import { Button, toaster } from '@atpradical/picopico-ui-kit'
+import { Button } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './SignUpFrom.module.scss'
@@ -63,14 +64,11 @@ export const SignUpForm = () => {
     } catch (e) {
       const errors = getErrorMessageData(e)
 
-      //todo: создать универсальную функцию для отображения ошибок в форме и тоасте
-      if (typeof errors !== 'string') {
-        errors.forEach(el => {
-          setError(el.field as keyof SignUpFields, { message: el.message })
-        })
-      } else {
-        toaster({ text: errors, variant: 'error' })
-      }
+      setFormErrors({
+        errors,
+        fields: [...(Object.keys(data) as (keyof SignUpFields)[])],
+        setError,
+      })
     }
   })
 

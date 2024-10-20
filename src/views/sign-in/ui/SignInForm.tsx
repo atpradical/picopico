@@ -4,13 +4,13 @@ import { useLoginMutation } from '@/shared/api'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components'
-import { getErrorMessageData } from '@/shared/utils'
+import { getErrorMessageData, setFormErrors } from '@/shared/utils'
 import { signInSchemeCreator } from '@/views/sign-in'
+import { SignInFields } from '@/views/sign-in/model/types'
 import { Button, Typography, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
-import { z } from 'zod'
 
 import s from './SignIn.module.scss'
 
@@ -21,7 +21,6 @@ export const SignInForm = () => {
   const [login] = useLoginMutation()
   const router = useRouter()
 
-  type SignInFields = z.infer<ReturnType<typeof signInSchemeCreator>>
   const {
     control,
     formState: { isDirty, isValid },
@@ -39,26 +38,19 @@ export const SignInForm = () => {
 
   const formHandler = handleSubmit(async data => {
     try {
-      const result = await login(data).unwrap()
+      await login(data).unwrap()
 
       router.push(Paths.home)
-    } catch (err) {
-      const errors = getErrorMessageData(err)
+    } catch (e) {
+      const errors = getErrorMessageData(e)
 
-      if (typeof errors !== 'string') {
-        errors.forEach(el => {
-          setError(el.field as keyof SignInFields, {
-            message: el.message,
-            type: 'manual',
-          })
-        })
-      } else {
-        Object.keys(data).forEach(field => {
-          setError(field as keyof SignInFields, {
-            message: ' ',
-            type: 'manual',
-          })
-        })
+      setFormErrors({
+        errors,
+        fields: [...(Object.keys(data) as (keyof SignInFields)[])],
+        setError,
+      })
+
+      if (typeof errors === 'string') {
         toaster({ text: errors, variant: 'error' })
       }
     }
