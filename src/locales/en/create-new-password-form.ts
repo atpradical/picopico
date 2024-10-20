@@ -1,6 +1,5 @@
 export const passwordRecoveryForm = {
   captionText: 'Your password must be between 6 and 20 characters',
-
   formTitle: 'Create New Password',
   labels: {
     labelConfirmPassword: 'Password confirmation',
@@ -11,4 +10,5 @@ export const passwordRecoveryForm = {
     placeholderPassword: 'Enter new password',
   },
   submitButton: 'Create new password',
+  successNotification: 'Password has been changed',
 }

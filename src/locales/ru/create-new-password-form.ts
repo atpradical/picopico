@@ -15,4 +15,5 @@ export const passwordRecoveryForm = {
     placeholderPassword: 'Введите новый пароль',
   },
   submitButton: 'Создать новый пароль',
+  successNotification: 'Пароль успешно изменен',
 }
