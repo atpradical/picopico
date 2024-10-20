@@ -1,2 +1,2 @@
 export * from './SignUpForm'
-export { default } from './SignUpPage'
+export * from './TermsAgreementLabel'

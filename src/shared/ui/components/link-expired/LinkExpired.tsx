@@ -18,7 +18,7 @@ export const LinkExpired = ({ t }: LinkExpiredProps) => {
   }
 
   return (
-    <>
+    <div className={s.container}>
       <Typography as={'h1'} className={s.title} variant={'h1'}>
         {title}
       </Typography>
@@ -33,6 +33,6 @@ export const LinkExpired = ({ t }: LinkExpiredProps) => {
         <ResendLinkForm />
       )}
       <SignUpConfirmedIllustration className={s.image} />
-    </>
+    </div>
   )
 }

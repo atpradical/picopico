@@ -1,15 +1,13 @@
-import { useEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
 import { useCreateUserMutation } from '@/shared/api/auth/auth.api'
 import { useTranslation } from '@/shared/hooks'
+import { useCheckPasswordsMatch } from '@/shared/hooks/useCheckPasswordsMatch'
 import { EmailConfirmationDialog } from '@/shared/ui/components'
-import { ControlledCheckbox } from '@/shared/ui/form-components/controlled-checkbox'
-import { ControlledTextField } from '@/shared/ui/form-components/controlled-text-field'
-import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
-import { signUpSchemeCreator } from '@/views/sign-up/model/sign-up-scheme-creator'
-import { SignUpFields } from '@/views/sign-up/model/types'
-import { TermsAgreementLabel } from '@/views/sign-up/ui/TermsAgreementLabel'
+import { ControlledCheckbox, ControlledTextField } from '@/shared/ui/form-components'
+import { getErrorMessageData } from '@/shared/utils'
+import { SignUpFields, TermsAgreementLabel, signUpSchemeCreator } from '@/views/sign-up'
 import { Button, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -46,13 +44,12 @@ export const SignUpForm = () => {
   const password = useWatch({ control, name: 'password' })
   const confirmPassword = useWatch({ control, name: 'confirmPassword' })
 
-  useEffect(() => {
-    if (password && confirmPassword && password !== confirmPassword) {
-      setError('confirmPassword', { message: t.validation.passwordsMatch })
-    } else {
-      setError('confirmPassword', { message: '' })
-    }
-  }, [password, confirmPassword, setError, t.validation.passwordsMatch])
+  useCheckPasswordsMatch({
+    confirmPassword,
+    password,
+    setError,
+    validationMessage: t.validation.passwordsMatch,
+  })
 
   const isSubmitDisabled = !isValid || !isDirty || isLoading
 

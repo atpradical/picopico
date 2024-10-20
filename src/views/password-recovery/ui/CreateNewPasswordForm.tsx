@@ -1,10 +1,9 @@
-import { useForm } from 'react-hook-form'
+import { useForm, useWatch } from 'react-hook-form'
 
 import { Paths } from '@/shared/enums'
-import { useTranslation } from '@/shared/hooks'
-import { ControlledTextField } from '@/shared/ui/form-components/controlled-text-field'
-import { createNewPasswordSchemeCreator } from '@/views/password-recovery/model/create-new-password-scheme-creator'
-import { CreatePWDFields } from '@/views/password-recovery/model/types'
+import { useCheckPasswordsMatch, useTranslation } from '@/shared/hooks'
+import { ControlledTextField } from '@/shared/ui/form-components'
+import { CreatePWDFields, createNewPasswordSchemeCreator } from '@/views/password-recovery'
 import { Button, Card, Typography } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
@@ -27,6 +26,7 @@ export const CreateNewPasswordForm = () => {
     formState: { isValid },
     handleSubmit,
     reset,
+    setError,
   } = useForm<CreatePWDFields>({
     defaultValues: {
       confirmPassword: '',
@@ -42,6 +42,16 @@ export const CreateNewPasswordForm = () => {
       reset()
       router.push(Paths.logIn)
     }
+  })
+
+  const password = useWatch({ control, name: 'password' })
+  const confirmPassword = useWatch({ control, name: 'confirmPassword' })
+
+  useCheckPasswordsMatch({
+    confirmPassword,
+    password,
+    setError,
+    validationMessage: t.validation.passwordsMatch,
   })
 
   return (
