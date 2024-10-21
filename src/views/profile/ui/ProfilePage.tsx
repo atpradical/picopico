@@ -14,7 +14,7 @@ function ProfilePage() {
       <div className={s.container}>
         <ProfileHeader className={s.header} />
         {/*todo: complete this section*/}
-        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'center' }}>
+        <div style={{ display: 'flex', flexWrap: 'wrap', gap: '12px', justifyContent: 'fl' }}>
           <Image
             alt={'dummy'}
             height={230}

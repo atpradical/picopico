@@ -5,6 +5,7 @@ import { expiredLink } from '@/locales/en/expired-link'
 import { forgotPasswordPage } from '@/locales/en/forgot-password-page'
 import { logoutDialog } from '@/locales/en/logout-dialog'
 import { privacyPolicyPage } from '@/locales/en/privacy-policy-page'
+import { profileSettings } from '@/locales/en/profile-settings'
 import { signInPage } from '@/locales/en/sign-in-page'
 import { signUpPage } from '@/locales/en/sign-up-page'
 import { termsOfServicePage } from '@/locales/en/terms-of-service-page'
@@ -32,6 +33,7 @@ export const en = {
   },
   logoutDialog: logoutDialog,
   privacyPolicyPage: privacyPolicyPage,
+  profileSettings: profileSettings,
   signInPage: signInPage,
   signUpPage: signUpPage,
   termsOfServicePage: termsOfServicePage,

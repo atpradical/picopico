@@ -6,6 +6,7 @@ import { expiredLink } from '@/locales/ru/expired-link'
 import { forgotPasswordPage } from '@/locales/ru/forgot-password-page'
 import { logoutDialog } from '@/locales/ru/logout-dialog'
 import { privacyPolicyPage } from '@/locales/ru/privacy-policy-page'
+import { profileSettings } from '@/locales/ru/profile-settings'
 import { signInPage } from '@/locales/ru/sign-in-page'
 import { signUpPage } from '@/locales/ru/sign-up-page'
 import { termsOfServicePage } from '@/locales/ru/terms-of-service-page'
@@ -23,6 +24,7 @@ export const ru: LocaleType = {
   },
   logoutDialog: logoutDialog,
   privacyPolicyPage: privacyPolicyPage,
+  profileSettings: profileSettings,
   signInPage: signInPage,
   signUpPage: signUpPage,
   termsOfServicePage: termsOfServicePage,

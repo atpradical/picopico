@@ -1,0 +1,37 @@
+.container {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.icon {
+  flex-shrink: 0;
+  align-self: flex-start;
+  width: var(--icon-size-xl);
+  height: var(--icon-size-xl);
+}
+
+.sessionInfo {
+  flex-shrink: 1;
+  gap: 6px;
+  width: 100%;
+
+  p {
+    margin-bottom: 6px;
+  }
+
+  p:first-child {
+    margin-bottom: 12px;
+  }
+
+  p:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.button {
+  flex-shrink: 0;
+  white-space: nowrap;
+}
+
+

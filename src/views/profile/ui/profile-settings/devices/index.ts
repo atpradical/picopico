@@ -1,1 +1,2 @@
-export * from './Devices'
+export * from './DevicesTab'
+export * from './device-item'
