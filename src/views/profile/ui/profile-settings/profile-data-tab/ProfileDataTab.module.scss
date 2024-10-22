@@ -1,0 +1,56 @@
+.content {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.formWrapper {
+  display: flex;
+  gap: 40px
+}
+
+.avatarBlock {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.separator {
+  background-color: var(--color-dark-300);
+
+  &[data-orientation="horizontal"] {
+    width: 100%;
+    height: 1px;
+  }
+}
+
+.submitButton {
+  align-self: flex-end;
+  width: fit-content;
+}
+
+.form {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 100%;
+}
+
+.selectContainer {
+  display: flex;
+  gap: 24px
+}
+
+.selectContainer > * {
+  flex: 1;
+}
+
+.textArea {
+  resize: none;
+  min-width: 100%;
+  min-height: 85px;
+  max-height: 85px;
+}

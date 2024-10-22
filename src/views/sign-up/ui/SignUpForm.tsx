@@ -21,7 +21,7 @@ export const SignUpForm = () => {
 
   const [showDialog, setShowDialog] = useState(false)
   const emailRef = useRef('')
-  const [createUser, isLoading] = useCreateUserMutation()
+  const [createUser] = useCreateUserMutation()
 
   const {
     control,
@@ -38,7 +38,7 @@ export const SignUpForm = () => {
       userName: '',
     },
     mode: 'onTouched',
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onChange',
     resolver: zodResolver(signUpSchemeCreator(t.validation)),
   })
 
