@@ -1,4 +1,5 @@
 import { useLazyGetSessionsQuery } from '@/shared/api/devices'
+import { useGetUserProfileQuery } from '@/shared/api/profile'
 import { useTranslation } from '@/shared/hooks'
 import { getSidebarLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
@@ -19,11 +20,10 @@ function ProfileSettingsPage() {
   const { tabNames } = t.profileSettings
 
   const [getSessions, { data: sessionsData }] = useLazyGetSessionsQuery()
+  const { data: userProfileData } = useGetUserProfileQuery()
 
   const onTabChangeHandler = async (value: string) => {
     switch (value) {
-      case TAB_PROFILE_DATA:
-        break
       case TAB_DEVICES:
         try {
           await getSessions().unwrap()
@@ -43,6 +43,7 @@ function ProfileSettingsPage() {
   return (
     <Page mt={'36px'}>
       <div className={s.container}>
+        {/*todo: delete this button*/}
         <TabsRoot defaultValue={TAB_PROFILE_DATA} onValueChange={onTabChangeHandler}>
           <TabsList className={s.tabList}>
             <TabsTrigger value={TAB_PROFILE_DATA}>{tabNames.generalInformation}</TabsTrigger>
@@ -50,8 +51,9 @@ function ProfileSettingsPage() {
             <TabsTrigger value={TAB_ACCOUNT}>{tabNames.accountManagement}</TabsTrigger>
             <TabsTrigger value={TAB_PAYMENTS}>{tabNames.payments}</TabsTrigger>
           </TabsList>
-          <ProfileDataTab data={sessionsData} value={TAB_PROFILE_DATA} />
-          {/*<TabsContent value={'information'}>Mock data General information</TabsContent>*/}
+          {userProfileData && (
+            <ProfileDataTab defaultData={userProfileData} value={TAB_PROFILE_DATA} />
+          )}
           {sessionsData && <DevicesTab data={sessionsData} value={TAB_DEVICES} />}
           <TabsContent value={TAB_ACCOUNT}>Mock data Account Management</TabsContent>
           <TabsContent value={TAB_PAYMENTS}>Mock dataMy payments</TabsContent>

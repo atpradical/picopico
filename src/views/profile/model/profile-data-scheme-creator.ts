@@ -5,9 +5,9 @@ import { z } from 'zod'
 export const profileDataSchemeCreator = (t: LocaleValidation) => {
   return z.object({
     aboutMe: aboutMeScheme(t.aboutMe),
-    city: z.string().min(1),
-    country: z.string().min(1),
-    dateOfBirth: z.string().min(1),
+    city: z.string(),
+    country: z.string(),
+    dateOfBirth: z.any(),
     firstName: nameScheme(t.name),
     lastName: nameScheme(t.name),
     userName: userNameScheme(t.userName),

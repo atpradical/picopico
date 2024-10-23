@@ -28,5 +28,13 @@ export const ControlledDatePicker = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  return <DatePicker onSelectSingleDate={onChange} selected={value} {...field} {...rest} />
+  return (
+    <DatePicker
+      defaultValue={defaultValue}
+      onSelectSingleDate={onChange}
+      selected={value}
+      {...field}
+      {...rest}
+    />
+  )
 }
