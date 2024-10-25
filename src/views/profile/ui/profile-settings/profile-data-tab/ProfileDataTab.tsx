@@ -15,7 +15,7 @@ import {
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
 import { profileDataSchemeCreator } from '@/views/profile/model/profile-data-scheme-creator'
 import { ProfileFormFields } from '@/views/profile/model/types'
-import { Avatar, Button, TabsContent, toaster } from '@atpradical/picopico-ui-kit'
+import { Avatar, Button, OptionsValue, TabsContent, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Separator from '@radix-ui/react-separator'
 import clsx from 'clsx'
@@ -41,6 +41,23 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
   })
 
   const [getCities, { data: citiesData }] = useLazyGetCitiesQuery()
+
+  let countriesDataOptions: OptionsValue[] = []
+  let citiesDataOptions: OptionsValue[] = []
+
+  if (countriesData) {
+    countriesDataOptions = countriesData.geonames.map(country => ({
+      option: country.countryName,
+      value: country.countryCode,
+    }))
+  }
+
+  if (citiesData) {
+    citiesDataOptions = citiesData.geonames.map(city => ({
+      option: city.name,
+      value: city.geonameId.toString(), // City ID in geonames
+    }))
+  }
 
   useEffect(() => {
     if (selectedCountry) {
@@ -124,8 +141,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
               label={'Select your country'}
               name={'country'}
               onValueChange={countrySelectValueChangeHandler}
-              //@ts-ignore todo: fix Type ResponseGetСountries | undefined is not assignable to type OptionsValue[] | undefined
-              options={countriesData}
+              options={countriesDataOptions}
               placeholder={'add country'}
               showScroll
             />
@@ -134,8 +150,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
               defaultValue={data?.city ?? ''}
               label={'Select your city'}
               name={'city'}
-              //@ts-ignore todo: fix Type ResponseGetCities | undefined is not assignable to type OptionsValue[] | undefined
-              options={citiesData}
+              options={citiesDataOptions}
               placeholder={'add city'}
               showScroll
             />

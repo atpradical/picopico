@@ -6,7 +6,7 @@
 
 .formWrapper {
   display: flex;
-  gap: 40px
+  gap: 40px;
 }
 
 .avatarBlock {
@@ -21,7 +21,7 @@
 .separator {
   background-color: var(--color-dark-300);
 
-  &[data-orientation="horizontal"] {
+  &[data-orientation='horizontal'] {
     width: 100%;
     height: 1px;
   }
@@ -41,7 +41,7 @@
 
 .selectContainer {
   display: flex;
-  gap: 24px
+  gap: 24px;
 }
 
 .selectContainer > * {
