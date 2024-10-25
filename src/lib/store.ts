@@ -1,3 +1,4 @@
+import { countriesApi } from '@/shared/api/countries/countriesApi'
 import { picoApi } from '@/shared/api/picoApi'
 import { Action, ThunkAction, combineSlices, configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
@@ -5,8 +6,9 @@ import { createWrapper } from 'next-redux-wrapper'
 const makeStore = () =>
   configureStore({
     devTools: true,
-    middleware: getDefaultMiddleware => getDefaultMiddleware().concat(picoApi.middleware),
-    reducer: combineSlices(picoApi),
+    middleware: getDefaultMiddleware =>
+      getDefaultMiddleware().concat(picoApi.middleware).concat(countriesApi.middleware),
+    reducer: combineSlices(picoApi, countriesApi),
   })
 
 export type AppStore = ReturnType<typeof makeStore>

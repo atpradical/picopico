@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { useGetCountriesQuery } from '@/shared/api/countries'
 import { useUpdateUserProfileMutation } from '@/shared/api/profile'
 import { ResponseGetUserProfile } from '@/shared/api/profile/profile.types'
 import { useTranslation } from '@/shared/hooks'
@@ -28,6 +29,12 @@ type ProfileDataTabProps = {
 export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataTabProps) => {
   const { locale, t } = useTranslation()
   const [updateProfile] = useUpdateUserProfileMutation()
+
+  const { data: countriesData } = useGetCountriesQuery({
+    locale: locale ?? 'en',
+  })
+
+  console.log(countriesData)
 
   const { control, handleSubmit, setError } = useForm<ProfileFormFields>({
     defaultValues: {
@@ -65,7 +72,7 @@ export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataT
     <TabsContent className={clsx(s.content, className)} {...rest}>
       <div className={s.formWrapper}>
         <div className={s.avatarBlock}>
-          <Avatar size={'m'} />
+          <Avatar size={'m'} src={''} />
           <Button variant={'outlined'}>Add a Profile Photo</Button>
         </div>
         <form className={s.form} id={'profile-form'} onSubmit={formHandler}>
@@ -80,7 +87,7 @@ export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataT
           <ControlledTextField control={control} isRequired label={'Last Name'} name={'lastName'} />
           <ControlledDatePicker
             control={control}
-            defaultValue={new Date(defaultData?.dateOfBirth ?? '')}
+            defaultValue={defaultData?.dateOfBirth ? new Date(defaultData?.dateOfBirth) : undefined}
             label={'Date of birth'}
             locale={locale === 'ru' ? ru : enUS}
             name={'dateOfBirth'}
@@ -91,6 +98,8 @@ export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataT
               defaultValue={defaultData?.country ?? ''}
               label={'Select your country'}
               name={'country'}
+              //todo: fix Type ResponseGetCountries | undefined is not assignable to type OptionsValue[] | undefined
+              options={countriesData}
             />
             <ControlledSelect
               control={control}

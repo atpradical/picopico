@@ -43,7 +43,6 @@ function ProfileSettingsPage() {
   return (
     <Page mt={'36px'}>
       <div className={s.container}>
-        {/*todo: delete this button*/}
         <TabsRoot defaultValue={TAB_PROFILE_DATA} onValueChange={onTabChangeHandler}>
           <TabsList className={s.tabList}>
             <TabsTrigger value={TAB_PROFILE_DATA}>{tabNames.generalInformation}</TabsTrigger>
