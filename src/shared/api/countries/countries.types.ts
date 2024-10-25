@@ -25,3 +25,9 @@ export type CountryData = {
 export type GetCountriesArgs = {
   locale: string
 }
+
+export type GetCitiesArgs = {
+  countryName: string
+  locale: string
+  minPopulation: number
+}

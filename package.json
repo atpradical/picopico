@@ -10,7 +10,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@atpradical/picopico-ui-kit": "^0.14.2",
+    "@atpradical/picopico-ui-kit": "^0.16.2",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-visually-hidden": "^1.1.0",
@@ -30,6 +30,7 @@
     "zod": "^3.23.8"
   },
   "devDependencies": {
+    "@hookform/devtools": "^4.3.1",
     "@it-incubator/eslint-config": "^1.0.3",
     "@it-incubator/prettier-config": "^0.1.2",
     "@it-incubator/stylelint-config": "^2.0.0",

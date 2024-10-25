@@ -6,6 +6,11 @@ export const validation = {
   },
   agreeToTerms: 'Please agree to the terms and conditions',
   email: 'The email must match the format example@example.com',
+  minAge: {
+    formField: 'A user under 13 cannot create a profile',
+    linkLabel: 'Privacy Policy',
+    notification: 'A user under 13 cannot create a profile, please read the <1>Privacy Policy</1>',
+  },
   name: {
     allowedSymbols: 'Username may contain symbols: 0-9, A-Z, a-z, А-Я or а-я',
     maxLength: 'Maximum number of characters 50',

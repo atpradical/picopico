@@ -36,8 +36,6 @@ export default function PasswordRecoveryPage() {
     return null
   }
 
-  console.log('render')
-
   return (
     <Page mt={'36px'}>
       <div className={s.container}>

@@ -1,9 +1,10 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { useGetCountriesQuery } from '@/shared/api/countries'
+import { useGetCountriesQuery, useLazyGetCitiesQuery } from '@/shared/api/countries'
 import { useUpdateUserProfileMutation } from '@/shared/api/profile'
 import { ResponseGetUserProfile } from '@/shared/api/profile/profile.types'
+import { MAX_CITY_POPULATION } from '@/shared/constants'
 import { useTranslation } from '@/shared/hooks'
 import {
   ControlledDatePicker,
@@ -14,7 +15,7 @@ import {
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
 import { profileDataSchemeCreator } from '@/views/profile/model/profile-data-scheme-creator'
 import { ProfileFormFields } from '@/views/profile/model/types'
-import { Avatar, Button, TabsContent } from '@atpradical/picopico-ui-kit'
+import { Avatar, Button, TabsContent, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Separator from '@radix-ui/react-separator'
 import clsx from 'clsx'
@@ -23,28 +24,43 @@ import { enUS, ru } from 'date-fns/locale'
 import s from './ProfileDataTab.module.scss'
 
 type ProfileDataTabProps = {
-  defaultData?: ResponseGetUserProfile
+  data?: ResponseGetUserProfile
 } & ComponentPropsWithoutRef<typeof TabsContent>
 
-export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataTabProps) => {
+export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps) => {
   const { locale, t } = useTranslation()
+  const [selectedCountry, setSelectedCountry] = useState(data?.country ?? '')
   const [updateProfile] = useUpdateUserProfileMutation()
+
+  const countrySelectValueChangeHandler = (value: string) => {
+    setSelectedCountry(value)
+  }
 
   const { data: countriesData } = useGetCountriesQuery({
     locale: locale ?? 'en',
   })
 
-  console.log(countriesData)
+  const [getCities, { data: citiesData }] = useLazyGetCitiesQuery()
+
+  useEffect(() => {
+    if (selectedCountry) {
+      getCities({
+        countryName: selectedCountry,
+        locale: locale ?? 'en',
+        minPopulation: MAX_CITY_POPULATION,
+      })
+    }
+  }, [selectedCountry, getCities, locale])
 
   const { control, handleSubmit, setError } = useForm<ProfileFormFields>({
     defaultValues: {
-      aboutMe: defaultData?.aboutMe ?? '',
-      city: defaultData?.city ?? '',
-      country: defaultData?.country ?? '',
-      dateOfBirth: new Date(defaultData?.dateOfBirth ?? ''),
-      firstName: defaultData?.firstName ?? '',
-      lastName: defaultData?.lastName ?? '',
-      userName: defaultData?.userName ?? '',
+      aboutMe: data?.aboutMe ?? '',
+      city: data?.city ?? '',
+      country: data?.country ?? '',
+      dateOfBirth: new Date(data?.dateOfBirth ?? ''),
+      firstName: data?.firstName ?? '',
+      lastName: data?.lastName ?? '',
+      userName: data?.userName ?? '',
     },
     mode: 'onTouched',
     reValidateMode: 'onChange',
@@ -57,6 +73,8 @@ export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataT
         ...data,
         dateOfBirth: new Date(data.dateOfBirth).toLocaleDateString(),
       }).unwrap()
+
+      toaster({ text: 'Your settings are saved!' })
     } catch (e) {
       const errors = getErrorMessageData(e)
 
@@ -79,15 +97,22 @@ export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataT
           <ControlledTextField control={control} isRequired label={'Username'} name={'userName'} />
           <ControlledTextField
             control={control}
-            defaultValue={defaultData?.firstName ?? ''}
+            defaultValue={data?.firstName ?? ''}
             isRequired
             label={'First Name'}
             name={'firstName'}
+            placeholder={'add first name'}
           />
-          <ControlledTextField control={control} isRequired label={'Last Name'} name={'lastName'} />
+          <ControlledTextField
+            control={control}
+            isRequired
+            label={'Last Name'}
+            name={'lastName'}
+            placeholder={'add second name'}
+          />
           <ControlledDatePicker
             control={control}
-            defaultValue={defaultData?.dateOfBirth ? new Date(defaultData?.dateOfBirth) : undefined}
+            defaultValue={data?.dateOfBirth ? new Date(data?.dateOfBirth) : undefined}
             label={'Date of birth'}
             locale={locale === 'ru' ? ru : enUS}
             name={'dateOfBirth'}
@@ -95,25 +120,33 @@ export const ProfileDataTab = ({ className, defaultData, ...rest }: ProfileDataT
           <div className={s.selectContainer}>
             <ControlledSelect
               control={control}
-              defaultValue={defaultData?.country ?? ''}
+              defaultValue={data?.country ?? ''}
               label={'Select your country'}
               name={'country'}
-              //todo: fix Type ResponseGetCountries | undefined is not assignable to type OptionsValue[] | undefined
+              onValueChange={countrySelectValueChangeHandler}
+              //@ts-ignore todo: fix Type ResponseGetСountries | undefined is not assignable to type OptionsValue[] | undefined
               options={countriesData}
+              placeholder={'add country'}
+              showScroll
             />
             <ControlledSelect
               control={control}
-              defaultValue={defaultData?.city ?? ''}
+              defaultValue={data?.city ?? ''}
               label={'Select your city'}
               name={'city'}
+              //@ts-ignore todo: fix Type ResponseGetCities | undefined is not assignable to type OptionsValue[] | undefined
+              options={citiesData}
+              placeholder={'add city'}
+              showScroll
             />
           </div>
           <ControlledTextArea
             className={s.textArea}
             control={control}
-            defaultValue={defaultData?.aboutMe ?? ''}
+            defaultValue={data?.aboutMe ?? ''}
             label={'About Me'}
             name={'aboutMe'}
+            placeholder={'tell us about yourself '}
           />
         </form>
       </div>

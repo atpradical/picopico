@@ -50,9 +50,7 @@ function ProfileSettingsPage() {
             <TabsTrigger value={TAB_ACCOUNT}>{tabNames.accountManagement}</TabsTrigger>
             <TabsTrigger value={TAB_PAYMENTS}>{tabNames.payments}</TabsTrigger>
           </TabsList>
-          {userProfileData && (
-            <ProfileDataTab defaultData={userProfileData} value={TAB_PROFILE_DATA} />
-          )}
+          {userProfileData && <ProfileDataTab data={userProfileData} value={TAB_PROFILE_DATA} />}
           {sessionsData && <DevicesTab data={sessionsData} value={TAB_DEVICES} />}
           <TabsContent value={TAB_ACCOUNT}>Mock data Account Management</TabsContent>
           <TabsContent value={TAB_PAYMENTS}>Mock dataMy payments</TabsContent>
