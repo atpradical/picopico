@@ -15,6 +15,7 @@ import {
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
 import { profileDataSchemeCreator } from '@/views/profile/model/profile-data-scheme-creator'
 import { ProfileFormFields } from '@/views/profile/model/types'
+import { ProfilePhotoDialog } from '@/views/profile/ui/profile-photo-dialog'
 import { Avatar, Button, OptionsValue, TabsContent, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Separator from '@radix-ui/react-separator'
@@ -122,6 +123,8 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
         <div className={s.avatarBlock}>
           <Avatar size={'m'} src={''} />
           <Button variant={'outlined'}>Add a Profile Photo</Button>
+          {/*todo: complete this section*/}
+          <ProfilePhotoDialog isOpen onOpenChange={() => {}} />
         </div>
         <form className={s.form} id={'profile-form'} onSubmit={formHandler}>
           <ControlledTextField
