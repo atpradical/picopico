@@ -1,6 +1,7 @@
 import axios from 'axios'
+import { NextApiRequest, NextApiResponse } from 'next'
 
-export default async function handler(req, res) {
+export default async function handler(req: NextApiRequest, res: NextApiResponse): Promise<void> {
   try {
     const { countryName, lang, minPopulation } = req.query
     const apiUrl = `${process.env.NEXT_PUBLIC_COUNTRIES_BASE_URL}searchJSON?country=${countryName}&lang=${lang}&featureClass=P&minPopulation=${minPopulation}&username=${process.env.NEXT_PUBLIC_COUNTRIES_USERNAME}`
