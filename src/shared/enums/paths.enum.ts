@@ -1,13 +1,11 @@
 export enum Paths {
   ProfileSettings = '/profile/settings',
   create = '/create',
-  createPassword = '/auth/create-password',
   favourites = '/favourites',
   forgotPassword = '/auth/forgot-password',
   home = '/',
   logIn = '/auth/sign-in',
   messages = '/messages',
-  passwordRecovery = '/auth/recovery',
   privacyPolicy = '/docs/privacy-policy',
   profile = '/profile',
   search = '/search',

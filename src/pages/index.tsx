@@ -1,6 +1,30 @@
+import { useGoogleLoginQuery } from '@/shared/api'
 import { getLayout } from '@/shared/ui/layout'
+import { getErrorMessageData } from '@/shared/utils'
+import { useRouter } from 'next/router'
 
 export default function Home() {
+  const router = useRouter()
+  const code = router.query.code as string
+  const { error, isLoading, isSuccess } = useGoogleLoginQuery({ code }, { skip: !code })
+
+  // todo: проверить и исправить обработку лоадера
+  if (isLoading) {
+    return <div>Loading...</div>
+  }
+
+  // todo: проверить и исправить обработку ошибок
+  if (error) {
+    const errorMessage = getErrorMessageData(error)
+
+    return <div>{`Error: ${errorMessage}`}</div>
+  }
+
+  // todo: проверить и исправить редиректы в случае успешного входа
+  if (isSuccess) {
+    router.push('/profile')
+  }
+
   return (
     <>
       {/*<Head>*/}

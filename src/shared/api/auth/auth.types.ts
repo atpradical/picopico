@@ -46,3 +46,12 @@ export type CreateNewPasswordArgs = {
   newPassword: string
   recoveryCode: string
 }
+
+export type GoogleLoginArgs = {
+  code: string
+}
+
+export type ResponseGoogleLogin = {
+  accessToken: string
+  email: string
+}

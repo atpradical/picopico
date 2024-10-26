@@ -1,28 +1,33 @@
 import { useTranslation } from '@/shared/hooks'
 import { Button, GithubIcon, GoogleIcon } from '@atpradical/picopico-ui-kit'
-import { useRouter } from 'next/router'
+import Link from 'next/link'
 
 import s from './OAuthIcons.module.scss'
 
-//todo: запросить ключи для google и github
+// https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow
+const GOOGLE_LOGIN_URL = {
+  pathname: 'https://accounts.google.com/o/oauth2/v2/auth',
+  query: {
+    client_id: process.env.NEXT_PUBLIC_GOOGLE_OAUTH_CLIENT_ID,
+    redirect_uri: process.env.NEXT_PUBLIC_BASE_URL,
+    response_type: 'code',
+    scope: 'email profile',
+  },
+} as const
+
+// https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#web-application-flow
+const GITHUB_LOGIN_URL = 'https://inctagram.work/api/v1/auth/github/login'
+
 export const OAuthBlock = () => {
-  const router = useRouter()
   const { t } = useTranslation()
   const { githubButton, googleButton } = t.signUpPage
 
-  const onGoogle = () => {
-    router.push(`${process.env.NEXT_PUBLIC_INCTAGRAM_BASE_URL}/v1/auth/google`)
-  }
-  const onGithub = () => {
-    router.push(`${process.env.NEXT_PUBLIC_INCTAGRAM_BASE_URL}/v1/auth/github`)
-  }
-
   return (
     <div className={s.socials}>
-      <Button className={s.socialsButton} onClick={onGithub} title={githubButton} variant={'icon'}>
+      <Button as={Link} href={GITHUB_LOGIN_URL} title={githubButton} variant={'icon'}>
         <GithubIcon className={s.icon} />
       </Button>
-      <Button className={s.socialsButton} onClick={onGoogle} title={googleButton} variant={'icon'}>
+      <Button as={Link} href={GOOGLE_LOGIN_URL} title={googleButton} variant={'icon'}>
         <GoogleIcon className={s.icon} />
       </Button>
     </div>

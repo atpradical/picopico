@@ -4,10 +4,12 @@ import {
   ConfirmEmailArgs,
   CreateNewPasswordArgs,
   CreateUserArgs,
+  GoogleLoginArgs,
   LoginArgs,
   PasswordRecoveryArgs,
   RecoveryCodeArgs,
   ResendRegistrationArgs,
+  ResponseGoogleLogin,
   ResponseLogin,
   ResponseMe,
   ResponseRecoveryCode,
@@ -44,6 +46,24 @@ export const authApi = picoApi.injectEndpoints({
           url: '/v1/auth/registration',
         }),
       }),
+      googleLogin: builder.query<ResponseGoogleLogin, GoogleLoginArgs>({
+        onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
+          try {
+            const { data } = await queryFulfilled
+
+            localStorage.setItem('accessToken', data.accessToken.trim())
+            dispatch(authApi.util.invalidateTags(['Me']))
+          } catch (e) {
+            // todo: error is catches in baseQueryWithReauth
+            console.error(e, 'Error in googleLogin: builder.query')
+          }
+        },
+        query: body => ({
+          body,
+          method: 'POST',
+          url: 'v1/auth/google/login',
+        }),
+      }),
       login: builder.mutation<ResponseLogin, LoginArgs>({
         async onQueryStarted(_, { dispatch, queryFulfilled }) {
           try {
@@ -53,7 +73,8 @@ export const authApi = picoApi.injectEndpoints({
 
             dispatch(authApi.util.invalidateTags(['Me']))
           } catch (e) {
-            // error is catches in baseQueryWithReauth & sigInPage component
+            // todo: error is catches in baseQueryWithReauth & sigInPage component
+            console.error(e, 'Error in login: builder.mutation')
           }
         },
         query: args => ({
@@ -95,6 +116,7 @@ export const {
   useConfirmEmailMutation,
   useCreatNewPasswordMutation,
   useCreateUserMutation,
+  useGoogleLoginQuery,
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
