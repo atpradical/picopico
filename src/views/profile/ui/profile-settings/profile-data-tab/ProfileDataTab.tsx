@@ -28,7 +28,13 @@ type ProfileDataTabProps = {
 } & ComponentPropsWithoutRef<typeof TabsContent>
 
 export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps) => {
-  const { locale, t } = useTranslation()
+  const {
+    locale,
+    t: {
+      profileSettings: { profileDataTab },
+      validation,
+    },
+  } = useTranslation()
   const [selectedCountry, setSelectedCountry] = useState(data?.country ?? '')
   const [updateProfile] = useUpdateUserProfileMutation()
 
@@ -69,7 +75,12 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
     }
   }, [selectedCountry, getCities, locale])
 
-  const { control, handleSubmit, setError } = useForm<ProfileFormFields>({
+  const {
+    control,
+    formState: { dirtyFields, isValid },
+    handleSubmit,
+    setError,
+  } = useForm<ProfileFormFields>({
     defaultValues: {
       aboutMe: data?.aboutMe ?? '',
       city: data?.city ?? '',
@@ -81,7 +92,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
     },
     mode: 'onTouched',
     reValidateMode: 'onChange',
-    resolver: zodResolver(profileDataSchemeCreator(t.validation)),
+    resolver: zodResolver(profileDataSchemeCreator(validation)),
   })
 
   const formHandler = handleSubmit(async data => {
@@ -91,7 +102,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
         dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toLocaleDateString() : '',
       }).unwrap()
 
-      toaster({ text: 'Your settings are saved!' })
+      toaster({ text: profileDataTab.successSettingsChangeMessage })
     } catch (e) {
       const errors = getErrorMessageData(e)
 
@@ -103,6 +114,8 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
     }
   })
 
+  const isSubmitDisabled = !isValid || !Object.keys(dirtyFields).length
+
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
       <div className={s.formWrapper}>
@@ -111,26 +124,31 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
           <Button variant={'outlined'}>Add a Profile Photo</Button>
         </div>
         <form className={s.form} id={'profile-form'} onSubmit={formHandler}>
-          <ControlledTextField control={control} isRequired label={'Username'} name={'userName'} />
+          <ControlledTextField
+            control={control}
+            isRequired
+            label={profileDataTab.labels.userName}
+            name={'userName'}
+          />
           <ControlledTextField
             control={control}
             defaultValue={data?.firstName ?? ''}
             isRequired
-            label={'First Name'}
+            label={profileDataTab.labels.firstName}
             name={'firstName'}
-            placeholder={'add first name'}
+            placeholder={profileDataTab.placeholders.firstName}
           />
           <ControlledTextField
             control={control}
             isRequired
-            label={'Last Name'}
+            label={profileDataTab.labels.lastName}
             name={'lastName'}
-            placeholder={'add second name'}
+            placeholder={profileDataTab.placeholders.lastName}
           />
           <ControlledDatePicker
             control={control}
             defaultValue={data?.dateOfBirth ? new Date(data?.dateOfBirth) : undefined}
-            label={'Date of birth'}
+            label={profileDataTab.labels.dateOfBirth}
             locale={locale === 'ru' ? ru : enUS}
             name={'dateOfBirth'}
           />
@@ -138,20 +156,20 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
             <ControlledSelect
               control={control}
               defaultValue={data?.country ?? ''}
-              label={'Select your country'}
+              label={profileDataTab.labels.country}
               name={'country'}
               onValueChange={countrySelectValueChangeHandler}
               options={countriesDataOptions}
-              placeholder={'add country'}
+              placeholder={profileDataTab.placeholders.country}
               showScroll
             />
             <ControlledSelect
               control={control}
               defaultValue={data?.city ?? ''}
-              label={'Select your city'}
+              label={profileDataTab.labels.city}
               name={'city'}
               options={citiesDataOptions}
-              placeholder={'add city'}
+              placeholder={profileDataTab.placeholders.city}
               showScroll
             />
           </div>
@@ -159,15 +177,20 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
             className={s.textArea}
             control={control}
             defaultValue={data?.aboutMe ?? ''}
-            label={'About Me'}
+            label={profileDataTab.labels.aboutMe}
             name={'aboutMe'}
-            placeholder={'tell us about yourself '}
+            placeholder={profileDataTab.placeholders.aboutMe}
           />
         </form>
       </div>
       <Separator.Root className={s.separator} />
-      <Button className={s.submitButton} form={'profile-form'} type={'submit'}>
-        Save Changes
+      <Button
+        className={s.submitButton}
+        disabled={isSubmitDisabled}
+        form={'profile-form'}
+        type={'submit'}
+      >
+        {profileDataTab.formSubmitButton}
       </Button>
     </TabsContent>
   )

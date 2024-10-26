@@ -1,3 +1,5 @@
+import { Fragment } from 'react'
+
 import { Paths } from '@/shared/enums'
 import { Translate } from '@/shared/ui/components'
 import { Typography } from '@atpradical/picopico-ui-kit'
@@ -11,7 +13,7 @@ type Props = {
 }
 export const PrivacyPolicyNotification = ({ linkText, notificationMessage }: Props) => {
   return (
-    <Typography>
+    <Typography as={'span'}>
       <Translate
         tags={{
           1: () => (
