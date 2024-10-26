@@ -74,7 +74,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
       aboutMe: data?.aboutMe ?? '',
       city: data?.city ?? '',
       country: data?.country ?? '',
-      dateOfBirth: new Date(data?.dateOfBirth ?? ''),
+      dateOfBirth: data?.dateOfBirth ? new Date(data?.dateOfBirth) : undefined,
       firstName: data?.firstName ?? '',
       lastName: data?.lastName ?? '',
       userName: data?.userName ?? '',
@@ -88,7 +88,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
     try {
       await updateProfile({
         ...data,
-        dateOfBirth: new Date(data.dateOfBirth).toLocaleDateString(),
+        dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toLocaleDateString() : '',
       }).unwrap()
 
       toaster({ text: 'Your settings are saved!' })

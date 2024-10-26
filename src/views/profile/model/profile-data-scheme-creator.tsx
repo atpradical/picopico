@@ -11,29 +11,39 @@ export const profileDataSchemeCreator = (t: LocaleValidation) => {
       aboutMe: aboutMeScheme(t.aboutMe),
       city: z.string(),
       country: z.string(),
-      dateOfBirth: z.any(),
+      dateOfBirth: z.date().optional(),
       firstName: nameScheme(t.name),
       lastName: nameScheme(t.name),
       userName: userNameScheme(t.userName),
     })
     .refine(
       val => {
-        const result =
-          new Date().getFullYear() - new Date(val.dateOfBirth).getFullYear() >= MIN_USER_AGE
+        debugger
 
-        if (!result) {
-          toaster({
-            text: (
-              <PrivacyPolicyNotification
-                linkText={t.minAge.linkLabel}
-                notificationMessage={t.minAge.notification}
-              />
-            ),
-            variant: 'error',
-          })
+        if (val.dateOfBirth instanceof Date) {
+          const isOldEnough =
+            new Date().getFullYear() - new Date(val.dateOfBirth).getFullYear() >= MIN_USER_AGE
+
+          if (!isOldEnough) {
+            toaster(
+              {
+                text: (
+                  <PrivacyPolicyNotification
+                    linkText={t.minAge.linkLabel}
+                    notificationMessage={t.minAge.notification}
+                  />
+                ),
+                variant: 'error',
+              },
+              // add autoClose delay and toastID to avoid toast duplicates in case of multiple validation errors
+              { autoClose: 8000, toastId: 'user-age-validation' }
+            )
+
+            return isOldEnough
+          }
         }
 
-        return result
+        return true
       },
       {
         message: t.minAge.formField,
