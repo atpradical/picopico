@@ -40,8 +40,6 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
     locale: locale ?? 'en',
   })
 
-  console.log('countriesData is', countriesData)
-
   const [getCities, { data: citiesData }] = useLazyGetCitiesQuery()
 
   let countriesDataOptions: OptionsValue[] = []

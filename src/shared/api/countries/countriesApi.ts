@@ -4,7 +4,6 @@ import {
   ResponseGetCities,
   ResponseGetCountries,
 } from '@/shared/api/countries/countries.types'
-import { OptionsValue } from '@atpradical/picopico-ui-kit'
 import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { createApi } from '@reduxjs/toolkit/query/react'
 
@@ -16,7 +15,7 @@ export const countriesApi = createApi({
       getCities: builder.query<ResponseGetCities, GetCitiesArgs>({
         query: ({ countryName, locale, minPopulation }) =>
           // `searchJSON?country=${countryName}&lang=${locale}&featureClass=P&minPopulation=${minPopulation}&username=${process.env.NEXT_PUBLIC_COUNTRIES_USERNAME}`,
-          `getCities?countryInfoJSON?lang=${locale}&countryName=${countryName}&minPopulation=${minPopulation}&username=${process.env.NEXT_PUBLIC_COUNTRIES_USERNAME}`,
+          `getCities?lang=${locale}&countryName=${countryName}&minPopulation=${minPopulation}&username=${process.env.NEXT_PUBLIC_COUNTRIES_USERNAME}`,
         // transformResponse: response =>
         //   //@ts-ignore //todo: Задать вопрос по типизации transformResponse
         //   response.geonames.map(city => ({
