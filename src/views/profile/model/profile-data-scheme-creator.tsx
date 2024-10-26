@@ -11,16 +11,14 @@ export const profileDataSchemeCreator = (t: LocaleValidation) => {
       aboutMe: aboutMeScheme(t.aboutMe),
       city: z.string(),
       country: z.string(),
-      dateOfBirth: z.date().optional(),
+      dateOfBirth: z.date(),
       firstName: nameScheme(t.name),
       lastName: nameScheme(t.name),
       userName: userNameScheme(t.userName),
     })
     .refine(
       val => {
-        debugger
-
-        if (val.dateOfBirth instanceof Date) {
+        if (val.dateOfBirth) {
           const isOldEnough =
             new Date().getFullYear() - new Date(val.dateOfBirth).getFullYear() >= MIN_USER_AGE
 

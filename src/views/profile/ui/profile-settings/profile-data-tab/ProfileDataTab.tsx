@@ -148,6 +148,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
           <ControlledDatePicker
             control={control}
             defaultValue={data?.dateOfBirth ? new Date(data?.dateOfBirth) : undefined}
+            isRequired
             label={profileDataTab.labels.dateOfBirth}
             locale={locale === 'ru' ? ru : enUS}
             name={'dateOfBirth'}

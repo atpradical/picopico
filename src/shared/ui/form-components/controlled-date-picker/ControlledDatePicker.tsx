@@ -29,8 +29,6 @@ export const ControlledDatePicker = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  console.log(' controlled date is ', error?.message)
-
   return (
     <DatePicker
       defaultValue={defaultValue}
