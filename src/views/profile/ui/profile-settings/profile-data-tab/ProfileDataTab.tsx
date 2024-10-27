@@ -15,7 +15,7 @@ import {
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
 import { profileDataSchemeCreator } from '@/views/profile/model/profile-data-scheme-creator'
 import { ProfileFormFields } from '@/views/profile/model/types'
-import { UploadAvatar } from '@/views/profile/ui/upload-avatar'
+import { ProfileAvatarManager } from '@/views/profile/ui'
 import { Button, OptionsValue, TabsContent, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Separator from '@radix-ui/react-separator'
@@ -120,7 +120,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
       <div className={s.formWrapper}>
-        <UploadAvatar avatarImage={data?.avatars.length ? data?.avatars[0].url : ''} />
+        <ProfileAvatarManager avatarImage={data?.avatars.length ? data?.avatars[0].url : ''} />
         <form className={s.form} id={'profile-form'} onSubmit={formHandler}>
           <ControlledTextField
             control={control}

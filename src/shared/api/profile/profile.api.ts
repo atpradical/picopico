@@ -8,6 +8,13 @@ import {
 export const profileApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
+      deleteAvatar: builder.mutation<void, void>({
+        invalidatesTags: ['Profile'],
+        query: () => ({
+          method: 'DELETE',
+          url: `/v1/users/profile/avatar`,
+        }),
+      }),
       getUserProfile: builder.query<ResponseGetUserProfile, void>({
         providesTags: ['Profile'],
         query: () => ({
@@ -45,5 +52,9 @@ export const profileApi = picoApi.injectEndpoints({
   },
 })
 
-export const { useGetUserProfileQuery, useUpdateUserProfileMutation, useUploadAvatarMutation } =
-  profileApi
+export const {
+  useDeleteAvatarMutation,
+  useGetUserProfileQuery,
+  useUpdateUserProfileMutation,
+  useUploadAvatarMutation,
+} = profileApi

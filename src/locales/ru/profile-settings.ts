@@ -7,6 +7,7 @@ export const profileSettings = {
     terminateAllOtherSessions: 'Завершить все другие сессии',
   },
   profileDataTab: {
+    addProfilePhotoButton: 'Добавить аватар',
     formSubmitButton: 'Сохранить изменения',
     labels: {
       aboutMe: 'О себе',

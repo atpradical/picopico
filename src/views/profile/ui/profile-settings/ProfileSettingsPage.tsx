@@ -4,7 +4,7 @@ import { useTranslation } from '@/shared/hooks'
 import { getSidebarLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { DevicesTab } from '@/views/profile/ui/profile-settings/devices/DevicesTab'
+import { DevicesTab } from '@/views/profile/ui/profile-settings/devices'
 import { ProfileDataTab } from '@/views/profile/ui/profile-settings/profile-data-tab'
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
 

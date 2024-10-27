@@ -7,6 +7,7 @@ export const profileSettings = {
     terminateAllOtherSessions: 'Terminate all other session',
   },
   profileDataTab: {
+    addProfilePhotoButton: 'Add a Profile Photo',
     formSubmitButton: 'Save Changes',
     labels: {
       aboutMe: 'About Me',

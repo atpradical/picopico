@@ -20,3 +20,4 @@ export const MAX_CITY_POPULATION = 500000
 
 // upload image limits
 export const AVATAR_MAX_FILE_SIZE = 10000000 // 10MB in bytes
+export const ALLOWED_IMAGE_UPLOAD_TYPES = ['image/jpeg', 'image/png']

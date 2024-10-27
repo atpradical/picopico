@@ -1,11 +1,13 @@
 import { LocaleType } from '@/locales/en'
 import { confirmEmailPage } from '@/locales/ru/confirm-email-page'
 import { createNewPasswordForm } from '@/locales/ru/create-new-password-form'
+import { deleteAvatarDialog } from '@/locales/ru/delete-avatar-dialog'
 import { emailConfirmationDialog } from '@/locales/ru/email-confirmation-dialog'
 import { expiredLink } from '@/locales/ru/expired-link'
 import { forgotPasswordPage } from '@/locales/ru/forgot-password-page'
 import { logoutDialog } from '@/locales/ru/logout-dialog'
 import { privacyPolicyPage } from '@/locales/ru/privacy-policy-page'
+import { profileAvatarDialog } from '@/locales/ru/profile-avatar-dialog'
 import { profileSettings } from '@/locales/ru/profile-settings'
 import { signInPage } from '@/locales/ru/sign-in-page'
 import { signUpPage } from '@/locales/ru/sign-up-page'
@@ -15,6 +17,7 @@ import { validation } from '@/locales/ru/validation'
 export const ru: LocaleType = {
   confirmEmailPage: confirmEmailPage,
   createNewPasswordForm: createNewPasswordForm,
+  deleteAvatarDialog: deleteAvatarDialog,
   emailConfirmationDialog: emailConfirmationDialog,
   expiredLink: expiredLink,
   forgotPasswordPage: forgotPasswordPage,
@@ -24,6 +27,7 @@ export const ru: LocaleType = {
   },
   logoutDialog: logoutDialog,
   privacyPolicyPage: privacyPolicyPage,
+  profileAvatarDialog: profileAvatarDialog,
   profileSettings: profileSettings,
   signInPage: signInPage,
   signUpPage: signUpPage,

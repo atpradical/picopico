@@ -1,7 +1,10 @@
 import { ComponentPropsWithoutRef, ComponentType, ElementRef, forwardRef, useState } from 'react'
 
+import { useLogoutMutation } from '@/shared/api'
+import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
-import { LogoutDialog } from '@/shared/ui/components/logout-dialog'
+import { ActionConfirmDialog } from '@/shared/ui/components'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { LogOutOutlineIcon, Typography } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
@@ -21,6 +24,20 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
 
   // todo: удалить этот хардкод, заменить на реальный email зарегистрированного пользователя
   const email = 'test@test.com'
+
+  const [logout] = useLogoutMutation()
+
+  const logoutHandler = async () => {
+    try {
+      await logout().unwrap()
+      localStorage.removeItem('accessToken')
+      router.push(Paths.logIn)
+    } catch (e) {
+      const error = getErrorMessageData(e)
+
+      showErrorToast(error)
+    }
+  }
 
   return (
     <nav className={clsx(s.sidebar, className)} ref={ref} {...rest}>
@@ -55,11 +72,16 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
         </Typography>
       </div>
       {openLogoutDialog && (
-        <LogoutDialog
-          email={email}
+        <ActionConfirmDialog
+          accessibilityDescription={t.logoutDialog.accessibilityDescription}
+          accessibilityTitle={t.logoutDialog.accessibilityTitle}
+          confirmButtonText={t.logoutDialog.confirmButton}
           isOpen={openLogoutDialog}
+          message={`${t.logoutDialog.visibleBodyText} ${email}`}
+          onConfirm={logoutHandler}
           onOpenChange={setOpenLogoutDialog}
-          t={t.logoutDialog}
+          rejectButtonText={t.logoutDialog.rejectButton}
+          title={t.logoutDialog.visibleTitle}
         />
       )}
     </nav>
