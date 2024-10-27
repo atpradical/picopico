@@ -10,8 +10,9 @@ import {
   DialogRoot,
   Typography,
 } from '@atpradical/picopico-ui-kit'
+import Image from 'next/image'
 
-import s from '@/shared/ui/components/email-confirmation-dialog/EmailConfirmationDialog.module.scss'
+import s from './ProfilePhotoDialog.module.scss'
 
 type ProfilePhotoDialogProps = {
   isOpen?: boolean
@@ -32,15 +33,14 @@ export const ProfilePhotoDialog = ({ isOpen, onOpenChange }: ProfilePhotoDialogP
             </Button>
           </DialogClose>
         </DialogHeader>
-        <DialogBody>
+        <DialogBody className={s.body}>
           <UploadFileError errorText={'ERROR_TEXT'} />
-          <Typography variant={'regular_14'}>{`BODY`}</Typography>
-        </DialogBody>
-        <DialogFooter className={s.footer}>
+          <Image alt={'dummy'} className={s.image} height={222} src={'/dummy_1.png'} width={228} />
           <Button className={s.button} onClick={() => {}} variant={'primary'}>
             {'Select from Computer'}
           </Button>
-        </DialogFooter>
+        </DialogBody>
+        <DialogFooter className={s.footer}></DialogFooter>
       </DialogContent>
     </DialogRoot>
   )
