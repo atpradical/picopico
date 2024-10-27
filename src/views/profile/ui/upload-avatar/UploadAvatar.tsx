@@ -3,19 +3,22 @@ import { useState } from 'react'
 import { ProfilePhotoDialog } from '@/views/profile/ui/profile-photo-dialog'
 import { Avatar, Button, CloseOutlineIcon } from '@atpradical/picopico-ui-kit'
 
-import s from './UploadAvatarForm.module.scss'
+import s from './UploadAvatar.module.scss'
 
-type UploadAvatarFormProps = {}
+type UploadAvatarProps = {
+  avatarImage: string
+}
 
-export const UploadAvatarForm = (props: UploadAvatarFormProps) => {
+export const UploadAvatar = ({ avatarImage }: UploadAvatarProps) => {
   const [isUploadAvatarDialogOpen, setIsUploadAvatarDialogOpen] = useState(false)
 
   return (
     <div className={s.avatarBlock}>
       <div className={s.avatarWrapper}>
-        <Avatar size={'m'} src={''} />
+        <Avatar size={'m'} src={avatarImage} />
         <div className={s.buttonWrapper}>
-          <Button className={s.closeButton} variant={'icon'}>
+          {/*  // todo: add translation*/}
+          <Button className={s.closeButton} title={'delete avatar'} variant={'icon'}>
             <CloseOutlineIcon className={s.closeIcon} />
           </Button>
         </div>
@@ -25,6 +28,7 @@ export const UploadAvatarForm = (props: UploadAvatarFormProps) => {
       </Button>
       {/*todo: complete this section*/}
       <ProfilePhotoDialog
+        avatarImage={avatarImage}
         isOpen={isUploadAvatarDialogOpen}
         onOpenChange={setIsUploadAvatarDialogOpen}
       />

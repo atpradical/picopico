@@ -19,3 +19,6 @@ export const ABOUT_ME_REGEX = /^[0-9a-zA-ZА-Яа-я!"#$%&'()*+,\-.:;<=>?@[\]^_`
 
 // countriesApi constants: request for cities
 export const MAX_CITY_POPULATION = 500000
+
+// upload image limits
+export const AVATAR_MAX_FILE_SIZE = 10000000 // 10MB in bytes

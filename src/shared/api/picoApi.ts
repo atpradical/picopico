@@ -5,5 +5,5 @@ export const picoApi = createApi({
   baseQuery: baseQueryWithReauth,
   endpoints: () => ({}),
   reducerPath: 'picoApi',
-  tagTypes: ['Me', 'Devices'],
+  tagTypes: ['Me', 'Devices', 'Profile'],
 })
