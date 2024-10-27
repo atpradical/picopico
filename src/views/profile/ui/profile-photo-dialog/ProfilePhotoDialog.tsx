@@ -1,38 +1,30 @@
-import { UploadFileError } from '@/shared/ui/components/upload-file-error'
+import { HiddenDialogComponents, UploadFileError } from '@/shared/ui/components'
 import {
   Button,
   CloseOutlineIcon,
   DialogBody,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogRoot,
-  DialogTitle,
   Typography,
 } from '@atpradical/picopico-ui-kit'
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 import s from '@/shared/ui/components/email-confirmation-dialog/EmailConfirmationDialog.module.scss'
 
 type ProfilePhotoDialogProps = {
   isOpen?: boolean
-  onOpenChange?: () => void
+  onOpenChange?: (open: boolean) => void
 }
 export const ProfilePhotoDialog = ({ isOpen, onOpenChange }: ProfilePhotoDialogProps) => {
   return (
     <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
       <DialogContent className={s.content} overlayClassName={s.overlay}>
-        <VisuallyHidden asChild>
-          <DialogTitle>{'TITLE'}</DialogTitle>
-        </VisuallyHidden>
-        <VisuallyHidden>
-          <DialogDescription>{'DESCRIPTION'}</DialogDescription>
-        </VisuallyHidden>
+        <HiddenDialogComponents description={'Add a Profile Photo'} title={'Add a Profile Photo'} />
         <DialogHeader className={s.header}>
           <Typography as={'h3'} variant={'h3'}>
-            {'HEADER'}
+            {'Add a Profile Photo'}
           </Typography>
           <DialogClose asChild>
             <Button title={'close'} variant={'icon'}>
@@ -46,7 +38,7 @@ export const ProfilePhotoDialog = ({ isOpen, onOpenChange }: ProfilePhotoDialogP
         </DialogBody>
         <DialogFooter className={s.footer}>
           <Button className={s.button} onClick={() => {}} variant={'primary'}>
-            {'BUTTON'}
+            {'Select from Computer'}
           </Button>
         </DialogFooter>
       </DialogContent>

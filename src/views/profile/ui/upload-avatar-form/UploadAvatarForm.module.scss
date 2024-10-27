@@ -1,0 +1,40 @@
+.avatarBlock {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-start;
+
+  margin-top: 24px;
+}
+
+.avatarWrapper {
+  position: relative;
+}
+
+.buttonWrapper {
+  position: absolute;
+  top: 4%;
+  right: 11%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: 28px;
+  height: 28px;
+
+  background-color: var(--color-dark-900);
+  border-radius: var(--border-radius-rounded);
+}
+
+.closeButton {
+  background-color: var(--color-danger-500);
+  border-radius: var(--border-radius-rounded);
+}
+
+.closeIcon {
+  width: 20px;
+  height: 20px;
+}

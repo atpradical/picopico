@@ -1,6 +1,7 @@
 import { LocaleLogoutDialog } from '@/locales/en'
 import { useLogoutMutation } from '@/shared/api/auth/auth.api'
 import { Paths } from '@/shared/enums'
+import { HiddenDialogComponents } from '@/shared/ui/components'
 import { showErrorToast } from '@/shared/utils'
 import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
 import {
@@ -9,14 +10,11 @@ import {
   DialogBody,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogRoot,
-  DialogTitle,
   Typography,
 } from '@atpradical/picopico-ui-kit'
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 import { useRouter } from 'next/router'
 
 import s from './LogoutDialog.module.scss'
@@ -51,12 +49,10 @@ export function LogoutDialog({ email, isOpen, onOpenChange, t }: LogoutDialogPro
   return (
     <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
       <DialogContent className={s.content}>
-        <VisuallyHidden asChild>
-          <DialogTitle>{t.accessibilityTitle}</DialogTitle>
-        </VisuallyHidden>
-        <VisuallyHidden>
-          <DialogDescription>{t.accessibilityDescription}</DialogDescription>
-        </VisuallyHidden>
+        <HiddenDialogComponents
+          description={t.accessibilityDescription}
+          title={t.accessibilityTitle}
+        />
         <DialogHeader className={s.header}>
           <Typography as={'h3'} variant={'h3'}>
             {t.visibleTitle}

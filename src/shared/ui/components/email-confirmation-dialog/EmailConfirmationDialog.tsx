@@ -1,18 +1,16 @@
 import { LocaleEmailConfirmationDialog } from '@/locales/en'
+import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Button,
   CloseOutlineIcon,
   DialogBody,
   DialogClose,
   DialogContent,
-  DialogDescription,
   DialogFooter,
   DialogHeader,
   DialogRoot,
-  DialogTitle,
   Typography,
 } from '@atpradical/picopico-ui-kit'
-import { VisuallyHidden } from '@radix-ui/react-visually-hidden'
 
 import s from './EmailConfirmationDialog.module.scss'
 
@@ -35,12 +33,10 @@ export const EmailConfirmationDialog = ({
   return (
     <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
       <DialogContent className={s.content} overlayClassName={s.overlay}>
-        <VisuallyHidden asChild>
-          <DialogTitle>{t.accessibilityTitle}</DialogTitle>
-        </VisuallyHidden>
-        <VisuallyHidden>
-          <DialogDescription>{t.accessibilityDescription}</DialogDescription>
-        </VisuallyHidden>
+        <HiddenDialogComponents
+          description={t.accessibilityDescription}
+          title={t.accessibilityTitle}
+        />
         <DialogHeader className={s.header}>
           <Typography as={'h3'} variant={'h3'}>
             {t.visibleTitle}
