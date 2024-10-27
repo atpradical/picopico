@@ -19,6 +19,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
   const { t } = useTranslation()
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
+  // todo: удалить этот хардкод, заменить на реальный email зарегистрированного пользователя
   const email = 'test@test.com'
 
   return (

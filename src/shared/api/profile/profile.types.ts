@@ -31,3 +31,7 @@ export type UpdateUserProfileArgs = {
   region?: string
   userName?: string
 }
+
+export type UploadAvatarArgs = {
+  file: Nullable<File>
+}
