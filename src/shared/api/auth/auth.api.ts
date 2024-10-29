@@ -84,6 +84,10 @@ export const authApi = picoApi.injectEndpoints({
         }),
       }),
       logout: builder.mutation<void, void>({
+        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+          localStorage.removeItem('accessToken')
+          dispatch(authApi.util.invalidateTags(['Me']))
+        },
         query: () => ({
           method: 'POST',
           url: '/v1/auth/logout',

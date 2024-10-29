@@ -15,6 +15,20 @@ import { termsOfServicePage } from '@/locales/ru/terms-of-service-page'
 import { validation } from '@/locales/ru/validation'
 
 export const ru: LocaleType = {
+  appHeader: {
+    signInButton: 'Войти',
+    signUpButton: 'Зарегистрироваться',
+  },
+  appSidebar: {
+    createButton: 'Создать',
+    favouritesLink: 'Избранное',
+    homeLink: 'Главная',
+    logOutButton: 'Выйти',
+    messagesLink: 'Сообщения',
+    profileLink: 'Профиль',
+    searchButton: 'Поиск',
+    statisticsLink: 'Статистика',
+  },
   confirmEmailPage: confirmEmailPage,
   createNewPasswordForm: createNewPasswordForm,
   deleteAvatarDialog: deleteAvatarDialog,

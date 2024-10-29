@@ -1,6 +1,7 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useContext, useState } from 'react'
 
 import { useLogoutMutation } from '@/shared/api'
+import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { ActionConfirmDialog } from '@/shared/ui/components'
@@ -18,7 +19,6 @@ import {
   PersonIcon,
   PersonOutlineIcon,
   PlusSquareIcon,
-  PlusSquareOutlineIcon,
   SearchIcon,
   SearchOutlineIcon,
   TrendingUpIcon,
@@ -37,18 +37,17 @@ type SideBarRef = ElementRef<'nav'>
 export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...rest }, ref) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { meData } = useContext(AuthContext)
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
   const [openCreatePostDialog, setOpenCreatePostDialog] = useState(false)
 
-  // todo: удалить этот хардкод, заменить на реальный email зарегистрированного пользователя
-  const email = 'test@test.com'
+  const email = meData?.email
 
   const [logout] = useLogoutMutation()
 
   const logoutHandler = async () => {
     try {
       await logout().unwrap()
-      localStorage.removeItem('accessToken')
       router.push(Paths.logIn)
     } catch (e) {
       const error = getErrorMessageData(e)
@@ -72,33 +71,16 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
           ) : (
             <HomeOutlineIcon className={s.icon} />
           )}
-          {/*todo: добавить переводы*/}
-          {'Home'}
+          {t.appSidebar.homeLink}
         </Typography>
-        {/*<Typography*/}
-        {/*  as={Link}*/}
-        {/*  className={s.title}*/}
-        {/*  data-active={router.pathname === Paths.create}*/}
-        {/*  href={Paths.create}*/}
-        {/*  variant={'medium_14'}*/}
-        {/*>*/}
-        {/*  {router.pathname === Paths.create ? (*/}
-        {/*    <PlusSquareIcon className={s.icon} />*/}
-        {/*  ) : (*/}
-        {/*    <PlusSquareOutlineIcon className={s.icon} />*/}
-        {/*  )}*/}
-        {/*  /!*todo: добавить переводы*!/*/}
-        {/*  {'Create'}*/}
-        {/*</Typography>*/}
         <Button
-          className={clsx(s.title, s.fontMedium)}
+          className={s.title}
           fullWidth
           onClick={() => setOpenCreatePostDialog(true)}
           variant={'icon'}
         >
           <PlusSquareIcon className={s.icon} />
-          {/*todo: добавить переводы*/}
-          {'Create'}
+          {t.appSidebar.createButton}
         </Button>
         <Typography
           as={Link}
@@ -112,8 +94,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
           ) : (
             <PersonOutlineIcon className={s.icon} />
           )}
-          {/*todo: добавить переводы*/}
-          {'My Profile'}
+          {t.appSidebar.profileLink}
         </Typography>
         <Typography
           as={Link}
@@ -127,8 +108,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
           ) : (
             <MessageCircleOutlineIcon className={s.icon} />
           )}
-          {/*todo: добавить переводы*/}
-          {'Messenger'}
+          {t.appSidebar.messagesLink}
         </Typography>
         <Typography
           as={Link}
@@ -142,8 +122,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
           ) : (
             <SearchOutlineIcon className={s.icon} />
           )}
-          {/*todo: добавить переводы*/}
-          {'Search'}
+          {t.appSidebar.searchButton}
         </Typography>
       </div>
       <div className={s.group}>
@@ -159,8 +138,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
           ) : (
             <TrendingUpOutlineIcon className={s.icon} />
           )}
-          {/*todo: добавить переводы*/}
-          {'Statistics'}
+          {t.appSidebar.statisticsLink}
         </Typography>
         <Typography
           as={Link}
@@ -174,14 +152,13 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
           ) : (
             <BookmarkOutlineIcon className={s.icon} />
           )}
-          {/*todo: добавить переводы*/}
-          {'Favourites'}
+          {t.appSidebar.favouritesLink}
         </Typography>
       </div>
       <div className={s.group}>
         <Typography as={'button'} className={s.title} onClick={() => setOpenLogoutDialog(true)}>
           <LogOutOutlineIcon className={s.icon} />
-          Log Out
+          {t.appSidebar.logOutButton}
         </Typography>
       </div>
       {openLogoutDialog && (

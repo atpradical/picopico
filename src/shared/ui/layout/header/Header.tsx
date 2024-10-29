@@ -2,6 +2,7 @@ import { useContext } from 'react'
 
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
+import { useTranslation } from '@/shared/hooks'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
 import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
@@ -14,6 +15,7 @@ export type HeaderProps = {
 }
 
 export const Header = ({ countNotification }: HeaderProps) => {
+  const { t } = useTranslation()
   const router = useRouter()
   const { isAuth } = useContext(AuthContext)
 
@@ -37,10 +39,10 @@ export const Header = ({ countNotification }: HeaderProps) => {
         {!isAuth && (
           <div className={s.buttonContainer}>
             <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
-              Log in
+              {t.appHeader.signInButton}
             </Button>
             <Button as={Link} className={s.button} href={Paths.signUp} variant={'primary'}>
-              Sign up
+              {t.appHeader.signUpButton}
             </Button>
           </div>
         )}

@@ -26,6 +26,20 @@ export type LocaleLinkExpired = typeof en.expiredLink
 export type LocaleCreateNewPasswordForm = typeof en.createNewPasswordForm
 
 export const en = {
+  appHeader: {
+    signInButton: 'Sign in',
+    signUpButton: 'Sign up',
+  },
+  appSidebar: {
+    createButton: 'Create',
+    favouritesLink: 'Favourites',
+    homeLink: 'Home',
+    logOutButton: 'Log Out',
+    messagesLink: 'Messenger',
+    profileLink: 'My Profile',
+    searchButton: 'Search',
+    statisticsLink: 'Statistics',
+  },
   confirmEmailPage: confirmEmailPage,
   createNewPasswordForm: createNewPasswordForm,
   deleteAvatarDialog: deleteAvatarDialog,
