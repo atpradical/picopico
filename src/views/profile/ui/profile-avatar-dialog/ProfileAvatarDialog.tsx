@@ -7,7 +7,6 @@ import { HiddenDialogComponents, UploadFileError } from '@/shared/ui/components'
 import { PlaceholderImage } from '@/shared/ui/components/placeholder-image'
 import {
   Button,
-  Card,
   CloseOutlineIcon,
   DialogBody,
   DialogClose,
@@ -15,7 +14,6 @@ import {
   DialogFooter,
   DialogHeader,
   DialogRoot,
-  ImageOutlineIcon,
   Typography,
 } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
@@ -65,7 +63,7 @@ export const ProfileAvatarDialog = ({
             <Image
               alt={t.profileAvatarDialog.avatarAltDescription}
               className={s.image}
-              content={''}
+              content={''} // todo: проверить для чего этот нужен этот пропс
               height={340}
               src={avatarPreview ?? ''}
               width={332}
@@ -74,7 +72,7 @@ export const ProfileAvatarDialog = ({
             <PlaceholderImage />
           )}
           {!isUploadingComplete ? (
-            <Button as={'label'} className={s.button} onClick={() => {}} variant={'primary'}>
+            <Button as={'label'} className={s.button} variant={'primary'}>
               <input
                 accept={ALLOWED_IMAGE_UPLOAD_TYPES.join(', ')}
                 hidden

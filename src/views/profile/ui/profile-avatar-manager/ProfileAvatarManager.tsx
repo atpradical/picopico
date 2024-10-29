@@ -21,7 +21,7 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
   const [isUploadAvatarDialogOpen, setIsUploadAvatarDialogOpen] = useState(false)
   const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState(false)
   const [deleteAvatar] = useDeleteAvatarMutation()
-  const [newAvatarImage, setNewAvatar] = useState<Nullable<File | string>>(avatarImage ?? null)
+  const [newAvatar, setNewAvatar] = useState<Nullable<File | string>>(avatarImage ?? null)
   const [avatarPreview, setAvatarPreview] = useState<Nullable<string>>(avatarImage ?? null)
   const [isUploadingError, setIsUploadingError] = useState('')
   const [isUploadingComplete, setIsUploadingComplete] = useState(false)
@@ -29,8 +29,8 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
   const [uploadAvatar] = useUploadAvatarMutation()
 
   useEffect(() => {
-    if (newAvatarImage && typeof newAvatarImage !== 'string') {
-      const newPreview = URL.createObjectURL(newAvatarImage)
+    if (newAvatar && typeof newAvatar !== 'string') {
+      const newPreview = URL.createObjectURL(newAvatar)
 
       if (avatarPreview) {
         URL.revokeObjectURL(avatarPreview)
@@ -41,7 +41,7 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
     }
     // 'preview' mustn't be added to avoid cyclical dependence
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newAvatarImage])
+  }, [newAvatar])
 
   const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
@@ -72,7 +72,7 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
   const saveImageHandler = async () => {
     try {
       await uploadAvatar({
-        file: typeof newAvatarImage === 'string' ? null : newAvatarImage,
+        file: typeof newAvatar === 'string' ? null : newAvatar,
       }).unwrap()
       setIsUploadAvatarDialogOpen(false)
       setIsUploadingComplete(false)

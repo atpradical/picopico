@@ -1,6 +1,10 @@
 .content {
   width: 100%;
-  max-width: 500px;
+  max-width: 492px;
+}
+
+.wide {
+  max-width: 972px;
 }
 
 .overlay {
@@ -22,11 +26,26 @@
   justify-content: center;
 }
 
-// .image {
-//  margin: 24px 0 60px;
-//  object-fit: cover;
-//  border-radius: var(--border-radius-xs);
-// }
+.filteringBody {
+  display: flex;
+  align-items: center;
+  padding: 0;
+}
+
+.withPreview {
+  padding: 0;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.previewSizes {
+  position: relative;
+  width: 490px;
+  height: 530px
+}
+
 
 .button {
   margin-bottom: 24px;

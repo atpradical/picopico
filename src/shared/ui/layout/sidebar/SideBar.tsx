@@ -1,11 +1,13 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useContext, useState } from 'react'
 
+import { postsActions } from '@/features/posts/api/posts.reducer'
+import { CreatePostDialog } from '@/features/posts/ui'
 import { useLogoutMutation } from '@/shared/api'
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
+import { useAppDispatch } from '@/shared/hooks/useAppDispatch'
 import { ActionConfirmDialog } from '@/shared/ui/components'
-import { CreateNewPostDialog } from '@/shared/ui/components/create-new-post-dialog'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
   BookmarkIcon,
@@ -38,10 +40,14 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
   const router = useRouter()
   const { t } = useTranslation()
   const { meData } = useContext(AuthContext)
-  const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
-  const [openCreatePostDialog, setOpenCreatePostDialog] = useState(false)
 
-  const email = meData?.email
+  const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
+
+  const dispatch = useAppDispatch()
+
+  const toggleCreatePostDialogHandler = (open: boolean) => {
+    dispatch(postsActions.togglePostCreationDialog({ isOpen: open }))
+  }
 
   const [logout] = useLogoutMutation()
 
@@ -76,7 +82,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
         <Button
           className={s.title}
           fullWidth
-          onClick={() => setOpenCreatePostDialog(true)}
+          onClick={() => toggleCreatePostDialogHandler(true)}
           variant={'icon'}
         >
           <PlusSquareIcon className={s.icon} />
@@ -167,14 +173,14 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
           accessibilityTitle={t.logoutDialog.accessibilityTitle}
           confirmButtonText={t.logoutDialog.confirmButton}
           isOpen={openLogoutDialog}
-          message={`${t.logoutDialog.visibleBodyText} ${email}`}
+          message={`${t.logoutDialog.visibleBodyText} ${meData?.email}`}
           onConfirm={logoutHandler}
           onOpenChange={setOpenLogoutDialog}
           rejectButtonText={t.logoutDialog.rejectButton}
           title={t.logoutDialog.visibleTitle}
         />
       )}
-      <CreateNewPostDialog onOpenChange={setOpenCreatePostDialog} open={openCreatePostDialog} />
+      <CreatePostDialog onOpenChange={toggleCreatePostDialogHandler} />
     </nav>
   )
 })
