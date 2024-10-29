@@ -115,7 +115,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
               onConfirm={() => {}}
               title={'Publishing'}
             />
-            <PublishingBody />
+            <PublishingBody onPublish={() => {}} />
           </>
         )}
       </DialogContent>
