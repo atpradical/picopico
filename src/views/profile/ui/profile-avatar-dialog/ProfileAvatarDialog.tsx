@@ -4,6 +4,7 @@ import { ALLOWED_IMAGE_UPLOAD_TYPES } from '@/shared/constants'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { HiddenDialogComponents, UploadFileError } from '@/shared/ui/components'
+import { PlaceholderImage } from '@/shared/ui/components/placeholder-image'
 import {
   Button,
   Card,
@@ -70,9 +71,7 @@ export const ProfileAvatarDialog = ({
               width={332}
             />
           ) : (
-            <Card className={s.noImageCard}>
-              <ImageOutlineIcon className={s.icon} />
-            </Card>
+            <PlaceholderImage />
           )}
           {!isUploadingComplete ? (
             <Button as={'label'} className={s.button} onClick={() => {}} variant={'primary'}>
@@ -88,7 +87,7 @@ export const ProfileAvatarDialog = ({
             <Button onClick={onSave}>{t.profileAvatarDialog.confirmButton}</Button>
           )}
         </DialogBody>
-        <DialogFooter className={s.footer}></DialogFooter>
+        <DialogFooter />
       </DialogContent>
     </DialogRoot>
   )
