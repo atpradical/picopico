@@ -1,18 +1,14 @@
 import { Nullable } from '@/shared/types'
 
-export type Post = {
-  content: Nullable<File | string>
-  description: string
-  id: string
-}
-
 export type PostsState = {
   description: string
-  isOpen: boolean
-  newPost: Nullable<File> // todo: заменить на массив постов
-  postPreview: Nullable<string>
-  step: PostCreationStep
-  uploadingError: string
+  dialogMeta: {
+    currentStep: PostCreationStep
+    isDialogOpen: boolean
+    uploadError: string
+  }
+  imagesList: File[]
+  postPreview: Nullable<string> // todo: заменить на массив постов previewList
 }
 
 export enum PostCreationStep {

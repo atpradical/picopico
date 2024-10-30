@@ -3,16 +3,17 @@ import { useSelector } from 'react-redux'
 
 import { postsActions } from '@/features/posts/api/posts.reducer'
 import { POST_ALLOWED_UPLOAD_TYPES, POST_MAX_FILE_SIZE } from '@/features/posts/config'
-import { PostCreationStep, selectPosts } from '@/features/posts/model'
+import { PostCreationStep, selectPostsAllData } from '@/features/posts/model'
 import {
   CroppingBody,
   FilteringBody,
   PublishingBody,
   StartBody,
 } from '@/features/posts/ui/create-post-dialog/dialog-bodies'
-import { useCreatePostImageMutation } from '@/shared/api/posts'
+import { useCreatePostImageMutation, useCreatePostMutation } from '@/shared/api/posts'
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch'
 import { HiddenDialogComponents } from '@/shared/ui/components'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { DialogContent, DialogRoot, clsx } from '@atpradical/picopico-ui-kit'
 
 import s from './CreatePostDialog.module.scss'
@@ -23,11 +24,11 @@ type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 
 export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogProps) => {
   const dispatch = useAppDispatch()
-  const { isOpen, newPost, postPreview, step } = useSelector(selectPosts)
+  const { description, dialogMeta, imagesList, postPreview } = useSelector(selectPostsAllData)
 
   useEffect(() => {
-    if (newPost && typeof newPost !== 'string') {
-      const newPreview = URL.createObjectURL(newPost)
+    if (imagesList.length) {
+      const newPreview = URL.createObjectURL(imagesList[0])
 
       if (postPreview) {
         URL.revokeObjectURL(postPreview)
@@ -38,7 +39,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     }
     // 'preview' mustn't be added to avoid cyclical dependence
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [newPost])
+  }, [imagesList])
 
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
@@ -71,26 +72,44 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     dispatch(postsActions.setPostsCreationStep({ step }))
   }
 
-  const isWide = step === PostCreationStep.Filtering || step === PostCreationStep.Publishing
+  const isWide =
+    dialogMeta.currentStep === PostCreationStep.Filtering ||
+    dialogMeta.currentStep === PostCreationStep.Publishing
 
   const [createPostImage] = useCreatePostImageMutation()
-  // const [createPost] = useCreatePostMutation()
+  const [createPost] = useCreatePostMutation()
 
-  const publishPostHandler = () => {
-    createPostImage({ file: newPost ?? null })
+  const publishPostHandler = async () => {
+    const files = imagesList.map(image => image)
+
+    try {
+      const { images } = await createPostImage({
+        file: files,
+      }).unwrap()
+
+      const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
+
+      await createPost({ childrenMetadata: uploadIdList, description: description }).unwrap()
+      dispatch(postsActions.resetPosts())
+      onOpenChange?.(false)
+    } catch (e) {
+      const errors = getErrorMessageData(e)
+
+      showErrorToast(errors)
+    }
   }
 
   return (
-    <DialogRoot onOpenChange={onOpenChange} open={isOpen} {...rest}>
+    <DialogRoot onOpenChange={onOpenChange} open={dialogMeta.isDialogOpen} {...rest}>
       <DialogContent className={clsx(s.content, isWide && s.wide)} overlayClassName={s.overlay}>
-        {step === PostCreationStep.Idle && (
+        {dialogMeta.currentStep === PostCreationStep.Idle && (
           <>
             <HiddenDialogComponents description={'HIDDEN DESCRIPTION'} title={'HIDDEN TITLE'} />
             <StartHeader />
             <StartBody onUpload={uploadPostHandler} />
           </>
         )}
-        {step === PostCreationStep.Cropping && (
+        {dialogMeta.currentStep === PostCreationStep.Cropping && (
           <>
             <HiddenDialogComponents description={'HIDDEN DESCRIPTION'} title={'HIDDEN TITLE'} />
             <ProgressHeader
@@ -99,10 +118,10 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
               onConfirm={() => navigationButtonHandler(PostCreationStep.Filtering)}
               title={'Cropping'}
             />
-            <CroppingBody />
+            <CroppingBody onUpload={uploadPostHandler} />
           </>
         )}
-        {step === PostCreationStep.Filtering && (
+        {dialogMeta.currentStep === PostCreationStep.Filtering && (
           <>
             <HiddenDialogComponents description={'HIDDEN DESCRIPTION'} title={'HIDDEN TITLE'} />
             <ProgressHeader
@@ -114,7 +133,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             <FilteringBody />
           </>
         )}
-        {step === PostCreationStep.Publishing && (
+        {dialogMeta.currentStep === PostCreationStep.Publishing && (
           <>
             <HiddenDialogComponents description={'HIDDEN DESCRIPTION'} title={'HIDDEN TITLE'} />
             <ProgressHeader

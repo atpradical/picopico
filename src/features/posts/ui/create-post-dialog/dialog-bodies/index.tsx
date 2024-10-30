@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { postsActions } from '@/features/posts/api'
 import { POST_ALLOWED_UPLOAD_TYPES, POST_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
-import { selectPostPreview, selectPostsUploadingError } from '@/features/posts/model'
+import { selectPostPreview, selectPostsDialogMeta } from '@/features/posts/model'
 import { useAppDispatch } from '@/shared/hooks'
 import { UploadFileError } from '@/shared/ui/components'
 import { PlaceholderImage } from '@/shared/ui/components/placeholder-image'
@@ -18,11 +18,11 @@ type StartBodyProps = {
 } & ComponentPropsWithoutRef<typeof DialogBody>
 
 export const StartBody = ({ onUpload, ...rest }: StartBodyProps) => {
-  const uploadingError = useSelector(selectPostsUploadingError)
+  const { uploadError } = useSelector(selectPostsDialogMeta)
 
   return (
     <DialogBody className={s.body} {...rest}>
-      {uploadingError && <UploadFileError errorText={uploadingError} />}
+      {uploadError && <UploadFileError errorText={uploadError} />}
       <PlaceholderImage />
       <Button as={'label'} className={s.button} variant={'primary'}>
         <input
@@ -46,21 +46,35 @@ export const StartBody = ({ onUpload, ...rest }: StartBodyProps) => {
   )
 }
 
-type CroppingBodyProps = ComponentPropsWithoutRef<typeof DialogBody>
-export const CroppingBody = (props: CroppingBodyProps) => {
+type CroppingBodyProps = {
+  onUpload: (e: ChangeEvent<HTMLInputElement>) => void
+} & ComponentPropsWithoutRef<typeof DialogBody>
+export const CroppingBody = ({ onUpload, ...props }: CroppingBodyProps) => {
   const postPreview = useSelector(selectPostPreview)
 
   return (
-    <DialogBody className={clsx(s.body, s.withPreview)} {...props}>
-      <div className={s.previewSizes}>
-        <Image
-          alt={'Изображение нового поста'} // todo: добавить переводы
-          className={s.image} // todo: определиться с cover или contain
-          fill
-          src={postPreview ?? ''}
+    <>
+      <DialogBody className={clsx(s.body, s.withPreview)} {...props}>
+        <div className={s.previewSizes}>
+          <Image
+            alt={'Изображение нового поста'} // todo: добавить переводы
+            className={s.image} // todo: определиться с cover или contain
+            fill
+            src={postPreview ?? ''}
+          />
+        </div>
+      </DialogBody>
+      <Button as={'label'} className={s.button} variant={'primary'}>
+        <input
+          accept={POST_ALLOWED_UPLOAD_TYPES.join(', ')}
+          hidden
+          onChange={onUpload}
+          type={'file'}
         />
-      </div>
-    </DialogBody>
+        {/*// todo: добавить переводы*/}
+        {'Select from Computer'}
+      </Button>
+    </>
   )
 }
 

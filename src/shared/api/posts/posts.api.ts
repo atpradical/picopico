@@ -10,7 +10,8 @@ export const postsApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       createPost: builder.mutation<CreatePostResponse, CreatePostArgs>({
-        query: () => ({
+        query: body => ({
+          body,
           method: 'POST',
           url: `/v1/posts`,
         }),
@@ -18,11 +19,12 @@ export const postsApi = picoApi.injectEndpoints({
       createPostImage: builder.mutation<CreatePostImageResponse, CreatePostImageArgs>({
         query: body => {
           const { file } = body
-
           const formData = new FormData()
 
-          if (file) {
-            formData.append('file', file)
+          if (file && file.length) {
+            file.forEach(image => {
+              formData.append('file', image)
+            })
           }
 
           return {

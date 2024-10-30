@@ -38,7 +38,7 @@ export type OwnerData = {
 }
 
 export type CreatePostImageArgs = {
-  file: Nullable<File>
+  file: Nullable<File[]>
 }
 
 export type CreatePostImageResponse = {
