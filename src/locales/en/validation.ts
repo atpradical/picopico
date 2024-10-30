@@ -25,6 +25,9 @@ export const validation = {
     noWhiteSpace: 'Whitespace characters are not allowed',
   },
   passwordsMatch: 'Passwords must match',
+  postDescription: {
+    maxLength: 'Maximum number of characters 500',
+  },
   recaptcha: 'Please complete the reCAPTCHA',
   requiredField: 'Required field',
   userName: {

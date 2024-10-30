@@ -1,3 +1,4 @@
+import { POST_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
 import {
   LocaleValidationAboutMe,
   LocaleValidationName,
@@ -67,3 +68,6 @@ export const aboutMeScheme = (args: LocaleValidationAboutMe) =>
       message: args.allowedSymbols,
     })
     .or(z.literal('')) // Допускаем пустую строку
+
+export const postDescriptionScheme = (message: string) =>
+  z.string().trim().max(POST_DESCRIPTION_MAX_LENGTH, message).or(z.literal('')) // Допускаем пустую строку

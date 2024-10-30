@@ -1,5 +1,6 @@
 import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
+import { POST_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
 import { TextArea, TextAreaProps, Typography } from '@atpradical/picopico-ui-kit'
 
 import s from './ControlledTextArea.module.scss'
@@ -37,7 +38,7 @@ export const ControlledTextArea = <T extends FieldValues>({
       <TextArea errorText={errorText ?? error?.message} {...props} {...field} />
       {showCounter && (
         <Typography className={s.charactersCount} variant={'small'}>
-          500/500
+          {`${field.value?.length ?? '0'}/${POST_DESCRIPTION_MAX_LENGTH}`}
         </Typography>
       )}
     </>

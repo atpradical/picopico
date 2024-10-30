@@ -2,7 +2,7 @@ import { ChangeEvent, ComponentPropsWithoutRef, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { postsActions } from '@/features/posts/api/posts.reducer'
-import { ALLOWED_POST_UPLOAD_TYPES, POST_MAX_FILE_SIZE } from '@/features/posts/config'
+import { POST_ALLOWED_UPLOAD_TYPES, POST_MAX_FILE_SIZE } from '@/features/posts/config'
 import { PostCreationStep, selectPosts } from '@/features/posts/model'
 import {
   CroppingBody,
@@ -44,7 +44,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       dispatch(postsActions.setPostUploadingError({ error: '' }))
       const file = e.target.files[0]
 
-      if (!ALLOWED_POST_UPLOAD_TYPES.includes(file.type)) {
+      if (!POST_ALLOWED_UPLOAD_TYPES.includes(file.type)) {
         dispatch(postsActions.setPostUploadingError({ error: 'Не верный формат файла' })) // todo: добавить переводы.
 
         return

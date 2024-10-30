@@ -1,29 +1,48 @@
 import { useForm } from 'react-hook-form'
 
+import { PostDescriptionFormFields, postDescriptionSchemeCreator } from '@/features/posts/model'
+import { useTranslation } from '@/shared/hooks'
 import { ControlledTextArea } from '@/shared/ui/form-components'
 import { Avatar, Typography } from '@atpradical/picopico-ui-kit'
+import { zodResolver } from '@hookform/resolvers/zod'
 import * as Separator from '@radix-ui/react-separator'
 
 import s from './post-description-form.module.scss'
 
-type Props = {}
+type Props = {
+  // errors:
+}
 export const PostDescriptionForm = (props: Props) => {
   const {
-    control,
-    // formState: { dirtyFields, isValid },
-    handleSubmit,
-    // setError,
-  } = useForm<any>({
+    t: { validation },
+  } = useTranslation()
+  const { control, handleSubmit } = useForm<PostDescriptionFormFields>({
     defaultValues: {
-      postDescription: '',
+      description: '',
     },
     mode: 'onTouched',
     reValidateMode: 'onChange',
-    // resolver: zodResolver(profileDataSchemeCreator(validation)),
+    resolver: zodResolver(postDescriptionSchemeCreator(validation)),
   })
 
   const formHandler = handleSubmit(async data => {
     console.log(data)
+    // try {
+    //     await updateProfile({
+    //         ...data,
+    //         dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toLocaleDateString() : '',
+    //     }).unwrap()
+    //
+    //     toaster({ text: profileDataTab.successSettingsChangeMessage })
+    // } catch (e) {
+    //     const errors = getErrorMessageData(e)
+    //
+    //     setFormErrors({
+    //         errors,
+    //         fields: [...(Object.keys(data) as (keyof ProfileFormFields)[])],
+    //         setError,
+    //     })
+    // }
   })
 
   return (
@@ -36,6 +55,7 @@ export const PostDescriptionForm = (props: Props) => {
           label={'Add publication descriptions'} // todo: добавить переводы
           name={'description'}
           placeholder={'Add post description'} // todo: добавить переводы
+          rows={6}
           showCounter
         />
       </form>

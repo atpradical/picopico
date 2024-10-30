@@ -26,6 +26,9 @@ export const validation = {
     noWhiteSpace: 'Использование пробелов запрещено',
   },
   passwordsMatch: 'Пароли должны совпадать',
+  postDescription: {
+    maxLength: 'Максимальное количество символов 500',
+  },
   recaptcha: 'Выполните проверку reCAPTCHA',
   requiredField: 'Обязательное поле',
   userName: {

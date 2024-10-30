@@ -1,7 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import { ALLOWED_POST_UPLOAD_TYPES } from '@/features/posts/config'
+import { POST_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
 import { selectPostPreview, selectPostsUploadingError } from '@/features/posts/model'
 import { PostDescriptionForm } from '@/features/posts/ui/create-post-dialog/post-description-form'
 import { UploadFileError } from '@/shared/ui/components'
@@ -24,7 +24,7 @@ export const StartBody = ({ onUpload, ...rest }: StartBodyProps) => {
       <PlaceholderImage />
       <Button as={'label'} className={s.button} variant={'primary'}>
         <input
-          accept={ALLOWED_POST_UPLOAD_TYPES.join(', ')}
+          accept={POST_ALLOWED_UPLOAD_TYPES.join(', ')}
           hidden
           onChange={onUpload}
           type={'file'}

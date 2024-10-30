@@ -1,4 +1,7 @@
+import { postDescriptionSchemeCreator } from '@/features/posts/model/post-description-scheme-creator'
+import { postDescriptionScheme } from '@/shared/lib/validations'
 import { Nullable } from '@/shared/types'
+import { z } from 'zod'
 
 export type Post = {
   content: string
@@ -14,14 +17,6 @@ export type PostsState = {
   uploadingError: string
 }
 
-// export type PostCreationStep =
-//   | 'COMPLETED'
-//   | 'CROPPING'
-//   | 'FILTERING'
-//   | 'IDLE'
-//   | 'PUBLISHING'
-//   | 'SELECTING'
-
 export enum PostCreationStep {
   Completed = 'COMPLETED',
   Cropping = 'CROPPING',
@@ -30,3 +25,6 @@ export enum PostCreationStep {
   Publishing = 'PUBLISHING',
   Selecting = 'SELECTING',
 }
+
+// form in create post feature
+export type PostDescriptionFormFields = z.infer<ReturnType<typeof postDescriptionSchemeCreator>>
