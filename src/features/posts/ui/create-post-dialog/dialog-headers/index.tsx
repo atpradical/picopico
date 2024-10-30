@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
 import { postsActions } from '@/features/posts/api'
-import { useAppDispatch } from '@/shared/hooks'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import {
   ArrowIosBackIcon,
   Button,
@@ -14,6 +14,9 @@ import {
 import s from './dialog-headers.module.scss'
 
 export const StartHeader = () => {
+  const {
+    t: { createPostDialog },
+  } = useTranslation()
   const dispatch = useAppDispatch()
 
   const closeDialogHandler = () => {
@@ -23,10 +26,14 @@ export const StartHeader = () => {
   return (
     <DialogHeader className={s.header}>
       <Typography as={'h3'} variant={'h3'}>
-        {'Add Photo'}
+        {createPostDialog.dialogTitles.start}
       </Typography>
       <DialogClose asChild>
-        <Button onClick={closeDialogHandler} title={'CLOSE BUTTON'} variant={'icon'}>
+        <Button
+          onClick={closeDialogHandler}
+          title={createPostDialog.buttons.closeButton}
+          variant={'icon'}
+        >
           <CloseOutlineIcon />
         </Button>
       </DialogClose>
@@ -48,9 +55,13 @@ export const ProgressHeader = ({
   title,
   ...rest
 }: ProgressHeaderProps) => {
+  const {
+    t: { createPostDialog },
+  } = useTranslation()
+
   return (
     <DialogHeader className={s.header} {...rest}>
-      <Button onClick={onBack} variant={'icon'}>
+      <Button onClick={onBack} title={createPostDialog.buttons.backButton} variant={'icon'}>
         <ArrowIosBackIcon />
       </Button>
       <Typography as={'h3'} variant={'h3'}>

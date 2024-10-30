@@ -1,5 +1,6 @@
 import { confirmEmailPage } from '@/locales/en/confirm-email-page'
 import { createNewPasswordForm } from '@/locales/en/create-new-password-form'
+import { createPostDialog } from '@/locales/en/create-post-dialog'
 import { deleteAvatarDialog } from '@/locales/en/delete-avatar-dialog'
 import { emailConfirmationDialog } from '@/locales/en/email-confirmation-dialog'
 import { expiredLink } from '@/locales/en/expired-link'
@@ -12,7 +13,6 @@ import { signInPage } from '@/locales/en/sign-in-page'
 import { signUpPage } from '@/locales/en/sign-up-page'
 import { termsOfServicePage } from '@/locales/en/terms-of-service-page'
 import { validation } from '@/locales/en/validation'
-import { ProfileAvatarDialog } from '@/views/profile/ui'
 
 export type LocaleType = typeof en
 export type LocaleValidation = typeof en.validation
@@ -42,6 +42,7 @@ export const en = {
   },
   confirmEmailPage: confirmEmailPage,
   createNewPasswordForm: createNewPasswordForm,
+  createPostDialog: createPostDialog,
   deleteAvatarDialog: deleteAvatarDialog,
   emailConfirmationDialog: emailConfirmationDialog,
   expiredLink: expiredLink,

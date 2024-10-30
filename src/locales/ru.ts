@@ -1,6 +1,7 @@
 import { LocaleType } from '@/locales/en'
 import { confirmEmailPage } from '@/locales/ru/confirm-email-page'
 import { createNewPasswordForm } from '@/locales/ru/create-new-password-form'
+import { createPostDialog } from '@/locales/ru/create-post-dialog'
 import { deleteAvatarDialog } from '@/locales/ru/delete-avatar-dialog'
 import { emailConfirmationDialog } from '@/locales/ru/email-confirmation-dialog'
 import { expiredLink } from '@/locales/ru/expired-link'
@@ -31,6 +32,7 @@ export const ru: LocaleType = {
   },
   confirmEmailPage: confirmEmailPage,
   createNewPasswordForm: createNewPasswordForm,
+  createPostDialog: createPostDialog,
   deleteAvatarDialog: deleteAvatarDialog,
   emailConfirmationDialog: emailConfirmationDialog,
   expiredLink: expiredLink,

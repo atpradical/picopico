@@ -3,7 +3,7 @@ import { Nullable } from '@/shared/types'
 export type PostsState = {
   description: string
   dialogMeta: {
-    currentStep: PostCreationStep
+    currentStep: PostsStep
     isDialogOpen: boolean
     uploadError: string
   }
@@ -11,11 +11,9 @@ export type PostsState = {
   postPreview: Nullable<string> // todo: заменить на массив постов previewList
 }
 
-export enum PostCreationStep {
-  Completed = 'COMPLETED',
-  Cropping = 'CROPPING',
-  Filtering = 'FILTERING',
-  Idle = 'IDLE',
-  Publishing = 'PUBLISHING',
-  Selecting = 'SELECTING',
+export enum PostsStep {
+  Crop = 'CROP',
+  Filters = 'FILTERS',
+  Publish = 'PUBLISH',
+  Start = 'START',
 }

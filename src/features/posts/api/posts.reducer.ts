@@ -1,11 +1,11 @@
-import { PostCreationStep, PostsState } from '@/features/posts/model'
+import { PostsState, PostsStep } from '@/features/posts/model'
 import { Nullable } from '@/shared/types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialPostsState: PostsState = {
   description: '',
   dialogMeta: {
-    currentStep: PostCreationStep.Idle,
+    currentStep: PostsStep.Start,
     isDialogOpen: false,
     uploadError: '',
   },
@@ -27,7 +27,7 @@ const slice = createSlice({
       state.imagesList = []
       state.description = ''
       state.postPreview = null
-      state.dialogMeta.currentStep = PostCreationStep.Idle
+      state.dialogMeta.currentStep = PostsStep.Start
       state.dialogMeta.uploadError = ''
     },
     setPostPreview: (state, action: PayloadAction<{ preview: Nullable<string> }>) => {
@@ -36,7 +36,7 @@ const slice = createSlice({
     setPostUploadingError: (state, action: PayloadAction<{ error: string }>) => {
       state.dialogMeta.uploadError = action.payload.error
     },
-    setPostsCreationStep: (state, action: PayloadAction<{ step: PostCreationStep }>) => {
+    setPostsCreationStep: (state, action: PayloadAction<{ step: PostsStep }>) => {
       state.dialogMeta.currentStep = action.payload.step
     },
     togglePostCreationDialog: (state, action: PayloadAction<{ isOpen: boolean }>) => {
