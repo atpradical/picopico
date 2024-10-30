@@ -1,12 +1,14 @@
 import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import { POST_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
+import { postsActions } from '@/features/posts/api'
+import { POST_ALLOWED_UPLOAD_TYPES, POST_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
 import { selectPostPreview, selectPostsUploadingError } from '@/features/posts/model'
-import { PostDescriptionForm } from '@/features/posts/ui/create-post-dialog/post-description-form'
+import { useAppDispatch } from '@/shared/hooks'
 import { UploadFileError } from '@/shared/ui/components'
 import { PlaceholderImage } from '@/shared/ui/components/placeholder-image'
-import { Button, DialogBody, Typography, clsx } from '@atpradical/picopico-ui-kit'
+import { Avatar, Button, DialogBody, TextArea, Typography, clsx } from '@atpradical/picopico-ui-kit'
+import * as Separator from '@radix-ui/react-separator'
 import Image from 'next/image'
 
 import s from './dialog.bodies.module.scss'
@@ -96,14 +98,21 @@ export const FilteringBody = (props: FilteringBodyProps) => {
 }
 
 type PublishingBodyProps = {
-  onPublish: () => void
+  // onPublish: (data: PostDescriptionFormFields) => void
 } & ComponentPropsWithoutRef<typeof DialogBody>
 
-export const PublishingBody = ({ onPublish, ...rest }: PublishingBodyProps) => {
+export const PublishingBody = (props: PublishingBodyProps) => {
+  const dispatch = useAppDispatch()
   const postPreview = useSelector(selectPostPreview)
 
+  const onDescriptionChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    const description = e.currentTarget.value
+
+    dispatch(postsActions.addPostDescription({ description }))
+  }
+
   return (
-    <DialogBody className={s.filteringBody} {...rest}>
+    <DialogBody className={s.filteringBody} {...props}>
       <div className={s.previewSizes}>
         <Image
           alt={'Изображение нового поста'} // todo: добавить переводы
@@ -112,7 +121,21 @@ export const PublishingBody = ({ onPublish, ...rest }: PublishingBodyProps) => {
           src={postPreview ?? ''}
         />
       </div>
-      <PostDescriptionForm />
+      <div className={s.formContainer} {...props}>
+        <Avatar showUserName size={'s'} userName={'User-Name'} />
+        <TextArea
+          className={s.textArea}
+          counterLimit={POST_DESCRIPTION_MAX_LENGTH}
+          label={'Add publication descriptions'} // todo: добавить переводы
+          onChange={onDescriptionChangeHandler}
+          placeholder={'Add post description'} // todo: добавить переводы
+          rows={6}
+        />
+        <Separator.Root className={s.separator} />
+        <Typography grey style={{ marginTop: '15px', textAlign: 'center' }} variant={'small'}>
+          {'Define "Location" feature is coming soon.'}
+        </Typography>
+      </div>
     </DialogBody>
   )
 }

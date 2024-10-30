@@ -4,7 +4,7 @@ import { useForm } from 'react-hook-form'
 import { useGetCountriesQuery, useLazyGetCitiesQuery } from '@/shared/api/countries'
 import { useUpdateUserProfileMutation } from '@/shared/api/profile'
 import { ResponseGetUserProfile } from '@/shared/api/profile/profile.types'
-import { MAX_CITY_POPULATION } from '@/shared/constants'
+import { MAX_ABOUT_ME_LENGTH, MAX_CITY_POPULATION } from '@/shared/constants'
 import { useTranslation } from '@/shared/hooks'
 import {
   ControlledDatePicker,
@@ -175,6 +175,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
           <ControlledTextArea
             className={s.textArea}
             control={control}
+            counterLimit={MAX_ABOUT_ME_LENGTH}
             defaultValue={data?.aboutMe ?? ''}
             label={profileDataTab.labels.aboutMe}
             name={'aboutMe'}

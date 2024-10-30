@@ -11,15 +11,26 @@ export const postsApi = picoApi.injectEndpoints({
     return {
       createPost: builder.mutation<CreatePostResponse, CreatePostArgs>({
         query: () => ({
-          method: 'post',
-          url: `/v1/posts/image`,
+          method: 'POST',
+          url: `/v1/posts`,
         }),
       }),
       createPostImage: builder.mutation<CreatePostImageResponse, CreatePostImageArgs>({
-        query: () => ({
-          method: 'post',
-          url: `/v1/posts`,
-        }),
+        query: body => {
+          const { file } = body
+
+          const formData = new FormData()
+
+          if (file) {
+            formData.append('file', file)
+          }
+
+          return {
+            body: formData,
+            method: 'POST',
+            url: `/v1/posts/image`,
+          }
+        },
       }),
     }
   },

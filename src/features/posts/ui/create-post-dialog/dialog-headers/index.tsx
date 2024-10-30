@@ -56,7 +56,7 @@ export const ProgressHeader = ({
       <Typography as={'h3'} variant={'h3'}>
         {title}
       </Typography>
-      <Button onClick={onConfirm} variant={'nb-outlined'}>
+      <Button onClick={onConfirm} type={'submit'} variant={'nb-outlined'}>
         {confirmButtonTitle}
       </Button>
     </DialogHeader>

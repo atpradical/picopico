@@ -10,6 +10,7 @@ import {
   PublishingBody,
   StartBody,
 } from '@/features/posts/ui/create-post-dialog/dialog-bodies'
+import { useCreatePostImageMutation } from '@/shared/api/posts'
 import { useAppDispatch } from '@/shared/hooks/useAppDispatch'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import { DialogContent, DialogRoot, clsx } from '@atpradical/picopico-ui-kit'
@@ -72,6 +73,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
   const isWide = step === PostCreationStep.Filtering || step === PostCreationStep.Publishing
 
+  const [createPostImage] = useCreatePostImageMutation()
+  // const [createPost] = useCreatePostMutation()
+
+  const publishPostHandler = () => {
+    createPostImage({ file: newPost ?? null })
+  }
+
   return (
     <DialogRoot onOpenChange={onOpenChange} open={isOpen} {...rest}>
       <DialogContent className={clsx(s.content, isWide && s.wide)} overlayClassName={s.overlay}>
@@ -112,10 +120,10 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             <ProgressHeader
               confirmButtonTitle={'Publish'}
               onBack={() => navigationButtonHandler(PostCreationStep.Filtering)}
-              onConfirm={() => {}}
+              onConfirm={publishPostHandler}
               title={'Publishing'}
             />
-            <PublishingBody onPublish={() => {}} />
+            <PublishingBody />
           </>
         )}
       </DialogContent>
