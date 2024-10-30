@@ -11,7 +11,7 @@ import {
   Typography,
 } from '@atpradical/picopico-ui-kit'
 
-import s from '@/features/posts/ui/create-post-dialog/CreatePostDialog.module.scss'
+import s from './dialog-headers.module.scss'
 
 export const StartHeader = () => {
   const dispatch = useAppDispatch()

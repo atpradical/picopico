@@ -1,0 +1,25 @@
+.formContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  gap: 24px;
+
+  width: 100%;
+  padding: 24px;
+}
+
+.textArea {
+  resize: none;
+  width: 100%;
+  max-width: 434px;
+  min-height: 120px;
+}
+
+.separator {
+  background-color: var(--color-dark-100);
+
+  &[data-orientation='horizontal'] {
+    width: 100%;
+    height: 1px;
+  }
+}

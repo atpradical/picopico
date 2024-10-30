@@ -1,17 +1,15 @@
 import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
-import { useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
 import { ALLOWED_POST_UPLOAD_TYPES } from '@/features/posts/config'
 import { selectPostPreview, selectPostsUploadingError } from '@/features/posts/model'
+import { PostDescriptionForm } from '@/features/posts/ui/create-post-dialog/post-description-form'
 import { UploadFileError } from '@/shared/ui/components'
 import { PlaceholderImage } from '@/shared/ui/components/placeholder-image'
-import { ControlledTextArea } from '@/shared/ui/form-components'
-import { Avatar, Button, DialogBody, Typography, clsx } from '@atpradical/picopico-ui-kit'
-import * as Separator from '@radix-ui/react-separator'
+import { Button, DialogBody, Typography, clsx } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
 
-import s from '@/features/posts/ui/create-post-dialog/CreatePostDialog.module.scss'
+import s from './dialog.bodies.module.scss'
 
 type StartBodyProps = {
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
@@ -104,24 +102,6 @@ type PublishingBodyProps = {
 export const PublishingBody = ({ onPublish, ...rest }: PublishingBodyProps) => {
   const postPreview = useSelector(selectPostPreview)
 
-  const {
-    control,
-    // formState: { dirtyFields, isValid },
-    handleSubmit,
-    // setError,
-  } = useForm<any>({
-    defaultValues: {
-      postDescription: '',
-    },
-    mode: 'onTouched',
-    reValidateMode: 'onChange',
-    // resolver: zodResolver(profileDataSchemeCreator(validation)),
-  })
-
-  const formHandler = handleSubmit(async data => {
-    console.log(data)
-  })
-
   return (
     <DialogBody className={s.filteringBody} {...rest}>
       <div className={s.previewSizes}>
@@ -132,23 +112,7 @@ export const PublishingBody = ({ onPublish, ...rest }: PublishingBodyProps) => {
           src={postPreview ?? ''}
         />
       </div>
-      <div className={s.formContainer}>
-        <Avatar showUserName size={'s'} userName={'User-Name'} />
-        <form onSubmit={formHandler}>
-          <ControlledTextArea
-            className={s.textArea}
-            control={control}
-            label={'Add publication descriptions'} // todo: добавить переводы
-            name={'description'}
-            placeholder={'Add post description'} // todo: добавить переводы
-            showCounter
-          />
-        </form>
-        <Separator.Root className={s.separator} />
-        <Typography grey style={{ marginTop: '15px', textAlign: 'center' }} variant={'small'}>
-          {'Define "Location" feature is coming soon.'}
-        </Typography>
-      </div>
+      <PostDescriptionForm />
     </DialogBody>
   )
 }

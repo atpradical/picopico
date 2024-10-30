@@ -2,7 +2,7 @@ import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
 
 import { TextArea, TextAreaProps, Typography } from '@atpradical/picopico-ui-kit'
 
-import s from '@/features/posts/ui/create-post-dialog/CreatePostDialog.module.scss'
+import s from './ControlledTextArea.module.scss'
 
 export type ControlledTextAreaProps<T extends FieldValues> = {
   showCounter?: boolean
