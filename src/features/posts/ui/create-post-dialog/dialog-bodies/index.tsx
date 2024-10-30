@@ -106,9 +106,9 @@ export const PublishingBody = ({ onPublish, ...rest }: PublishingBodyProps) => {
 
   const {
     control,
-    formState: { dirtyFields, isValid },
+    // formState: { dirtyFields, isValid },
     handleSubmit,
-    setError,
+    // setError,
   } = useForm<any>({
     defaultValues: {
       postDescription: '',
@@ -118,7 +118,9 @@ export const PublishingBody = ({ onPublish, ...rest }: PublishingBodyProps) => {
     // resolver: zodResolver(profileDataSchemeCreator(validation)),
   })
 
-  const formHandler = handleSubmit(async data => {})
+  const formHandler = handleSubmit(async data => {
+    console.log(data)
+  })
 
   return (
     <DialogBody className={s.filteringBody} {...rest}>
@@ -131,7 +133,7 @@ export const PublishingBody = ({ onPublish, ...rest }: PublishingBodyProps) => {
         />
       </div>
       <div className={s.formContainer}>
-        <Avatar showUserName size={'s'} userName={'Username'} />
+        <Avatar showUserName size={'s'} userName={'User-Name'} />
         <form onSubmit={formHandler}>
           <ControlledTextArea
             className={s.textArea}
