@@ -19,11 +19,11 @@ export const StartBody = ({ onUpload, ...rest }: StartBodyProps) => {
   const {
     t: { createPostDialog },
   } = useTranslation()
-  const { uploadError } = useSelector(selectPostsDialogMeta)
+  const { errorMessage } = useSelector(selectPostsDialogMeta)
 
   return (
     <DialogBody className={s.body} {...rest}>
-      {uploadError && <UploadFileError errorText={uploadError} />}
+      {errorMessage && <UploadFileError errorText={errorMessage} />}
       <PlaceholderImage />
       <Button as={'label'} className={s.button} variant={'primary'}>
         <input
