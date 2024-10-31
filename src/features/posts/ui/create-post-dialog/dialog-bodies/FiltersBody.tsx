@@ -1,11 +1,8 @@
 import { ComponentPropsWithoutRef } from 'react'
-import { useSelector } from 'react-redux'
 
-import { selectPostPreview } from '@/features/posts/model'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { Carousel, DialogBody, Typography } from '@atpradical/picopico-ui-kit'
-import Image from 'next/image'
 
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
 
