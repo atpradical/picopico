@@ -5,8 +5,8 @@ const initialPostsState: PostsState = {
   description: '',
   dialogMeta: {
     currentStep: PostsStep.Start,
+    errorMessage: '',
     isDialogOpen: false,
-    uploadError: '',
   },
 }
 
@@ -20,13 +20,13 @@ const slice = createSlice({
     resetPosts: state => {
       state.description = ''
       state.dialogMeta.currentStep = PostsStep.Start
-      state.dialogMeta.uploadError = ''
-    },
-    setPostUploadingError: (state, action: PayloadAction<{ error: string }>) => {
-      state.dialogMeta.uploadError = action.payload.error
+      state.dialogMeta.errorMessage = ''
     },
     setPostsCreationStep: (state, action: PayloadAction<{ step: PostsStep }>) => {
       state.dialogMeta.currentStep = action.payload.step
+    },
+    setPostsErrorMessage: (state, action: PayloadAction<{ error: string }>) => {
+      state.dialogMeta.errorMessage = action.payload.error
     },
     togglePostCreationDialog: (state, action: PayloadAction<{ isOpen: boolean }>) => {
       state.dialogMeta.isDialogOpen = action.payload.isOpen

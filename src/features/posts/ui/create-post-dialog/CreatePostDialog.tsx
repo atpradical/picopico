@@ -51,14 +51,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   }, [imagesList])
 
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
-    debugger
     if (e.target.files && e.target.files.length) {
-      dispatch(postsActions.setPostUploadingError({ error: '' }))
+      dispatch(postsActions.setPostsErrorMessage({ error: '' }))
       const files = Array.from(e.target.files)
 
       if (files.length >= POSTS_FILES_LIMIT) {
         dispatch(
-          postsActions.setPostUploadingError({ error: createPostDialog.tooManyFilesForUploading })
+          postsActions.setPostsErrorMessage({ error: createPostDialog.tooManyFilesForUploading })
         )
 
         return
@@ -66,13 +65,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       files.forEach(el => {
         if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(el.type)) {
-          dispatch(postsActions.setPostUploadingError({ error: createPostDialog.wrongFileFormat }))
+          dispatch(postsActions.setPostsErrorMessage({ error: createPostDialog.wrongFileFormat }))
 
           return
         }
         if (el.size >= POSTS_MAX_FILE_SIZE) {
           dispatch(
-            postsActions.setPostUploadingError({
+            postsActions.setPostsErrorMessage({
               error: createPostDialog.wrongFileSize,
             })
           )
@@ -90,6 +89,12 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const [createPost] = useCreatePostMutation()
 
   const publishPostsHandler = async () => {
+    if (dialogMeta.errorMessage) {
+      showErrorToast(dialogMeta.errorMessage)
+
+      return
+    }
+
     const files = imagesList?.map(el => el) ?? []
 
     try {

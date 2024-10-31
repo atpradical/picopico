@@ -70,4 +70,4 @@ export const aboutMeScheme = (args: LocaleValidationAboutMe) =>
     .or(z.literal('')) // Допускаем пустую строку
 
 export const postDescriptionScheme = (message: string) =>
-  z.string().trim().max(POSTS_DESCRIPTION_MAX_LENGTH, message).or(z.literal('')) // Допускаем пустую строку
+  z.string().max(POSTS_DESCRIPTION_MAX_LENGTH, message).or(z.literal('')) // Допускаем пустую строку

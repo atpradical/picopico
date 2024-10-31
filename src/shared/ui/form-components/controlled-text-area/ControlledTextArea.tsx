@@ -19,7 +19,7 @@ export const ControlledTextArea = <T extends FieldValues>({
   ...props
 }: ControlledTextAreaProps<T>) => {
   const {
-    field,
+    field: { onBlur, onChange, ref, value, ...field },
     fieldState: { error },
   } = useController({
     control,
@@ -32,9 +32,12 @@ export const ControlledTextArea = <T extends FieldValues>({
 
   return (
     <TextArea
-      counterValue={field.value?.length}
-      errorText={errorText ?? error?.message}
       {...props}
+      counterValue={value.length}
+      errorText={errorText ?? error?.message}
+      onChange={onChange}
+      ref={ref}
+      value={value ?? ''}
       {...field}
     />
   )
