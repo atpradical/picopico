@@ -4,10 +4,8 @@ import { useSelector } from 'react-redux'
 import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
 import { selectPostsDialogMeta } from '@/features/posts/model'
 import { useTranslation } from '@/shared/hooks'
-import { UploadFileError } from '@/shared/ui/components'
-import { PlaceholderImage } from '@/shared/ui/components/placeholder-image'
-import { Button } from '@atpradical/picopico-ui-kit'
-import { DialogBody } from 'next/dist/client/components/react-dev-overlay/internal/components/Dialog'
+import { PlaceholderImage, UploadFileError } from '@/shared/ui/components'
+import { Button, DialogBody } from '@atpradical/picopico-ui-kit'
 
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
 
