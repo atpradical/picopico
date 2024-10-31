@@ -51,19 +51,20 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   }, [imagesList])
 
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    debugger
     if (e.target.files && e.target.files.length) {
       dispatch(postsActions.setPostUploadingError({ error: '' }))
       const files = Array.from(e.target.files)
 
+      if (files.length >= POSTS_FILES_LIMIT) {
+        dispatch(
+          postsActions.setPostUploadingError({ error: createPostDialog.tooManyFilesForUploading })
+        )
+
+        return
+      }
+
       files.forEach(el => {
-        if (files.length >= POSTS_FILES_LIMIT) {
-          dispatch(
-            postsActions.setPostUploadingError({ error: createPostDialog.tooManyFilesForUploading })
-          )
-
-          return
-        }
-
         if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(el.type)) {
           dispatch(postsActions.setPostUploadingError({ error: createPostDialog.wrongFileFormat }))
 
@@ -78,13 +79,11 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
           return
         }
+
+        setImagesList(state => [...(state || []), ...files])
+        dispatch(postsActions.setPostsCreationStep({ step: PostsStep.Crop }))
       })
-
-      setImagesList(state => [...(state || []), ...files])
-      dispatch(postsActions.setPostsCreationStep({ step: PostsStep.Crop }))
     }
-
-    return
   }
 
   const [createPostImage] = useCreatePostImageMutation()
@@ -116,6 +115,12 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     dispatch(postsActions.setPostsCreationStep({ step }))
   }
 
+  const closeDialogHandler = () => {
+    dispatch(postsActions.resetPosts())
+    setPreviewList(null)
+    setImagesList(null)
+  }
+
   const isWide =
     dialogMeta.currentStep === PostsStep.Filters || dialogMeta.currentStep === PostsStep.Publish
 
@@ -123,7 +128,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     <DialogRoot onOpenChange={onOpenChange} open={dialogMeta.isDialogOpen} {...rest}>
       <DialogContent className={clsx(s.content, isWide && s.wide)} overlayClassName={s.overlay}>
         {dialogMeta.currentStep === PostsStep.Start && (
-          <StartContent onUpload={uploadPostHandler} />
+          <StartContent onClose={closeDialogHandler} onUpload={uploadPostHandler} />
         )}
         {dialogMeta.currentStep === PostsStep.Crop && (
           <CropContent

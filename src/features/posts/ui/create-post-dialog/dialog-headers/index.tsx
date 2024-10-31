@@ -1,7 +1,6 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { postsActions } from '@/features/posts/api'
-import { useAppDispatch, useTranslation } from '@/shared/hooks'
+import { useTranslation } from '@/shared/hooks'
 import {
   ArrowIosBackIcon,
   Button,
@@ -13,15 +12,14 @@ import {
 
 import s from './dialog-headers.module.scss'
 
-export const StartHeader = () => {
+type StartHeaderProps = {
+  onClose: () => void
+}
+
+export const StartHeader = ({ onClose }: StartHeaderProps) => {
   const {
     t: { createPostDialog },
   } = useTranslation()
-  const dispatch = useAppDispatch()
-
-  const closeDialogHandler = () => {
-    dispatch(postsActions.resetPosts())
-  }
 
   return (
     <DialogHeader className={s.header}>
@@ -29,11 +27,7 @@ export const StartHeader = () => {
         {createPostDialog.dialogTitles.start}
       </Typography>
       <DialogClose asChild>
-        <Button
-          onClick={closeDialogHandler}
-          title={createPostDialog.buttons.closeButton}
-          variant={'icon'}
-        >
+        <Button onClick={onClose} title={createPostDialog.buttons.closeButton} variant={'icon'}>
           <CloseOutlineIcon />
         </Button>
       </DialogClose>

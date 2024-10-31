@@ -6,10 +6,11 @@ import { useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 
 type StartContentProps = {
+  onClose: () => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
 }
 
-export const StartContent = ({ onUpload }: StartContentProps) => {
+export const StartContent = ({ onClose, onUpload }: StartContentProps) => {
   const { t } = useTranslation()
 
   return (
@@ -18,7 +19,7 @@ export const StartContent = ({ onUpload }: StartContentProps) => {
         description={t.createPostDialog.startDialogStep.accessibilityDescription}
         title={t.createPostDialog.startDialogStep.accessibilityTitle}
       />
-      <StartHeader />
+      <StartHeader onClose={onClose} />
       <StartBody onUpload={onUpload} />
     </>
   )
