@@ -1,9 +1,8 @@
 import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
 
-import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { Button, Carousel, DialogBody } from '@atpradical/picopico-ui-kit'
+import { Carousel, DialogBody } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
@@ -31,15 +30,15 @@ export const CropBody = ({ onUpload, previewList, ...props }: CropBodyProps) => 
           {/*  />*/}
         </div>
       </DialogBody>
-      <Button as={'label'} className={s.button} variant={'primary'}>
-        <input
-          accept={POSTS_ALLOWED_UPLOAD_TYPES.join(', ')}
-          hidden
-          onChange={onUpload}
-          type={'file'}
-        />
-        {createPostDialog.buttons.selectFilesButton}
-      </Button>
+      {/*<Button as={'label'} className={s.button} variant={'primary'}>*/}
+      {/*  <input*/}
+      {/*    accept={POSTS_ALLOWED_UPLOAD_TYPES.join(', ')}*/}
+      {/*    hidden*/}
+      {/*    onChange={onUpload}*/}
+      {/*    type={'file'}*/}
+      {/*  />*/}
+      {/*  {createPostDialog.buttons.selectFilesButton}*/}
+      {/*</Button>*/}
     </>
   )
 }
