@@ -37,6 +37,7 @@ export const createPostDialog = {
     accessibilityTitle: 'Popup asking user to choose files for new post',
   },
 
+  tooManyFilesForUploading: 'Only 10 files per 1 post allowed',
   wrongFileFormat: 'The photo must be JPEG or PNG format',
   wrongFileSize: 'The photo must be less than 20 Mb',
 }

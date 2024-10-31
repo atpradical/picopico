@@ -38,6 +38,7 @@ export const createPostDialog = {
     accessibilityTitle: 'Всплывающее окно с предложением выбрать файлы для нового поста',
   },
 
+  tooManyFilesForUploading: 'Пост не может содержать более 10 файлов',
   wrongFileFormat: 'Фото должно быть в формате JPEG или PNG',
   wrongFileSize: 'Размер фото должен быть менее 20 Мб',
 }

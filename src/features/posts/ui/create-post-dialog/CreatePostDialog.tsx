@@ -1,8 +1,12 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useEffect } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { postsActions } from '@/features/posts/api'
-import { POST_ALLOWED_UPLOAD_TYPES, POST_MAX_FILE_SIZE } from '@/features/posts/config'
+import {
+  POSTS_ALLOWED_UPLOAD_TYPES,
+  POSTS_FILES_LIMIT,
+  POSTS_MAX_FILE_SIZE,
+} from '@/features/posts/config'
 import { PostsStep, selectPostsAllData } from '@/features/posts/model'
 import {
   CropContent,
@@ -10,7 +14,10 @@ import {
   PublishContent,
   StartContent,
 } from '@/features/posts/ui/create-post-dialog/dialog-content'
+import { useCreatePostImageMutation, useCreatePostMutation } from '@/shared/api/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
+import { Nullable } from '@/shared/types'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { DialogContent, DialogRoot, clsx } from '@atpradical/picopico-ui-kit'
 
 import s from './CreatePostDialog.module.scss'
@@ -22,19 +29,22 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     t: { createPostDialog },
   } = useTranslation()
   const dispatch = useAppDispatch()
-  const { dialogMeta, imagesList, postPreview } = useSelector(selectPostsAllData)
+  const { description, dialogMeta } = useSelector(selectPostsAllData)
+  // todo: переделать на Redux + IndexedDB
+  const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
+  const [previewList, setPreviewList] = useState<Nullable<string[]>>(null)
 
   useEffect(() => {
-    if (imagesList.length) {
-      const newPreview = URL.createObjectURL(imagesList[0])
+    if (imagesList && imagesList.length) {
+      const newPreviews = imagesList.map(el => URL.createObjectURL(el))
 
-      if (postPreview) {
-        URL.revokeObjectURL(postPreview)
+      if (previewList) {
+        previewList.forEach(el => URL.revokeObjectURL(el))
       }
-      // todo: вспомнить нак переделать на Actions из to-do когда есть экспорт actions
-      dispatch(postsActions.setPostPreview({ preview: newPreview }))
 
-      return () => URL.revokeObjectURL(newPreview)
+      setPreviewList(newPreviews)
+
+      return () => newPreviews.forEach(el => URL.revokeObjectURL(el))
     }
     // 'preview' mustn't be added to avoid cyclical dependence
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -43,28 +53,63 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       dispatch(postsActions.setPostUploadingError({ error: '' }))
-      const file = e.target.files[0]
+      const files = Array.from(e.target.files)
 
-      if (!POST_ALLOWED_UPLOAD_TYPES.includes(file.type)) {
-        dispatch(postsActions.setPostUploadingError({ error: createPostDialog.wrongFileFormat }))
+      files.forEach(el => {
+        if (files.length >= POSTS_FILES_LIMIT) {
+          dispatch(
+            postsActions.setPostUploadingError({ error: createPostDialog.tooManyFilesForUploading })
+          )
 
-        return
-      }
+          return
+        }
 
-      if (file.size >= POST_MAX_FILE_SIZE) {
-        dispatch(
-          postsActions.setPostUploadingError({
-            error: createPostDialog.wrongFileSize,
-          })
-        )
+        if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(el.type)) {
+          dispatch(postsActions.setPostUploadingError({ error: createPostDialog.wrongFileFormat }))
 
-        return
-      }
-      dispatch(postsActions.addNewPost({ post: file }))
+          return
+        }
+        if (el.size >= POSTS_MAX_FILE_SIZE) {
+          dispatch(
+            postsActions.setPostUploadingError({
+              error: createPostDialog.wrongFileSize,
+            })
+          )
+
+          return
+        }
+      })
+
+      setImagesList(state => [...(state || []), ...files])
       dispatch(postsActions.setPostsCreationStep({ step: PostsStep.Crop }))
     }
 
     return
+  }
+
+  const [createPostImage] = useCreatePostImageMutation()
+  const [createPost] = useCreatePostMutation()
+
+  const publishPostsHandler = async () => {
+    const files = imagesList?.map(el => el) ?? []
+
+    try {
+      const { images } = await createPostImage({
+        file: files,
+      }).unwrap()
+
+      const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
+
+      await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
+      dispatch(postsActions.resetPosts())
+      setPreviewList(null)
+      setImagesList(null)
+      dispatch(postsActions.togglePostCreationDialog({ isOpen: false }))
+    } catch (e) {
+      const errors = getErrorMessageData(e)
+
+      showErrorToast(errors)
+    }
   }
 
   const navigationButtonHandler = (step: PostsStep) => {
@@ -85,13 +130,23 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             onBack={navigationButtonHandler}
             onConfirm={navigationButtonHandler}
             onUpload={uploadPostHandler}
+            previewList={previewList}
           />
         )}
         {dialogMeta.currentStep === PostsStep.Filters && (
-          <FiltersContent onBack={navigationButtonHandler} onConfirm={navigationButtonHandler} />
+          <FiltersContent
+            onBack={navigationButtonHandler}
+            onConfirm={navigationButtonHandler}
+            previewList={previewList}
+          />
         )}
         {dialogMeta.currentStep === PostsStep.Publish && (
-          <PublishContent onBack={navigationButtonHandler} />
+          <PublishContent
+            imagesList={imagesList}
+            onBack={navigationButtonHandler}
+            onConfirm={publishPostsHandler}
+            previewList={previewList}
+          />
         )}
       </DialogContent>
     </DialogRoot>

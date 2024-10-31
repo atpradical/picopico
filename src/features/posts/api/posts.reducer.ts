@@ -1,5 +1,4 @@
 import { PostsState, PostsStep } from '@/features/posts/model'
-import { Nullable } from '@/shared/types'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialPostsState: PostsState = {
@@ -9,29 +8,19 @@ const initialPostsState: PostsState = {
     isDialogOpen: false,
     uploadError: '',
   },
-  imagesList: [],
-  postPreview: null,
 }
 
 const slice = createSlice({
   initialState: initialPostsState,
   name: 'posts',
   reducers: {
-    addNewPost: (state, action: PayloadAction<{ post: File }>) => {
-      state.imagesList.push(action.payload.post)
-    },
     addPostDescription: (state, action: PayloadAction<{ description: string }>) => {
       state.description = action.payload.description
     },
     resetPosts: state => {
-      state.imagesList = []
       state.description = ''
-      state.postPreview = null
       state.dialogMeta.currentStep = PostsStep.Start
       state.dialogMeta.uploadError = ''
-    },
-    setPostPreview: (state, action: PayloadAction<{ preview: Nullable<string> }>) => {
-      state.postPreview = action.payload.preview
     },
     setPostUploadingError: (state, action: PayloadAction<{ error: string }>) => {
       state.dialogMeta.uploadError = action.payload.error

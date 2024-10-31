@@ -1,45 +1,18 @@
-import { useSelector } from 'react-redux'
-
-import { postsActions } from '@/features/posts/api'
-import { PostsStep, selectPostsDescription, selectPostsImagesList } from '@/features/posts/model'
+import { PostsStep } from '@/features/posts/model'
 import { PublishBody } from '@/features/posts/ui/create-post-dialog/dialog-bodies'
 import { ProgressHeader } from '@/features/posts/ui/create-post-dialog/dialog-headers'
-import { useCreatePostImageMutation, useCreatePostMutation } from '@/shared/api/posts'
-import { useAppDispatch, useTranslation } from '@/shared/hooks'
+import { useTranslation } from '@/shared/hooks'
+import { Nullable } from '@/shared/types'
 import { HiddenDialogComponents } from '@/shared/ui/components'
-import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 
 type PublishContentProps = {
+  imagesList: Nullable<File[]>
   onBack: (step: PostsStep) => void
+  onConfirm: () => void
+  previewList: Nullable<string[]>
 }
-export const PublishContent = ({ onBack }: PublishContentProps) => {
+export const PublishContent = ({ onBack, onConfirm, previewList }: PublishContentProps) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
-  const description = useSelector(selectPostsDescription)
-  const imagesList = useSelector(selectPostsImagesList)
-
-  const [createPostImage] = useCreatePostImageMutation()
-  const [createPost] = useCreatePostMutation()
-
-  const publishPostHandler = async () => {
-    const files = imagesList.map(image => image)
-
-    try {
-      const { images } = await createPostImage({
-        file: files,
-      }).unwrap()
-
-      const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
-
-      await createPost({ childrenMetadata: uploadIdList, description: description }).unwrap()
-      dispatch(postsActions.resetPosts())
-      dispatch(postsActions.togglePostCreationDialog({ isOpen: false }))
-    } catch (e) {
-      const errors = getErrorMessageData(e)
-
-      showErrorToast(errors)
-    }
-  }
 
   return (
     <>
@@ -50,10 +23,10 @@ export const PublishContent = ({ onBack }: PublishContentProps) => {
       <ProgressHeader
         confirmButtonTitle={t.createPostDialog.buttons.publishButton}
         onBack={() => onBack(PostsStep.Filters)}
-        onConfirm={publishPostHandler}
+        onConfirm={onConfirm}
         title={t.createPostDialog.dialogTitles.publish}
       />
-      <PublishBody />
+      <PublishBody previewList={previewList} />
     </>
   )
 }
