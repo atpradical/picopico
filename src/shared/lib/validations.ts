@@ -58,15 +58,18 @@ export const recaptchaScheme = (message: string) => {
   return z.string().min(1, message)
 }
 
-export const aboutMeScheme = (args: LocaleValidationAboutMe) =>
-  z
+export const aboutMeScheme = (args: LocaleValidationAboutMe) => {
+  debugger
+
+  return z
     .string()
     .trim()
     .max(MAX_ABOUT_ME_LENGTH, { message: args.maxLength })
     .regex(ABOUT_ME_REGEX, {
       message: args.allowedSymbols,
     })
-    .or(z.literal('')) // Допускаем пустую строку
+    .optional()
+}
 
 export const postDescriptionScheme = (message: string) =>
   z.string().max(POSTS_DESCRIPTION_MAX_LENGTH, message).or(z.literal('')) // Допускаем пустую строку
