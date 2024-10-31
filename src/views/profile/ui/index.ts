@@ -1,5 +1,2 @@
 export * from './privacy-policy-notification'
-export * from './profile-avatar-dialog'
-export * from './profile-avatar-manager'
 export * from './profile-header'
-export * from './profile-stats'

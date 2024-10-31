@@ -1,10 +1,9 @@
 import { ChangeEvent } from 'react'
 
-import { ALLOWED_IMAGE_UPLOAD_TYPES } from '@/shared/constants'
+import { ALLOWED_IMAGE_UPLOAD_TYPES } from '@/features/profile/config'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { HiddenDialogComponents, UploadFileError } from '@/shared/ui/components'
-import { PlaceholderImage } from '@/shared/ui/components/placeholder-image'
+import { HiddenDialogComponents, PlaceholderImage, UploadFileError } from '@/shared/ui/components'
 import {
   Button,
   CloseOutlineIcon,

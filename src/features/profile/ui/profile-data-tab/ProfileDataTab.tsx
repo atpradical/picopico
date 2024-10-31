@@ -1,10 +1,13 @@
 import { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
+import { MAX_ABOUT_ME_LENGTH, MAX_CITY_POPULATION } from '@/features/profile/config'
+import { ProfileFormFields } from '@/features/profile/model/profile.types'
+import { profileDataSchemeCreator } from '@/features/profile/model/profile-data-scheme-creator'
+import { ProfileAvatarManager } from '@/features/profile/ui/profile-avatar-manager'
 import { useGetCountriesQuery, useLazyGetCitiesQuery } from '@/shared/api/countries'
 import { useUpdateUserProfileMutation } from '@/shared/api/profile'
 import { ResponseGetUserProfile } from '@/shared/api/profile/profile.types'
-import { MAX_ABOUT_ME_LENGTH, MAX_CITY_POPULATION } from '@/shared/constants'
 import { useTranslation } from '@/shared/hooks'
 import {
   ControlledDatePicker,
@@ -13,9 +16,6 @@ import {
   ControlledTextField,
 } from '@/shared/ui/form-components'
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
-import { profileDataSchemeCreator } from '@/views/profile/model/profile-data-scheme-creator'
-import { ProfileFormFields } from '@/views/profile/model/types'
-import { ProfileAvatarManager } from '@/views/profile/ui'
 import { Button, OptionsValue, TabsContent, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Separator from '@radix-ui/react-separator'

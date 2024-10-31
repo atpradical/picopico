@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+import { ProfileStats } from '@/features/profile/ui'
 import { Paths } from '@/shared/enums'
-import { ProfileStats } from '@/views/profile/ui/profile-stats'
 import { Avatar, Button, Typography } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 import link from 'next/link'

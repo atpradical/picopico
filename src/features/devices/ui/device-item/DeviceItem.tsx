@@ -1,8 +1,8 @@
+import { BrowserIcon } from '@/features/devices/model'
 import { useTerminateSessionMutation } from '@/shared/api/devices'
 import { SessionData } from '@/shared/api/devices/devices.types'
 import { useTranslation } from '@/shared/hooks'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { BrowserIcon } from '@/views/profile/ui/profile-settings/devices/device-item/browser-icon'
 import { Button, Card, LogOutOutlineIcon, Typography } from '@atpradical/picopico-ui-kit'
 
 import s from './DeviceItem.module.scss'

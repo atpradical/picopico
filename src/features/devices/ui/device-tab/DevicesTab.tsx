@@ -1,10 +1,10 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+import { DeviceItem } from '@/features/devices/ui/device-item'
 import { useTerminateAllSessionsMutation } from '@/shared/api/devices'
 import { ResponseGetSessions } from '@/shared/api/devices/devices.types'
 import { useTranslation } from '@/shared/hooks'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { DeviceItem } from '@/views/profile/ui/profile-settings/devices/device-item'
 import { Button, TabsContent, Typography } from '@atpradical/picopico-ui-kit'
 
 import s from './DevicesTab.module.scss'

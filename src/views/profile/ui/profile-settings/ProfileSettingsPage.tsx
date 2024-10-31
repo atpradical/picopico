@@ -1,11 +1,11 @@
+import { DevicesTab } from '@/features/devices/ui'
+import { ProfileDataTab } from '@/features/profile/ui/profile-data-tab'
 import { useLazyGetSessionsQuery } from '@/shared/api/devices'
 import { useGetUserProfileQuery } from '@/shared/api/profile'
 import { useTranslation } from '@/shared/hooks'
 import { getSidebarLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { DevicesTab } from '@/views/profile/ui/profile-settings/devices'
-import { ProfileDataTab } from '@/views/profile/ui/profile-settings/profile-data-tab'
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
 
 import s from './ProfileSettingsPage.module.scss'

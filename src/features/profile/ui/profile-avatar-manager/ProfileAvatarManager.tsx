@@ -1,12 +1,12 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
+import { ALLOWED_IMAGE_UPLOAD_TYPES, AVATAR_MAX_FILE_SIZE } from '@/features/profile/config'
+import { ProfileAvatarDialog } from '@/features/profile/ui'
 import { useDeleteAvatarMutation, useUploadAvatarMutation } from '@/shared/api/profile'
-import { ALLOWED_IMAGE_UPLOAD_TYPES, AVATAR_MAX_FILE_SIZE } from '@/shared/constants'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { ActionConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { ProfileAvatarDialog } from '@/views/profile/ui'
 import { Avatar, Button, CloseOutlineIcon } from '@atpradical/picopico-ui-kit'
 
 import s from './ProfileAvatarManager.module.scss'

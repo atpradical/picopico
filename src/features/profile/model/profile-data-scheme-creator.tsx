@@ -1,5 +1,5 @@
+import { MIN_USER_AGE } from '@/features/profile/config'
 import { LocaleValidation } from '@/locales/en'
-import { MIN_USER_AGE } from '@/shared/constants'
 import { aboutMeScheme, nameScheme, userNameScheme } from '@/shared/lib/validations'
 import { PrivacyPolicyNotification } from '@/views/profile/ui/privacy-policy-notification'
 import { toaster } from '@atpradical/picopico-ui-kit'

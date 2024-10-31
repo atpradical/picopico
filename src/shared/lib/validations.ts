@@ -1,4 +1,5 @@
 import { POSTS_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
+import { ABOUT_ME_REGEX, MAX_ABOUT_ME_LENGTH } from '@/features/profile/config'
 import {
   LocaleValidationAboutMe,
   LocaleValidationName,
@@ -6,8 +7,6 @@ import {
   LocaleValidationUserName,
 } from '@/locales/en'
 import {
-  ABOUT_ME_REGEX,
-  MAX_ABOUT_ME_LENGTH,
   MAX_NAME_LENGTH,
   MAX_PASSWORD_LENGTH,
   MAX_USERNAME_LENGTH,
