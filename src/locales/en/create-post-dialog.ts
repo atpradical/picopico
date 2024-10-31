@@ -25,6 +25,18 @@ export const createPostDialog = {
     accessibilityTitle: 'Popup asking user to apply filters to chosen',
   },
 
+  interruptDialog: {
+    accessibilityDescription: 'Popup with possibility to interrupt current dialog',
+    accessibilityTitle: 'Popup asking user to interrupt current dialog',
+    discardButtonText: 'Discard',
+    saveButtonText: 'Save draft',
+    title: 'Сlose',
+    visibleBodyText:
+      'Do you really want to close the creation of a publication?\n' +
+      'If you close everything will be deleted',
+    visibleTitle: 'Сlose',
+  },
+
   publishDialogStep: {
     accessibilityDescription: 'Popup with possibility to define post description ',
     accessibilityTitle: 'Popup with possibility to define post description',

@@ -26,6 +26,18 @@ export const createPostDialog = {
     accessibilityTitle: 'Всплывающее окно с предложением применить фильтры к выбранным фотографиям',
   },
 
+  interruptDialog: {
+    accessibilityDescription: 'Всплывающее окно с возможностью прервать текущий диалог',
+    accessibilityTitle: 'Всплывающее окно, запрашивающее пользователя прервать текущий диалог',
+    discardButtonText: 'Отменить',
+    saveButtonText: 'Сохранить',
+    title: 'Закрыть',
+    visibleBodyText:
+      'Вы действительно хотите закрыть создание публикации?\n' +
+      'Если вы закроете, все будет удалено',
+    visibleTitle: 'Закрыть',
+  },
+
   publishDialogStep: {
     accessibilityDescription: 'Всплывающее окно с возможностью добавления описания к посту',
     accessibilityTitle: 'Всплывающее окно с возможностью добавления описания к посту',
@@ -37,8 +49,8 @@ export const createPostDialog = {
     accessibilityDescription: 'Всплывающее окно с возможностью выбора файлов для нового поста',
     accessibilityTitle: 'Всплывающее окно с предложением выбрать файлы для нового поста',
   },
-
   tooManyFilesForUploading: 'Пост не может содержать более 10 файлов',
   wrongFileFormat: 'Фото должно быть в формате JPEG или PNG',
+
   wrongFileSize: 'Размер фото должен быть менее 20 Мб',
 }

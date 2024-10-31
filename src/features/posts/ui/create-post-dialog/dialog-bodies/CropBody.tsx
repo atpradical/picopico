@@ -13,9 +13,9 @@ type CropBodyProps = {
 } & ComponentPropsWithoutRef<typeof DialogBody>
 
 export const CropBody = ({ onUpload, previewList, ...props }: CropBodyProps) => {
-  const {
-    t: { createPostDialog },
-  } = useTranslation()
+  // const {
+  //   t: { createPostDialog },
+  // } = useTranslation()
 
   return (
     <>

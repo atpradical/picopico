@@ -17,6 +17,7 @@ import {
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/shared/api/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
+import { ActionConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { DialogContent, DialogRoot, clsx } from '@atpradical/picopico-ui-kit'
 
@@ -30,6 +31,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   } = useTranslation()
   const dispatch = useAppDispatch()
   const { description, dialogMeta } = useSelector(selectPostsAllData)
+  const [interruptDialog, setInterruptDialog] = useState(false)
   // todo: переделать на Redux + IndexedDB
   const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
   const [previewList, setPreviewList] = useState<Nullable<string[]>>(null)
@@ -126,39 +128,62 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     setImagesList(null)
   }
 
+  const interruptDialogHandler = (event: Event) => {
+    event.preventDefault()
+    setInterruptDialog(true)
+  }
+
   const isWide =
     dialogMeta.currentStep === PostsStep.Filters || dialogMeta.currentStep === PostsStep.Publish
 
   return (
-    <DialogRoot onOpenChange={onOpenChange} open={dialogMeta.isDialogOpen} {...rest}>
-      <DialogContent className={clsx(s.content, isWide && s.wide)} overlayClassName={s.overlay}>
-        {dialogMeta.currentStep === PostsStep.Start && (
-          <StartContent onClose={closeDialogHandler} onUpload={uploadPostHandler} />
-        )}
-        {dialogMeta.currentStep === PostsStep.Crop && (
-          <CropContent
-            onBack={navigationButtonHandler}
-            onConfirm={navigationButtonHandler}
-            onUpload={uploadPostHandler}
-            previewList={previewList}
-          />
-        )}
-        {dialogMeta.currentStep === PostsStep.Filters && (
-          <FiltersContent
-            onBack={navigationButtonHandler}
-            onConfirm={navigationButtonHandler}
-            previewList={previewList}
-          />
-        )}
-        {dialogMeta.currentStep === PostsStep.Publish && (
-          <PublishContent
-            imagesList={imagesList}
-            onBack={navigationButtonHandler}
-            onConfirm={publishPostsHandler}
-            previewList={previewList}
-          />
-        )}
-      </DialogContent>
-    </DialogRoot>
+    <>
+      <DialogRoot onOpenChange={onOpenChange} open={dialogMeta.isDialogOpen} {...rest}>
+        <DialogContent
+          className={clsx(s.content, isWide && s.wide)}
+          onEscapeKeyDown={interruptDialogHandler}
+          onInteractOutside={interruptDialogHandler}
+          overlayClassName={s.overlay}
+        >
+          {dialogMeta.currentStep === PostsStep.Start && (
+            <StartContent onClose={closeDialogHandler} onUpload={uploadPostHandler} />
+          )}
+          {dialogMeta.currentStep === PostsStep.Crop && (
+            <CropContent
+              onBack={navigationButtonHandler}
+              onConfirm={navigationButtonHandler}
+              onUpload={uploadPostHandler}
+              previewList={previewList}
+            />
+          )}
+          {dialogMeta.currentStep === PostsStep.Filters && (
+            <FiltersContent
+              onBack={navigationButtonHandler}
+              onConfirm={navigationButtonHandler}
+              previewList={previewList}
+            />
+          )}
+          {dialogMeta.currentStep === PostsStep.Publish && (
+            <PublishContent
+              imagesList={imagesList}
+              onBack={navigationButtonHandler}
+              onConfirm={publishPostsHandler}
+              previewList={previewList}
+            />
+          )}
+        </DialogContent>
+      </DialogRoot>
+      <ActionConfirmDialog
+        accessibilityDescription={createPostDialog.interruptDialog.accessibilityDescription}
+        accessibilityTitle={createPostDialog.interruptDialog.accessibilityTitle}
+        confirmButtonText={createPostDialog.interruptDialog.saveButtonText}
+        isOpen={interruptDialog}
+        message={createPostDialog.interruptDialog.visibleBodyText}
+        onConfirm={() => {}} //todo: добавить возможность сохранять черновик в IndexedDB
+        onOpenChange={setInterruptDialog}
+        rejectButtonText={createPostDialog.interruptDialog.discardButtonText}
+        title={createPostDialog.interruptDialog.title}
+      />
+    </>
   )
 }
