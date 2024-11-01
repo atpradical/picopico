@@ -1,6 +1,6 @@
-import { useContext, useEffect } from 'react'
+import { useContext } from 'react'
 
-import { useLazyGetUserProfileQuery } from '@/services/profile'
+import { useGetUserProfileQuery } from '@/services/profile'
 import { AuthContext } from '@/shared/contexts'
 import { getSidebarLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
@@ -13,16 +13,8 @@ import s from './ProfilePage.module.scss'
 function ProfilePage() {
   const router = useRouter()
   const { isAuth, meData } = useContext(AuthContext)
-
-  const [getAuthorizedUserProfile, { data: profileData }] = useLazyGetUserProfileQuery()
-
-  useEffect(() => {
-    if (meData?.userId === router.query.id) {
-      getAuthorizedUserProfile()
-    }
-    // getAuthorizedUserProfile is not included as a dependency
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [meData?.userId, router.query.id])
+  const skip = meData?.userId !== Number(router.query.id)
+  const { data: profileData } = useGetUserProfileQuery(undefined, { skip })
 
   if (!profileData) {
     return null
