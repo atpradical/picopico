@@ -1,9 +1,5 @@
 import { picoApi } from '@/services/picoApi'
-import {
-  ResponseGetUserProfile,
-  UpdateUserProfileArgs,
-  UploadAvatarArgs,
-} from '@/services/profile/profile.types'
+import { ResponseGetUserProfile, UpdateUserProfileArgs, UploadAvatarArgs } from '@/services/profile'
 
 export const profileApi = picoApi.injectEndpoints({
   endpoints: builder => {
@@ -55,6 +51,7 @@ export const profileApi = picoApi.injectEndpoints({
 export const {
   useDeleteAvatarMutation,
   useGetUserProfileQuery,
+  useLazyGetUserProfileQuery,
   useUpdateUserProfileMutation,
   useUploadAvatarMutation,
 } = profileApi

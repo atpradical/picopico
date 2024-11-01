@@ -8,6 +8,7 @@ import { forgotPasswordPage } from '@/locales/en/forgot-password-page'
 import { logoutDialog } from '@/locales/en/logout-dialog'
 import { privacyPolicyPage } from '@/locales/en/privacy-policy-page'
 import { profileAvatarDialog } from '@/locales/en/profile-avatar-dialog'
+import { profilePage } from '@/locales/en/profile-page'
 import { profileSettings } from '@/locales/en/profile-settings'
 import { signInPage } from '@/locales/en/sign-in-page'
 import { signUpPage } from '@/locales/en/sign-up-page'
@@ -54,6 +55,7 @@ export const en = {
   logoutDialog: logoutDialog,
   privacyPolicyPage: privacyPolicyPage,
   profileAvatarDialog: profileAvatarDialog,
+  profilePage: profilePage,
   profileSettings: profileSettings,
   signInPage: signInPage,
   signUpPage: signUpPage,

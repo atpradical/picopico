@@ -15,6 +15,8 @@ import { signUpPage } from '@/locales/ru/sign-up-page'
 import { termsOfServicePage } from '@/locales/ru/terms-of-service-page'
 import { validation } from '@/locales/ru/validation'
 
+import { profilePage } from './ru/profile-page'
+
 export const ru: LocaleType = {
   appHeader: {
     signInButton: 'Войти',
@@ -44,6 +46,7 @@ export const ru: LocaleType = {
   logoutDialog: logoutDialog,
   privacyPolicyPage: privacyPolicyPage,
   profileAvatarDialog: profileAvatarDialog,
+  profilePage: profilePage,
   profileSettings: profileSettings,
   signInPage: signInPage,
   signUpPage: signUpPage,
