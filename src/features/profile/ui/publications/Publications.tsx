@@ -1,6 +1,7 @@
 import { ElementRef, forwardRef } from 'react'
 
 import { GetPostsItems } from '@/services/posts'
+import Image from 'next/image'
 
 import s from './Publications.module.scss'
 
@@ -8,7 +9,7 @@ type PublicationsProps = {
   items: GetPostsItems[]
 }
 
-type PublicationsRef = ElementRef<'div'>
+type PublicationsRef = ElementRef<typeof Image>
 
 export const Publications = forwardRef<PublicationsRef, PublicationsProps>(
   ({ items }: PublicationsProps, ref) => {
@@ -17,39 +18,30 @@ export const Publications = forwardRef<PublicationsRef, PublicationsProps>(
         {items.map((post, index) => {
           if (items.length === index + 1) {
             return (
-              <div
+              <Image
+                alt={'post image'}
+                height={228}
                 key={post.id}
                 ref={ref}
-                style={{ border: '1px solid red', height: '300px', width: '300px' }}
-              >
-                {post.description}
-              </div>
+                src={post.images[0].url}
+                style={{ content: 'contain' }}
+                width={234}
+              />
             )
           } else {
             return (
-              <div
+              <Image
+                alt={'post image'}
+                height={228}
                 key={post.id}
-                style={{
-                  border: '1px solid green',
-                  height: '300px',
-                  width: '300px',
-                }}
-              >
-                {post.description}
-              </div>
+                ref={ref}
+                src={post.images[0].url}
+                style={{ content: 'contain' }}
+                width={234}
+              />
             )
           }
         })}
-        {/*{items.map(el => (*/}
-        {/*  <Image*/}
-        {/*    alt={'post image'}*/}
-        {/*    height={230}*/}
-        {/*    key={el.id}*/}
-        {/*    src={undefined}*/}
-        {/*    style={{ content: 'contain' }}*/}
-        {/*    width={240}*/}
-        {/*  />*/}
-        {/*))}*/}
       </div>
     )
   }

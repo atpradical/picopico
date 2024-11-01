@@ -55,7 +55,9 @@ export type ImagesData = {
 
 export type GetPostsResponse = {
   items: GetPostsItems[]
+  page: number
   pageSize: number
+  pagesCount: number
   totalCount: number
 }
 
