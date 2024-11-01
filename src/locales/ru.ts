@@ -28,7 +28,7 @@ export const ru: LocaleType = {
     homeLink: 'Главная',
     logOutButton: 'Выйти',
     messagesLink: 'Сообщения',
-    profileLink: 'Профиль',
+    profileLink: 'Мой Профиль',
     searchButton: 'Поиск',
     statisticsLink: 'Статистика',
   },

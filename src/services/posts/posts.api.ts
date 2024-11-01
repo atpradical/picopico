@@ -4,6 +4,8 @@ import {
   CreatePostImageArgs,
   CreatePostImageResponse,
   CreatePostResponse,
+  GetPostsArgs,
+  GetPostsResponse,
 } from '@/services/posts/posts.types'
 
 export const postsApi = picoApi.injectEndpoints({
@@ -17,6 +19,7 @@ export const postsApi = picoApi.injectEndpoints({
         }),
       }),
       createPostImage: builder.mutation<CreatePostImageResponse, CreatePostImageArgs>({
+        invalidatesTags: ['Posts'],
         query: body => {
           const { file } = body
           const formData = new FormData()
@@ -34,8 +37,16 @@ export const postsApi = picoApi.injectEndpoints({
           }
         },
       }),
+      getPosts: builder.query<GetPostsResponse, GetPostsArgs>({
+        providesTags: ['Posts'],
+        query: ({ userName, ...args }) => ({
+          method: 'GET',
+          params: args ?? undefined,
+          url: `v1/posts/${userName}`,
+        }),
+      }),
     }
   },
 })
 
-export const { useCreatePostImageMutation, useCreatePostMutation } = postsApi
+export const { useCreatePostImageMutation, useCreatePostMutation, useGetPostsQuery } = postsApi

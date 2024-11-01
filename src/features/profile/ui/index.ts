@@ -1,3 +1,6 @@
+export * from './header'
 export * from './profile-avatar-dialog'
 export * from './profile-avatar-manager'
-export * from './profile-stats'
+export * from './publications'
+export * from './settings'
+export * from './stats'

@@ -1,5 +1,5 @@
 import { DevicesTab } from '@/features/devices/ui'
-import { ProfileDataTab } from '@/features/profile/ui/profile-data-tab'
+import { ProfileDataTab } from '@/features/profile/ui/settings'
 import { useLazyGetSessionsQuery } from '@/services/devices'
 import { useGetUserProfileQuery } from '@/services/profile'
 import { useTranslation } from '@/shared/hooks'

@@ -4,7 +4,6 @@ import { ProfileStats } from '@/features/profile/ui'
 import { AvatarsData } from '@/services/profile'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
-import { Nullable } from '@/shared/types'
 import { Avatar, Button, Typography } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 import link from 'next/link'
@@ -12,10 +11,10 @@ import link from 'next/link'
 import s from './ProfileHeader.module.scss'
 
 type ProfileHeaderProps = {
-  aboutMe: Nullable<string>
-  avatars: Nullable<AvatarsData[]>
-  isAuth: Nullable<boolean>
-  userName: Nullable<string>
+  aboutMe: string
+  avatars: AvatarsData[]
+  isAuth: boolean
+  userName: string
 } & ComponentPropsWithoutRef<'section'>
 
 export const ProfileHeader = ({
@@ -33,8 +32,8 @@ export const ProfileHeader = ({
       <Avatar
         className={s.avatar}
         showFallback
-        src={avatars ? avatars[0]?.url : 'picopico'}
-        userName={userName ?? ''}
+        src={avatars ? avatars[0]?.url : ''}
+        userName={userName}
       />
       <div className={s.content}>
         <div className={s.titleBlock}>
