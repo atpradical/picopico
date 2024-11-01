@@ -91,11 +91,11 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
         <Typography
           as={Link}
           className={s.title}
-          data-active={router.pathname === Paths.profile}
-          href={Paths.profile}
+          data-active={router.asPath === `${Paths.profile}/${meData?.userId}`}
+          href={`${Paths.profile}/${meData?.userId}`}
           variant={'medium_14'}
         >
-          {router.pathname === Paths.profile ? (
+          {router.asPath === `${Paths.profile}/${meData?.userId}` ? (
             <PersonIcon className={s.icon} />
           ) : (
             <PersonOutlineIcon className={s.icon} />

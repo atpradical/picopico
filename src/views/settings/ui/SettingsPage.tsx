@@ -8,14 +8,14 @@ import { Page } from '@/shared/ui/layout/page'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
 
-import s from './ProfileSettingsPage.module.scss'
+import s from './SettingsPage.module.scss'
 
 const TAB_PROFILE_DATA = 'profile_data'
 const TAB_DEVICES = 'devices'
 const TAB_ACCOUNT = 'account'
 const TAB_PAYMENTS = 'payments'
 
-function ProfileSettingsPage() {
+function SettingsPage() {
   const { t } = useTranslation()
   const { tabNames } = t.profileSettings
 
@@ -60,5 +60,5 @@ function ProfileSettingsPage() {
   )
 }
 
-ProfileSettingsPage.getLayout = getSidebarLayout
-export default ProfileSettingsPage
+SettingsPage.getLayout = getSidebarLayout
+export default SettingsPage

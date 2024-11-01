@@ -18,7 +18,7 @@ export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
           <Typography as={'h1'} variant={'h1'}>
             ProfileTitle
           </Typography>
-          <Button as={link} href={Paths.ProfileSettings} variant={'secondary'}>
+          <Button as={link} href={Paths.Settings} variant={'secondary'}>
             Profile Settings
           </Button>
         </div>
