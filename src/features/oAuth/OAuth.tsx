@@ -2,7 +2,7 @@ import { useTranslation } from '@/shared/hooks'
 import { Button, GithubIcon, GoogleIcon } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
 
-import s from './OAuthIcons.module.scss'
+import s from './OAuth.module.scss'
 
 // https://developers.google.com/identity/protocols/oauth2/javascript-implicit-flow
 const GOOGLE_LOGIN_URL = {
@@ -18,7 +18,7 @@ const GOOGLE_LOGIN_URL = {
 // https://docs.github.com/en/apps/oauth-apps/building-oauth-apps/authorizing-oauth-apps#web-application-flow
 const GITHUB_LOGIN_URL = 'https://inctagram.work/api/v1/auth/github/login'
 
-export const OAuthBlock = () => {
+export const OAuth = () => {
   const { t } = useTranslation()
   const { githubButton, googleButton } = t.signUpPage
 

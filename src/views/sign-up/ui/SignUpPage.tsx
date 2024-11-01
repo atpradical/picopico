@@ -1,6 +1,6 @@
+import { OAuth } from '@/features/oAuth'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
-import { OAuthBlock } from '@/shared/ui/components/oAuth-block'
 import { getLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { SignUpForm } from '@/views/sign-up/ui/SignUpForm'
@@ -20,7 +20,7 @@ function SignUpPage() {
           <Typography as={'h1'} variant={'h1'}>
             {pageTitle}
           </Typography>
-          <OAuthBlock />
+          <OAuth />
           <SignUpForm />
           <div className={s.footer}>
             <Typography variant={'regular_16'}>{isAccount}</Typography>

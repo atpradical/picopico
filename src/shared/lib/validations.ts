@@ -59,8 +59,6 @@ export const recaptchaScheme = (message: string) => {
 }
 
 export const aboutMeScheme = (args: LocaleValidationAboutMe) => {
-  debugger
-
   return z
     .string()
     .trim()

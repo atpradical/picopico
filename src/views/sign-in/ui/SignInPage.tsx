@@ -1,6 +1,6 @@
+import { OAuth } from '@/features/oAuth'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
-import { OAuthBlock } from '@/shared/ui/components/oAuth-block'
 import { getLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { SignInForm } from '@/views/sign-in'
@@ -19,7 +19,7 @@ function SignInPage() {
         <Typography as={'h1'} variant={'h1'}>
           {pageTitle}
         </Typography>
-        <OAuthBlock />
+        <OAuth />
         <SignInForm />
         <Typography variant={'regular_16'}>{isAccount}</Typography>
         <Button as={Link} href={Paths.signUp} variant={'nb-outlined'}>

@@ -32,7 +32,6 @@ export const PublishBody = ({ previewList, ...rest }: PublishBodyProps) => {
   }
 
   useEffect(() => {
-    debugger
     if (description) {
       const checkResult = postsDescriptionSchemeCreator(
         validation.postDescription.maxLength
