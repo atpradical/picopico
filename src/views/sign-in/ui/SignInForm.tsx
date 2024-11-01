@@ -40,7 +40,7 @@ export const SignInForm = () => {
     try {
       await login(data).unwrap()
 
-      router.push(Paths.profile)
+      router.push(Paths.Home)
     } catch (e) {
       const errors = getErrorMessageData(e)
 

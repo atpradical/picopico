@@ -6,7 +6,6 @@ import { useTranslation } from '@/shared/hooks'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
 import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import s from './Header.module.scss'
 
@@ -16,12 +15,11 @@ export type HeaderProps = {
 
 export const Header = ({ countNotification }: HeaderProps) => {
   const { t } = useTranslation()
-  const router = useRouter()
   const { isAuth } = useContext(AuthContext)
 
   return (
     <div className={s.wrapper}>
-      <Button as={Link} className={s.logoWrapper} href={Paths.home} tabIndex={-1} variant={'link'}>
+      <Button as={Link} className={s.logoWrapper} href={Paths.Home} tabIndex={-1} variant={'link'}>
         <LogoLight className={s.logo} />
         <Typography as={'h1'} variant={'large'}>
           PicoPico

@@ -68,11 +68,11 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
         <Typography
           as={Link}
           className={s.title}
-          data-active={router.pathname === Paths.home}
-          href={Paths.home}
+          data-active={router.pathname === Paths.Home}
+          href={Paths.Home}
           variant={'medium_14'}
         >
-          {router.pathname === Paths.home ? (
+          {router.pathname === Paths.Home ? (
             <HomeIcon className={s.icon} />
           ) : (
             <HomeOutlineIcon className={s.icon} />

@@ -1,9 +1,9 @@
 export enum Paths {
+  Home = '/',
   Settings = '/settings',
   create = '/create',
   favourites = '/favourites',
   forgotPassword = '/auth/forgot-password',
-  home = '/',
   logIn = '/auth/sign-in',
   messages = '/messages',
   privacyPolicy = '/docs/privacy-policy',
