@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect, useState } from 'react'
 
 import { ALLOWED_IMAGE_UPLOAD_TYPES, AVATAR_MAX_FILE_SIZE } from '@/features/profile/config'
 import { ProfileAvatarDialog } from '@/features/profile/ui'
-import { useDeleteAvatarMutation, useUploadAvatarMutation } from '@/shared/api/profile'
+import { useDeleteAvatarMutation, useUploadAvatarMutation } from '@/services/profile'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { ActionConfirmDialog } from '@/shared/ui/components'

@@ -1,4 +1,4 @@
-import { useGoogleLoginQuery } from '@/shared/api'
+import { useGoogleLoginQuery } from '@/services/auth'
 import { getLayout } from '@/shared/ui/layout'
 import { getErrorMessageData } from '@/shared/utils'
 import { useRouter } from 'next/router'

@@ -1,4 +1,4 @@
-import { picoApi } from '@/shared/api/picoApi'
+import { picoApi } from '@/services'
 
 import {
   ConfirmEmailArgs,
@@ -84,7 +84,7 @@ export const authApi = picoApi.injectEndpoints({
         }),
       }),
       logout: builder.mutation<void, void>({
-        async onQueryStarted(_, { dispatch, queryFulfilled }) {
+        async onQueryStarted(_, { dispatch }) {
           localStorage.removeItem('accessToken')
           dispatch(authApi.util.invalidateTags(['Me']))
         },

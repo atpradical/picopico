@@ -1,4 +1,4 @@
-import { picoApi } from '@/shared/api/picoApi'
+import { picoApi } from '@/services'
 
 import { ResponseGetSessions, TerminateSessionArgs } from './devices.types'
 

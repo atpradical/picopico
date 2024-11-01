@@ -1,10 +1,10 @@
-import { picoApi } from '@/shared/api/picoApi'
+import { picoApi } from '@/services'
 import {
   CreatePostArgs,
   CreatePostImageArgs,
   CreatePostImageResponse,
   CreatePostResponse,
-} from '@/shared/api/posts/posts.types'
+} from '@/services/posts/posts.types'
 
 export const postsApi = picoApi.injectEndpoints({
   endpoints: builder => {

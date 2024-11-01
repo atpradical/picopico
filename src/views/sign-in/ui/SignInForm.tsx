@@ -1,6 +1,6 @@
 import { useForm } from 'react-hook-form'
 
-import { useLoginMutation } from '@/shared/api'
+import { useLoginMutation } from '@/services/auth'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components'

@@ -14,7 +14,7 @@ import {
   PublishContent,
   StartContent,
 } from '@/features/posts/ui/create-post-dialog/dialog-content'
-import { useCreatePostImageMutation, useCreatePostMutation } from '@/shared/api/posts'
+import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { ActionConfirmDialog } from '@/shared/ui/components'

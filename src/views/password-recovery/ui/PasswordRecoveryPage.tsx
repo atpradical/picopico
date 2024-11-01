@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useCheckRecoveryCodeMutation } from '@/shared/api'
+import { useCheckRecoveryCodeMutation } from '@/services/auth'
 import { useTranslation } from '@/shared/hooks'
 import { LinkExpired } from '@/shared/ui/components/link-expired/LinkExpired'
 import { getLayout } from '@/shared/ui/layout'

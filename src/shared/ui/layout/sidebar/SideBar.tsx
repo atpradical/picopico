@@ -2,11 +2,10 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef, useContext, useState 
 
 import { postsActions } from '@/features/posts/api/posts.reducer'
 import { CreatePostDialog } from '@/features/posts/ui'
-import { useLogoutMutation } from '@/shared/api'
+import { useLogoutMutation } from '@/services/auth'
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
-import { useTranslation } from '@/shared/hooks'
-import { useAppDispatch } from '@/shared/hooks/useAppDispatch'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { ActionConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {

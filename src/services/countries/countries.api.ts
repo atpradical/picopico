@@ -3,7 +3,7 @@ import {
   GetCountriesArgs,
   ResponseGetCities,
   ResponseGetCountries,
-} from '@/shared/api/countries/countries.types'
+} from '@/services/countries/countries.types'
 import { fetchBaseQuery } from '@reduxjs/toolkit/query'
 import { createApi } from '@reduxjs/toolkit/query/react'
 

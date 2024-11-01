@@ -1,7 +1,7 @@
 import { useForm, useWatch } from 'react-hook-form'
 
 import { LocaleCreateNewPasswordForm } from '@/locales/en'
-import { useCreatNewPasswordMutation } from '@/shared/api'
+import { useCreatNewPasswordMutation } from '@/services/auth'
 import { Paths } from '@/shared/enums'
 import { useCheckPasswordsMatch, useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components'

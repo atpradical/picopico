@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react'
 
-import { useConfirmEmailMutation } from '@/shared/api/auth/auth.api'
+import { useConfirmEmailMutation } from '@/services/auth'
 import { useTranslation } from '@/shared/hooks'
 import { LinkExpired } from '@/shared/ui/components/link-expired/LinkExpired'
 import { getLayout } from '@/shared/ui/layout'

@@ -1,6 +1,6 @@
 import { ReactNode, createContext, useEffect, useState } from 'react'
 
-import { ResponseMe, useMeQuery } from '@/shared/api'
+import { ResponseMe, useMeQuery } from '@/services/auth'
 import { Paths } from '@/shared/enums'
 import { Nullable } from '@/shared/types'
 import { useRouter } from 'next/router'

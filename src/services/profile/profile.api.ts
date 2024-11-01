@@ -1,9 +1,9 @@
-import { picoApi } from '@/shared/api/picoApi'
+import { picoApi } from '@/services/picoApi'
 import {
   ResponseGetUserProfile,
   UpdateUserProfileArgs,
   UploadAvatarArgs,
-} from '@/shared/api/profile/profile.types'
+} from '@/services/profile/profile.types'
 
 export const profileApi = picoApi.injectEndpoints({
   endpoints: builder => {

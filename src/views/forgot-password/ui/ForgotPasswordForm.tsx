@@ -2,7 +2,7 @@ import { useRef, useState } from 'react'
 import ReCAPTCHA from 'react-google-recaptcha'
 import { useForm } from 'react-hook-form'
 
-import { usePasswordRecoveryMutation } from '@/shared/api'
+import { usePasswordRecoveryMutation } from '@/services/auth'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'

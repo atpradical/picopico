@@ -1,6 +1,6 @@
-import { postsReducer } from '@/features/posts/api/posts.reducer'
-import { countriesApi } from '@/shared/api/countries/countriesApi'
-import { picoApi } from '@/shared/api/picoApi'
+import { postsReducer } from '@/features/posts/api'
+import { countriesApi } from '@/services/countries'
+import { picoApi } from '@/services/picoApi'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
 import { createWrapper } from 'next-redux-wrapper'
 
