@@ -9,7 +9,9 @@
 
 .socialsButton {
   &:hover {
+    transform: scale(1.1);
     color: inherit;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
   }
 
   &:focus {
@@ -18,11 +20,16 @@
   }
 }
 
+
 .icon {
   width: var(--icon-size-l);
   height: var(--icon-size-l);
+  transition: transform 0.3s ease;
 
   &:hover {
     cursor: pointer;
+    background-color: rgb(57 125 246 / 25%);
+    border-radius: var(--border-radius-rounded);
+    box-shadow: 0 8px 30px rgb(57 125 246 / 25%);
   }
 }

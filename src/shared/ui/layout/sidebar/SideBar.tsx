@@ -53,11 +53,12 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
   const logoutHandler = async () => {
     try {
       await logout().unwrap()
-      router.push(Paths.logIn)
     } catch (e) {
       const error = getErrorMessageData(e)
 
       showErrorToast(error)
+    } finally {
+      setOpenLogoutDialog(false)
     }
   }
 

@@ -24,11 +24,23 @@ export const OAuth = () => {
 
   return (
     <div className={s.socials}>
-      <Button as={Link} href={GITHUB_LOGIN_URL} title={githubButton} variant={'icon'}>
-        <GithubIcon className={s.icon} />
-      </Button>
-      <Button as={Link} href={GOOGLE_LOGIN_URL} title={googleButton} variant={'icon'}>
+      <Button
+        as={Link}
+        className={s.socialsButton}
+        href={GOOGLE_LOGIN_URL}
+        title={googleButton}
+        variant={'icon'}
+      >
         <GoogleIcon className={s.icon} />
+      </Button>
+      <Button
+        as={Link}
+        className={s.socialsButton}
+        href={GITHUB_LOGIN_URL}
+        title={githubButton}
+        variant={'icon'}
+      >
+        <GithubIcon className={s.icon} />
       </Button>
     </div>
   )
