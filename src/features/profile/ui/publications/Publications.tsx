@@ -1,47 +1,61 @@
-import { ElementRef, forwardRef } from 'react'
+import { ElementRef, forwardRef, useState } from 'react'
 
+import { PostDialog } from '@/features/posts/ui/post-dialog'
 import { GetPostsItems } from '@/services/posts'
+import { Nullable } from '@/shared/types'
 import Image from 'next/image'
 
 import s from './Publications.module.scss'
 
 type PublicationsProps = {
-  items: GetPostsItems[]
+  posts: GetPostsItems[]
 }
 
 type PublicationsRef = ElementRef<typeof Image>
 
 export const Publications = forwardRef<PublicationsRef, PublicationsProps>(
-  ({ items }: PublicationsProps, ref) => {
+  ({ posts }: PublicationsProps, ref) => {
+    const [postId, setPostId] = useState<Nullable<number>>(null)
+    const [showPost, setShowPost] = useState(false)
+
+    const postData = posts.find(el => el.id === postId)
+
+    if (!posts) {
+      return <div>No items to display</div>
+    }
+
+    const closePostDialogHandler = () => {
+      setShowPost(false)
+      setPostId(null)
+    }
+
+    const openPostDialogHandler = (postId: number) => {
+      setPostId(postId)
+      setShowPost(true)
+    }
+
     return (
       <div className={s.publicationsContainer}>
-        {items.map((post, index) => {
-          if (items.length === index + 1) {
-            return (
-              <Image
-                alt={'post image'}
-                height={228}
-                key={post.id}
-                ref={ref}
-                src={post.images[0].url}
-                style={{ content: 'contain' }}
-                width={234}
-              />
-            )
-          } else {
-            return (
-              <Image
-                alt={'post image'}
-                height={228}
-                key={post.id}
-                ref={ref}
-                src={post.images[0].url}
-                style={{ content: 'contain' }}
-                width={234}
-              />
-            )
-          }
-        })}
+        {posts.map((post, index) => (
+          <Image
+            alt={'post image'}
+            height={228}
+            key={post.id}
+            onClick={() => openPostDialogHandler(post.id)}
+            ref={posts.length === index + 1 ? ref : undefined}
+            src={post.images[0].url}
+            style={{ content: 'contain' }}
+            width={234}
+          />
+        ))}
+        {showPost && (
+          <PostDialog
+            isOpen={showPost}
+            onClose={closePostDialogHandler}
+            onOpenChange={setShowPost}
+            postData={postData ?? null}
+          />
+        )}
       </div>
     )
   }

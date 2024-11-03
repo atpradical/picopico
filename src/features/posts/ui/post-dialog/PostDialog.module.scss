@@ -1,0 +1,43 @@
+.dialogContent {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  max-width: 972px;
+}
+
+.dialogOverlay {
+  &[data-state='open'] {
+    opacity: 0.8;
+  }
+}
+
+.carousel {
+  flex: 1;
+  width: 490px;
+  height: 530px;
+}
+
+.postDetails {
+  flex: 1;
+}
+
+.dialogHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+
+.dialogBody {
+  display: flex;
+  flex-direction: column;
+  padding: 24px 24px 12px;
+}
+
+.dialogSeparator {
+  height: 1px;
+  background-color: var(--color-light-900);
+}
+
+
+
+

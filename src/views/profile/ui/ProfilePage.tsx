@@ -66,7 +66,7 @@ function ProfilePage() {
           isAuth={isAuth}
           userName={profileData?.userName ?? 'userName'}
         />
-        <Publications items={allPosts} ref={lastPostRef} />
+        <Publications posts={allPosts} ref={lastPostRef} />
       </div>
     </Page>
   )
