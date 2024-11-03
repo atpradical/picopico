@@ -86,3 +86,7 @@ export type GetPostsArgs = {
   sortDirection?: string
   userName: string
 }
+
+export type DeletePostArgs = {
+  postId: number
+}

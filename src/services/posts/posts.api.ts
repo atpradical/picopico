@@ -4,6 +4,7 @@ import {
   CreatePostImageArgs,
   CreatePostImageResponse,
   CreatePostResponse,
+  DeletePostArgs,
   GetPostsArgs,
   GetPostsResponse,
 } from '@/services/posts/posts.types'
@@ -38,6 +39,13 @@ export const postsApi = picoApi.injectEndpoints({
           }
         },
       }),
+      deletePost: builder.mutation<void, DeletePostArgs>({
+        invalidatesTags: ['Posts'],
+        query: ({ postId }) => ({
+          method: 'DELETE',
+          url: `/v1/posts/${postId}`,
+        }),
+      }),
       getPosts: builder.query<GetPostsResponse, GetPostsArgs>({
         providesTags: ['Posts'],
         query: ({ userName, ...args }) => ({
@@ -50,4 +58,9 @@ export const postsApi = picoApi.injectEndpoints({
   },
 })
 
-export const { useCreatePostImageMutation, useCreatePostMutation, useGetPostsQuery } = postsApi
+export const {
+  useCreatePostImageMutation,
+  useCreatePostMutation,
+  useDeletePostMutation,
+  useGetPostsQuery,
+} = postsApi

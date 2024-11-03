@@ -1,6 +1,6 @@
 import { ElementRef, forwardRef, useState } from 'react'
 
-import { PostDialog } from '@/features/posts/ui/post-dialog'
+import { PostDialog } from '@/features/posts/ui'
 import { GetPostsItems } from '@/services/posts'
 import { Nullable } from '@/shared/types'
 import Image from 'next/image'

@@ -31,7 +31,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   } = useTranslation()
   const dispatch = useAppDispatch()
   const { description, dialogMeta } = useSelector(selectPostsAllData)
-  const [interruptDialog, setInterruptDialog] = useState(false)
+  const [isAlertDialog, setIsAlertDialog] = useState(false)
   // todo: переделать на Redux + IndexedDB
   const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
   const [previewList, setPreviewList] = useState<Nullable<string[]>>(null)
@@ -130,7 +130,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
   const interruptDialogHandler = (event: Event) => {
     event.preventDefault()
-    setInterruptDialog(true)
+    setIsAlertDialog(true)
   }
 
   const isWide =
@@ -177,10 +177,10 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
         accessibilityDescription={createPostDialog.interruptDialog.accessibilityDescription}
         accessibilityTitle={createPostDialog.interruptDialog.accessibilityTitle}
         confirmButtonText={createPostDialog.interruptDialog.saveButtonText}
-        isOpen={interruptDialog}
+        isOpen={isAlertDialog}
         message={createPostDialog.interruptDialog.visibleBodyText}
         onConfirm={() => {}} //todo: добавить возможность сохранять черновик в IndexedDB
-        onOpenChange={setInterruptDialog}
+        onOpenChange={setIsAlertDialog}
         rejectButtonText={createPostDialog.interruptDialog.discardButtonText}
         title={createPostDialog.interruptDialog.title}
       />

@@ -58,10 +58,10 @@ export function ActionConfirmDialog({
           <Typography variant={'regular_14'}>{message}</Typography>
         </DialogBody>
         <DialogFooter className={s.footer}>
-          <Button onClick={closeDialogHandler} variant={'outlined'}>
-            {rejectButtonText}
+          <Button onClick={onConfirm} variant={'outlined'}>
+            {confirmButtonText}
           </Button>
-          <Button onClick={onConfirm}>{confirmButtonText}</Button>
+          <Button onClick={closeDialogHandler}>{rejectButtonText}</Button>
         </DialogFooter>
       </DialogContent>
     </DialogRoot>
