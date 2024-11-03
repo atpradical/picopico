@@ -1,6 +1,7 @@
 import { useState } from 'react'
 
 import { useDeletePostMutation } from '@/services/posts'
+import { useTranslation } from '@/shared/hooks'
 import { ActionConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
@@ -25,6 +26,7 @@ type EditPostDropdownProps = {
 }
 
 export const PostActionsDropdown = ({ onConfirm, postId }: EditPostDropdownProps) => {
+  const { t } = useTranslation()
   const [isDeleteAlertDialog, setIsDeleteAlertDialog] = useState(false)
   const [deletePost] = useDeletePostMutation()
 
@@ -58,26 +60,26 @@ export const PostActionsDropdown = ({ onConfirm, postId }: EditPostDropdownProps
             <DropdownMenuGroup>
               <DropdownMenuItem>
                 <EditOutlineIcon className={s.icon} />
-                <Typography>Edit Post</Typography>
+                <Typography>{t.postDialog.actionsDropdown.editPostButton}</Typography>
               </DropdownMenuItem>
               <DropdownMenuItem onClick={onDeleteOptionHandler}>
                 <TrashOutlineIcon className={s.icon} />
-                <Typography>Delete Post</Typography>
+                <Typography>{t.postDialog.actionsDropdown.deletePostButton}</Typography>
               </DropdownMenuItem>
             </DropdownMenuGroup>
           </DropdownMenuContent>
         </DropdownMenuPortal>
       </DropdownMenu>
       <ActionConfirmDialog
-        accessibilityDescription={'accessibilityDescription'}
-        accessibilityTitle={'accessibilityTitle'}
-        confirmButtonText={'saveButtonText'}
+        accessibilityDescription={t.postDialog.alertDeleteDialog.accessibilityDescription}
+        accessibilityTitle={t.postDialog.alertDeleteDialog.accessibilityTitle}
+        confirmButtonText={t.postDialog.alertDeleteDialog.confirmButtonText}
         isOpen={isDeleteAlertDialog}
-        message={'visibleBodyText'}
+        message={t.postDialog.alertDeleteDialog.visibleBodyText}
         onConfirm={deletePostHandler}
         onOpenChange={setIsDeleteAlertDialog}
-        rejectButtonText={'discardButtonText'}
-        title={'title'}
+        rejectButtonText={t.postDialog.alertDeleteDialog.discardButtonText}
+        title={t.postDialog.alertDeleteDialog.visibleTitle}
       />
     </>
   )

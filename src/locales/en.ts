@@ -6,6 +6,7 @@ import { emailConfirmationDialog } from '@/locales/en/email-confirmation-dialog'
 import { expiredLink } from '@/locales/en/expired-link'
 import { forgotPasswordPage } from '@/locales/en/forgot-password-page'
 import { logoutDialog } from '@/locales/en/logout-dialog'
+import { postDialog } from '@/locales/en/post-dialog'
 import { privacyPolicyPage } from '@/locales/en/privacy-policy-page'
 import { profileAvatarDialog } from '@/locales/en/profile-avatar-dialog'
 import { profilePage } from '@/locales/en/profile-page'
@@ -53,6 +54,7 @@ export const en = {
     ru: ' Russian',
   },
   logoutDialog: logoutDialog,
+  postDialog: postDialog,
   privacyPolicyPage: privacyPolicyPage,
   profileAvatarDialog: profileAvatarDialog,
   profilePage: profilePage,

@@ -1,6 +1,5 @@
 export const createPostDialog = {
   altDescription: 'New post image',
-
   buttons: {
     backButton: 'Go Back',
     closeButton: 'Close',
