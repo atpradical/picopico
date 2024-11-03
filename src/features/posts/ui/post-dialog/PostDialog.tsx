@@ -1,17 +1,16 @@
 import { ComponentPropsWithoutRef } from 'react'
 
+import { EditPostDropdown } from '@/features/posts/ui/edit-post-dropdown'
 import { GetPostsItems } from '@/services/posts'
 import { Nullable } from '@/shared/types'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Avatar,
-  Button,
   Carousel,
   DialogBody,
   DialogContent,
   DialogHeader,
   DialogRoot,
-  MoreHorizontalIcon,
   Typography,
 } from '@atpradical/picopico-ui-kit'
 import * as Separator from '@radix-ui/react-separator'
@@ -52,9 +51,7 @@ export const PostDialog = ({ isOpen, onClose, onOpenChange, postData }: PostsDia
               src={postData?.avatarOwner}
               userName={postData?.userName}
             />
-            <Button variant={'icon'}>
-              <MoreHorizontalIcon />
-            </Button>
+            <EditPostDropdown />
           </DialogHeader>
           <DialogBody className={s.dialogBody}>
             <PostDescription postData={postData} />

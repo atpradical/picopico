@@ -12,6 +12,7 @@ export const postsApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       createPost: builder.mutation<CreatePostResponse, CreatePostArgs>({
+        invalidatesTags: ['Posts'],
         query: body => ({
           body,
           method: 'POST',

@@ -1,0 +1,10 @@
+.container {
+  display: flex;
+  gap: 12px;
+  align-items: flex-start;
+}
+
+.descriptionWrapper {
+  display: flex;
+  flex-direction: column;
+}

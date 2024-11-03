@@ -32,7 +32,7 @@ function ProfilePage() {
     if (isProfileDataSuccess) {
       setSkipGetPosts(false)
     }
-  }, [isProfileDataSuccess])
+  }, [profileData, isProfileDataSuccess])
 
   useEffect(() => {
     if (postsData?.items) {
