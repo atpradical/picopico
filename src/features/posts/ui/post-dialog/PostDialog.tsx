@@ -1,22 +1,14 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useState } from 'react'
 
-import { PostActionsDropdown, PostDescription } from '@/features/posts/ui'
-import { GetPostsItems } from '@/services/posts'
+import { DisplayPostContent } from '@/features/posts/ui'
+import { GetPostsItems, useUpdatePostMutation } from '@/services/posts'
 import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { HiddenDialogComponents } from '@/shared/ui/components'
-import {
-  Avatar,
-  Carousel,
-  DialogBody,
-  DialogContent,
-  DialogHeader,
-  DialogRoot,
-  Typography,
-} from '@atpradical/picopico-ui-kit'
-import * as Separator from '@radix-ui/react-separator'
+import { ActionConfirmDialog } from '@/shared/ui/components'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
+import { DialogRoot } from '@atpradical/picopico-ui-kit'
 
-import s from './PostDialog.module.scss'
+import { EditPostContent } from './edit-post-content'
 
 type PostsDialogProps = {
   isOpen: boolean
@@ -27,43 +19,70 @@ type PostsDialogProps = {
 
 export const PostDialog = ({ isOpen, onClose, onOpenChange, postData }: PostsDialogProps) => {
   const { t } = useTranslation()
+  const [isAlertDialog, setIsAlertDialog] = useState(false)
+  const [editMode, setEditMode] = useState(false)
+  const [updatePost] = useUpdatePostMutation()
 
   if (!postData) {
     return
   }
 
-  const postsImages = postData?.images.map(el => el.url)
+  const toggleEditModeHandler = () => {
+    setEditMode(true)
+  }
+
+  const interruptEditPostHandler = (event: Event) => {
+    event.preventDefault()
+    setIsAlertDialog(true)
+  }
+
+  const confirmExitEditModeHandler = () => {
+    setEditMode(false)
+    setIsAlertDialog(false)
+  }
+
+  const savePostChangesHandler = async (description: string) => {
+    try {
+      await updatePost({ description, postId: postData?.id }).unwrap()
+      setEditMode(false)
+    } catch (e) {
+      const errors = getErrorMessageData(e)
+
+      showErrorToast(errors)
+    }
+  }
 
   return (
-    <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
-      <DialogContent
-        className={s.dialogContent}
-        onClose={onClose}
-        overlayClassName={s.dialogOverlay}
-        withCloseButton
-      >
-        <HiddenDialogComponents
-          description={t.postDialog.accessibilityDescription}
-          title={t.postDialog.accessibilityTitle}
-        />
-        <Carousel className={s.carousel} slides={postsImages} />
-        <div className={s.postDetails}>
-          <DialogHeader className={s.dialogHeader}>
-            <Avatar
-              showUserName
-              size={'s'}
-              src={postData.avatarOwner}
-              userName={postData.userName}
-            />
-            <PostActionsDropdown onConfirm={onClose} postId={postData.id} />
-          </DialogHeader>
-          <DialogBody className={s.dialogBody}>
-            <PostDescription postData={postData} />
-            <Separator.Root className={s.dialogSeparator} />
-            <Typography grey>Comments, likes, and other features coming soon...</Typography>
-          </DialogBody>
-        </div>
-      </DialogContent>
-    </DialogRoot>
+    <>
+      <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
+        {editMode ? (
+          <EditPostContent
+            key={postData.id}
+            onInterrupt={interruptEditPostHandler}
+            onSave={savePostChangesHandler}
+            postData={postData}
+          />
+        ) : (
+          <DisplayPostContent
+            onClose={onClose}
+            postData={postData}
+            setEditMode={toggleEditModeHandler}
+          />
+        )}
+      </DialogRoot>
+      <ActionConfirmDialog
+        accessibilityDescription={
+          t.postDialog.editPostDialog.alertDeleteDialog.accessibilityDescription
+        }
+        accessibilityTitle={t.postDialog.editPostDialog.alertDeleteDialog.accessibilityTitle}
+        confirmButtonText={t.postDialog.editPostDialog.alertDeleteDialog.confirmButtonText}
+        isOpen={isAlertDialog}
+        message={t.postDialog.editPostDialog.alertDeleteDialog.visibleBodyText}
+        onConfirm={confirmExitEditModeHandler}
+        onOpenChange={setIsAlertDialog}
+        rejectButtonText={t.postDialog.editPostDialog.alertDeleteDialog.discardButtonText}
+        title={t.postDialog.editPostDialog.alertDeleteDialog.visibleTitle}
+      />
+    </>
   )
 }

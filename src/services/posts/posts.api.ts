@@ -7,6 +7,7 @@ import {
   DeletePostArgs,
   GetPostsArgs,
   GetPostsResponse,
+  UpdatePostArgs,
 } from '@/services/posts/posts.types'
 
 export const postsApi = picoApi.injectEndpoints({
@@ -54,6 +55,14 @@ export const postsApi = picoApi.injectEndpoints({
           url: `v1/posts/${userName}`,
         }),
       }),
+      updatePost: builder.mutation<void, UpdatePostArgs>({
+        invalidatesTags: ['Posts'],
+        query: ({ description, postId }) => ({
+          body: { description },
+          method: 'PUT',
+          url: `v1/posts/${postId}`,
+        }),
+      }),
     }
   },
 })
@@ -63,4 +72,5 @@ export const {
   useCreatePostMutation,
   useDeletePostMutation,
   useGetPostsQuery,
+  useUpdatePostMutation,
 } = postsApi

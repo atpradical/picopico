@@ -90,3 +90,8 @@ export type GetPostsArgs = {
 export type DeletePostArgs = {
   postId: number
 }
+
+export type UpdatePostArgs = {
+  description: string
+  postId: number
+}

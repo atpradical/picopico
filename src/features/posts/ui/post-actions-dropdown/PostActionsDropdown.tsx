@@ -22,10 +22,11 @@ import s from './PostActionsDropdown.module.scss'
 
 type EditPostDropdownProps = {
   onConfirm: () => void
+  onEdit: () => void
   postId: number
 }
 
-export const PostActionsDropdown = ({ onConfirm, postId }: EditPostDropdownProps) => {
+export const PostActionsDropdown = ({ onConfirm, onEdit, postId }: EditPostDropdownProps) => {
   const { t } = useTranslation()
   const [isDeleteAlertDialog, setIsDeleteAlertDialog] = useState(false)
   const [deletePost] = useDeletePostMutation()
@@ -58,7 +59,7 @@ export const PostActionsDropdown = ({ onConfirm, postId }: EditPostDropdownProps
         <DropdownMenuPortal>
           <DropdownMenuContent align={'end'} className={s.dropdownContent}>
             <DropdownMenuGroup>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={onEdit}>
                 <EditOutlineIcon className={s.icon} />
                 <Typography>{t.postDialog.actionsDropdown.editPostButton}</Typography>
               </DropdownMenuItem>

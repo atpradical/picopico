@@ -1,0 +1,60 @@
+.dialogContent {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  max-width: 972px;
+}
+
+.dialogOverlay {
+  &[data-state='open'] {
+    opacity: 0.8;
+  }
+}
+
+.dialogHeader {
+  display: flex;
+  justify-content: space-between;
+  padding: 12px 24px;
+}
+
+.dialogBody {
+  display: flex;
+  padding: 0;
+}
+
+.carousel {
+  flex: 1;
+  width: 490px;
+  height: 530px;
+}
+
+.formContainer {
+  display: flex;
+  flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+
+  width: 100%;
+  padding: 24px;
+}
+
+.descriptionContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.textArea {
+  resize: none;
+
+  width: 100%;
+  max-width: 434px;
+  min-height: 120px;
+
+  // размытие фона https://stackoverflow.com/questions/54667653/text-blur-after-scroll-bar-hide-with-webkit
+  border-radius: unset;
+}
+
+.button {
+  align-self: flex-end;
+}
