@@ -7,6 +7,7 @@ import { useTranslation } from '@/shared/hooks'
 import { Avatar, Button, Typography } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 import link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './ProfileHeader.module.scss'
 
@@ -14,8 +15,10 @@ type ProfileHeaderProps = ComponentPropsWithoutRef<'section'>
 
 export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
   const { t } = useTranslation()
+  const router = useRouter()
   const { isAuth } = useContext(AuthContext)
   const { myProfileData } = useContext(MyProfileContext)
+  const showSettingsButton = isAuth && myProfileData.id === Number(router.query.id)
 
   return (
     <section className={clsx(s.container, className)} {...props}>
@@ -30,7 +33,7 @@ export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
           <Typography as={'h1'} variant={'h1'}>
             {myProfileData.userName}
           </Typography>
-          {isAuth && (
+          {showSettingsButton && (
             <Button as={link} href={Paths.Settings} variant={'secondary'}>
               {t.profilePage.profileSettingsButton}
             </Button>
