@@ -1,8 +1,6 @@
-import { ReactNode, createContext, useContext, useEffect, useState } from 'react'
+import { ReactNode, createContext } from 'react'
 
 import { ResponseGetUserProfile, useGetUserProfileQuery } from '@/services/profile'
-
-import { AuthContext } from './AuthContext'
 
 type MyProfileContextType = {
   myProfileData: ResponseGetUserProfile
@@ -31,16 +29,7 @@ type AuthProviderProps = {
 }
 
 export const MyProfileProvider = ({ children }: AuthProviderProps) => {
-  const { meData } = useContext(AuthContext)
-  const [skip, setSkip] = useState(true)
-  const { data: myProfileData } = useGetUserProfileQuery(undefined, { skip })
-
-  // if me success get my profile data
-  useEffect(() => {
-    if (meData && meData?.userId) {
-      setSkip(false)
-    }
-  }, [meData])
+  const { data: myProfileData } = useGetUserProfileQuery()
 
   return (
     <MyProfileContext.Provider value={{ myProfileData: myProfileData ?? initialData }}>

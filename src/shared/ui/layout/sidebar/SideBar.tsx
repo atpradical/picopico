@@ -1,6 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef, useContext, useState } from 'react'
 
-import { postsActions } from '@/features/posts/api/posts.reducer'
+import { createPostActions } from '@/features/posts/api/create-post.reducer'
 import { CreatePostDialog } from '@/features/posts/ui'
 import { useLogoutMutation } from '@/services/auth'
 import { AuthContext } from '@/shared/contexts'
@@ -45,7 +45,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
   const dispatch = useAppDispatch()
 
   const toggleCreatePostDialogHandler = (open: boolean) => {
-    dispatch(postsActions.togglePostCreationDialog({ isOpen: open }))
+    dispatch(createPostActions.togglePostCreationDialog({ isOpen: open }))
   }
 
   const [logout] = useLogoutMutation()

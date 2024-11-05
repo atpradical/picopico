@@ -12,20 +12,20 @@ const initialPostsState: PostsState = {
 
 const slice = createSlice({
   initialState: initialPostsState,
-  name: 'posts',
+  name: 'create-post',
   reducers: {
     addPostDescription: (state, action: PayloadAction<{ description: string }>) => {
       state.description = action.payload.description
     },
-    resetPosts: state => {
+    resetPost: state => {
       state.description = ''
       state.dialogMeta.currentStep = PostsStep.Start
       state.dialogMeta.errorMessage = ''
     },
-    setPostsCreationStep: (state, action: PayloadAction<{ step: PostsStep }>) => {
+    setPostCreationStep: (state, action: PayloadAction<{ step: PostsStep }>) => {
       state.dialogMeta.currentStep = action.payload.step
     },
-    setPostsErrorMessage: (state, action: PayloadAction<{ error: string }>) => {
+    setPostErrorMessage: (state, action: PayloadAction<{ error: string }>) => {
       state.dialogMeta.errorMessage = action.payload.error
     },
     togglePostCreationDialog: (state, action: PayloadAction<{ isOpen: boolean }>) => {
@@ -34,5 +34,5 @@ const slice = createSlice({
   },
 })
 
-export const postsReducer = slice.reducer
-export const postsActions = slice.actions
+export const createPostReducer = slice.reducer
+export const createPostActions = slice.actions

@@ -2,7 +2,7 @@ import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
-import { selectPostsDialogMeta } from '@/features/posts/model'
+import { selectPostDialogMeta } from '@/features/posts/model'
 import { useTranslation } from '@/shared/hooks'
 import { PlaceholderImage, UploadFileError } from '@/shared/ui/components'
 import { Button, DialogBody } from '@atpradical/picopico-ui-kit'
@@ -17,7 +17,7 @@ export const StartBody = ({ onUpload, ...rest }: StartBodyProps) => {
   const {
     t: { createPostDialog },
   } = useTranslation()
-  const { errorMessage } = useSelector(selectPostsDialogMeta)
+  const { errorMessage } = useSelector(selectPostDialogMeta)
 
   return (
     <DialogBody className={s.body} {...rest}>

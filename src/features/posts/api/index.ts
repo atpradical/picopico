@@ -1,1 +1,1 @@
-export * from './posts.reducer'
+export * from './create-post.reducer'

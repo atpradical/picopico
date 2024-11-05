@@ -1,4 +1,4 @@
-import { postsReducer } from '@/features/posts/api'
+import { createPostReducer } from '@/features/posts/api'
 import { countriesApi } from '@/services/countries'
 import { picoApi } from '@/services/picoApi'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
@@ -12,8 +12,8 @@ const makeStore = () =>
     // reducer: combineSlices(picoApi, countriesApi),
     reducer: {
       [countriesApi.reducerPath]: countriesApi.reducer,
+      createPost: createPostReducer,
       [picoApi.reducerPath]: picoApi.reducer,
-      posts: postsReducer,
     },
   })
 

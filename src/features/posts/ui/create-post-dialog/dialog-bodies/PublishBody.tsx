@@ -1,9 +1,9 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useContext, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
-import { postsActions } from '@/features/posts/api'
+import { createPostActions } from '@/features/posts/api'
 import { POSTS_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
-import { postsDescriptionSchemeCreator, selectPostsAllData } from '@/features/posts/model'
+import { postsDescriptionSchemeCreator, selectCreatePostAllData } from '@/features/posts/model'
 import { AuthContext } from '@/shared/contexts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
@@ -23,12 +23,12 @@ export const PublishBody = ({ previewList, ...rest }: PublishBodyProps) => {
 
   const { meData } = useContext(AuthContext)
   const dispatch = useAppDispatch()
-  const { description, dialogMeta } = useSelector(selectPostsAllData)
+  const { description, dialogMeta } = useSelector(selectCreatePostAllData)
 
   const onDescriptionChangeHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
     const descriptionValue = e.currentTarget.value
 
-    dispatch(postsActions.addPostDescription({ description: descriptionValue }))
+    dispatch(createPostActions.addPostDescription({ description: descriptionValue }))
   }
 
   useEffect(() => {
@@ -40,10 +40,12 @@ export const PublishBody = ({ previewList, ...rest }: PublishBodyProps) => {
       })
 
       if (checkResult.error) {
-        dispatch(postsActions.setPostsErrorMessage({ error: checkResult.error.errors[0].message }))
+        dispatch(
+          createPostActions.setPostErrorMessage({ error: checkResult.error.errors[0].message })
+        )
       }
       if (checkResult.success) {
-        dispatch(postsActions.setPostsErrorMessage({ error: '' }))
+        dispatch(createPostActions.setPostErrorMessage({ error: '' }))
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps

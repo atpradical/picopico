@@ -1,13 +1,13 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { postsActions } from '@/features/posts/api'
+import { createPostActions } from '@/features/posts/api'
 import {
   POSTS_ALLOWED_UPLOAD_TYPES,
   POSTS_FILES_LIMIT,
   POSTS_MAX_FILE_SIZE,
 } from '@/features/posts/config'
-import { PostsStep, selectPostsAllData } from '@/features/posts/model'
+import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
 import {
   CropContent,
   FiltersContent,
@@ -30,7 +30,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     t: { createPostDialog },
   } = useTranslation()
   const dispatch = useAppDispatch()
-  const { description, dialogMeta } = useSelector(selectPostsAllData)
+  const { description, dialogMeta } = useSelector(selectCreatePostAllData)
   const [isAlertDialog, setIsAlertDialog] = useState(false)
   // todo: переделать на Redux + IndexedDB
   const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
@@ -54,12 +54,14 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
-      dispatch(postsActions.setPostsErrorMessage({ error: '' }))
+      dispatch(createPostActions.setPostErrorMessage({ error: '' }))
       const files = Array.from(e.target.files)
 
       if (files.length >= POSTS_FILES_LIMIT) {
         dispatch(
-          postsActions.setPostsErrorMessage({ error: createPostDialog.tooManyFilesForUploading })
+          createPostActions.setPostErrorMessage({
+            error: createPostDialog.tooManyFilesForUploading,
+          })
         )
 
         return
@@ -67,13 +69,15 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       files.forEach(el => {
         if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(el.type)) {
-          dispatch(postsActions.setPostsErrorMessage({ error: createPostDialog.wrongFileFormat }))
+          dispatch(
+            createPostActions.setPostErrorMessage({ error: createPostDialog.wrongFileFormat })
+          )
 
           return
         }
         if (el.size >= POSTS_MAX_FILE_SIZE) {
           dispatch(
-            postsActions.setPostsErrorMessage({
+            createPostActions.setPostErrorMessage({
               error: createPostDialog.wrongFileSize,
             })
           )
@@ -82,7 +86,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
         }
 
         setImagesList(state => [...(state || []), ...files])
-        dispatch(postsActions.setPostsCreationStep({ step: PostsStep.Crop }))
+        dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Crop }))
       })
     }
   }
@@ -107,10 +111,10 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
 
       await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
-      dispatch(postsActions.resetPosts())
+      dispatch(createPostActions.resetPost())
       setPreviewList(null)
       setImagesList(null)
-      dispatch(postsActions.togglePostCreationDialog({ isOpen: false }))
+      dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
     } catch (e) {
       const errors = getErrorMessageData(e)
 
@@ -119,11 +123,11 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   }
 
   const navigationButtonHandler = (step: PostsStep) => {
-    dispatch(postsActions.setPostsCreationStep({ step }))
+    dispatch(createPostActions.setPostCreationStep({ step }))
   }
 
   const closeDialogHandler = () => {
-    dispatch(postsActions.resetPosts())
+    dispatch(createPostActions.resetPost())
     setPreviewList(null)
     setImagesList(null)
   }
