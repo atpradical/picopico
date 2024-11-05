@@ -45,6 +45,10 @@ export const Publications = () => {
     if (postsData?.items) {
       dispatch(publicationsActions.setPublications({ posts: postsData.items }))
     }
+
+    return () => {
+      dispatch(publicationsActions.resetPublications())
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postsData])
 
