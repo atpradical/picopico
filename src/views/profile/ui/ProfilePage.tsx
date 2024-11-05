@@ -12,9 +12,14 @@ import s from './ProfilePage.module.scss'
 
 function ProfilePage() {
   const { myProfileData } = useContext(MyProfileContext)
-
   const [pageNumber, setPageNumber] = useState(1)
   const [allPosts, setAllPosts] = useState<GetPostsItems[]>([])
+
+  const [lastPostRef, entry] = useIntersectionObserver({
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.5,
+  })
 
   const { data: postsData } = useGetPostsQuery({
     pageNumber,
@@ -29,12 +34,6 @@ function ProfilePage() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [postsData])
 
-  const [lastPostRef, entry] = useIntersectionObserver({
-    root: null,
-    rootMargin: '0px',
-    threshold: 0.5,
-  })
-
   useEffect(() => {
     if (postsData) {
       if (entry?.isIntersecting && postsData?.pagesCount > pageNumber) {
@@ -47,7 +46,7 @@ function ProfilePage() {
   return (
     <Page>
       <div className={s.container}>
-        <ProfileHeader />
+        <ProfileHeader className={s.header} />
         <Publications posts={allPosts} ref={lastPostRef} />
       </div>
     </Page>
