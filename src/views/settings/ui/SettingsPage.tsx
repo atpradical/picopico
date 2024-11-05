@@ -1,7 +1,6 @@
 import { DevicesTab } from '@/features/devices/ui'
 import { ProfileDataTab } from '@/features/profile/ui/settings'
 import { useLazyGetSessionsQuery } from '@/services/devices'
-import { useGetUserProfileQuery } from '@/services/profile'
 import { useTranslation } from '@/shared/hooks'
 import { Page, getSidebarLayout } from '@/shared/ui/layout'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
@@ -19,7 +18,6 @@ function SettingsPage() {
   const { tabNames } = t.profileSettings
 
   const [getSessions, { data: sessionsData }] = useLazyGetSessionsQuery()
-  const { data: userProfileData } = useGetUserProfileQuery()
 
   const onTabChangeHandler = async (value: string) => {
     switch (value) {
@@ -49,7 +47,7 @@ function SettingsPage() {
             <TabsTrigger value={TAB_ACCOUNT}>{tabNames.accountManagement}</TabsTrigger>
             <TabsTrigger value={TAB_PAYMENTS}>{tabNames.payments}</TabsTrigger>
           </TabsList>
-          {userProfileData && <ProfileDataTab data={userProfileData} value={TAB_PROFILE_DATA} />}
+          <ProfileDataTab value={TAB_PROFILE_DATA} />
           {sessionsData && <DevicesTab data={sessionsData} value={TAB_DEVICES} />}
           <TabsContent value={TAB_ACCOUNT}>Mock data Account Management</TabsContent>
           <TabsContent value={TAB_PAYMENTS}>Mock dataMy payments</TabsContent>

@@ -1,6 +1,6 @@
 import { PropsWithChildren, ReactElement } from 'react'
 
-import { AuthProvider } from '@/shared/contexts'
+import { AuthProvider, MyProfileProvider } from '@/shared/contexts'
 import { HeadMeta, Header } from '@/shared/ui/layout'
 import { CustomToastContainer } from '@atpradical/picopico-ui-kit'
 import { NextPage } from 'next'
@@ -14,10 +14,12 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
   return (
     <>
       <AuthProvider>
-        <HeadMeta />
-        <Header />
-        <main className={s.layout}>{children}</main>
-        <CustomToastContainer />
+        <MyProfileProvider>
+          <HeadMeta />
+          <Header />
+          <main className={s.layout}>{children}</main>
+          <CustomToastContainer />
+        </MyProfileProvider>
       </AuthProvider>
     </>
   )

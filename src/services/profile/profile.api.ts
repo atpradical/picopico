@@ -51,7 +51,6 @@ export const profileApi = picoApi.injectEndpoints({
 export const {
   useDeleteAvatarMutation,
   useGetUserProfileQuery,
-  useLazyGetUserProfileQuery,
   useUpdateUserProfileMutation,
   useUploadAvatarMutation,
 } = profileApi

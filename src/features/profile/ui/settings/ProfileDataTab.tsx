@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { ComponentPropsWithoutRef, useContext, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
 import { MAX_ABOUT_ME_LENGTH, MAX_CITY_POPULATION } from '@/features/profile/config'
@@ -6,7 +6,8 @@ import { profileDataSchemeCreator } from '@/features/profile/model'
 import { ProfileFormFields } from '@/features/profile/model/profile.types'
 import { ProfileAvatarManager } from '@/features/profile/ui'
 import { useGetCountriesQuery, useLazyGetCitiesQuery } from '@/services/countries'
-import { ResponseGetUserProfile, useUpdateUserProfileMutation } from '@/services/profile'
+import { useUpdateUserProfileMutation } from '@/services/profile'
+import { MyProfileContext } from '@/shared/contexts'
 import { useTranslation } from '@/shared/hooks'
 import {
   ControlledDatePicker,
@@ -23,11 +24,9 @@ import { enUS, ru } from 'date-fns/locale'
 
 import s from './ProfileDataTab.module.scss'
 
-type ProfileDataTabProps = {
-  data?: ResponseGetUserProfile
-} & ComponentPropsWithoutRef<typeof TabsContent>
+type ProfileDataTabProps = ComponentPropsWithoutRef<typeof TabsContent> //{
 
-export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps) => {
+export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
   const {
     locale,
     t: {
@@ -35,7 +34,8 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
       validation,
     },
   } = useTranslation()
-  const [selectedCountry, setSelectedCountry] = useState(data?.country ?? '')
+  const { myProfileData } = useContext(MyProfileContext)
+  const [selectedCountry, setSelectedCountry] = useState(myProfileData.country ?? '')
   const [updateProfile] = useUpdateUserProfileMutation()
 
   const countrySelectValueChangeHandler = (value: string) => {
@@ -82,13 +82,13 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
     setError,
   } = useForm<ProfileFormFields>({
     defaultValues: {
-      aboutMe: data?.aboutMe ?? '',
-      city: data?.city ?? '',
-      country: data?.country ?? '',
-      dateOfBirth: data?.dateOfBirth ? new Date(data?.dateOfBirth) : undefined,
-      firstName: data?.firstName ?? '',
-      lastName: data?.lastName ?? '',
-      userName: data?.userName ?? '',
+      aboutMe: myProfileData.aboutMe ?? '',
+      city: myProfileData.city ?? '',
+      country: myProfileData.country ?? '',
+      dateOfBirth: myProfileData.dateOfBirth ? new Date(myProfileData.dateOfBirth) : undefined,
+      firstName: myProfileData.firstName ?? '',
+      lastName: myProfileData.lastName ?? '',
+      userName: myProfileData.userName ?? '',
     },
     mode: 'onTouched',
     reValidateMode: 'onChange',
@@ -119,7 +119,9 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
       <div className={s.formWrapper}>
-        <ProfileAvatarManager avatarImage={data?.avatars.length ? data?.avatars[0].url : ''} />
+        <ProfileAvatarManager
+          avatarImage={myProfileData.avatars.length ? myProfileData.avatars[0].url : ''}
+        />
         <form className={s.form} id={'profile-form'} onSubmit={formHandler}>
           <ControlledTextField
             control={control}
@@ -129,7 +131,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
           />
           <ControlledTextField
             control={control}
-            defaultValue={data?.firstName ?? ''}
+            defaultValue={myProfileData.firstName ?? ''}
             isRequired
             label={profileDataTab.labels.firstName}
             name={'firstName'}
@@ -144,7 +146,9 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
           />
           <ControlledDatePicker
             control={control}
-            defaultValue={data?.dateOfBirth ? new Date(data?.dateOfBirth) : undefined}
+            defaultValue={
+              myProfileData.dateOfBirth ? new Date(myProfileData.dateOfBirth) : undefined
+            }
             isRequired
             label={profileDataTab.labels.dateOfBirth}
             locale={locale === 'ru' ? ru : enUS}
@@ -153,7 +157,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
           <div className={s.selectContainer}>
             <ControlledSelect
               control={control}
-              defaultValue={data?.country ?? ''}
+              defaultValue={myProfileData.country ?? ''}
               label={profileDataTab.labels.country}
               name={'country'}
               onValueChange={countrySelectValueChangeHandler}
@@ -163,7 +167,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
             />
             <ControlledSelect
               control={control}
-              defaultValue={data?.city ?? ''}
+              defaultValue={myProfileData.city ?? ''}
               label={profileDataTab.labels.city}
               name={'city'}
               options={citiesDataOptions}
@@ -175,7 +179,7 @@ export const ProfileDataTab = ({ className, data, ...rest }: ProfileDataTabProps
             className={s.textArea}
             control={control}
             counterLimit={MAX_ABOUT_ME_LENGTH}
-            defaultValue={data?.aboutMe ?? ''}
+            defaultValue={myProfileData.aboutMe ?? ''}
             label={profileDataTab.labels.aboutMe}
             name={'aboutMe'}
             placeholder={profileDataTab.placeholders.aboutMe}

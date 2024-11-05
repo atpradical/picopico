@@ -1,7 +1,7 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useContext } from 'react'
 
 import { ProfileStats } from '@/features/profile/ui'
-import { AvatarsData } from '@/services/profile'
+import { AuthContext, MyProfileContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { Avatar, Button, Typography } from '@atpradical/picopico-ui-kit'
@@ -10,35 +10,25 @@ import link from 'next/link'
 
 import s from './ProfileHeader.module.scss'
 
-type ProfileHeaderProps = {
-  aboutMe: string
-  avatars: AvatarsData[]
-  isAuth: boolean
-  userName: string
-} & ComponentPropsWithoutRef<'section'>
+type ProfileHeaderProps = ComponentPropsWithoutRef<'section'>
 
-export const ProfileHeader = ({
-  aboutMe,
-  avatars,
-  className,
-  isAuth,
-  userName,
-  ...props
-}: ProfileHeaderProps) => {
+export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
   const { t } = useTranslation()
+  const { isAuth } = useContext(AuthContext)
+  const { myProfileData } = useContext(MyProfileContext)
 
   return (
     <section className={clsx(s.container, className)} {...props}>
       <Avatar
         className={s.avatar}
         showFallback
-        src={avatars ? avatars[0]?.url : ''}
-        userName={userName}
+        src={myProfileData.avatars[0]?.url ?? ''}
+        userName={myProfileData.userName}
       />
       <div className={s.content}>
         <div className={s.titleBlock}>
           <Typography as={'h1'} variant={'h1'}>
-            {userName}
+            {myProfileData.userName}
           </Typography>
           {isAuth && (
             <Button as={link} href={Paths.Settings} variant={'secondary'}>
@@ -47,7 +37,7 @@ export const ProfileHeader = ({
           )}
         </div>
         <ProfileStats />
-        <Typography className={s.aboutMe}>{aboutMe}</Typography>
+        <Typography className={s.aboutMe}>{myProfileData.aboutMe}</Typography>
       </div>
     </section>
   )
