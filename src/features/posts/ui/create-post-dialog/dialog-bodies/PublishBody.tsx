@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux'
 import { createPostActions } from '@/features/posts/api'
 import { POSTS_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
 import { postsDescriptionSchemeCreator, selectCreatePostAllData } from '@/features/posts/model'
-import { AuthContext } from '@/shared/contexts'
+import { AuthContext, MyProfileContext } from '@/shared/contexts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { Avatar, Carousel, DialogBody, TextArea, Typography } from '@atpradical/picopico-ui-kit'
@@ -22,6 +22,7 @@ export const PublishBody = ({ previewList, ...rest }: PublishBodyProps) => {
   } = useTranslation()
 
   const { meData } = useContext(AuthContext)
+  const { myProfileData } = useContext(MyProfileContext)
   const dispatch = useAppDispatch()
   const { description, dialogMeta } = useSelector(selectCreatePostAllData)
 
@@ -65,7 +66,12 @@ export const PublishBody = ({ previewList, ...rest }: PublishBodyProps) => {
       </div>
       <div className={s.formContainer}>
         {/*  todo: добавить аватар пользователя */}
-        <Avatar showUserName size={'s'} userName={meData?.userName} />
+        <Avatar
+          showUserName
+          size={'s'}
+          src={myProfileData.avatars[1]?.url}
+          userName={meData?.userName}
+        />
         <TextArea
           className={s.textArea}
           counterLimit={POSTS_DESCRIPTION_MAX_LENGTH}

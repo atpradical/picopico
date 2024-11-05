@@ -1,34 +1,32 @@
 import { ComponentPropsWithoutRef, useState } from 'react'
+import { useSelector } from 'react-redux'
 
+import { publicationsActions } from '@/features/posts/api'
+import { selectPostContent, selectPublicationsAllData } from '@/features/posts/model'
 import { DisplayPostContent } from '@/features/posts/ui'
-import { GetPostsItems, useUpdatePostMutation } from '@/services/posts'
-import { useTranslation } from '@/shared/hooks'
-import { Nullable } from '@/shared/types'
+import { AppState } from '@/lib/store'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { ActionConfirmDialog } from '@/shared/ui/components'
-import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { DialogRoot } from '@atpradical/picopico-ui-kit'
 
 import { EditPostContent } from './edit-post-content'
 
-type PostsDialogProps = {
-  isOpen: boolean
-  onClose: () => void
-  onOpenChange: (open: boolean) => void
-  postData: Nullable<GetPostsItems>
-} & ComponentPropsWithoutRef<typeof DialogRoot>
+type PostsDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 
-export const PostDialog = ({ isOpen, onClose, onOpenChange, postData }: PostsDialogProps) => {
+export const PostDialog = (props: PostsDialogProps) => {
   const { t } = useTranslation()
-  const [isAlertDialog, setIsAlertDialog] = useState(false)
-  const [editMode, setEditMode] = useState(false)
-  const [updatePost] = useUpdatePostMutation()
+  const dispatch = useAppDispatch()
+  const { editMode, postId, showPost } = useSelector(selectPublicationsAllData)
+  const postContent = useSelector((state: AppState) => selectPostContent(state, postId))
 
-  if (!postData) {
+  const [isAlertDialog, setIsAlertDialog] = useState(false)
+
+  if (!postContent) {
     return
   }
 
   const toggleEditModeHandler = () => {
-    setEditMode(true)
+    dispatch(publicationsActions.toggleEditMode({ isEdit: true }))
   }
 
   const interruptEditPostHandler = (event: Event) => {
@@ -37,37 +35,21 @@ export const PostDialog = ({ isOpen, onClose, onOpenChange, postData }: PostsDia
   }
 
   const confirmExitEditModeHandler = () => {
-    setEditMode(false)
+    dispatch(publicationsActions.toggleEditMode({ isEdit: false }))
     setIsAlertDialog(false)
-  }
-
-  const savePostChangesHandler = async (description: string) => {
-    try {
-      await updatePost({ description, postId: postData?.id }).unwrap()
-      setEditMode(false)
-    } catch (e) {
-      const errors = getErrorMessageData(e)
-
-      showErrorToast(errors)
-    }
   }
 
   return (
     <>
-      <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
+      <DialogRoot open={showPost} {...props}>
         {editMode ? (
           <EditPostContent
-            key={postData.id}
+            key={postContent.id}
             onInterrupt={interruptEditPostHandler}
-            onSave={savePostChangesHandler}
-            postData={postData}
+            postData={postContent}
           />
         ) : (
-          <DisplayPostContent
-            onClose={onClose}
-            postData={postData}
-            setEditMode={toggleEditModeHandler}
-          />
+          <DisplayPostContent postData={postContent} setEditMode={toggleEditModeHandler} />
         )}
       </DialogRoot>
       <ActionConfirmDialog

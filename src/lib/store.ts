@@ -1,4 +1,4 @@
-import { createPostReducer } from '@/features/posts/api'
+import { createPostReducer, publicationsReducer } from '@/features/posts/api'
 import { countriesApi } from '@/services/countries'
 import { picoApi } from '@/services/picoApi'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
@@ -14,6 +14,7 @@ const makeStore = () =>
       [countriesApi.reducerPath]: countriesApi.reducer,
       createPost: createPostReducer,
       [picoApi.reducerPath]: picoApi.reducer,
+      publications: publicationsReducer,
     },
   })
 

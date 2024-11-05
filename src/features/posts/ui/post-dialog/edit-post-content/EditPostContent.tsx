@@ -1,10 +1,12 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
+import { publicationsActions } from '@/features/posts/api'
 import { POSTS_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
 import { postsDescriptionSchemeCreator } from '@/features/posts/model'
-import { GetPostsItems } from '@/services/posts'
-import { useTranslation } from '@/shared/hooks'
+import { GetPostsItems, useUpdatePostMutation } from '@/services/posts'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
   Avatar,
   Button,
@@ -22,15 +24,15 @@ import s from './EditPostContent.module.scss'
 
 type EditPostContentProps = {
   onInterrupt: (event: Event) => void
-  onSave: (description: string) => void
   postData: GetPostsItems
 }
 
-export const EditPostContent = ({ onInterrupt, onSave, postData }: EditPostContentProps) => {
+export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps) => {
   const { t } = useTranslation()
-
+  const dispatch = useAppDispatch()
   const [description, setDescription] = useState(postData.description)
   const [descriptionError, setDescriptionError] = useState('')
+  const [updatePost] = useUpdatePostMutation()
 
   useEffect(() => {
     if (description) {
@@ -50,12 +52,20 @@ export const EditPostContent = ({ onInterrupt, onSave, postData }: EditPostConte
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [description])
 
-  const newDescriptionHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.currentTarget.value)
+  const savePostHandler = async () => {
+    try {
+      await updatePost({ description, postId: postData.id }).unwrap()
+      dispatch(publicationsActions.resetPublications())
+      dispatch(publicationsActions.toggleEditMode({ isEdit: false }))
+    } catch (e) {
+      const errors = getErrorMessageData(e)
+
+      showErrorToast(errors)
+    }
   }
 
-  const savePostHandler = () => {
-    onSave(description)
+  const newDescriptionHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
+    setDescription(e.currentTarget.value)
   }
 
   return (

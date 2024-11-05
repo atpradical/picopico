@@ -1,6 +1,7 @@
+import { publicationsActions } from '@/features/posts/api'
 import { PostActionsDropdown, PostDescription } from '@/features/posts/ui'
 import { GetPostsItems } from '@/services/posts'
-import { useTranslation } from '@/shared/hooks'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Avatar,
@@ -15,19 +16,22 @@ import * as Separator from '@radix-ui/react-separator'
 import s from './DisplayPostContent.module.scss'
 
 type DisplayPostContentProps = {
-  onClose: () => void
   postData: GetPostsItems
   setEditMode: () => void
 }
-export const DisplayPostContent = ({ onClose, postData, setEditMode }: DisplayPostContentProps) => {
+export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContentProps) => {
   const { t } = useTranslation()
-
+  const dispatch = useAppDispatch()
   const postsImages = postData.images.map(el => el.url)
+
+  const closePostDialogHandler = () => {
+    dispatch(publicationsActions.togglePostDisplayDialog({ isOpen: false, postId: 0 }))
+  }
 
   return (
     <DialogContent
       className={s.dialogContent}
-      onClose={onClose}
+      onClose={closePostDialogHandler}
       overlayClassName={s.dialogOverlay}
       withCloseButton
     >
@@ -39,7 +43,11 @@ export const DisplayPostContent = ({ onClose, postData, setEditMode }: DisplayPo
       <div className={s.postDetails}>
         <DialogHeader className={s.dialogHeader}>
           <Avatar showUserName size={'s'} src={postData.avatarOwner} userName={postData.userName} />
-          <PostActionsDropdown onConfirm={onClose} onEdit={setEditMode} postId={postData.id} />
+          <PostActionsDropdown
+            onConfirm={closePostDialogHandler}
+            onEdit={setEditMode}
+            postId={postData.id}
+          />
         </DialogHeader>
         <DialogBody className={s.dialogBody}>
           <PostDescription postData={postData} />

@@ -1,7 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { createPostActions } from '@/features/posts/api'
+import { createPostActions, publicationsActions } from '@/features/posts/api'
 import {
   POSTS_ALLOWED_UPLOAD_TYPES,
   POSTS_FILES_LIMIT,
@@ -114,6 +114,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       dispatch(createPostActions.resetPost())
       setPreviewList(null)
       setImagesList(null)
+      dispatch(publicationsActions.resetPublications())
       dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
     } catch (e) {
       const errors = getErrorMessageData(e)

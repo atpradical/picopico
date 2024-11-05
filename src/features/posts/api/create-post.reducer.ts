@@ -1,7 +1,7 @@
 import { PostsState, PostsStep } from '@/features/posts/model'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
-const initialPostsState: PostsState = {
+const initialState: PostsState = {
   description: '',
   dialogMeta: {
     currentStep: PostsStep.Start,
@@ -11,8 +11,8 @@ const initialPostsState: PostsState = {
 }
 
 const slice = createSlice({
-  initialState: initialPostsState,
-  name: 'create-post',
+  initialState,
+  name: 'createPost',
   reducers: {
     addPostDescription: (state, action: PayloadAction<{ description: string }>) => {
       state.description = action.payload.description
