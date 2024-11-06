@@ -1,13 +1,15 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 import Cropper, { Area } from 'react-easy-crop'
 import { useSelector } from 'react-redux'
 
 import { avatarPostActions } from '@/features/profile/api'
-import { ALLOWED_IMAGE_UPLOAD_TYPES } from '@/features/profile/config'
+import { ALLOWED_IMAGE_UPLOAD_TYPES, AVATAR_MAX_FILE_SIZE } from '@/features/profile/config'
 import { selectAvatarAllData } from '@/features/profile/model'
+import { useUploadAvatarMutation } from '@/services/profile'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { HiddenDialogComponents, PlaceholderImage, UploadFileError } from '@/shared/ui/components'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import getCroppedImg from '@/shared/utils/crop-image'
 import {
   Button,
@@ -22,32 +24,70 @@ import {
 
 import s from './ProfileAvatarDialog.module.scss'
 
-type ProfileAvatarDialogProps = {
-  onSave: (croppedImage: any) => void
-  onUpload: (e: ChangeEvent<HTMLInputElement>) => void
-}
-export const ProfileAvatarDialog = ({ onSave, onUpload }: ProfileAvatarDialogProps) => {
+export const ProfileAvatarDialog = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { avatarPreview, error, isOpen } = useSelector(selectAvatarAllData)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Nullable<Area>>(null)
-  const [_, setCroppedImage] = useState(null)
 
-  const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
-    setCroppedAreaPixels(croppedAreaPixels)
+  const [uploadAvatar] = useUploadAvatarMutation()
+  const [newAvatar, setNewAvatar] = useState<Nullable<File | string>>(null)
+
+  useEffect(() => {
+    if (newAvatar && typeof newAvatar !== 'string') {
+      const newPreview = URL.createObjectURL(newAvatar)
+
+      if (avatarPreview) {
+        URL.revokeObjectURL(avatarPreview)
+      }
+      dispatch(avatarPostActions.setAvatarPreview({ preview: newPreview }))
+
+      return () => URL.revokeObjectURL(newPreview)
+    }
+    // 'preview' mustn't be added to avoid cyclical dependence
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [newAvatar])
+
+  const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files && e.target.files.length) {
+      dispatch(avatarPostActions.setAvatarError({ error: '' }))
+      const file = e.target.files[0]
+
+      if (!ALLOWED_IMAGE_UPLOAD_TYPES.includes(file.type)) {
+        dispatch(
+          avatarPostActions.setAvatarError({ error: t.profileAvatarDialog.wrongPhotoFormat })
+        )
+
+        return
+      }
+
+      if (file.size >= AVATAR_MAX_FILE_SIZE) {
+        dispatch(avatarPostActions.setAvatarError({ error: t.profileAvatarDialog.wrongPhotoSize }))
+
+        return
+      }
+
+      setNewAvatar(file)
+    }
   }
 
-  const saveCroppedImageHandler = async () => {
+  const saveImageHandler = async () => {
     try {
       const croppedImage = await getCroppedImg(avatarPreview, croppedAreaPixels, 0)
 
-      setCroppedImage(croppedImage)
-      onSave(croppedImage)
+      await uploadAvatar({ file: croppedImage }).unwrap()
+      dispatch(avatarPostActions.resetAvatarDialog())
     } catch (e) {
-      console.error(e)
+      const errors = getErrorMessageData(e)
+
+      showErrorToast(errors)
     }
+  }
+
+  const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
+    setCroppedAreaPixels(croppedAreaPixels)
   }
 
   const closeDialogHandler = () => {
@@ -95,7 +135,7 @@ export const ProfileAvatarDialog = ({ onSave, onUpload }: ProfileAvatarDialogPro
                   zoom={zoom}
                 />
               </div>
-              <Button className={s.saveButton} onClick={saveCroppedImageHandler}>
+              <Button className={s.saveButton} onClick={saveImageHandler}>
                 {t.profileAvatarDialog.confirmButton}
               </Button>
             </>
@@ -106,7 +146,7 @@ export const ProfileAvatarDialog = ({ onSave, onUpload }: ProfileAvatarDialogPro
                 <input
                   accept={ALLOWED_IMAGE_UPLOAD_TYPES.join(', ')}
                   hidden
-                  onChange={onUpload}
+                  onChange={uploadImageHandler}
                   type={'file'}
                 />
                 {t.profileAvatarDialog.selectPhotoButton}
