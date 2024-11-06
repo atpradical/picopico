@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { avatarPostActions } from '@/features/profile/api'
 import { ALLOWED_IMAGE_UPLOAD_TYPES, AVATAR_MAX_FILE_SIZE } from '@/features/profile/config'
-import { selectAvatarAllData } from '@/features/profile/model'
+import { selectAvatarPreview } from '@/features/profile/model'
 import { ProfileAvatarDialog } from '@/features/profile/ui'
 import { useDeleteAvatarMutation, useUploadAvatarMutation } from '@/services/profile'
 import { MyProfileContext } from '@/shared/contexts'
@@ -19,7 +19,7 @@ export const ProfileAvatarManager = () => {
   const { t } = useTranslation()
   const { myProfileData } = useContext(MyProfileContext)
   const dispatch = useAppDispatch()
-  const { avatarPreview } = useSelector(selectAvatarAllData)
+  const avatarPreview = useSelector(selectAvatarPreview)
   const avatarImage = myProfileData.avatars.length ? myProfileData.avatars[0].url : ''
 
   const [alertDialog, setAlertDialog] = useState(false)
@@ -81,13 +81,6 @@ export const ProfileAvatarManager = () => {
       showErrorToast(errors)
     }
   }
-
-  // const closeUploadDialogHandler = (open: boolean) => {
-  //   dispatch(avatarPostActions.toggleAvatarDialog({ isOpen: open }))
-  //   avatarPostActions.setAvatarError({ error: '' })
-  //   setNewAvatar(null)
-  //   setAvatarPreview(null)
-  // }
 
   const deleteAvatarHandler = async () => {
     try {
