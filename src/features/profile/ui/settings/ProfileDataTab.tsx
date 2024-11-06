@@ -119,9 +119,7 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
       <div className={s.formWrapper}>
-        <ProfileAvatarManager
-          avatarImage={myProfileData.avatars.length ? myProfileData.avatars[0].url : ''}
-        />
+        <ProfileAvatarManager />
         <form className={s.form} id={'profile-form'} onSubmit={formHandler}>
           <ControlledTextField
             control={control}

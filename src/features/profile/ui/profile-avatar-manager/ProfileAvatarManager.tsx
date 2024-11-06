@@ -1,9 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useContext, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
+import { avatarPostActions } from '@/features/profile/api'
 import { ALLOWED_IMAGE_UPLOAD_TYPES, AVATAR_MAX_FILE_SIZE } from '@/features/profile/config'
+import { selectAvatarAllData } from '@/features/profile/model'
 import { ProfileAvatarDialog } from '@/features/profile/ui'
 import { useDeleteAvatarMutation, useUploadAvatarMutation } from '@/services/profile'
-import { useTranslation } from '@/shared/hooks'
+import { MyProfileContext } from '@/shared/contexts'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { ActionConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
@@ -11,22 +15,18 @@ import { Avatar, Button, CloseOutlineIcon } from '@atpradical/picopico-ui-kit'
 
 import s from './ProfileAvatarManager.module.scss'
 
-type Props = {
-  avatarImage: string
-}
-
-export const ProfileAvatarManager = ({ avatarImage }: Props) => {
+export const ProfileAvatarManager = () => {
   const { t } = useTranslation()
+  const { myProfileData } = useContext(MyProfileContext)
+  const dispatch = useAppDispatch()
+  const { avatarPreview } = useSelector(selectAvatarAllData)
+  const avatarImage = myProfileData.avatars.length ? myProfileData.avatars[0].url : ''
 
-  const [isUploadAvatarDialogOpen, setIsUploadAvatarDialogOpen] = useState(false)
-  const [openDeleteAvatarDialog, setOpenDeleteAvatarDialog] = useState(false)
-  const [deleteAvatar] = useDeleteAvatarMutation()
-  const [newAvatar, setNewAvatar] = useState<Nullable<File | string>>(avatarImage ?? null)
-  const [avatarPreview, setAvatarPreview] = useState<Nullable<string>>(avatarImage ?? null)
-  const [isUploadingError, setIsUploadingError] = useState('')
-  const [isUploadingComplete, setIsUploadingComplete] = useState(false)
+  const [alertDialog, setAlertDialog] = useState(false)
+  const [newAvatar, setNewAvatar] = useState<Nullable<File | string>>(null)
 
   const [uploadAvatar] = useUploadAvatarMutation()
+  const [deleteAvatar] = useDeleteAvatarMutation()
 
   useEffect(() => {
     if (newAvatar && typeof newAvatar !== 'string') {
@@ -35,7 +35,7 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
       if (avatarPreview) {
         URL.revokeObjectURL(avatarPreview)
       }
-      setAvatarPreview(newPreview)
+      dispatch(avatarPostActions.setAvatarPreview({ preview: newPreview }))
 
       return () => URL.revokeObjectURL(newPreview)
     }
@@ -45,28 +45,25 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
 
   const uploadImageHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
-      setIsUploadingError('')
+      dispatch(avatarPostActions.setAvatarError({ error: '' }))
       const file = e.target.files[0]
 
       if (!ALLOWED_IMAGE_UPLOAD_TYPES.includes(file.type)) {
-        setIsUploadingError(t.profileAvatarDialog.wrongPhotoFormat)
+        dispatch(
+          avatarPostActions.setAvatarError({ error: t.profileAvatarDialog.wrongPhotoFormat })
+        )
 
         return
       }
 
       if (file.size >= AVATAR_MAX_FILE_SIZE) {
-        setIsUploadingError(t.profileAvatarDialog.wrongPhotoSize)
+        dispatch(avatarPostActions.setAvatarError({ error: t.profileAvatarDialog.wrongPhotoSize }))
 
         return
       }
 
-      if (!isUploadingComplete) {
-        setIsUploadingComplete(true)
-        setNewAvatar(file)
-      }
+      setNewAvatar(file)
     }
-
-    return
   }
 
   const saveImageHandler = async (croppedImage: any) => {
@@ -77,9 +74,7 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
         file: typeof newAvatar === 'string' ? null : imageToSend,
       }).unwrap()
       setNewAvatar(null)
-      setAvatarPreview(null)
-      setIsUploadAvatarDialogOpen(false)
-      setIsUploadingComplete(false)
+      dispatch(avatarPostActions.resetAvatarDialog())
     } catch (e) {
       const errors = getErrorMessageData(e)
 
@@ -87,25 +82,28 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
     }
   }
 
-  const closeUploadDialogHandler = (open: boolean) => {
-    setIsUploadAvatarDialogOpen(open)
-    setIsUploadingComplete(false)
-    setIsUploadingError('')
-    setNewAvatar(null)
-    setAvatarPreview(null)
-  }
+  // const closeUploadDialogHandler = (open: boolean) => {
+  //   dispatch(avatarPostActions.toggleAvatarDialog({ isOpen: open }))
+  //   avatarPostActions.setAvatarError({ error: '' })
+  //   setNewAvatar(null)
+  //   setAvatarPreview(null)
+  // }
 
   const deleteAvatarHandler = async () => {
     try {
       await deleteAvatar().unwrap()
-      setOpenDeleteAvatarDialog(false)
+      setAlertDialog(false)
       setNewAvatar(null)
-      setAvatarPreview(null)
+      dispatch(avatarPostActions.resetAvatarDialog())
     } catch (e) {
       const errors = getErrorMessageData(e)
 
       showErrorToast(errors)
     }
+  }
+
+  const openUploadDialogHandler = () => {
+    dispatch(avatarPostActions.toggleAvatarDialog({ isOpen: true }))
   }
 
   return (
@@ -116,40 +114,32 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
           <div className={s.buttonWrapper}>
             <Button
               className={s.closeButton}
-              onClick={setOpenDeleteAvatarDialog}
+              onClick={setAlertDialog}
               title={t.deleteAvatarDialog.deleteAvatarButton}
               variant={'icon'}
             >
               <CloseOutlineIcon className={s.closeIcon} />
             </Button>
-            {openDeleteAvatarDialog && (
-              <ActionConfirmDialog
-                accessibilityDescription={t.deleteAvatarDialog.accessibilityDescription}
-                accessibilityTitle={t.deleteAvatarDialog.accessibilityTitle}
-                confirmButtonText={t.deleteAvatarDialog.confirmButton}
-                isOpen={openDeleteAvatarDialog}
-                message={t.deleteAvatarDialog.visibleBodyText}
-                onConfirm={deleteAvatarHandler}
-                onOpenChange={setOpenDeleteAvatarDialog}
-                rejectButtonText={t.deleteAvatarDialog.rejectButton}
-                title={t.deleteAvatarDialog.visibleTitle}
-              />
-            )}
           </div>
         )}
       </div>
-      <Button onClick={setIsUploadAvatarDialogOpen} variant={'outlined'}>
+      <Button onClick={openUploadDialogHandler} variant={'outlined'}>
         {t.profileSettings.profileDataTab.addProfilePhotoButton}
       </Button>
-      <ProfileAvatarDialog
-        avatarPreview={avatarPreview}
-        isOpen={isUploadAvatarDialogOpen}
-        isUploadingComplete={isUploadingComplete}
-        isUploadingError={isUploadingError}
-        onDialogOpenChange={closeUploadDialogHandler}
-        onSave={saveImageHandler}
-        onUpload={uploadImageHandler}
-      />
+      <ProfileAvatarDialog onSave={saveImageHandler} onUpload={uploadImageHandler} />
+      {alertDialog && (
+        <ActionConfirmDialog
+          accessibilityDescription={t.deleteAvatarDialog.accessibilityDescription}
+          accessibilityTitle={t.deleteAvatarDialog.accessibilityTitle}
+          confirmButtonText={t.deleteAvatarDialog.confirmButton}
+          isOpen={alertDialog}
+          message={t.deleteAvatarDialog.visibleBodyText}
+          onConfirm={deleteAvatarHandler}
+          onOpenChange={setAlertDialog}
+          rejectButtonText={t.deleteAvatarDialog.rejectButton}
+          title={t.deleteAvatarDialog.visibleTitle}
+        />
+      )}
     </div>
   )
 }

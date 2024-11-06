@@ -1,4 +1,5 @@
 import { createPostReducer, publicationsReducer } from '@/features/posts/api'
+import { avatarPostReducer } from '@/features/profile/api'
 import { countriesApi } from '@/services/countries'
 import { picoApi } from '@/services/picoApi'
 import { Action, ThunkAction, configureStore } from '@reduxjs/toolkit'
@@ -11,6 +12,7 @@ const makeStore = () =>
       getDefaultMiddleware().concat(picoApi.middleware).concat(countriesApi.middleware),
     // reducer: combineSlices(picoApi, countriesApi),
     reducer: {
+      avatar: avatarPostReducer,
       [countriesApi.reducerPath]: countriesApi.reducer,
       createPost: createPostReducer,
       [picoApi.reducerPath]: picoApi.reducer,
