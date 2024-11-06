@@ -69,11 +69,15 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
     return
   }
 
-  const saveImageHandler = async () => {
+  const saveImageHandler = async (croppedImage: any) => {
+    const imageToSend = croppedImage ? croppedImage : newAvatar
+
     try {
       await uploadAvatar({
-        file: typeof newAvatar === 'string' ? null : newAvatar,
+        file: typeof newAvatar === 'string' ? null : imageToSend,
       }).unwrap()
+      setNewAvatar(null)
+      setAvatarPreview(null)
       setIsUploadAvatarDialogOpen(false)
       setIsUploadingComplete(false)
     } catch (e) {
@@ -87,16 +91,16 @@ export const ProfileAvatarManager = ({ avatarImage }: Props) => {
     setIsUploadAvatarDialogOpen(open)
     setIsUploadingComplete(false)
     setIsUploadingError('')
-    setNewAvatar(avatarImage ?? null)
-    setAvatarPreview(avatarImage ?? null)
+    setNewAvatar(null)
+    setAvatarPreview(null)
   }
 
   const deleteAvatarHandler = async () => {
     try {
       await deleteAvatar().unwrap()
       setOpenDeleteAvatarDialog(false)
-      setNewAvatar(avatarImage ?? null)
-      setAvatarPreview(avatarImage ?? null)
+      setNewAvatar(null)
+      setAvatarPreview(null)
     } catch (e) {
       const errors = getErrorMessageData(e)
 
