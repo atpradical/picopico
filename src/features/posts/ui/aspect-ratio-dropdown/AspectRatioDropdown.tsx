@@ -1,7 +1,4 @@
 import {
-  AspectHorizontalRectangle,
-  AspectSquareRatioIcon,
-  AspectVerticalRectangle,
   Button,
   DropdownMenu,
   DropdownMenuContent,
@@ -10,8 +7,11 @@ import {
   DropdownMenuPortal,
   DropdownMenuTrigger,
   ExpandOutlineIcon,
+  HorizontalRectangleIcon,
   ImageOutlineIcon,
+  SquareIcon,
   Typography,
+  VerticalRectangleIcon,
 } from '@atpradical/picopico-ui-kit'
 
 import s from './AspectRatioDropdown.module.scss'
@@ -33,15 +33,15 @@ export const AspectRatioDropdown = () => {
             </DropdownMenuItem>
             <DropdownMenuItem className={s.item}>
               <Typography>1:1</Typography>
-              <AspectSquareRatioIcon className={s.icon} />
+              <SquareIcon className={s.rectangleIcon} />
             </DropdownMenuItem>
             <DropdownMenuItem className={s.item}>
               <Typography>4:5</Typography>
-              <AspectVerticalRectangle className={s.icon} />
+              <VerticalRectangleIcon className={s.rectangleIcon} />
             </DropdownMenuItem>
             <DropdownMenuItem className={s.item}>
               <Typography>16:9</Typography>
-              <AspectHorizontalRectangle className={s.icon} />
+              <HorizontalRectangleIcon className={s.rectangleIcon} />
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
