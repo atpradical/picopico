@@ -22,18 +22,22 @@ export const UploadPopover = ({ previewList }: { previewList: Nullable<string[]>
       </PopoverTrigger>
       <PopoverContent align={'end'} className={s.popoverContainer} side={'top'}>
         <div className={s.contentContainer}>
-          <div className={s.previewItem}>
-            <Image
-              alt={'description'}
-              className={s.image}
-              height={80}
-              src={previewList?.[0] ?? ''}
-              width={80}
-            />
-            <Button className={s.closeButton} variant={'icon'}>
-              <CloseOutlineIcon />
-            </Button>
-          </div>
+          {previewList?.map((el, index) => {
+            return (
+              <div className={s.previewItem} key={el + index}>
+                <Image
+                  alt={'description'}
+                  className={s.image}
+                  height={80}
+                  src={previewList?.[0] ?? ''}
+                  width={80}
+                />
+                <Button className={s.closeButton} variant={'icon'}>
+                  <CloseOutlineIcon />
+                </Button>
+              </div>
+            )
+          })}
           <Button className={s.addButton} variant={'icon'}>
             <PlusCircleOutlineIcon className={s.plusIcon} />
           </Button>

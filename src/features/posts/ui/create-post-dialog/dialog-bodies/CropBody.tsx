@@ -1,8 +1,6 @@
 import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
 
-import { ExpandPopover } from '@/features/posts/ui/expand-popover'
-import { ScalePopover } from '@/features/posts/ui/scale-popover'
-import { UploadPopover } from '@/features/posts/ui/upload-popover'
+import { ExpandPopover, ScalePopover, UploadPopover } from '@/features/posts/ui/popovers'
 import { Nullable } from '@/shared/types'
 import { Carousel, DialogBody } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
