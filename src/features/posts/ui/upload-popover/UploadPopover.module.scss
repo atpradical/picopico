@@ -1,0 +1,57 @@
+.buttonTrigger {
+  padding: 6px;
+  background-color: rgb(23 23 23 / 80%);
+}
+
+.iconImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
+}
+
+.popoverContainer {
+  width: 152px;
+  height: 106px;
+  background-color: rgb(23 23 23 / 80%);
+
+}
+
+.contentContainer {
+  display: flex;
+  gap: 12px;
+}
+
+.previewItem {
+  position: relative;
+}
+
+.image {
+  object-fit: cover;
+}
+
+.closeButton {
+  position: absolute;
+  top: 2px;
+  right: 2px;
+
+  width: var(--icon-size-xs);
+  height: var(--icon-size-xs);
+
+  background-color: rgb(23 23 23 / 80%);
+  border-radius: var(--border-radius-s);
+}
+
+.addButton {
+  display: flex;
+  align-items: start;
+  justify-content: flex-start;
+  height: 32px;
+}
+
+.plusIcon {
+  width: var(--icon-size-l);
+  height: var(--icon-size-l);
+}

@@ -1,0 +1,21 @@
+.buttonTrigger {
+  padding: 6px;
+  background-color: rgb(23 23 23 / 80%);
+}
+
+.popoverContent {
+  background-color: rgb(23 23 23 / 80%);
+}
+
+.iconImage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
+}
+
+.slider {
+  width: 124px;
+}
