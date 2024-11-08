@@ -15,7 +15,12 @@
 .popoverContainer {
   width: 100%;
   max-width: 465px;
-  background-color: rgb(23 23 23 / 80%)
+  background-color: rgb(23 23 23 / 80%);
+
+  &:focus {
+    outline: none;
+  }
+
 }
 
 .scrollContainer {
