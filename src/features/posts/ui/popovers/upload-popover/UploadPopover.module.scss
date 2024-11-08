@@ -14,14 +14,24 @@
 
 .popoverContainer {
   width: 100%;
-  max-width: 300px;
+  max-width: 465px;
   background-color: rgb(23 23 23 / 80%)
+}
+
+.scrollContainer {
+  overflow: auto;
+  display: flex;
+  flex-direction: row;
+
+  max-width: 200px;
+  height: 130px;
 }
 
 .contentContainer {
   display: flex;
   flex-direction: row;
   gap: 12px;
+  width: 100%;
 }
 
 .previewItem {
@@ -51,6 +61,7 @@
 }
 
 .plusIcon {
+  flex-shrink: 0;
   width: var(--icon-size-l);
   height: var(--icon-size-l);
 }

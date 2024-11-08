@@ -58,8 +58,8 @@ export const UploadPopover = ({ onUpload, previewList }: UploadPopoverProps) => 
             >
               <PlusCircleOutlineIcon className={s.plusIcon} />
             </FileUploader>
+            <ScrollBar orientation={'horizontal'} />
           </div>
-          <ScrollBar orientation={'horizontal'} />
         </ScrollArea>
       </PopoverContent>
     </Popover>
