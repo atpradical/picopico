@@ -19,7 +19,13 @@ import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { ActionConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { DialogContent, DialogRoot, clsx } from '@atpradical/picopico-ui-kit'
+import {
+  CustomToastContainer,
+  DialogContent,
+  DialogRoot,
+  toaster,
+} from '@atpradical/picopico-ui-kit'
+import clsx from 'clsx'
 
 import s from './CreatePostDialog.module.scss'
 
@@ -57,7 +63,8 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       dispatch(createPostActions.setPostErrorMessage({ error: '' }))
       const files = Array.from(e.target.files)
 
-      if (files.length >= POSTS_FILES_LIMIT) {
+      if (imagesList && imagesList.length >= POSTS_FILES_LIMIT) {
+        toaster({ text: createPostDialog.tooManyFilesForUploading })
         dispatch(
           createPostActions.setPostErrorMessage({
             error: createPostDialog.tooManyFilesForUploading,
@@ -177,6 +184,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             />
           )}
         </DialogContent>
+        <CustomToastContainer />
       </DialogRoot>
       <ActionConfirmDialog
         accessibilityDescription={createPostDialog.interruptDialog.accessibilityDescription}

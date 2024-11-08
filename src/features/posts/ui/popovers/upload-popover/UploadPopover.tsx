@@ -1,18 +1,29 @@
+import { ChangeEvent } from 'react'
+
+import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
 import { Nullable } from '@/shared/types'
 import {
   Button,
   CloseOutlineIcon,
+  FileUploader,
   ImageOutlineIcon,
   PlusCircleOutlineIcon,
   Popover,
   PopoverContent,
   PopoverTrigger,
+  ScrollArea,
+  ScrollBar,
 } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
 
 import s from './UploadPopover.module.scss'
 
-export const UploadPopover = ({ previewList }: { previewList: Nullable<string[]> }) => {
+type UploadPopoverProps = {
+  onUpload: (e: ChangeEvent<HTMLInputElement>) => void
+  previewList: Nullable<string[]>
+}
+
+export const UploadPopover = ({ onUpload, previewList }: UploadPopoverProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -21,27 +32,35 @@ export const UploadPopover = ({ previewList }: { previewList: Nullable<string[]>
         </Button>
       </PopoverTrigger>
       <PopoverContent align={'end'} className={s.popoverContainer} side={'top'}>
-        <div className={s.contentContainer}>
-          {previewList?.map((el, index) => {
-            return (
-              <div className={s.previewItem} key={el + index}>
-                <Image
-                  alt={'description'}
-                  className={s.image}
-                  height={80}
-                  src={previewList?.[0] ?? ''}
-                  width={80}
-                />
-                <Button className={s.closeButton} variant={'icon'}>
-                  <CloseOutlineIcon />
-                </Button>
-              </div>
-            )
-          })}
-          <Button className={s.addButton} variant={'icon'}>
-            <PlusCircleOutlineIcon className={s.plusIcon} />
-          </Button>
-        </div>
+        <ScrollArea>
+          <div className={s.contentContainer}>
+            {previewList?.map((el, index) => {
+              return (
+                <div className={s.previewItem} key={el + index}>
+                  <Image
+                    alt={'description'}
+                    className={s.image}
+                    height={80}
+                    src={previewList?.[index] ?? ''}
+                    width={80}
+                  />
+                  <Button className={s.closeButton} variant={'icon'}>
+                    <CloseOutlineIcon />
+                  </Button>
+                </div>
+              )
+            })}
+            <FileUploader
+              accept={POSTS_ALLOWED_UPLOAD_TYPES}
+              className={s.addButton}
+              onChange={onUpload}
+              variant={'icon'}
+            >
+              <PlusCircleOutlineIcon className={s.plusIcon} />
+            </FileUploader>
+          </div>
+          <ScrollBar orientation={'horizontal'} />
+        </ScrollArea>
       </PopoverContent>
     </Popover>
   )

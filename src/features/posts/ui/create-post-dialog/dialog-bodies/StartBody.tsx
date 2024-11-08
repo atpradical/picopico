@@ -5,7 +5,7 @@ import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
 import { selectPostDialogMeta } from '@/features/posts/model'
 import { useTranslation } from '@/shared/hooks'
 import { PlaceholderImage, UploadFileError } from '@/shared/ui/components'
-import { Button, DialogBody } from '@atpradical/picopico-ui-kit'
+import { Button, DialogBody, FileUploader } from '@atpradical/picopico-ui-kit'
 
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
 
@@ -23,15 +23,9 @@ export const StartBody = ({ onUpload, ...rest }: StartBodyProps) => {
     <DialogBody className={s.body} {...rest}>
       {errorMessage && <UploadFileError errorText={errorMessage} />}
       <PlaceholderImage />
-      <Button as={'label'} className={s.button} variant={'primary'}>
-        <input
-          accept={POSTS_ALLOWED_UPLOAD_TYPES.join(', ')}
-          hidden
-          onChange={onUpload}
-          type={'file'}
-        />
+      <FileUploader accept={POSTS_ALLOWED_UPLOAD_TYPES} className={s.button} onChange={onUpload}>
         {createPostDialog.buttons.selectFilesButton}
-      </Button>
+      </FileUploader>
       <Button
         className={s.button}
         onClick={() => {}} // todo: добавить handlers для кнопок

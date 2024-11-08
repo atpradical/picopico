@@ -13,19 +13,20 @@
 }
 
 .popoverContainer {
-  width: 152px;
-  height: 106px;
-  background-color: rgb(23 23 23 / 80%);
-
+  width: 100%;
+  max-width: 300px;
+  background-color: rgb(23 23 23 / 80%)
 }
 
 .contentContainer {
   display: flex;
+  flex-direction: row;
   gap: 12px;
 }
 
 .previewItem {
   position: relative;
+  margin-bottom: 5px;
 }
 
 .image {
@@ -45,9 +46,7 @@
 }
 
 .addButton {
-  display: flex;
-  align-items: start;
-  justify-content: flex-start;
+  align-self: flex-start;
   height: 32px;
 }
 
