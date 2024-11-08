@@ -53,7 +53,10 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       setPreviewList(newPreviews)
 
       return () => newPreviews.forEach(el => URL.revokeObjectURL(el))
+    } else {
+      dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Start }))
     }
+
     // 'preview' mustn't be added to avoid cyclical dependence
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imagesList])
@@ -145,6 +148,14 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     setIsAlertDialog(true)
   }
 
+  const removeImageHandler = (index: number) => {
+    if (imagesList?.length) {
+      const updatedImagesList = imagesList?.filter((_, i) => i !== index)
+
+      setImagesList([...updatedImagesList])
+    }
+  }
+
   const isWide =
     dialogMeta.currentStep === PostsStep.Filters || dialogMeta.currentStep === PostsStep.Publish
 
@@ -164,6 +175,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             <CropContent
               onBack={navigationButtonHandler}
               onConfirm={navigationButtonHandler}
+              onRemove={removeImageHandler}
               onUpload={uploadPostHandler}
               previewList={previewList}
             />

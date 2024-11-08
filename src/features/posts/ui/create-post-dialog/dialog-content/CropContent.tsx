@@ -10,11 +10,18 @@ import { HiddenDialogComponents } from '@/shared/ui/components'
 type CropContentProps = {
   onBack: (step: PostsStep) => void
   onConfirm: (step: PostsStep) => void
+  onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
   previewList: Nullable<string[]>
 }
 
-export const CropContent = ({ onBack, onConfirm, onUpload, previewList }: CropContentProps) => {
+export const CropContent = ({
+  onBack,
+  onConfirm,
+  onRemove,
+  onUpload,
+  previewList,
+}: CropContentProps) => {
   const { t } = useTranslation()
 
   return (
@@ -29,7 +36,7 @@ export const CropContent = ({ onBack, onConfirm, onUpload, previewList }: CropCo
         onConfirm={() => onConfirm(PostsStep.Filters)}
         title={t.createPostDialog.dialogTitles.crop}
       />
-      <CropBody onUpload={onUpload} previewList={previewList} />
+      <CropBody onRemove={onRemove} onUpload={onUpload} previewList={previewList} />
     </>
   )
 }

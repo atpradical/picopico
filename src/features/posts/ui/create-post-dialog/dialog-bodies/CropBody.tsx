@@ -11,11 +11,12 @@ import clsx from 'clsx'
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
 
 type CropBodyProps = {
+  onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
   previewList: Nullable<string[]>
 } & ComponentPropsWithoutRef<typeof DialogBody>
 
-export const CropBody = ({ onUpload, previewList, ...props }: CropBodyProps) => {
+export const CropBody = ({ onRemove, onUpload, previewList, ...props }: CropBodyProps) => {
   const { errorMessage } = useSelector(selectPostDialogMeta)
 
   return (
@@ -28,7 +29,7 @@ export const CropBody = ({ onUpload, previewList, ...props }: CropBodyProps) => 
             <ExpandPopover />
             <ScalePopover />
           </div>
-          <UploadPopover onUpload={onUpload} previewList={previewList} />
+          <UploadPopover onRemove={onRemove} onUpload={onUpload} previewList={previewList} />
         </div>
       </div>
     </DialogBody>

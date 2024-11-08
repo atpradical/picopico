@@ -19,11 +19,12 @@ import Image from 'next/image'
 import s from './UploadPopover.module.scss'
 
 type UploadPopoverProps = {
+  onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
   previewList: Nullable<string[]>
 }
 
-export const UploadPopover = ({ onUpload, previewList }: UploadPopoverProps) => {
+export const UploadPopover = ({ onRemove, onUpload, previewList }: UploadPopoverProps) => {
   return (
     <Popover>
       <PopoverTrigger asChild>
@@ -44,7 +45,11 @@ export const UploadPopover = ({ onUpload, previewList }: UploadPopoverProps) => 
                     src={previewList?.[index] ?? ''}
                     width={80}
                   />
-                  <Button className={s.closeButton} variant={'icon'}>
+                  <Button
+                    className={s.closeButton}
+                    onClick={() => onRemove(index)}
+                    variant={'icon'}
+                  >
                     <CloseOutlineIcon />
                   </Button>
                 </div>
