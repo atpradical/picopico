@@ -19,12 +19,7 @@ import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { ActionConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import {
-  CustomToastContainer,
-  DialogContent,
-  DialogRoot,
-  toaster,
-} from '@atpradical/picopico-ui-kit'
+import { DialogContent, DialogRoot, toasterModal } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 
 import s from './CreatePostDialog.module.scss'
@@ -63,34 +58,23 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
-      dispatch(createPostActions.setPostErrorMessage({ error: '' }))
-      const files = Array.from(e.target.files)
-
       if (imagesList && imagesList.length >= POSTS_FILES_LIMIT) {
-        toaster({ text: createPostDialog.tooManyFilesForUploading })
-        dispatch(
-          createPostActions.setPostErrorMessage({
-            error: createPostDialog.tooManyFilesForUploading,
-          })
-        )
+        toasterModal({ text: createPostDialog.tooManyFilesForUploading, variant: 'error' })
 
         return
       }
 
+      const files = Array.from(e.target.files)
+
       files.forEach(el => {
         if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(el.type)) {
-          dispatch(
-            createPostActions.setPostErrorMessage({ error: createPostDialog.wrongFileFormat })
-          )
+          debugger
+          toasterModal({ text: createPostDialog.wrongFileFormat, variant: 'error' })
 
           return
         }
         if (el.size >= POSTS_MAX_FILE_SIZE) {
-          dispatch(
-            createPostActions.setPostErrorMessage({
-              error: createPostDialog.wrongFileSize,
-            })
-          )
+          toasterModal({ text: createPostDialog.wrongFileSize, variant: 'error' })
 
           return
         }
@@ -196,7 +180,6 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             />
           )}
         </DialogContent>
-        <CustomToastContainer />
       </DialogRoot>
       <ActionConfirmDialog
         accessibilityDescription={createPostDialog.interruptDialog.accessibilityDescription}

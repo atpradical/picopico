@@ -8,7 +8,7 @@ import { selectAvatarAllData } from '@/features/profile/model'
 import { useUploadAvatarMutation } from '@/services/profile'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { HiddenDialogComponents, PlaceholderImage, UploadFileError } from '@/shared/ui/components'
+import { HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import getCroppedImg from '@/shared/utils/crop-image'
 import {
@@ -20,6 +20,7 @@ import {
   DialogHeader,
   DialogRoot,
   Typography,
+  toasterModal,
 } from '@atpradical/picopico-ui-kit'
 
 import s from './ProfileAvatarDialog.module.scss'
@@ -27,7 +28,7 @@ import s from './ProfileAvatarDialog.module.scss'
 export const ProfileAvatarDialog = () => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { avatarPreview, error, isOpen } = useSelector(selectAvatarAllData)
+  const { avatarPreview, isOpen } = useSelector(selectAvatarAllData)
   const [crop, setCrop] = useState({ x: 0, y: 0 })
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Nullable<Area>>(null)
@@ -52,19 +53,16 @@ export const ProfileAvatarDialog = () => {
 
   const uploadImageHandler = async (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
-      dispatch(avatarPostActions.setAvatarError({ error: '' }))
       const file = e.target.files[0]
 
       if (!ALLOWED_IMAGE_UPLOAD_TYPES.includes(file.type)) {
-        dispatch(
-          avatarPostActions.setAvatarError({ error: t.profileAvatarDialog.wrongPhotoFormat })
-        )
+        toasterModal({ text: t.profileAvatarDialog.wrongPhotoFormat, variant: 'error' })
 
         return
       }
 
       if (file.size >= AVATAR_MAX_FILE_SIZE) {
-        dispatch(avatarPostActions.setAvatarError({ error: t.profileAvatarDialog.wrongPhotoSize }))
+        toasterModal({ text: t.profileAvatarDialog.wrongPhotoSize, variant: 'error' })
 
         return
       }
@@ -116,13 +114,11 @@ export const ProfileAvatarDialog = () => {
           </DialogClose>
         </DialogHeader>
         <DialogBody className={s.body}>
-          {error && <UploadFileError errorText={error} />}
           {avatarPreview ? (
             <>
               <div className={s.cropperContainer}>
                 <Cropper
                   aspect={1}
-                  classes={{ cropAreaClassName: s.cropArea }}
                   crop={crop}
                   cropShape={'round'}
                   cropSize={{ height: 300, width: 300 }}

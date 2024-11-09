@@ -1,10 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef } from 'react'
-import { useSelector } from 'react-redux'
 
-import { selectPostDialogMeta } from '@/features/posts/model'
 import { ExpandPopover, ScalePopover, UploadPopover } from '@/features/posts/ui/popovers'
 import { Nullable } from '@/shared/types'
-import { UploadFileError } from '@/shared/ui/components'
 import { Carousel, DialogBody } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 
@@ -17,11 +14,8 @@ type CropBodyProps = {
 } & ComponentPropsWithoutRef<typeof DialogBody>
 
 export const CropBody = ({ onRemove, onUpload, previewList, ...props }: CropBodyProps) => {
-  const { errorMessage } = useSelector(selectPostDialogMeta)
-
   return (
     <DialogBody className={clsx(s.body, s.withPreview)} {...props}>
-      {errorMessage && <UploadFileError errorText={errorMessage} />}
       <div className={s.previewSizes}>
         <Carousel slides={previewList ?? []} />
         <div className={s.toolsContainer}>
