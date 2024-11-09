@@ -38,7 +38,7 @@ type SideBarRef = ElementRef<'nav'>
 export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...rest }, ref) => {
   const router = useRouter()
   const { t } = useTranslation()
-  const { meData } = useContext(AuthContext)
+  const { isAuth, meData } = useContext(AuthContext)
 
   const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
@@ -60,6 +60,10 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
     } finally {
       setOpenLogoutDialog(false)
     }
+  }
+
+  if (!isAuth) {
+    return null
   }
 
   return (
