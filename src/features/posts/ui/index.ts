@@ -1,4 +1,5 @@
 export * from './create-post-dialog'
+export * from './crop-item'
 export * from './post-actions-dropdown'
 export * from './post-description'
 export * from './post-dialog'

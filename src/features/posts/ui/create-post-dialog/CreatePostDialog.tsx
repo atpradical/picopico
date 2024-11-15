@@ -64,24 +64,23 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
         return
       }
 
-      const files = Array.from(e.target.files)
+      const file = e.target.files[0]
 
-      files.forEach(el => {
-        if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(el.type)) {
-          debugger
-          toasterModal({ text: createPostDialog.wrongFileFormat, variant: 'error' })
+      if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(file.type)) {
+        debugger
+        toasterModal({ text: createPostDialog.wrongFileFormat, variant: 'error' })
 
-          return
-        }
-        if (el.size >= POSTS_MAX_FILE_SIZE) {
-          toasterModal({ text: createPostDialog.wrongFileSize, variant: 'error' })
+        return
+      }
+      if (file.size >= POSTS_MAX_FILE_SIZE) {
+        toasterModal({ text: createPostDialog.wrongFileSize, variant: 'error' })
 
-          return
-        }
+        return
+      }
 
-        setImagesList(state => [...(state || []), ...files])
-        dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Crop }))
-      })
+      setImagesList(state => [...(state || []), file])
+      // addToPostsDB(file)
+      dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Crop }))
     }
   }
 
@@ -108,6 +107,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       dispatch(createPostActions.resetPost())
       setPreviewList(null)
       setImagesList(null)
+      // clearPostsDB()
       dispatch(publicationsActions.resetPublications())
       dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
     } catch (e) {

@@ -1,3 +1,3 @@
-export * from './expand-popover'
-export * from './scale-popover'
+export * from './aspect-popover'
 export * from './upload-popover'
+export * from './zoom-popover'

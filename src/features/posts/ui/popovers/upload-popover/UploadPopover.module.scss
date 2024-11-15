@@ -20,7 +20,6 @@
   &:focus {
     outline: none;
   }
-
 }
 
 .scrollContainer {
@@ -42,6 +41,10 @@
 .previewItem {
   position: relative;
   margin-bottom: 5px;
+}
+
+.activeSlide {
+  border-bottom: 2px solid var(--color-accent-700);
 }
 
 .image {

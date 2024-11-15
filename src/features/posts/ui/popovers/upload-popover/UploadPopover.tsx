@@ -1,4 +1,4 @@
-import { ChangeEvent } from 'react'
+import { ChangeEvent, useEffect, useState } from 'react'
 
 import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
 import { Nullable } from '@/shared/types'
@@ -6,6 +6,7 @@ import {
   Button,
   CloseOutlineIcon,
   FileUploader,
+  ImageIcon,
   ImageOutlineIcon,
   PlusCircleOutlineIcon,
   Popover,
@@ -14,30 +15,81 @@ import {
   ScrollArea,
   ScrollBar,
 } from '@atpradical/picopico-ui-kit'
+import clsx from 'clsx'
 import Image from 'next/image'
+import { useSwiper } from 'swiper/react'
 
 import s from './UploadPopover.module.scss'
 
 type UploadPopoverProps = {
+  isOpen: boolean
+  onOpen: (isOpen: boolean) => void
   onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
   previewList: Nullable<string[]>
 }
 
-export const UploadPopover = ({ onRemove, onUpload, previewList }: UploadPopoverProps) => {
+export const UploadPopover = ({
+  isOpen,
+  onOpen,
+  onRemove,
+  onUpload,
+  previewList,
+}: UploadPopoverProps) => {
+  const swiper = useSwiper()
+  const [_, setActiveSlideIndex] = useState(swiper.activeIndex)
+
+  useEffect(() => {
+    const updateSlideIndex = () => {
+      setActiveSlideIndex(swiper.activeIndex)
+    }
+
+    swiper.on('slideChange', updateSlideIndex)
+
+    // Обновление значения при первом рендере
+    updateSlideIndex()
+
+    // Очистка подписки на событие при размонтировании компонента
+    return () => {
+      swiper.off('slideChange', updateSlideIndex)
+    }
+  }, [swiper])
+
+  useEffect(() => {
+    if (previewList && previewList.length) {
+      swiper.slideTo(previewList.length)
+      onOpen(false)
+    }
+  }, [swiper, previewList, onOpen])
+
+  const switchToSlideHandler = (index: number) => {
+    swiper.slideTo(index)
+    onOpen(false)
+  }
+
   return (
-    <Popover>
+    <Popover onOpenChange={onOpen} open={isOpen}>
       <PopoverTrigger asChild>
         <Button className={s.buttonTrigger} variant={'icon'}>
-          <ImageOutlineIcon className={s.iconImage} />
+          {isOpen ? (
+            <ImageIcon className={s.iconImage} />
+          ) : (
+            <ImageOutlineIcon className={s.iconImage} />
+          )}
         </Button>
       </PopoverTrigger>
       <PopoverContent align={'end'} className={s.popoverContainer} side={'top'}>
         <ScrollArea>
           <div className={s.contentContainer}>
             {previewList?.map((el, index) => {
+              const isActiveSlide = swiper.activeIndex === index
+
               return (
-                <div className={s.previewItem} key={el + index}>
+                <div
+                  className={clsx(s.previewItem, isActiveSlide && s.activeSlide)}
+                  key={el + index}
+                  onClick={() => switchToSlideHandler(index)}
+                >
                   <Image
                     alt={'description'}
                     className={s.image}

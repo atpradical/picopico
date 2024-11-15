@@ -1,6 +1,5 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { Carousel, DialogBody, Typography } from '@atpradical/picopico-ui-kit'
 
@@ -11,20 +10,14 @@ type FiltersBodyProps = {
 } & ComponentPropsWithoutRef<typeof DialogBody>
 
 export const FiltersBody = ({ previewList, ...rest }: FiltersBodyProps) => {
-  const {
-    t: { createPostDialog },
-  } = useTranslation()
+  // const {
+  //   t: { createPostDialog },
+  // } = useTranslation()
 
   return (
     <DialogBody className={s.filteringBody} {...rest}>
       <div className={s.previewSizes}>
         <Carousel slides={previewList ?? []} />
-        {/*<Image*/}
-        {/*  alt={createPostDialog.altDescription}*/}
-        {/*  className={s.image} // todo: определиться с cover или contain*/}
-        {/*  fill*/}
-        {/*  src={previewList?.[0] ?? ''}*/}
-        {/*/>*/}
       </div>
       {/*todo: complete posts filters*/}
       <div

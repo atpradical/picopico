@@ -5,9 +5,8 @@
 
 .popoverContent,
 .toggleGroup {
-  opacity: 0.8
+  opacity: 0.9;
 }
-
 
 .toggleGroup {
   width: 156px;
@@ -21,12 +20,17 @@
   justify-content: space-between;
   color: var(--color-dark-300);
 
-  &:hover {
-    background-color: var(--color-dark-700);
+  &[data-state='on'] {
+    opacity: 1;
+    background-color: var(--color-accent-900);
   }
 
   &:focus {
     outline: none;
+  }
+
+  &:hover:not([data-state='on']) {
+    background-color: var(--color-dark-700);
   }
 }
 
@@ -40,8 +44,7 @@
 .iconRatio {
   width: var(--icon-size-s);
   height: var(--icon-size-s);
-  margin-right: 2px
-
+  margin-right: 2px;
 }
 
 .iconImage {
