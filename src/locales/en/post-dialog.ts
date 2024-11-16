@@ -10,10 +10,10 @@ export const postDialog = {
   alertDeleteDialog: {
     accessibilityDescription: 'Popup asking to confirm post deletion',
     accessibilityTitle: 'Popup asking to confirm post deletion',
-    confirmButtonText: 'Yes',
-    discardButtonText: 'No',
-    title: 'close',
-    visibleBodyText: 'Are you sure you want to delete this post?',
+    closeButton: 'close',
+    confirmButton: 'Yes',
+    rejectButton: 'No',
+    visibleBody: 'Are you sure you want to delete this post?',
     visibleTitle: 'Delete Post',
   },
 
@@ -24,10 +24,10 @@ export const postDialog = {
     alertDeleteDialog: {
       accessibilityDescription: 'Popup asking to confirm cancel post edit',
       accessibilityTitle: 'Popup asking to confirm cancel post edit',
-      confirmButtonText: 'Yes',
-      discardButtonText: 'No',
-      title: 'close',
-      visibleBodyText:
+      closeButton: 'close',
+      confirmButton: 'Yes',
+      rejectButton: 'No',
+      visibleBody:
         'Do you really want to close the edition of the publication? If you close changes won’t be saved',
       visibleTitle: 'Close Post',
     },

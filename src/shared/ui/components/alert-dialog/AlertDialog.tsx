@@ -11,31 +11,26 @@ import {
   Typography,
 } from '@atpradical/picopico-ui-kit'
 
-import s from './ActionConfirmDialog.module.scss'
+import s from './AlertDialog.module.scss'
 
-type ActionConfirmDialogProps = {
+type AlertDialogTranslations = {
   accessibilityDescription: string
   accessibilityTitle: string
-  confirmButtonText: string
-  isOpen: boolean
-  message: string
-  onConfirm: () => void
-  onOpenChange: (isOpen: boolean) => void
-  rejectButtonText: string
-  title: string
+  closeButton: string
+  confirmButton: string
+  rejectButton: string
+  visibleBody: string
+  visibleTitle: string
 }
 
-export function ActionConfirmDialog({
-  accessibilityDescription,
-  accessibilityTitle,
-  confirmButtonText,
-  isOpen,
-  message,
-  onConfirm,
-  onOpenChange,
-  rejectButtonText,
-  title,
-}: ActionConfirmDialogProps) {
+type AlertDialogProps = {
+  isOpen: boolean
+  onConfirm: () => void
+  onOpenChange: (isOpen: boolean) => void
+  t: AlertDialogTranslations
+}
+
+export function AlertDialog({ isOpen, onConfirm, onOpenChange, t }: AlertDialogProps) {
   const closeDialogHandler = () => {
     onOpenChange(false)
   }
@@ -43,25 +38,28 @@ export function ActionConfirmDialog({
   return (
     <DialogRoot onOpenChange={onOpenChange} open={isOpen}>
       <DialogContent className={s.content}>
-        <HiddenDialogComponents description={accessibilityDescription} title={accessibilityTitle} />
+        <HiddenDialogComponents
+          description={t.accessibilityDescription}
+          title={t.accessibilityTitle}
+        />
         <DialogHeader className={s.header}>
           <Typography as={'h3'} variant={'h3'}>
-            {title}
+            {t.visibleTitle}
           </Typography>
           <DialogClose asChild>
-            <Button title={'close'} variant={'icon'}>
+            <Button title={t.closeButton} variant={'icon'}>
               <CloseOutlineIcon />
             </Button>
           </DialogClose>
         </DialogHeader>
         <DialogBody>
-          <Typography variant={'regular_14'}>{message}</Typography>
+          <Typography variant={'regular_14'}>{t.visibleBody}</Typography>
         </DialogBody>
         <DialogFooter className={s.footer}>
           <Button onClick={onConfirm} variant={'outlined'}>
-            {confirmButtonText}
+            {t.confirmButton}
           </Button>
-          <Button onClick={closeDialogHandler}>{rejectButtonText}</Button>
+          <Button onClick={closeDialogHandler}>{t.rejectButton}</Button>
         </DialogFooter>
       </DialogContent>
     </DialogRoot>

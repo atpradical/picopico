@@ -3,7 +3,7 @@ import { useState } from 'react'
 import { publicationsActions } from '@/features/posts/api'
 import { useDeletePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { ActionConfirmDialog } from '@/shared/ui/components'
+import { AlertDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
   Button,
@@ -74,16 +74,11 @@ export const PostActionsDropdown = ({ onConfirm, onEdit, postId }: EditPostDropd
           </DropdownMenuContent>
         </DropdownMenuPortal>
       </DropdownMenu>
-      <ActionConfirmDialog
-        accessibilityDescription={t.postDialog.alertDeleteDialog.accessibilityDescription}
-        accessibilityTitle={t.postDialog.alertDeleteDialog.accessibilityTitle}
-        confirmButtonText={t.postDialog.alertDeleteDialog.confirmButtonText}
+      <AlertDialog
         isOpen={isDeleteAlertDialog}
-        message={t.postDialog.alertDeleteDialog.visibleBodyText}
         onConfirm={deletePostHandler}
         onOpenChange={setIsDeleteAlertDialog}
-        rejectButtonText={t.postDialog.alertDeleteDialog.discardButtonText}
-        title={t.postDialog.alertDeleteDialog.visibleTitle}
+        t={t.postDialog.alertDeleteDialog}
       />
     </>
   )

@@ -1,4 +1,4 @@
-export * from './action-confirm-dialog'
+export * from './alert-dialog'
 export * from './docs-content'
 export * from './email-confirmation-dialog'
 export * from './hidden-dialog-components'

@@ -5,6 +5,18 @@ export const createPostDialog = {
   accessibilityTitle:
     'Всплывающее окно, предлагающее пользователю выбрать файлы для нового поста, определить описание поста, применить фильтры и обрезать выбранные фотографии',
 
+  alertDialog: {
+    accessibilityDescription: 'Всплывающее окно с возможностью прервать текущий диалог',
+    accessibilityTitle: 'Всплывающее окно, запрашивающее пользователя прервать текущий диалог',
+    closeButton: 'закрыть',
+    confirmButton: 'Сохранить',
+    rejectButton: 'Отменить',
+    visibleBody:
+      'Вы действительно хотите закрыть создание публикации?\n' +
+      'Если вы закроете, все будет удалено',
+    visibleTitle: 'Закрыть',
+  },
+
   altDescription: 'Изображение нового поста',
 
   buttons: {
@@ -21,18 +33,6 @@ export const createPostDialog = {
     filters: 'Фильтрация',
     publish: 'Публикация',
     start: 'Добавить фото',
-  },
-
-  interruptDialog: {
-    accessibilityDescription: 'Всплывающее окно с возможностью прервать текущий диалог',
-    accessibilityTitle: 'Всплывающее окно, запрашивающее пользователя прервать текущий диалог',
-    discardButtonText: 'Отменить',
-    saveButtonText: 'Сохранить',
-    title: 'Закрыть',
-    visibleBodyText:
-      'Вы действительно хотите закрыть создание публикации?\n' +
-      'Если вы закроете, все будет удалено',
-    visibleTitle: 'Закрыть',
   },
   publishDialogStep: {
     descriptionFieldLabel: 'Добавить описание публикации',

@@ -5,7 +5,7 @@ import { ProfileAvatarDialog } from '@/features/profile/ui'
 import { useDeleteAvatarMutation } from '@/services/profile'
 import { MyProfileContext } from '@/shared/contexts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { ActionConfirmDialog } from '@/shared/ui/components'
+import { AlertDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { Avatar, Button, CloseOutlineIcon } from '@atpradical/picopico-ui-kit'
 
@@ -59,16 +59,11 @@ export const ProfileAvatarManager = () => {
       </Button>
       <ProfileAvatarDialog />
       {alertDialog && (
-        <ActionConfirmDialog
-          accessibilityDescription={t.deleteAvatarDialog.accessibilityDescription}
-          accessibilityTitle={t.deleteAvatarDialog.accessibilityTitle}
-          confirmButtonText={t.deleteAvatarDialog.confirmButton}
+        <AlertDialog
           isOpen={alertDialog}
-          message={t.deleteAvatarDialog.visibleBodyText}
           onConfirm={deleteAvatarHandler}
           onOpenChange={setAlertDialog}
-          rejectButtonText={t.deleteAvatarDialog.rejectButton}
-          title={t.deleteAvatarDialog.visibleTitle}
+          t={t.deleteAvatarDialog}
         />
       )}
     </div>

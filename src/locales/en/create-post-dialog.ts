@@ -3,7 +3,21 @@ export const createPostDialog = {
     'Popup with possibility to choose files for new post, define post description, apply filters to chosen photos, and crop chosen photos',
   accessibilityTitle:
     'Popup asking user to choose files for new post, define post description, apply filters, and crop chosen photos',
+
+  alertDialog: {
+    accessibilityDescription: 'Popup with possibility to interrupt current dialog',
+    accessibilityTitle: 'Popup asking user to interrupt current dialog',
+    closeButton: 'close',
+    confirmButton: 'Save draft',
+    rejectButton: 'Discard',
+    visibleBody:
+      'Do you really want to close the creation of a publication?\n' +
+      'If you close everything will be deleted',
+    visibleTitle: 'Сlose',
+  },
+
   altDescription: 'New post image',
+
   buttons: {
     backButton: 'Go Back',
     closeButton: 'Close',
@@ -18,18 +32,6 @@ export const createPostDialog = {
     filters: 'Filtering',
     publish: 'Publishing',
     start: 'Add Photo',
-  },
-
-  interruptDialog: {
-    accessibilityDescription: 'Popup with possibility to interrupt current dialog',
-    accessibilityTitle: 'Popup asking user to interrupt current dialog',
-    discardButtonText: 'Discard',
-    saveButtonText: 'Save draft',
-    title: 'Сlose',
-    visibleBodyText:
-      'Do you really want to close the creation of a publication?\n' +
-      'If you close everything will be deleted',
-    visibleTitle: 'Сlose',
   },
 
   publishDialogStep: {

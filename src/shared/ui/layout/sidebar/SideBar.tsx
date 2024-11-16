@@ -6,7 +6,7 @@ import { useLogoutMutation } from '@/services/auth'
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { ActionConfirmDialog } from '@/shared/ui/components'
+import { AlertDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
   BookmarkIcon,
@@ -172,16 +172,11 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
         </Typography>
       </div>
       {openLogoutDialog && (
-        <ActionConfirmDialog
-          accessibilityDescription={t.logoutDialog.accessibilityDescription}
-          accessibilityTitle={t.logoutDialog.accessibilityTitle}
-          confirmButtonText={t.logoutDialog.confirmButton}
+        <AlertDialog
           isOpen={openLogoutDialog}
-          message={`${t.logoutDialog.visibleBodyText} ${meData?.email}`}
           onConfirm={logoutHandler}
           onOpenChange={setOpenLogoutDialog}
-          rejectButtonText={t.logoutDialog.rejectButton}
-          title={t.logoutDialog.visibleTitle}
+          t={t.logoutDialog}
         />
       )}
       <CreatePostDialog onOpenChange={toggleCreatePostDialogHandler} />

@@ -6,7 +6,7 @@ import { selectPostContent, selectPublicationsAllData } from '@/features/posts/m
 import { DisplayPostContent } from '@/features/posts/ui'
 import { AppState } from '@/lib/store'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { ActionConfirmDialog } from '@/shared/ui/components'
+import { AlertDialog } from '@/shared/ui/components'
 import { DialogRoot } from '@atpradical/picopico-ui-kit'
 
 import { EditPostContent } from './edit-post-content'
@@ -52,18 +52,11 @@ export const PostDialog = (props: PostsDialogProps) => {
           <DisplayPostContent postData={postContent} setEditMode={toggleEditModeHandler} />
         )}
       </DialogRoot>
-      <ActionConfirmDialog
-        accessibilityDescription={
-          t.postDialog.editPostDialog.alertDeleteDialog.accessibilityDescription
-        }
-        accessibilityTitle={t.postDialog.editPostDialog.alertDeleteDialog.accessibilityTitle}
-        confirmButtonText={t.postDialog.editPostDialog.alertDeleteDialog.confirmButtonText}
+      <AlertDialog
         isOpen={isAlertDialog}
-        message={t.postDialog.editPostDialog.alertDeleteDialog.visibleBodyText}
         onConfirm={confirmExitEditModeHandler}
         onOpenChange={setIsAlertDialog}
-        rejectButtonText={t.postDialog.editPostDialog.alertDeleteDialog.discardButtonText}
-        title={t.postDialog.editPostDialog.alertDeleteDialog.visibleTitle}
+        t={t.postDialog.editPostDialog.alertDeleteDialog}
       />
     </>
   )

@@ -18,7 +18,7 @@ import {
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { ActionConfirmDialog, HiddenDialogComponents } from '@/shared/ui/components'
+import { AlertDialog, HiddenDialogComponents } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { DialogContent, DialogRoot, toasterModal } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
@@ -166,16 +166,11 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
           {dialogMeta.currentStep === PostsStep.Publish && <PublishBody />}
         </DialogContent>
       </DialogRoot>
-      <ActionConfirmDialog
-        accessibilityDescription={t.createPostDialog.interruptDialog.accessibilityDescription}
-        accessibilityTitle={t.createPostDialog.interruptDialog.accessibilityTitle}
-        confirmButtonText={t.createPostDialog.interruptDialog.saveButtonText}
+      <AlertDialog
         isOpen={isAlertDialog}
-        message={t.createPostDialog.interruptDialog.visibleBodyText}
         onConfirm={() => {}} //todo: добавить возможность сохранять черновик в IndexedDB
         onOpenChange={setIsAlertDialog}
-        rejectButtonText={t.createPostDialog.interruptDialog.discardButtonText}
-        title={t.createPostDialog.interruptDialog.title}
+        t={t.createPostDialog.alertDialog}
       />
     </>
   )
