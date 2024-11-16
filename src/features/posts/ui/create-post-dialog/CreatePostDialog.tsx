@@ -10,11 +10,11 @@ import {
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
 import { CreatePostHeader } from '@/features/posts/ui'
 import {
-  CropContent,
-  FiltersContent,
-  PublishContent,
-  StartContent,
-} from '@/features/posts/ui/create-post-dialog/dialog-content'
+  CropBody,
+  FiltersBody,
+  PublishBody,
+  StartBody,
+} from '@/features/posts/ui/create-post-dialog/dialog-bodies'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
@@ -162,21 +162,19 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             onPublish={publishPostsHandler}
             step={dialogMeta.currentStep}
           />
-          {dialogMeta.currentStep === PostsStep.Start && (
-            <StartContent onUpload={uploadPostHandler} />
-          )}
+          {dialogMeta.currentStep === PostsStep.Start && <StartBody onUpload={uploadPostHandler} />}
           {dialogMeta.currentStep === PostsStep.Crop && (
-            <CropContent
+            <CropBody
               onRemove={removeImageHandler}
               onUpload={uploadPostHandler}
               previewList={previewList}
             />
           )}
           {dialogMeta.currentStep === PostsStep.Filters && (
-            <FiltersContent previewList={previewList} />
+            <FiltersBody previewList={previewList} />
           )}
           {dialogMeta.currentStep === PostsStep.Publish && (
-            <PublishContent imagesList={imagesList} previewList={previewList} />
+            <PublishBody previewList={previewList} />
           )}
         </DialogContent>
       </DialogRoot>
