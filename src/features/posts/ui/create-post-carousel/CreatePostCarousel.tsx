@@ -1,7 +1,7 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { selectCreatePostAllData } from '@/features/posts/model'
+import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
 import { CropItem } from '@/features/posts/ui'
 /* eslint-disable import/extensions */
 import {
@@ -28,7 +28,9 @@ type CreatePostCarouselProps = {
 }
 
 export const CreatePostCarousel = ({ onRemove, onUpload }: CreatePostCarouselProps) => {
-  const { previewList } = useSelector(selectCreatePostAllData)
+  const { dialogMeta, previewList, previewListWithFilter } = useSelector(selectCreatePostAllData)
+
+  const isCrop = dialogMeta.currentStep === PostsStep.Crop
 
   return (
     <div className={clsx(s.swiperContainer, s.previewPosts)}>
@@ -43,17 +45,29 @@ export const CreatePostCarousel = ({ onRemove, onUpload }: CreatePostCarouselPro
           el: '.swiper-pagination',
         }}
       >
-        {previewList?.map((slide, index) => (
-          <SwiperSlide className={s.slide} key={`slide-${index}`}>
-            <CropItem
-              imageUrl={slide}
-              key={`cropitem-${index}`}
-              onRemove={() => onRemove(index)}
-              onUpload={e => onUpload(e)}
-              previewList={previewList}
-            />
-          </SwiperSlide>
-        ))}
+        {isCrop
+          ? previewList?.map((slide, index) => (
+              <SwiperSlide className={s.slide} key={`slide-${index}`}>
+                <CropItem
+                  imageUrl={slide}
+                  key={`cropitem-${index}`}
+                  onRemove={() => onRemove(index)}
+                  onUpload={e => onUpload(e)}
+                  previewList={previewList}
+                />
+              </SwiperSlide>
+            ))
+          : previewListWithFilter?.map((slide, index) => (
+              <SwiperSlide className={s.slide} key={`slide-${index}`}>
+                <CropItem
+                  imageUrl={slide}
+                  key={`cropitem-${index}`}
+                  onRemove={() => onRemove(index)}
+                  onUpload={e => onUpload(e)}
+                  previewList={previewList}
+                />
+              </SwiperSlide>
+            ))}
         <div className={'swiper-pagination'}></div>
         <SwiperButtons />
       </Swiper>
