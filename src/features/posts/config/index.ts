@@ -14,6 +14,15 @@ export enum PostFilter {
   sepia = 'Sepia',
 }
 
+export const FILTERS_LIST = [
+  PostFilter.original,
+  PostFilter.clarendon,
+  PostFilter.lark,
+  PostFilter.gingham,
+  PostFilter.sepia,
+  PostFilter.moon,
+]
+
 export enum PostAspect {
   landscape = '16:9',
   original = 'original',

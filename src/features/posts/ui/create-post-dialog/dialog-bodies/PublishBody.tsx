@@ -6,20 +6,19 @@ import { POSTS_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
 import { postsDescriptionSchemeCreator, selectCreatePostAllData } from '@/features/posts/model'
 import { AuthContext, MyProfileContext } from '@/shared/contexts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { Nullable } from '@/shared/types'
 import { Avatar, Carousel, DialogBody, TextArea, Typography } from '@atpradical/picopico-ui-kit'
 import * as Separator from '@radix-ui/react-separator'
 
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
 
-type PublishBodyProps = {
-  previewList: Nullable<string[]>
-} & ComponentPropsWithoutRef<typeof DialogBody>
+type PublishBodyProps = ComponentPropsWithoutRef<typeof DialogBody>
 
-export const PublishBody = ({ previewList, ...rest }: PublishBodyProps) => {
+export const PublishBody = ({ ...rest }: PublishBodyProps) => {
   const {
     t: { createPostDialog, validation },
   } = useTranslation()
+
+  const { previewList } = useSelector(selectCreatePostAllData)
 
   const { meData } = useContext(AuthContext)
   const { myProfileData } = useContext(MyProfileContext)

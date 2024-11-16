@@ -8,6 +8,8 @@ const initialState: PostsState = {
     errorMessage: '',
     isDialogOpen: false,
   },
+  previewList: null,
+  previewListWithFilter: null,
 }
 
 const slice = createSlice({
@@ -17,10 +19,25 @@ const slice = createSlice({
     addPostDescription: (state, action: PayloadAction<{ description: string }>) => {
       state.description = action.payload.description
     },
+    addPostPreview: (state, action: PayloadAction<{ preview: string[] }>) => {
+      state.previewList = action.payload.preview
+    },
+    addPostPreviewWithFilter: (
+      state,
+      action: PayloadAction<{ index: number; preview: string }>
+    ) => {
+      if (state.previewListWithFilter) {
+        state.previewListWithFilter[action.payload.index] = action.payload.preview
+      }
+    },
     resetPost: state => {
       state.description = ''
       state.dialogMeta.currentStep = PostsStep.Start
       state.dialogMeta.errorMessage = ''
+      state.previewList = null
+    },
+    setInitialPreviewListWithFilter: state => {
+      state.previewListWithFilter = state.previewList && [...state.previewList]
     },
     setPostCreationStep: (state, action: PayloadAction<{ step: PostsStep }>) => {
       state.dialogMeta.currentStep = action.payload.step

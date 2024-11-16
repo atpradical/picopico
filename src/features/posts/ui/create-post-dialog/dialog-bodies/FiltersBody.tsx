@@ -1,60 +1,67 @@
 import { ComponentPropsWithoutRef, useCallback, useEffect, useState } from 'react'
+import { useSelector } from 'react-redux'
 
-import { PostFilter } from '@/features/posts/config'
+import { createPostActions } from '@/features/posts/api'
+import { FILTERS_LIST, PostFilter } from '@/features/posts/config'
+import { selectCreatePostAllData } from '@/features/posts/model'
 import { applyFilter } from '@/features/posts/model/apply-filter'
+import { useAppDispatch } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { Carousel, DialogBody, Typography, toaster } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
 
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
 
-type FiltersBodyProps = {
-  onFilterChange: (filter: PostFilter, index: number) => void
-  previewList: Nullable<string[]>
-} & ComponentPropsWithoutRef<typeof DialogBody>
+type FiltersBodyProps = ComponentPropsWithoutRef<typeof DialogBody>
 
-export const FiltersBody = ({ onFilterChange, previewList, ...rest }: FiltersBodyProps) => {
+export const FiltersBody = ({ ...rest }: FiltersBodyProps) => {
   // const {
   //   t: { createPostDialog },
   // } = useTranslation()
+  const dispatch = useAppDispatch()
+  const { previewList, previewListWithFilter } = useSelector(selectCreatePostAllData)
+
+  useEffect(() => {
+    dispatch(createPostActions.setInitialPreviewListWithFilter())
+  }, [dispatch])
+
+  const setPostFilterHandler = async (filter: PostFilter, index: number) => {
+    if (!previewList) {
+      return
+    }
+
+    const preview = previewList[index]
+
+    if (preview) {
+      applyFilter(preview, filter).then(previewWithFilter =>
+        dispatch(
+          createPostActions.addPostPreviewWithFilter({
+            index,
+            preview: previewWithFilter,
+          })
+        )
+      )
+    }
+  }
+
+  if (previewListWithFilter === null) {
+    return null
+  }
 
   return (
     <DialogBody className={s.filteringBody} {...rest}>
       <div className={s.previewSizes}>
-        <Carousel slides={previewList ?? []} />
+        <Carousel slides={previewListWithFilter ?? []} />
       </div>
-      {/*todo: complete posts filters*/}
       <div className={s.filtersContainer}>
-        <FilterItem
-          filter={PostFilter.original}
-          imageUrl={previewList?.[0] ?? ''}
-          onClick={onFilterChange}
-        />
-        <FilterItem
-          filter={PostFilter.clarendon}
-          imageUrl={previewList?.[0] ?? ''}
-          onClick={onFilterChange}
-        />
-        <FilterItem
-          filter={PostFilter.lark}
-          imageUrl={previewList?.[0] ?? ''}
-          onClick={onFilterChange}
-        />
-        <FilterItem
-          filter={PostFilter.gingham}
-          imageUrl={previewList?.[0] ?? ''}
-          onClick={onFilterChange}
-        />
-        <FilterItem
-          filter={PostFilter.sepia}
-          imageUrl={previewList?.[0] ?? ''}
-          onClick={onFilterChange}
-        />
-        <FilterItem
-          filter={PostFilter.moon}
-          imageUrl={previewList?.[0] ?? ''}
-          onClick={onFilterChange}
-        />
+        {FILTERS_LIST.map(filter => (
+          <FilterItem
+            filter={filter}
+            imageUrl={previewList?.[0] ?? ''}
+            key={filter}
+            onClick={setPostFilterHandler}
+          />
+        ))}
       </div>
     </DialogBody>
   )

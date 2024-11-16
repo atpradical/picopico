@@ -1,4 +1,5 @@
 import { postsDescriptionSchemeCreator } from '@/features/posts/model/posts-descriptioin-scheme-creator'
+import { Nullable } from '@/shared/types'
 import { z } from 'zod'
 
 export type PostsState = {
@@ -8,6 +9,8 @@ export type PostsState = {
     errorMessage: string
     isDialogOpen: boolean
   }
+  previewList: Nullable<string[]>
+  previewListWithFilter: Nullable<string[]>
 }
 
 export type PostsDescriptionField = z.infer<ReturnType<typeof postsDescriptionSchemeCreator>>

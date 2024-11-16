@@ -6,10 +6,8 @@ import {
   POSTS_ALLOWED_UPLOAD_TYPES,
   POSTS_FILES_LIMIT,
   POSTS_MAX_FILE_SIZE,
-  PostFilter,
 } from '@/features/posts/config'
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
-import { applyFilter } from '@/features/posts/model/apply-filter'
 import { CreatePostHeader } from '@/features/posts/ui'
 import {
   CropBody,
@@ -32,11 +30,10 @@ type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { description, dialogMeta } = useSelector(selectCreatePostAllData)
+  const { description, dialogMeta, previewList } = useSelector(selectCreatePostAllData)
   const [isAlertDialog, setIsAlertDialog] = useState(false)
   // todo: переделать на Redux + IndexedDB
   const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
-  const [previewList, setPreviewList] = useState<Nullable<string[]>>(null)
 
   useEffect(() => {
     if (imagesList && imagesList.length) {
@@ -46,14 +43,12 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
         previewList.forEach(el => URL.revokeObjectURL(el))
       }
 
-      setPreviewList(newPreviews)
+      dispatch(createPostActions.addPostPreview({ preview: newPreviews }))
 
       return () => newPreviews.forEach(el => URL.revokeObjectURL(el))
     } else {
       dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Start }))
     }
-
-    // 'preview' mustn't be added to avoid cyclical dependence
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imagesList])
 
@@ -106,7 +101,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
       dispatch(createPostActions.resetPost())
-      setPreviewList(null)
+
       setImagesList(null)
       // clearPostsDB()
       dispatch(publicationsActions.resetPublications())
@@ -124,7 +119,6 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
   const closeDialogHandler = () => {
     dispatch(createPostActions.resetPost())
-    setPreviewList(null)
     setImagesList(null)
   }
 
@@ -139,24 +133,6 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       setImagesList([...updatedImagesList])
     }
-  }
-
-  const setPostFilterHandler = async (filter: PostFilter, index: number) => {
-    if (!previewList) {
-      return
-    }
-
-    const newPreviewList = await Promise.all(
-      previewList.map(async (el, i) => {
-        if (i === index) {
-          return await applyFilter(el, filter)
-        }
-
-        return el
-      })
-    )
-
-    setPreviewList(newPreviewList)
   }
 
   const isWide =
@@ -184,18 +160,10 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
           />
           {dialogMeta.currentStep === PostsStep.Start && <StartBody onUpload={uploadPostHandler} />}
           {dialogMeta.currentStep === PostsStep.Crop && (
-            <CropBody
-              onRemove={removeImageHandler}
-              onUpload={uploadPostHandler}
-              previewList={previewList}
-            />
+            <CropBody onRemove={removeImageHandler} onUpload={uploadPostHandler} />
           )}
-          {dialogMeta.currentStep === PostsStep.Filters && (
-            <FiltersBody onFilterChange={setPostFilterHandler} previewList={previewList} />
-          )}
-          {dialogMeta.currentStep === PostsStep.Publish && (
-            <PublishBody previewList={previewList} />
-          )}
+          {dialogMeta.currentStep === PostsStep.Filters && <FiltersBody />}
+          {dialogMeta.currentStep === PostsStep.Publish && <PublishBody />}
         </DialogContent>
       </DialogRoot>
       <ActionConfirmDialog

@@ -1,7 +1,9 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
+/* eslint-disable import/extensions */
+import { useSelector } from 'react-redux'
 
+import { selectCreatePostAllData } from '@/features/posts/model'
 import { CropItem } from '@/features/posts/ui'
-import { Nullable } from '@/shared/types'
 import {
   ArrowIosBackOutlineIcon,
   ArrowIosForwardOutlineIcon,
@@ -13,7 +15,6 @@ import clsx from 'clsx'
 import { Keyboard, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 
-/* eslint-disable import/extensions */
 // import lib swiper's styles for proper slider display and disable rule as import require a css file.
 import 'swiper/css'
 import 'swiper/css/navigation'
@@ -25,10 +26,12 @@ import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodie
 type CropBodyProps = {
   onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
-  previewList: Nullable<string[]>
+  // previewList: Nullable<string[]>
 } & ComponentPropsWithoutRef<typeof DialogBody>
 
-export const CropBody = ({ onRemove, onUpload, previewList, ...props }: CropBodyProps) => {
+export const CropBody = ({ onRemove, onUpload, ...props }: CropBodyProps) => {
+  const { previewList } = useSelector(selectCreatePostAllData)
+
   return (
     <DialogBody className={clsx(s.body, s.withPreview)} {...props}>
       <div className={s.swiperContainer}>
