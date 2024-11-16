@@ -10,6 +10,7 @@ import {
   Button,
   Card,
 } from '@atpradical/picopico-ui-kit'
+import clsx from 'clsx'
 import { Keyboard, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 
@@ -30,7 +31,7 @@ export const CreatePostCarousel = ({ onRemove, onUpload }: CreatePostCarouselPro
   const { previewList } = useSelector(selectCreatePostAllData)
 
   return (
-    <div className={s.swiperContainer}>
+    <div className={clsx(s.swiperContainer, s.previewPosts)}>
       <Swiper
         centeredSlides
         className={s.swiper}

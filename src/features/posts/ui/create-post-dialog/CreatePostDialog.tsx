@@ -8,19 +8,25 @@ import {
   POSTS_MAX_FILE_SIZE,
 } from '@/features/posts/config'
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
-import { CreatePostHeader } from '@/features/posts/ui'
 import {
-  CropBody,
-  FiltersBody,
-  PublishBody,
-  StartBody,
-} from '@/features/posts/ui/create-post-dialog/dialog-bodies'
+  CreatePostCarousel,
+  CreatePostDescription,
+  CreatePostFilters,
+  CreatePostHeader,
+} from '@/features/posts/ui'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { AlertDialog, HiddenDialogComponents } from '@/shared/ui/components'
+import { AlertDialog, HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { DialogContent, DialogRoot, toasterModal } from '@atpradical/picopico-ui-kit'
+import {
+  Button,
+  DialogBody,
+  DialogContent,
+  DialogRoot,
+  FileUploader,
+  toasterModal,
+} from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 
 import s from './create-post-dialog-styles.module.scss'
@@ -158,12 +164,36 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             onPublish={publishPostsHandler}
             step={dialogMeta.currentStep}
           />
-          {dialogMeta.currentStep === PostsStep.Start && <StartBody onUpload={uploadPostHandler} />}
-          {dialogMeta.currentStep === PostsStep.Crop && (
-            <CropBody onRemove={removeImageHandler} onUpload={uploadPostHandler} />
+          {dialogMeta.currentStep === PostsStep.Start ? (
+            <div className={s.body}>
+              <PlaceholderImage />
+              <FileUploader
+                accept={POSTS_ALLOWED_UPLOAD_TYPES}
+                className={s.button}
+                onChange={uploadPostHandler}
+              >
+                {t.createPostDialog.buttons.selectFilesButton}
+              </FileUploader>
+              <Button
+                className={s.button}
+                onClick={() => {}} // todo: добавить черновик
+                variant={'outlined'}
+              >
+                {t.createPostDialog.buttons.openDraftButton}
+              </Button>
+            </div>
+          ) : (
+            <DialogBody
+              className={clsx(
+                s.bodyFilters,
+                dialogMeta.currentStep === PostsStep.Crop && s.bodyCrop
+              )}
+            >
+              <CreatePostCarousel onRemove={removeImageHandler} onUpload={uploadPostHandler} />
+              {dialogMeta.currentStep === PostsStep.Filters && <CreatePostFilters />}
+              {dialogMeta.currentStep === PostsStep.Publish && <CreatePostDescription />}
+            </DialogBody>
           )}
-          {dialogMeta.currentStep === PostsStep.Filters && <FiltersBody />}
-          {dialogMeta.currentStep === PostsStep.Publish && <PublishBody />}
         </DialogContent>
       </DialogRoot>
       <AlertDialog
