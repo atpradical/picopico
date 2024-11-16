@@ -8,6 +8,7 @@ import {
   POSTS_MAX_FILE_SIZE,
 } from '@/features/posts/config'
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
+import { CreatePostHeader } from '@/features/posts/ui'
 import {
   CropContent,
   FiltersContent,
@@ -22,7 +23,7 @@ import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { DialogContent, DialogRoot, toasterModal } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 
-import s from './CreatePostDialog.module.scss'
+import s from './create-post-dialog-styles.module.scss'
 
 type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 
@@ -152,32 +153,28 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
           onInteractOutside={interruptDialogHandler}
           overlayClassName={s.overlay}
         >
+          <CreatePostHeader
+            onBack={navigationButtonHandler}
+            onClose={closeDialogHandler}
+            onNext={navigationButtonHandler}
+            onPublish={publishPostsHandler}
+            step={dialogMeta.currentStep}
+          />
           {dialogMeta.currentStep === PostsStep.Start && (
-            <StartContent onClose={closeDialogHandler} onUpload={uploadPostHandler} />
+            <StartContent onUpload={uploadPostHandler} />
           )}
           {dialogMeta.currentStep === PostsStep.Crop && (
             <CropContent
-              onBack={navigationButtonHandler}
-              onConfirm={navigationButtonHandler}
               onRemove={removeImageHandler}
               onUpload={uploadPostHandler}
               previewList={previewList}
             />
           )}
           {dialogMeta.currentStep === PostsStep.Filters && (
-            <FiltersContent
-              onBack={navigationButtonHandler}
-              onConfirm={navigationButtonHandler}
-              previewList={previewList}
-            />
+            <FiltersContent previewList={previewList} />
           )}
           {dialogMeta.currentStep === PostsStep.Publish && (
-            <PublishContent
-              imagesList={imagesList}
-              onBack={navigationButtonHandler}
-              onConfirm={publishPostsHandler}
-              previewList={previewList}
-            />
+            <PublishContent imagesList={imagesList} previewList={previewList} />
           )}
         </DialogContent>
       </DialogRoot>

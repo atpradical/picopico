@@ -62,6 +62,7 @@ export const CropBody = ({ onRemove, onUpload, previewList, ...props }: CropBody
   )
 }
 
+//todo: добавить экспорт кнопок слайдера из picopico-ui-kit
 const SwiperButtons = () => {
   const swiper = useSwiper()
   const [isActiveIndex, setActiveSlideIndex] = useState(swiper.activeIndex)

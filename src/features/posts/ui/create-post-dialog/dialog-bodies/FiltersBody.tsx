@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { Nullable } from '@/shared/types'
 import { Carousel, DialogBody, Typography } from '@atpradical/picopico-ui-kit'
+import Image from 'next/image'
 
 import s from '@/features/posts/ui/create-post-dialog/dialog-bodies/dialog.bodies.module.scss'
 
@@ -20,19 +21,25 @@ export const FiltersBody = ({ previewList, ...rest }: FiltersBodyProps) => {
         <Carousel slides={previewList ?? []} />
       </div>
       {/*todo: complete posts filters*/}
-      <div
-        style={{
-          alignItems: 'center',
-          display: 'flex',
-          flex: 1,
-          flexDirection: 'column',
-          justifyContent: 'center',
-        }}
-      >
-        <Typography grey style={{ marginTop: '15px', textAlign: 'center' }} variant={'small'}>
-          {'Apply "Filters" to photo feature is coming soon.'}
-        </Typography>
+      <div className={s.filtersContainer}>
+        <FilterItem filterName={'filter Name'} imageUrl={previewList?.[0] ?? ''} />
+        <FilterItem filterName={'filter Name'} imageUrl={previewList?.[0] ?? ''} />
+        <FilterItem filterName={'filter Name'} imageUrl={previewList?.[0] ?? ''} />
       </div>
     </DialogBody>
+  )
+}
+
+type FilterItemProps = {
+  filterName: string
+  imageUrl: string
+}
+
+const FilterItem = ({ filterName, imageUrl }: FilterItemProps) => {
+  return (
+    <div className={s.filter}>
+      <Image alt={'preview'} className={s.image} height={108} src={imageUrl} width={108} />
+      <Typography>{filterName}</Typography>
+    </div>
   )
 }
