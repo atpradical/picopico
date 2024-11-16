@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
+import { useSelector } from 'react-redux'
 
-import { PostsStep } from '@/features/posts/model'
+import { PostsStep, selectPostDialogMeta } from '@/features/posts/model'
 import { LocaleType } from '@/locales/en'
 import { useTranslation } from '@/shared/hooks'
 import {
@@ -19,7 +20,6 @@ type CreatePostHeaderProps = {
   onClose: () => void
   onNext: (step: PostsStep) => void
   onPublish: () => void
-  step: PostsStep
 } & ComponentPropsWithoutRef<typeof DialogHeader>
 
 export const CreatePostHeader = ({
@@ -27,18 +27,19 @@ export const CreatePostHeader = ({
   onClose,
   onNext,
   onPublish,
-  step,
   ...rest
 }: CreatePostHeaderProps) => {
   const { t } = useTranslation()
 
-  const title = getDialogTitle(step, t)
+  const { currentStep } = useSelector(selectPostDialogMeta)
+
+  const title = getDialogTitle(currentStep, t)
 
   return (
     <DialogHeader className={s.header} {...rest}>
-      {step !== PostsStep.Start && (
+      {currentStep !== PostsStep.Start && (
         <Button
-          onClick={() => backStepHandler(step, onBack)}
+          onClick={() => backStepHandler(currentStep, onBack)}
           title={t.createPostDialog.buttons.backButton}
           variant={'icon'}
         >
@@ -48,7 +49,7 @@ export const CreatePostHeader = ({
       <Typography as={'h3'} variant={'h3'}>
         {title}
       </Typography>
-      {step === PostsStep.Start ? (
+      {currentStep === PostsStep.Start ? (
         <DialogClose asChild>
           <Button
             className={s.closeButton}
@@ -62,12 +63,12 @@ export const CreatePostHeader = ({
       ) : (
         <Button
           className={s.confirmStepButton}
-          onClick={() => confirmStepHandler(step, onNext, onPublish)}
+          onClick={() => confirmStepHandler(currentStep, onNext, onPublish)}
           ripple={false}
           type={'submit'}
           variant={'nb-outlined'}
         >
-          {step === PostsStep.Publish
+          {currentStep === PostsStep.Publish
             ? t.createPostDialog.buttons.publishButton
             : t.createPostDialog.buttons.nextButton}
         </Button>

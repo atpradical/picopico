@@ -13,7 +13,7 @@ import {
 import s from './ZoomPopover.module.scss'
 
 type ScalePopoverProps = {
-  onValueChange: (value: number[]) => void
+  onValueChange: (value: number) => void
   value: number[]
 }
 
@@ -35,7 +35,13 @@ export const ZoomPopover = ({ onValueChange, value }: ScalePopoverProps) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent align={'start'} className={s.popoverContent} side={'top'}>
-        <Slider className={s.slider} max={11} min={1} onValueChange={onValueChange} value={value} />
+        <Slider
+          className={s.slider}
+          max={10}
+          min={1}
+          onValueChange={newValue => onValueChange(newValue[0])}
+          value={value}
+        />
       </PopoverContent>
     </Popover>
   )

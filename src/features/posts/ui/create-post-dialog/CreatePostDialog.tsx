@@ -149,6 +149,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       <DialogRoot onOpenChange={onOpenChange} open={dialogMeta.isDialogOpen} {...rest}>
         <DialogContent
           className={clsx(s.content, isWide && s.wide)}
+          noBorder
           onEscapeKeyDown={interruptDialogHandler}
           onInteractOutside={interruptDialogHandler}
           overlayClassName={s.overlay}
@@ -162,7 +163,6 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             onClose={closeDialogHandler}
             onNext={navigationButtonHandler}
             onPublish={publishPostsHandler}
-            step={dialogMeta.currentStep}
           />
           {dialogMeta.currentStep === PostsStep.Start ? (
             <div className={s.body}>
