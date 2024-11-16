@@ -1,7 +1,23 @@
+// ---- CreatePostDialogContent start ----
+
 .content {
   width: 100%;
   max-width: 492px;
 }
+
+.wide {
+  max-width: 972px;
+}
+
+.overlay {
+  &[data-state='open'] {
+    opacity: 0.8;
+  }
+}
+
+// ---- CreatePostDialogContent end ----
+
+// ---- CreatePostDialogHeader start ----
 
 .header {
   display: flex;
@@ -18,12 +34,4 @@
   padding-right: 0;
 }
 
-.wide {
-  max-width: 972px;
-}
-
-.overlay {
-  &[data-state='open'] {
-    opacity: 0.8;
-  }
-}
+// ---- CreatePostDialogHeader end ----

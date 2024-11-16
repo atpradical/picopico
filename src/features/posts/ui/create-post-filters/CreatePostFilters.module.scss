@@ -1,0 +1,22 @@
+.filtersContainer {
+  display: flex;
+  flex: 1;
+  flex-wrap: wrap;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-start;
+
+  padding: 24px 54px;
+}
+
+.filter {
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.image {
+  object-fit: cover;
+}
