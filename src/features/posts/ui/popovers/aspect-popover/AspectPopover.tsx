@@ -1,5 +1,6 @@
 import { useState } from 'react'
 
+import { PostAspect } from '@/features/posts/config'
 import {
   Button,
   ExpandOutlineIcon,
@@ -22,25 +23,25 @@ type ExpandPopoverProps = {
 }
 
 export const AspectPopover = ({ onAspectChange, originalAspect }: ExpandPopoverProps) => {
-  const [value, setValue] = useState('original')
+  const [value, setValue] = useState(PostAspect.original)
 
   const toggleValueChangeHandler = (value: string) => {
     switch (value) {
-      case 'original':
+      case PostAspect.original:
         onAspectChange(originalAspect)
-        setValue('original')
+        setValue(PostAspect.original)
         break
-      case '1:1':
+      case PostAspect.square:
         onAspectChange(1)
-        setValue('1:1')
+        setValue(PostAspect.square)
         break
-      case '4:5':
+      case PostAspect.portrait:
         onAspectChange(4 / 5)
-        setValue('4:5')
+        setValue(PostAspect.portrait)
         break
-      case '16:9':
+      case PostAspect.landscape:
         onAspectChange(16 / 9)
-        setValue('16:9')
+        setValue(PostAspect.landscape)
         break
     }
   }
@@ -63,14 +64,14 @@ export const AspectPopover = ({ onAspectChange, originalAspect }: ExpandPopoverP
           <ToggleGroupItem className={s.toggleItem} value={'original'}>
             Original <ImageOutlineIcon className={s.iconImage} />
           </ToggleGroupItem>
-          <ToggleGroupItem className={s.toggleItem} value={'1:1'}>
-            1:1 <SquareIcon className={s.iconRatio} />
+          <ToggleGroupItem className={s.toggleItem} value={PostAspect.square}>
+            {PostAspect.square} <SquareIcon className={s.iconRatio} />
           </ToggleGroupItem>
-          <ToggleGroupItem className={s.toggleItem} value={'4:5'}>
-            4:5 <VerticalRectangleIcon className={s.iconRatio} />
+          <ToggleGroupItem className={s.toggleItem} value={PostAspect.portrait}>
+            {PostAspect.portrait} <VerticalRectangleIcon className={s.iconRatio} />
           </ToggleGroupItem>
-          <ToggleGroupItem className={s.toggleItem} value={'16:9'}>
-            16:9 <HorizontalRectangleIcon className={s.iconRatio} />
+          <ToggleGroupItem className={s.toggleItem} value={PostAspect.landscape}>
+            {PostAspect.landscape} <HorizontalRectangleIcon className={s.iconRatio} />
           </ToggleGroupItem>
         </ToggleGroup>
       </PopoverContent>

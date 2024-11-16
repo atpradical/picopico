@@ -6,8 +6,10 @@ import {
   POSTS_ALLOWED_UPLOAD_TYPES,
   POSTS_FILES_LIMIT,
   POSTS_MAX_FILE_SIZE,
+  PostFilter,
 } from '@/features/posts/config'
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
+import { applyFilter } from '@/features/posts/model/apply-filter'
 import { CreatePostHeader } from '@/features/posts/ui'
 import {
   CropBody,
@@ -139,6 +141,24 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     }
   }
 
+  const setPostFilterHandler = async (filter: PostFilter, index: number) => {
+    if (!previewList) {
+      return
+    }
+
+    const newPreviewList = await Promise.all(
+      previewList.map(async (el, i) => {
+        if (i === index) {
+          return await applyFilter(el, filter)
+        }
+
+        return el
+      })
+    )
+
+    setPreviewList(newPreviewList)
+  }
+
   const isWide =
     dialogMeta.currentStep === PostsStep.Filters || dialogMeta.currentStep === PostsStep.Publish
 
@@ -171,7 +191,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             />
           )}
           {dialogMeta.currentStep === PostsStep.Filters && (
-            <FiltersBody previewList={previewList} />
+            <FiltersBody onFilterChange={setPostFilterHandler} previewList={previewList} />
           )}
           {dialogMeta.currentStep === PostsStep.Publish && (
             <PublishBody previewList={previewList} />
