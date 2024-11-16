@@ -165,7 +165,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             onPublish={publishPostsHandler}
           />
           {dialogMeta.currentStep === PostsStep.Start ? (
-            <div className={s.body}>
+            <DialogBody className={s.body}>
               <PlaceholderImage />
               <FileUploader
                 accept={POSTS_ALLOWED_UPLOAD_TYPES}
@@ -181,7 +181,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
               >
                 {t.createPostDialog.buttons.openDraftButton}
               </Button>
-            </div>
+            </DialogBody>
           ) : (
             <DialogBody
               className={clsx(
