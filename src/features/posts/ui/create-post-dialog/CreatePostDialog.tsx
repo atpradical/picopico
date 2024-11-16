@@ -18,7 +18,7 @@ import {
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { ActionConfirmDialog } from '@/shared/ui/components'
+import { ActionConfirmDialog, HiddenDialogComponents } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { DialogContent, DialogRoot, toasterModal } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
@@ -28,9 +28,7 @@ import s from './create-post-dialog-styles.module.scss'
 type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 
 export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogProps) => {
-  const {
-    t: { createPostDialog },
-  } = useTranslation()
+  const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { description, dialogMeta } = useSelector(selectCreatePostAllData)
   const [isAlertDialog, setIsAlertDialog] = useState(false)
@@ -60,7 +58,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
     if (e.target.files && e.target.files.length) {
       if (imagesList && imagesList.length >= POSTS_FILES_LIMIT) {
-        toasterModal({ text: createPostDialog.tooManyFilesForUploading, variant: 'error' })
+        toasterModal({ text: t.createPostDialog.tooManyFilesForUploading, variant: 'error' })
 
         return
       }
@@ -69,12 +67,12 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(file.type)) {
         debugger
-        toasterModal({ text: createPostDialog.wrongFileFormat, variant: 'error' })
+        toasterModal({ text: t.createPostDialog.wrongFileFormat, variant: 'error' })
 
         return
       }
       if (file.size >= POSTS_MAX_FILE_SIZE) {
-        toasterModal({ text: createPostDialog.wrongFileSize, variant: 'error' })
+        toasterModal({ text: t.createPostDialog.wrongFileSize, variant: 'error' })
 
         return
       }
@@ -153,6 +151,10 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
           onInteractOutside={interruptDialogHandler}
           overlayClassName={s.overlay}
         >
+          <HiddenDialogComponents
+            description={t.createPostDialog.accessibilityDescription}
+            title={t.createPostDialog.accessibilityTitle}
+          />
           <CreatePostHeader
             onBack={navigationButtonHandler}
             onClose={closeDialogHandler}
@@ -179,15 +181,15 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
         </DialogContent>
       </DialogRoot>
       <ActionConfirmDialog
-        accessibilityDescription={createPostDialog.interruptDialog.accessibilityDescription}
-        accessibilityTitle={createPostDialog.interruptDialog.accessibilityTitle}
-        confirmButtonText={createPostDialog.interruptDialog.saveButtonText}
+        accessibilityDescription={t.createPostDialog.interruptDialog.accessibilityDescription}
+        accessibilityTitle={t.createPostDialog.interruptDialog.accessibilityTitle}
+        confirmButtonText={t.createPostDialog.interruptDialog.saveButtonText}
         isOpen={isAlertDialog}
-        message={createPostDialog.interruptDialog.visibleBodyText}
+        message={t.createPostDialog.interruptDialog.visibleBodyText}
         onConfirm={() => {}} //todo: добавить возможность сохранять черновик в IndexedDB
         onOpenChange={setIsAlertDialog}
-        rejectButtonText={createPostDialog.interruptDialog.discardButtonText}
-        title={createPostDialog.interruptDialog.title}
+        rejectButtonText={t.createPostDialog.interruptDialog.discardButtonText}
+        title={t.createPostDialog.interruptDialog.title}
       />
     </>
   )

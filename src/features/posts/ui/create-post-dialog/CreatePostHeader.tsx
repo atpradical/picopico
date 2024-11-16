@@ -50,13 +50,20 @@ export const CreatePostHeader = ({
       </Typography>
       {step === PostsStep.Start ? (
         <DialogClose asChild>
-          <Button onClick={onClose} title={t.createPostDialog.buttons.closeButton} variant={'icon'}>
+          <Button
+            className={s.closeButton}
+            onClick={onClose}
+            title={t.createPostDialog.buttons.closeButton}
+            variant={'icon'}
+          >
             <CloseOutlineIcon />
           </Button>
         </DialogClose>
       ) : (
         <Button
+          className={s.confirmStepButton}
           onClick={() => confirmStepHandler(step, onNext, onPublish)}
+          ripple={false}
           type={'submit'}
           variant={'nb-outlined'}
         >

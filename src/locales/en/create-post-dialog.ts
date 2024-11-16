@@ -1,4 +1,8 @@
 export const createPostDialog = {
+  accessibilityDescription:
+    'Popup with possibility to choose files for new post, define post description, apply filters to chosen photos, and crop chosen photos',
+  accessibilityTitle:
+    'Popup asking user to choose files for new post, define post description, apply filters, and crop chosen photos',
   altDescription: 'New post image',
   buttons: {
     backButton: 'Go Back',
@@ -8,20 +12,12 @@ export const createPostDialog = {
     publishButton: 'Publish',
     selectFilesButton: 'Select from Computer',
   },
-  cropDialogStep: {
-    accessibilityDescription: 'Popup with possibility to crop chosen photos',
-    accessibilityTitle: 'Popup asking user to crop chosen photos',
-  },
+
   dialogTitles: {
     crop: 'Cropping',
     filters: 'Filtering',
     publish: 'Publishing',
     start: 'Add Photo',
-  },
-
-  filtersDialogStep: {
-    accessibilityDescription: 'Popup with possibility to apply filters to chosen photos',
-    accessibilityTitle: 'Popup asking user to apply filters to chosen',
   },
 
   interruptDialog: {
@@ -37,15 +33,8 @@ export const createPostDialog = {
   },
 
   publishDialogStep: {
-    accessibilityDescription: 'Popup with possibility to define post description ',
-    accessibilityTitle: 'Popup with possibility to define post description',
     descriptionFieldLabel: 'Add publication description',
     descriptionFieldPlaceholder: 'Add publication description',
-  },
-
-  startDialogStep: {
-    accessibilityDescription: 'Popup with possibility to choose files for new post',
-    accessibilityTitle: 'Popup asking user to choose files for new post',
   },
 
   tooManyFilesForUploading: 'Only 10 files per 1 post allowed',
