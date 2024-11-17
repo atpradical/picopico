@@ -1,4 +1,4 @@
-import { Point } from 'react-easy-crop'
+import { Area, Point } from 'react-easy-crop'
 
 import { PostFilter } from '@/features/posts/config'
 import { PostPreview, PostsState, PostsStep } from '@/features/posts/model'
@@ -13,7 +13,6 @@ const initialState: PostsState = {
     isDialogOpen: false,
   },
   previewList: null,
-  // previewListWithFilter: null,
   previewUrlsList: null,
 }
 
@@ -42,20 +41,24 @@ const slice = createSlice({
       state.dialogMeta.currentStep = PostsStep.Start
       state.dialogMeta.errorMessage = ''
       state.previewList = null
-      // state.previewListWithFilter = null
       state.activeSlideIndex = 0
     },
     setActiveSlideIndex: (state, action: PayloadAction<{ index: number }>) => {
       state.activeSlideIndex = action.payload.index
     },
-    // setInitialPreviewListWithFilter: state => {
-    //   state.previewListWithFilter = state.previewList && [...state.previewList]
     setCrop: (state, action: PayloadAction<{ crop: Point; index: number }>) => {
       if (state.previewList) {
         state.previewList[action.payload.index].crop = action.payload.crop
       }
     },
-    // },
+    setCroppedAreaPixels: (
+      state,
+      action: PayloadAction<{ croppedAreaPixels: Area; index: number }>
+    ) => {
+      if (state.previewList) {
+        state.previewList[action.payload.index].croppedAreaPixels = action.payload.croppedAreaPixels
+      }
+    },
     setPostCreationStep: (state, action: PayloadAction<{ step: PostsStep }>) => {
       state.dialogMeta.currentStep = action.payload.step
     },
@@ -70,14 +73,14 @@ const slice = createSlice({
     togglePostCreationDialog: (state, action: PayloadAction<{ isOpen: boolean }>) => {
       state.dialogMeta.isDialogOpen = action.payload.isOpen
     },
-    updatePostPreviewUrlModified: (
-      state,
-      action: PayloadAction<{ index: number; preview: string }>
-    ) => {
-      if (state.previewList) {
-        state.previewList[action.payload.index].previewUrlModified = action.payload.preview
-      }
-    },
+    // updatePostPreviewUrlModified: (
+    //   state,
+    //   action: PayloadAction<{ index: number; preview: string }>
+    // ) => {
+    //   if (state.previewList) {
+    //     state.previewList[action.payload.index].previewUrlModified = action.payload.preview
+    //   }
+    // },
     updatePreviewModifiedAspect: (
       state,
       action: PayloadAction<{ aspect: number; index: number }>

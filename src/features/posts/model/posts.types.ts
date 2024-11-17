@@ -1,4 +1,4 @@
-import { Point } from 'react-easy-crop'
+import { Area, Point } from 'react-easy-crop'
 
 import { PostFilter } from '@/features/posts/config'
 import { postsDescriptionSchemeCreator } from '@/features/posts/model/posts-descriptioin-scheme-creator'
@@ -13,9 +13,7 @@ export type PostsState = {
     errorMessage: string
     isDialogOpen: boolean
   }
-  // previewList: Nullable<string[]>
   previewList: Nullable<PostPreview[]>
-  // previewListWithFilter: Nullable<string[]>
   previewUrlsList: Nullable<string[]>
 }
 
@@ -25,6 +23,7 @@ export type PostPreview = {
   aspectModified: number
   aspectOrig: number
   crop: Point
+  croppedAreaPixels: Nullable<Area>
   previewUrlModified: string
   previewUrlOrig: string
 }

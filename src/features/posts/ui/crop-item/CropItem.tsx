@@ -6,7 +6,6 @@ import { createPostActions } from '@/features/posts/api'
 import { PostPreview, PostsStep, selectPostDialogMeta } from '@/features/posts/model'
 import { AspectPopover, UploadPopover, ZoomPopover } from '@/features/posts/ui/popovers'
 import { useAppDispatch } from '@/shared/hooks'
-import { Nullable } from '@/shared/types'
 import clsx from 'clsx'
 
 import s from './CropItem.module.scss'
@@ -20,13 +19,10 @@ type Props = {
 export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
   const dispatch = useAppDispatch()
   const { currentStep } = useSelector(selectPostDialogMeta)
-
-  const [croppedAreaPixels, setCroppedAreaPixels] = useState<Nullable<Area>>(null)
-  const [croppedImage, setCroppedImage] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
 
   const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
-    setCroppedAreaPixels(croppedAreaPixels)
+    dispatch(createPostActions.setCroppedAreaPixels({ croppedAreaPixels, index: slideIndex }))
   }
 
   // Получаем Original Aspect изображения.

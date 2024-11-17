@@ -20,6 +20,7 @@ import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import { AlertDialog, HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
+import getCroppedImg from '@/shared/utils/crop-image'
 import {
   Button,
   DialogBody,
@@ -53,6 +54,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
           aspectModified: 1,
           aspectOrig: 1,
           crop: { x: 0, y: 0 },
+          croppedAreaPixels: null,
           previewUrlModified: previewUrl,
           previewUrlOrig: previewUrl,
         }
@@ -109,9 +111,18 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       return
     }
 
-    const files = imagesList?.map(el => el) ?? []
+    // const files = imagesList?.map(el => el) ?? []
+    const filesPromises = previewList?.map(async el => {
+      return await getCroppedImg(el.previewUrlModified, el.croppedAreaPixels, 0)
+    })
+
+    if (!filesPromises) {
+      return
+    }
 
     try {
+      const files = await Promise.all(filesPromises)
+
       const { images } = await createPostImage({
         file: files,
       }).unwrap()
