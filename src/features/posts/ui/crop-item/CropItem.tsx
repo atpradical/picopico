@@ -86,7 +86,11 @@ export const CropItem = ({
         showGrid={false}
         style={{
           containerStyle: disableCrop ? { cursor: 'default' } : {},
-          cropAreaStyle: { boxShadow: '0 0 0 10000em var(--color-dark-300)', margin: '-1px' },
+          cropAreaStyle: {
+            border: 'none',
+            boxShadow: '0 0 0 10000em var(--color-dark-300)',
+            margin: '-1px',
+          },
         }}
         zoom={zoom}
       />
