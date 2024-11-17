@@ -5,7 +5,6 @@ import { createPostActions } from '@/features/posts/api'
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
 import { CropItem } from '@/features/posts/ui'
 import { useAppDispatch } from '@/shared/hooks'
-/* eslint-disable import/extensions */
 import {
   ArrowIosBackOutlineIcon,
   ArrowIosForwardOutlineIcon,
@@ -16,12 +15,6 @@ import clsx from 'clsx'
 import { Keyboard, Navigation, Pagination } from 'swiper/modules'
 import { Swiper, SwiperSlide, useSwiper } from 'swiper/react'
 
-// import lib swiper's styles for proper slider display and disable rule as import require a css file.
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
-
-/* eslint-enable import/extensions */
 import s from './CreatePostCarousel.module.scss'
 
 type CreatePostCarouselProps = {
