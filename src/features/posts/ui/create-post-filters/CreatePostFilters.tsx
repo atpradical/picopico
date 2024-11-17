@@ -14,7 +14,8 @@ import s from './CreatePostFilters.module.scss'
 
 export const CreatePostFilters = () => {
   const dispatch = useAppDispatch()
-  const { previewList, previewListWithFilter } = useSelector(selectCreatePostAllData)
+  const { activeSlideIndex, previewList, previewListWithFilter } =
+    useSelector(selectCreatePostAllData)
 
   useEffect(() => {
     dispatch(createPostActions.setInitialPreviewListWithFilter())
@@ -48,7 +49,7 @@ export const CreatePostFilters = () => {
       {FILTERS_LIST.map(filter => (
         <FilterItem
           filter={filter}
-          imageUrl={previewList?.[0] ?? ''}
+          imageUrl={previewList?.[activeSlideIndex] ?? ''}
           key={filter}
           onClick={setPostFilterHandler}
         />
