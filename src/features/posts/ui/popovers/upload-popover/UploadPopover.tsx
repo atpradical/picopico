@@ -1,7 +1,8 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent } from 'react'
+import { useSelector } from 'react-redux'
 
 import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
-import { Nullable } from '@/shared/types'
+import { selectCreatePostAllData } from '@/features/posts/model'
 import {
   Button,
   CloseOutlineIcon,
@@ -26,41 +27,11 @@ type UploadPopoverProps = {
   onOpen: (isOpen: boolean) => void
   onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
-  previewList: Nullable<string[]>
 }
 
-export const UploadPopover = ({
-  isOpen,
-  onOpen,
-  onRemove,
-  onUpload,
-  previewList,
-}: UploadPopoverProps) => {
+export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopoverProps) => {
   const swiper = useSwiper()
-  const [_, setActiveSlideIndex] = useState(swiper.activeIndex)
-
-  useEffect(() => {
-    const updateSlideIndex = () => {
-      setActiveSlideIndex(swiper.activeIndex)
-    }
-
-    swiper.on('slideChange', updateSlideIndex)
-
-    // Обновление значения при первом рендере
-    updateSlideIndex()
-
-    // Очистка подписки на событие при размонтировании компонента
-    return () => {
-      swiper.off('slideChange', updateSlideIndex)
-    }
-  }, [swiper])
-
-  useEffect(() => {
-    if (previewList && previewList.length) {
-      swiper.slideTo(previewList.length)
-      onOpen(false)
-    }
-  }, [swiper, previewList, onOpen])
+  const { previewUrlsList } = useSelector(selectCreatePostAllData)
 
   const switchToSlideHandler = (index: number) => {
     swiper.slideTo(index)
@@ -81,7 +52,7 @@ export const UploadPopover = ({
       <PopoverContent align={'end'} className={s.popoverContainer} side={'top'}>
         <ScrollArea>
           <div className={s.contentContainer}>
-            {previewList?.map((el, index) => {
+            {previewUrlsList?.map((el, index) => {
               const isActiveSlide = swiper.activeIndex === index
 
               return (
@@ -94,7 +65,7 @@ export const UploadPopover = ({
                     alt={'description'}
                     className={s.image}
                     height={80}
-                    src={previewList?.[index] ?? ''}
+                    src={previewUrlsList?.[index] ?? ''}
                     width={80}
                   />
                   <Button

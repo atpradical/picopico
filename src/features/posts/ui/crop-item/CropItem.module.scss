@@ -1,7 +1,10 @@
 .cropperContainer {
   position: relative;
+
   width: 100%;
+  max-width: 490px;
   height: 100%;
+  max-height: 530px;
 }
 
 .toolsContainer {

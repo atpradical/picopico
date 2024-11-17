@@ -18,12 +18,13 @@ import {
 import s from './AspectPopover.module.scss'
 
 type ExpandPopoverProps = {
+  aspect: number
   onAspectChange: (value: number) => void
   originalAspect: number
 }
 
-export const AspectPopover = ({ onAspectChange, originalAspect }: ExpandPopoverProps) => {
-  const [value, setValue] = useState(PostAspect.original)
+export const AspectPopover = ({ aspect, onAspectChange, originalAspect }: ExpandPopoverProps) => {
+  const [value, setValue] = useState(getAspectText(aspect))
 
   const toggleValueChangeHandler = (value: string) => {
     switch (value) {
@@ -77,4 +78,17 @@ export const AspectPopover = ({ onAspectChange, originalAspect }: ExpandPopoverP
       </PopoverContent>
     </Popover>
   )
+}
+
+const getAspectText = (aspect: number) => {
+  switch (aspect) {
+    case 1:
+      return PostAspect.square
+    case 4 / 5:
+      return PostAspect.portrait
+    case 16 / 9:
+      return PostAspect.landscape
+    default:
+      return PostAspect.original
+  }
 }

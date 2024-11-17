@@ -6,6 +6,7 @@ import {
   POSTS_ALLOWED_UPLOAD_TYPES,
   POSTS_FILES_LIMIT,
   POSTS_MAX_FILE_SIZE,
+  PostFilter,
 } from '@/features/posts/config'
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
 import {
@@ -43,15 +44,27 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
   useEffect(() => {
     if (imagesList && imagesList.length) {
-      const newPreviews = imagesList.map(el => URL.createObjectURL(el))
+      const newPreviews = imagesList.map(el => {
+        const previewUrl = URL.createObjectURL(el)
 
-      if (previewList) {
-        previewList.forEach(el => URL.revokeObjectURL(el))
+        return {
+          appliedFilter: PostFilter.original,
+          appliedZoom: 1,
+          aspectModified: 1,
+          aspectOrig: 1,
+          crop: { x: 0, y: 0 },
+          previewUrlModified: previewUrl,
+          previewUrlOrig: previewUrl,
+        }
+      })
+
+      if (previewList && previewList.length) {
+        previewList.forEach(el => URL.revokeObjectURL(el.previewUrlOrig ?? ''))
       }
 
       dispatch(createPostActions.addPostPreview({ preview: newPreviews }))
 
-      return () => newPreviews.forEach(el => URL.revokeObjectURL(el))
+      return () => newPreviews.forEach(el => URL.revokeObjectURL(el.previewUrlOrig))
     } else {
       dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Start }))
     }

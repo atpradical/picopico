@@ -2,35 +2,25 @@ import { ChangeEvent, useEffect, useState } from 'react'
 import Cropper, { Area, Point } from 'react-easy-crop'
 import { useSelector } from 'react-redux'
 
-import { PostsStep, selectPostDialogMeta } from '@/features/posts/model'
+import { createPostActions } from '@/features/posts/api'
+import { PostPreview, PostsStep, selectPostDialogMeta } from '@/features/posts/model'
 import { AspectPopover, UploadPopover, ZoomPopover } from '@/features/posts/ui/popovers'
+import { useAppDispatch } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
 import clsx from 'clsx'
 
 import s from './CropItem.module.scss'
 
 type Props = {
-  cropInit?: Point
-  imageUrl: string
+  data: PostPreview
   onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
-  previewList: Nullable<string[]>
-  zoomInit?: number
+  slideIndex: number
 }
-export const CropItem = ({
-  cropInit = { x: 0, y: 0 },
-  imageUrl,
-  onRemove,
-  onUpload,
-  previewList,
-  zoomInit = 1,
-}: Props) => {
+export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
+  const dispatch = useAppDispatch()
   const { currentStep } = useSelector(selectPostDialogMeta)
 
-  const [originalAspect, setOriginalAspect] = useState(1)
-  const [aspect, setAspect] = useState(1)
-  const [crop, setCrop] = useState<Point>(cropInit)
-  const [zoom, setZoom] = useState(zoomInit)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Nullable<Area>>(null)
   const [croppedImage, setCroppedImage] = useState(null)
   const [isOpen, setIsOpen] = useState(false)
@@ -43,32 +33,39 @@ export const CropItem = ({
   useEffect(() => {
     const img = new Image()
 
-    img.src = imageUrl
+    img.src = data.previewUrlOrig ?? ''
     img.onload = () => {
       const width = img.width
       const height = img.height
       const imageAspectRatio = width / height
 
-      setAspect(imageAspectRatio)
-      setOriginalAspect(imageAspectRatio)
+      dispatch(
+        createPostActions.updatePreviewOriginalAspect({
+          aspect: imageAspectRatio,
+          index: slideIndex,
+        })
+      )
     }
-  }, [imageUrl])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [data.previewUrlOrig])
 
   // Обёртки для setCrop и setZoom
   const cropChangeHandler = (location: Point) => {
     if (!disableCrop) {
-      setCrop(location)
+      dispatch(createPostActions.setCrop({ crop: location, index: slideIndex }))
     }
   }
 
   const zoomChaneHandler = (zoomValue: number) => {
     if (!disableCrop) {
-      setZoom(zoomValue)
+      dispatch(createPostActions.setZoom({ index: slideIndex, zoom: zoomValue }))
     }
   }
 
   const aspectChangeHandler = (newAspect: number) => {
-    setAspect(newAspect)
+    dispatch(
+      createPostActions.updatePreviewModifiedAspect({ aspect: newAspect, index: slideIndex })
+    )
   }
 
   const disableCrop = currentStep !== PostsStep.Crop
@@ -76,10 +73,10 @@ export const CropItem = ({
   return (
     <div className={clsx(s.cropperContainer, disableCrop && s.cropperContainerDisabled)}>
       <Cropper
-        aspect={aspect}
-        crop={crop}
-        image={imageUrl}
-        objectFit={getObjectFit(aspect)}
+        aspect={data.aspectModified}
+        crop={data.crop}
+        image={data.previewUrlModified ?? ''}
+        objectFit={getObjectFit(data.aspectModified)}
         onCropChange={cropChangeHandler}
         onCropComplete={onCropComplete}
         onZoomChange={zoomChaneHandler}
@@ -92,20 +89,23 @@ export const CropItem = ({
             margin: '-1px',
           },
         }}
-        zoom={zoom}
+        zoom={data.appliedZoom}
       />
       {!disableCrop && (
         <div className={s.toolsContainer}>
           <div className={s.leftToolsContainer}>
-            <AspectPopover onAspectChange={aspectChangeHandler} originalAspect={originalAspect} />
-            <ZoomPopover onValueChange={zoomChaneHandler} value={[zoom]} />
+            <AspectPopover
+              aspect={data.aspectModified}
+              onAspectChange={aspectChangeHandler}
+              originalAspect={data.aspectOrig}
+            />
+            <ZoomPopover onValueChange={zoomChaneHandler} value={[data.appliedZoom]} />
           </div>
           <UploadPopover
             isOpen={isOpen}
             onOpen={setIsOpen}
             onRemove={onRemove}
             onUpload={onUpload}
-            previewList={previewList}
           />
         </div>
       )}

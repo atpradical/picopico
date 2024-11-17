@@ -6,7 +6,7 @@
   align-items: center;
   justify-content: flex-start;
 
-  padding: 24px 54px;
+  padding: 24px 48px;
 
   border-top: 1px solid var(--color-dark-100);
 }
@@ -17,6 +17,11 @@
   flex-shrink: 0;
   align-items: center;
   justify-content: center;
+
+  &[data-state='active'] {
+    outline: 2px solid var(--color-accent-500);
+    outline-offset: 4px;
+  }
 }
 
 .image {

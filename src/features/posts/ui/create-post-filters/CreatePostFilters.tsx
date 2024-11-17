@@ -14,34 +14,26 @@ import s from './CreatePostFilters.module.scss'
 
 export const CreatePostFilters = () => {
   const dispatch = useAppDispatch()
-  const { activeSlideIndex, previewList, previewListWithFilter } =
-    useSelector(selectCreatePostAllData)
-
-  useEffect(() => {
-    dispatch(createPostActions.setInitialPreviewListWithFilter())
-  }, [dispatch])
+  const { activeSlideIndex, previewList } = useSelector(selectCreatePostAllData)
 
   const setPostFilterHandler = async (filter: PostFilter, index: number) => {
     if (!previewList) {
       return
     }
 
-    const preview = previewList[index]
+    const preview = previewList[index].previewUrlOrig
 
     if (preview) {
-      applyFilter(preview, filter).then(previewWithFilter =>
+      applyFilter(preview, filter).then(previewWithFilter => {
         dispatch(
-          createPostActions.addPostPreviewWithFilter({
+          createPostActions.applyFilterToPostPreview({
+            filter,
             index,
             preview: previewWithFilter,
           })
         )
-      )
+      })
     }
-  }
-
-  if (previewListWithFilter === null) {
-    return null
   }
 
   return (
@@ -49,7 +41,7 @@ export const CreatePostFilters = () => {
       {FILTERS_LIST.map(filter => (
         <FilterItem
           filter={filter}
-          imageUrl={previewList?.[activeSlideIndex] ?? ''}
+          imageUrl={previewList?.[activeSlideIndex].previewUrlOrig ?? ''}
           key={filter}
           onClick={setPostFilterHandler}
         />
@@ -65,8 +57,10 @@ type FilterItemProps = {
 }
 
 const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
-  const { activeSlideIndex } = useSelector(selectCreatePostAllData)
+  const { activeSlideIndex, previewList } = useSelector(selectCreatePostAllData)
   const [preview, setPreview] = useState<Nullable<string>>(null)
+
+  const isActiveFilter = previewList?.[activeSlideIndex].appliedFilter === filter
 
   const fetchPreview = useCallback(async () => {
     try {
@@ -82,12 +76,12 @@ const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
     fetchPreview()
   }, [fetchPreview])
 
-  if (!preview) {
-    return null
-  }
-
   return (
-    <div className={s.filter} onClick={() => onClick(filter, activeSlideIndex)}>
+    <div
+      className={s.filter}
+      data-state={isActiveFilter ? 'active' : 'inactive'}
+      onClick={() => onClick(filter, activeSlideIndex)}
+    >
       <Image
         alt={'preview'}
         className={s.image}
