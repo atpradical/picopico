@@ -1,8 +1,10 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { ChangeEvent, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
+import { createPostActions } from '@/features/posts/api'
 import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
 import { CropItem } from '@/features/posts/ui'
+import { useAppDispatch } from '@/shared/hooks'
 /* eslint-disable import/extensions */
 import {
   ArrowIosBackOutlineIcon,
@@ -77,12 +79,13 @@ export const CreatePostCarousel = ({ onRemove, onUpload }: CreatePostCarouselPro
 
 //todo: добавить экспорт кнопок слайдера из picopico-ui-kit
 const SwiperButtons = () => {
+  const dispatch = useAppDispatch()
+  const { activeSlideIndex } = useSelector(selectCreatePostAllData)
   const swiper = useSwiper()
-  const [isActiveIndex, setActiveSlideIndex] = useState(swiper.activeIndex)
 
   useEffect(() => {
     const updateSlideIndex = () => {
-      setActiveSlideIndex(swiper.activeIndex)
+      dispatch(createPostActions.setActiveSlideIndex({ index: swiper.activeIndex }))
     }
 
     swiper.on('slideChange', updateSlideIndex)
@@ -94,6 +97,7 @@ const SwiperButtons = () => {
     return () => {
       swiper.off('slideChange', updateSlideIndex)
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [swiper])
 
   if (!swiper.slides.length) {
@@ -102,14 +106,14 @@ const SwiperButtons = () => {
 
   return (
     <div>
-      {isActiveIndex > 0 && (
+      {activeSlideIndex > 0 && (
         <Card className={s.prevBtn} variant={'transparent'}>
           <Button onClick={() => swiper.slidePrev()} variant={'icon'}>
             <ArrowIosBackOutlineIcon className={s.icon} />
           </Button>
         </Card>
       )}
-      {isActiveIndex < swiper.slides.length - 1 && (
+      {activeSlideIndex < swiper.slides.length - 1 && (
         <Card className={s.nextBtn} variant={'transparent'}>
           <Button onClick={() => swiper.slideNext()} variant={'icon'}>
             <ArrowIosForwardOutlineIcon className={s.icon} />

@@ -64,6 +64,7 @@ type FilterItemProps = {
 }
 
 const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
+  const { activeSlideIndex } = useSelector(selectCreatePostAllData)
   const [preview, setPreview] = useState<Nullable<string>>(null)
 
   const fetchPreview = useCallback(async () => {
@@ -85,7 +86,7 @@ const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
   }
 
   return (
-    <div className={s.filter} onClick={() => onClick(filter, 0)}>
+    <div className={s.filter} onClick={() => onClick(filter, activeSlideIndex)}>
       <Image
         alt={'preview'}
         className={s.image}

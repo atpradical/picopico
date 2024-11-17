@@ -2,6 +2,7 @@ import { PostsState, PostsStep } from '@/features/posts/model'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: PostsState = {
+  activeSlideIndex: 0,
   description: '',
   dialogMeta: {
     currentStep: PostsStep.Start,
@@ -35,6 +36,11 @@ const slice = createSlice({
       state.dialogMeta.currentStep = PostsStep.Start
       state.dialogMeta.errorMessage = ''
       state.previewList = null
+      state.previewListWithFilter = null
+      state.activeSlideIndex = 0
+    },
+    setActiveSlideIndex: (state, action: PayloadAction<{ index: number }>) => {
+      state.activeSlideIndex = action.payload.index
     },
     setInitialPreviewListWithFilter: state => {
       state.previewListWithFilter = state.previewList && [...state.previewList]

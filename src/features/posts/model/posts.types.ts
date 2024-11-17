@@ -3,6 +3,7 @@ import { Nullable } from '@/shared/types'
 import { z } from 'zod'
 
 export type PostsState = {
+  activeSlideIndex: number
   description: string
   dialogMeta: {
     currentStep: PostsStep
