@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 
 import { PostAspect } from '@/features/posts/config'
 import {
@@ -24,7 +24,13 @@ type ExpandPopoverProps = {
 }
 
 export const AspectPopover = ({ aspect, onAspectChange, originalAspect }: ExpandPopoverProps) => {
-  const [value, setValue] = useState(getAspectText(aspect))
+  const [value, setValue] = useState('')
+
+  useEffect(() => {
+    const aspectText = getAspectText(aspect)
+
+    setValue(aspectText)
+  }, [aspect])
 
   const toggleValueChangeHandler = (value: string) => {
     switch (value) {
