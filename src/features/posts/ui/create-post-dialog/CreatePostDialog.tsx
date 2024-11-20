@@ -84,7 +84,6 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       const file = e.target.files[0]
 
       if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(file.type)) {
-        debugger
         toasterModal({ text: t.createPostDialog.wrongFileFormat, variant: 'error' })
 
         return
@@ -111,14 +110,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       return
     }
 
-    // const files = imagesList?.map(el => el) ?? []
-    const filesPromises = previewList?.map(async el => {
-      return await getCroppedImg(el.previewUrlModified, el.croppedAreaPixels, 0)
-    })
-
-    if (!filesPromises) {
+    if (!previewList?.length) {
       return
     }
+
+    const filesPromises = previewList.map(async el => {
+      return await getCroppedImg(el.previewUrlModified, el.croppedAreaPixels, 0)
+    })
 
     try {
       const files = await Promise.all(filesPromises)
