@@ -19,7 +19,7 @@ function SignInPage() {
   const { t } = useTranslation()
   const { isAccount, pageTitle, signUpLink } = t.signInPage
 
-  const token = localStorage.getItem('accessToken')
+  const token = typeof window !== 'undefined' ? localStorage.getItem('accessToken') : null
 
   useEffect(() => {
     if (isAuth && meData?.userId && !!token) {
