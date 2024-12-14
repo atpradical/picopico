@@ -2,7 +2,7 @@ export const signInPage = {
   isAccount: 'У вас нет аккаунта?',
   pageTitle: 'Войти',
   signInForm: {
-    forgotPassword: 'Забыл пароль',
+    forgotPassword: 'Забыли пароль?',
     labels: {
       email: 'Email',
       password: 'Пароль',

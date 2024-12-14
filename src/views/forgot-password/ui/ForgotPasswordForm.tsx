@@ -26,22 +26,23 @@ export const ForgotPasswordForm = () => {
   const { locale, t } = useTranslation()
   const { formContent, pageLink, sentLinkText, submitButton } = t.forgotPasswordPage
 
-  const [passwordRecovery] = usePasswordRecoveryMutation()
+  const [passwordRecovery, { isLoading }] = usePasswordRecoveryMutation()
 
   const {
     clearErrors,
     control,
-    formState: { errors },
+    formState: { errors, isValid },
     handleSubmit,
     setError,
     setValue,
+    trigger,
   } = useForm<ForgotPasswordFields>({
     defaultValues: {
       email: '',
       recaptcha: '',
     },
     mode: 'onTouched',
-    reValidateMode: 'onSubmit',
+    reValidateMode: 'onChange',
     resolver: zodResolver(forgotPasswordSchemeCreator(t.validation)),
   })
 
@@ -71,11 +72,12 @@ export const ForgotPasswordForm = () => {
     if (token) {
       setValue('recaptcha', token)
       clearErrors('recaptcha')
+      trigger()
     }
   }
 
   return (
-    <form className={s.form} onSubmit={formHandler}>
+    <form className={s.form} onChange={() => trigger('email')} onSubmit={formHandler}>
       <ControlledTextField
         control={control}
         label={'Email'}
@@ -90,7 +92,9 @@ export const ForgotPasswordForm = () => {
           {sentLinkText}
         </Typography>
       )}
-      <Button type={'submit'}>{submitButton}</Button>
+      <Button disabled={!isValid || isLoading} type={'submit'}>
+        {submitButton}
+      </Button>
       <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
         {pageLink}
       </Button>
