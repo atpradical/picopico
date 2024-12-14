@@ -1,7 +1,7 @@
 import { publicationsActions } from '@/features/posts/api'
 import { PostActionsDropdown, PostDescription } from '@/features/posts/ui'
 import { GetPostsItems } from '@/services/posts'
-import { useAppDispatch, useTranslation } from '@/shared/hooks'
+import { useAppDispatch, useIsAuthUserOnProfilePage, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Avatar,
@@ -24,9 +24,13 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
   const dispatch = useAppDispatch()
   const postsImages = postData.images.map(el => el.url)
 
+  const isAuthUserOnProfilePage = useIsAuthUserOnProfilePage()
+
   const closePostDialogHandler = () => {
     dispatch(publicationsActions.togglePostDisplayDialog({ isOpen: false, postId: 0 }))
   }
+
+  console.log('isAuthUserOnProfilePage is', isAuthUserOnProfilePage)
 
   return (
     <DialogContent
@@ -43,11 +47,13 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
       <div className={s.postDetails}>
         <DialogHeader className={s.dialogHeader}>
           <Avatar showUserName size={'s'} src={postData.avatarOwner} userName={postData.userName} />
-          <PostActionsDropdown
-            onConfirm={closePostDialogHandler}
-            onEdit={setEditMode}
-            postId={postData.id}
-          />
+          {isAuthUserOnProfilePage && (
+            <PostActionsDropdown
+              onConfirm={closePostDialogHandler}
+              onEdit={setEditMode}
+              postId={postData.id}
+            />
+          )}
         </DialogHeader>
         <DialogBody className={s.dialogBody}>
           <PostDescription postData={postData} />
