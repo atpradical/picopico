@@ -4,6 +4,7 @@ export const profileSettings = {
     currentDevices: 'Current devices',
     lastVisit: 'Last visit',
     logout: 'Log out',
+    noActiveSessions: 'You have not yet logged in from other devices',
     terminateAllOtherSessions: 'Terminate all other session',
   },
   profileDataTab: {

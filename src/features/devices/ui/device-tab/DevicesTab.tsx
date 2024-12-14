@@ -38,7 +38,7 @@ export const DevicesTab = ({ data: { current, others }, ...rest }: DevicesTabPro
         </Typography>
         <DeviceItem data={current} isCurrent />
       </section>
-      {!!otherSessions.length && (
+      {otherSessions.length ? (
         <>
           <Button className={s.button} onClick={killAllSessionsHandler} variant={'outlined'}>
             {devicesTab.terminateAllOtherSessions}
@@ -52,6 +52,10 @@ export const DevicesTab = ({ data: { current, others }, ...rest }: DevicesTabPro
             ))}
           </section>
         </>
+      ) : (
+        <div className={s.emptyText}>
+          <Typography variant={'h1'}>{devicesTab.noActiveSessions}</Typography>
+        </div>
       )}
     </TabsContent>
   )
