@@ -10,7 +10,6 @@ import '@atpradical/picopico-ui-kit/dist/style.css'
 import s from './Layout.module.scss'
 
 export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
-  //todo: add User data into context
   return (
     <>
       <AuthProvider>

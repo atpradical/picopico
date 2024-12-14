@@ -52,7 +52,8 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
 
   const logoutHandler = async () => {
     try {
-      await logout().unwrap()
+      await logout()
+      router.push(Paths.logIn)
     } catch (e) {
       const error = getErrorMessageData(e)
 

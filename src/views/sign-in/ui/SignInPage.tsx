@@ -1,4 +1,7 @@
+import { useContext, useEffect } from 'react'
+
 import { OAuth } from '@/features/oAuth'
+import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { getLayout } from '@/shared/ui/layout'
@@ -6,12 +9,23 @@ import { Page } from '@/shared/ui/layout/page'
 import { SignInForm } from '@/views/sign-in'
 import { Button, Card, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 import s from './SignIn.module.scss'
 
 function SignInPage() {
+  const { isAuth, meData } = useContext(AuthContext)
+  const router = useRouter()
   const { t } = useTranslation()
   const { isAccount, pageTitle, signUpLink } = t.signInPage
+
+  const token = localStorage.getItem('accessToken')
+
+  useEffect(() => {
+    if (isAuth && meData?.userId && !!token) {
+      router.push(Paths.profile + '/' + meData.userId)
+    }
+  }, [isAuth, meData, router, token])
 
   return (
     <Page className={s.container} mt={'36px'}>

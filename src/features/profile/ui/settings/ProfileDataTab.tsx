@@ -24,7 +24,7 @@ import { enUS, ru } from 'date-fns/locale'
 
 import s from './ProfileDataTab.module.scss'
 
-type ProfileDataTabProps = ComponentPropsWithoutRef<typeof TabsContent> //{
+type ProfileDataTabProps = ComponentPropsWithoutRef<typeof TabsContent>
 
 export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
   const {

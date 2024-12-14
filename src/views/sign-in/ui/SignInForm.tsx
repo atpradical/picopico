@@ -10,7 +10,6 @@ import { SignInFields } from '@/views/sign-in/model/types'
 import { Button, Typography, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
-import { useRouter } from 'next/router'
 
 import s from './SignIn.module.scss'
 
@@ -19,7 +18,6 @@ export const SignInForm = () => {
   const { forgotPassword, labels, placeholders, submitButton } = t.signInPage.signInForm
 
   const [login] = useLoginMutation()
-  const router = useRouter()
 
   const {
     control,
@@ -39,8 +37,6 @@ export const SignInForm = () => {
   const formHandler = handleSubmit(async data => {
     try {
       await login(data).unwrap()
-
-      router.push(Paths.Home)
     } catch (e) {
       const errors = getErrorMessageData(e)
 
