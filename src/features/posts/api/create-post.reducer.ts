@@ -73,14 +73,6 @@ const slice = createSlice({
     togglePostCreationDialog: (state, action: PayloadAction<{ isOpen: boolean }>) => {
       state.dialogMeta.isDialogOpen = action.payload.isOpen
     },
-    // updatePostPreviewUrlModified: (
-    //   state,
-    //   action: PayloadAction<{ index: number; preview: string }>
-    // ) => {
-    //   if (state.previewList) {
-    //     state.previewList[action.payload.index].previewUrlModified = action.payload.preview
-    //   }
-    // },
     updatePreviewModifiedAspect: (
       state,
       action: PayloadAction<{ aspect: number; index: number }>

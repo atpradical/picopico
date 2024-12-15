@@ -30,8 +30,6 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
     dispatch(publicationsActions.togglePostDisplayDialog({ isOpen: false, postId: 0 }))
   }
 
-  console.log('isAuthUserOnProfilePage is', isAuthUserOnProfilePage)
-
   return (
     <DialogContent
       className={s.dialogContent}

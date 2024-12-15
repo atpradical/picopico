@@ -38,8 +38,15 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
   const [selectedCountry, setSelectedCountry] = useState(myProfileData.country ?? '')
   const [updateProfile] = useUpdateUserProfileMutation()
 
+  // получаем временные данные для формы из localStorage если они есть
+  const tempFormDataString =
+    typeof window !== 'undefined' ? localStorage.getItem('tempFormData') : null
+
+  const tempFormData = tempFormDataString ? JSON.parse(tempFormDataString) : null
+
   const countrySelectValueChangeHandler = (value: string) => {
     setSelectedCountry(value)
+    setValue('city', '')
   }
 
   const { data: countriesData } = useGetCountriesQuery({
@@ -77,18 +84,22 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
 
   const {
     control,
-    formState: { dirtyFields, isValid },
+    formState: { isDirty, isValid },
+    getValues,
     handleSubmit,
     setError,
+    setValue,
   } = useForm<ProfileFormFields>({
     defaultValues: {
-      aboutMe: myProfileData.aboutMe ?? '',
-      city: myProfileData.city ?? '',
-      country: myProfileData.country ?? '',
-      dateOfBirth: myProfileData.dateOfBirth ? new Date(myProfileData.dateOfBirth) : undefined,
-      firstName: myProfileData.firstName ?? '',
-      lastName: myProfileData.lastName ?? '',
-      userName: myProfileData.userName ?? '',
+      aboutMe: tempFormData?.aboutMe ?? myProfileData.aboutMe ?? '',
+      city: tempFormData?.city ?? myProfileData.city ?? '',
+      country: tempFormData?.country ?? myProfileData.country ?? '',
+      dateOfBirth: myProfileData.dateOfBirth
+        ? new Date(tempFormData?.dateOfBirth ?? myProfileData.dateOfBirth)
+        : undefined,
+      firstName: tempFormData?.firstName ?? myProfileData.firstName ?? '',
+      lastName: tempFormData?.lastName ?? myProfileData.lastName ?? '',
+      userName: tempFormData?.userName ?? myProfileData.userName ?? '',
     },
     mode: 'onTouched',
     reValidateMode: 'onChange',
@@ -101,7 +112,8 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
         ...data,
         dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toLocaleDateString() : '',
       }).unwrap()
-
+      localStorage.removeItem('tempFormData')
+      localStorage.removeItem('isFormChanged')
       toaster({ text: profileDataTab.successSettingsChangeMessage })
     } catch (e) {
       const errors = getErrorMessageData(e)
@@ -114,7 +126,24 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
     }
   })
 
-  const isSubmitDisabled = !isValid || !Object.keys(dirtyFields).length
+  // save temp form data to localStorage in case if user started form filling
+  useEffect(() => {
+    return () => {
+      if (isDirty) {
+        const currentFormData = getValues()
+
+        localStorage.setItem('tempFormData', JSON.stringify(currentFormData))
+      }
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [isDirty])
+
+  // disable submit button if form is not valid or not dirty or if tempFormData exists
+  let isSubmitDisabled = !isValid || !isDirty
+
+  if (tempFormData) {
+    isSubmitDisabled = false
+  }
 
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
@@ -129,7 +158,6 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
           />
           <ControlledTextField
             control={control}
-            defaultValue={myProfileData.firstName ?? ''}
             isRequired
             label={profileDataTab.labels.firstName}
             name={'firstName'}
@@ -145,7 +173,9 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
           <ControlledDatePicker
             control={control}
             defaultValue={
-              myProfileData.dateOfBirth ? new Date(myProfileData.dateOfBirth) : undefined
+              myProfileData.dateOfBirth
+                ? new Date(tempFormData?.dateOfBirth ?? myProfileData.dateOfBirth)
+                : undefined
             }
             isRequired
             label={profileDataTab.labels.dateOfBirth}
@@ -177,7 +207,6 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
             className={s.textArea}
             control={control}
             counterLimit={MAX_ABOUT_ME_LENGTH}
-            defaultValue={myProfileData.aboutMe ?? ''}
             label={profileDataTab.labels.aboutMe}
             name={'aboutMe'}
             placeholder={profileDataTab.placeholders.aboutMe}
