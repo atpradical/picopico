@@ -126,6 +126,12 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
     }
   })
 
+  useEffect(() => {
+    if (tempFormData?.country && selectedCountry !== tempFormData?.country) {
+      setSelectedCountry(tempFormData.country)
+    }
+  }, [tempFormData?.country, selectedCountry])
+
   // save temp form data to localStorage in case if user started form filling
   useEffect(() => {
     return () => {
