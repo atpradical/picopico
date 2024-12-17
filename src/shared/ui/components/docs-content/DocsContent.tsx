@@ -1,4 +1,3 @@
-import { Paths } from '@/shared/enums'
 import { ArrowBackOutlineIcon, Button, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
 
@@ -7,7 +6,7 @@ import s from './DocsContent.module.scss'
 type DocsContentProps = {
   buttonText: string
   docsContent: string
-  href: Paths
+  href: string
   title: string
 }
 

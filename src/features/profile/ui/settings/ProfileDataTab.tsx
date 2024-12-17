@@ -134,15 +134,15 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
 
   // save temp form data to localStorage in case if user started form filling
   useEffect(() => {
-    return () => {
-      if (isDirty) {
+    if (isDirty) {
+      return () => {
         const currentFormData = getValues()
 
         localStorage.setItem('tempFormData', JSON.stringify(currentFormData))
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [isDirty])
+  }, [isDirty, selectedCountry])
 
   // disable submit button if form is not valid or not dirty or if tempFormData exists
   let isSubmitDisabled = !isValid || !isDirty
@@ -191,7 +191,7 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
           <div className={s.selectContainer}>
             <ControlledSelect
               control={control}
-              defaultValue={myProfileData.country ?? ''}
+              defaultValue={tempFormData?.country ?? myProfileData.country ?? ''}
               label={profileDataTab.labels.country}
               name={'country'}
               onValueChange={countrySelectValueChangeHandler}
@@ -201,7 +201,7 @@ export const ProfileDataTab = ({ className, ...rest }: ProfileDataTabProps) => {
             />
             <ControlledSelect
               control={control}
-              defaultValue={myProfileData.city ?? ''}
+              defaultValue={tempFormData?.city ?? myProfileData.city ?? ''}
               label={profileDataTab.labels.city}
               name={'city'}
               options={citiesDataOptions}

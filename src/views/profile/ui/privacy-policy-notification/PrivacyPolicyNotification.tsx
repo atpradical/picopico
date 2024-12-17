@@ -1,5 +1,3 @@
-import { Fragment } from 'react'
-
 import { Paths } from '@/shared/enums'
 import { Translate } from '@/shared/ui/components'
 import { Typography } from '@atpradical/picopico-ui-kit'
@@ -12,6 +10,10 @@ type Props = {
   notificationMessage: string
 }
 export const PrivacyPolicyNotification = ({ linkText, notificationMessage }: Props) => {
+  const onClickHandler = () => {
+    localStorage.setItem('goBackLink', Paths.Settings)
+  }
+
   return (
     <Typography as={'span'}>
       <Translate
@@ -21,6 +23,7 @@ export const PrivacyPolicyNotification = ({ linkText, notificationMessage }: Pro
               as={Link}
               className={s.link}
               href={Paths.privacyPolicy}
+              onClick={onClickHandler}
               variant={'small_link'}
             >
               {linkText}
