@@ -11,7 +11,7 @@ export const profileDataSchemeCreator = (t: LocaleValidation) => {
       aboutMe: aboutMeScheme(t.aboutMe),
       city: z.string(),
       country: z.string(),
-      dateOfBirth: z.date(),
+      dateOfBirth: z.date().nullable(),
       firstName: nameScheme(t.name),
       lastName: nameScheme(t.name),
       userName: userNameScheme(t.userName),

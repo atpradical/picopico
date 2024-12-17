@@ -23,7 +23,7 @@ export const Publications = () => {
   const { data: postsData } = useGetPostsQuery({
     pageNumber,
     pageSize: POSTS_MAX_PAGE_SIZE,
-    userName: myProfileData.userName,
+    userName: myProfileData?.userName ?? '',
   })
 
   const [lastPostRef, entry] = useIntersectionObserver({

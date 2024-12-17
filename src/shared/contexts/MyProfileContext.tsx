@@ -1,27 +1,14 @@
 import { ReactNode, createContext } from 'react'
 
 import { ResponseGetUserProfile, useGetUserProfileQuery } from '@/services/profile'
+import { Nullable } from '@/shared/types'
 
 type MyProfileContextType = {
-  myProfileData: ResponseGetUserProfile
-}
-
-const initialData: ResponseGetUserProfile = {
-  aboutMe: null,
-  avatars: [],
-  city: null,
-  country: null,
-  createdAt: '',
-  dateOfBirth: null,
-  firstName: null,
-  id: 0,
-  lastName: null,
-  region: null,
-  userName: '',
+  myProfileData: Nullable<ResponseGetUserProfile>
 }
 
 export const MyProfileContext = createContext<MyProfileContextType>({
-  myProfileData: initialData,
+  myProfileData: null,
 })
 
 type AuthProviderProps = {
@@ -32,7 +19,7 @@ export const MyProfileProvider = ({ children }: AuthProviderProps) => {
   const { data: myProfileData } = useGetUserProfileQuery()
 
   return (
-    <MyProfileContext.Provider value={{ myProfileData: myProfileData ?? initialData }}>
+    <MyProfileContext.Provider value={{ myProfileData: myProfileData ?? null }}>
       {children}
     </MyProfileContext.Provider>
   )

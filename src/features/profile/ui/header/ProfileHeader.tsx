@@ -18,6 +18,11 @@ export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
   const router = useRouter()
   const { isAuth } = useContext(AuthContext)
   const { myProfileData } = useContext(MyProfileContext)
+
+  if (!myProfileData) {
+    return null
+  }
+
   const showSettingsButton = isAuth && myProfileData.id === Number(router.query.id)
 
   return (
