@@ -144,6 +144,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
   useEffect(() => {
     if (isDirty) {
       return () => {
+        console.log('tempFormData', getValues())
         localStorage.setItem('tempFormData', JSON.stringify(getValues()))
       }
     }
@@ -167,6 +168,10 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
       })
     }
   })
+
+  const datePickerDefault = myProfileData.dateOfBirth
+    ? new Date(tempFormData?.dateOfBirth ?? myProfileData.dateOfBirth)
+    : undefined
 
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
@@ -196,11 +201,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
           {
             <ControlledDatePicker
               control={control}
-              defaultValue={
-                myProfileData.dateOfBirth
-                  ? new Date(tempFormData?.dateOfBirth ?? myProfileData.dateOfBirth)
-                  : undefined
-              }
+              defaultValue={datePickerDefault}
               isRequired
               label={profileDataTab.labels.dateOfBirth}
               locale={locale === 'ru' ? ru : enUS}

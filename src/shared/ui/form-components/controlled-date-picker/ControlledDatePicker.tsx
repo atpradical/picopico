@@ -31,7 +31,7 @@ export const ControlledDatePicker = <T extends FieldValues>({
 
   return (
     <DatePicker
-      defaultValue={defaultValue}
+      defaultValue={value}
       errorText={error?.message}
       onSelectSingleDate={onChange}
       selected={value}
