@@ -52,7 +52,7 @@ export const CreatePostDescription = () => {
       <Avatar
         showUserName
         size={'s'}
-        src={myProfileData.avatars[1]?.url}
+        src={myProfileData?.avatars[1]?.url}
         userName={meData?.userName}
       />
       <TextArea

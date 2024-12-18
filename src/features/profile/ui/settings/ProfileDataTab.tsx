@@ -139,7 +139,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
         setValue('userName', tempFormData.userName)
       }
     }
-  }, [tempFormData])
+  }, [tempFormData, setValue])
 
   useEffect(() => {
     if (isDirty) {

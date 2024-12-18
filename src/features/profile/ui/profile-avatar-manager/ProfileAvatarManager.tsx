@@ -19,7 +19,7 @@ export const ProfileAvatarManager = () => {
   const [alertDialog, setAlertDialog] = useState(false)
   const [deleteAvatar] = useDeleteAvatarMutation()
 
-  const avatarImage = myProfileData.avatars.length ? myProfileData.avatars[0].url : ''
+  const avatarImage = myProfileData?.avatars.length ? myProfileData?.avatars[0].url : ''
 
   const deleteAvatarHandler = async () => {
     try {
