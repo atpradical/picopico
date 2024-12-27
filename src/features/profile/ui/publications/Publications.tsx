@@ -1,4 +1,4 @@
-import { useContext, useEffect } from 'react'
+import { useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { publicationsActions } from '@/features/posts/api'
@@ -6,24 +6,26 @@ import { POSTS_MAX_PAGE_SIZE } from '@/features/posts/config'
 import { selectPublicationsAllData } from '@/features/posts/model'
 import { PostDialog } from '@/features/posts/ui'
 import { useGetPostsQuery } from '@/services/posts'
-import { MyProfileContext } from '@/shared/contexts'
+import { ResponseGetUserProfile } from '@/services/profile'
 import { useAppDispatch } from '@/shared/hooks'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 import Image from 'next/image'
 
 import s from './Publications.module.scss'
 
-export const Publications = () => {
+type PublicationsProps = {
+  profileData: ResponseGetUserProfile
+}
+
+export const Publications = ({ profileData }: PublicationsProps) => {
   const dispatch = useAppDispatch()
   const { posts } = useSelector(selectPublicationsAllData)
   const { pageNumber } = useSelector(selectPublicationsAllData)
 
-  const { myProfileData } = useContext(MyProfileContext)
-
   const { data: postsData } = useGetPostsQuery({
     pageNumber,
     pageSize: POSTS_MAX_PAGE_SIZE,
-    userName: myProfileData?.userName ?? '',
+    userName: profileData.userName,
   })
 
   const [lastPostRef, entry] = useIntersectionObserver({

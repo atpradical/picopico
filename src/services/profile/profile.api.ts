@@ -1,25 +1,38 @@
 import { picoApi } from '@/services/picoApi'
-import { ResponseGetMyProfile, UpdateMyProfileArgs, UploadAvatarArgs } from '@/services/profile'
+import {
+  GetUserProfileArgs,
+  ResponseGetMyProfile,
+  ResponseGetUserProfile,
+  UpdateMyProfileArgs,
+  UploadAvatarArgs,
+} from '@/services/profile'
 
 export const profileApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       deleteAvatar: builder.mutation<void, void>({
-        invalidatesTags: ['Profile'],
+        invalidatesTags: ['MyProfile'],
         query: () => ({
           method: 'DELETE',
           url: `/v1/users/profile/avatar`,
         }),
       }),
       getMyProfile: builder.query<ResponseGetMyProfile, void>({
-        providesTags: ['Profile'],
+        providesTags: ['MyProfile'],
         query: () => ({
           method: 'GET',
           url: `v1/users/profile`,
         }),
       }),
+      getUserProfile: builder.query<ResponseGetUserProfile, GetUserProfileArgs>({
+        providesTags: ['Profile'],
+        query: ({ profileId }) => ({
+          method: 'GET',
+          url: `v1/public-user/profile/${profileId}`,
+        }),
+      }),
       updateMyProfile: builder.mutation<void, UpdateMyProfileArgs>({
-        invalidatesTags: ['Profile'],
+        invalidatesTags: ['MyProfile'],
         query: body => ({
           body,
           method: 'PUT',
@@ -27,7 +40,7 @@ export const profileApi = picoApi.injectEndpoints({
         }),
       }),
       uploadAvatar: builder.mutation<void, UploadAvatarArgs>({
-        invalidatesTags: ['Profile'],
+        invalidatesTags: ['MyProfile'],
         query: body => {
           const { file } = body
 
@@ -51,6 +64,7 @@ export const profileApi = picoApi.injectEndpoints({
 export const {
   useDeleteAvatarMutation,
   useGetMyProfileQuery,
+  useGetUserProfileQuery,
   useUpdateMyProfileMutation,
   useUploadAvatarMutation,
 } = profileApi

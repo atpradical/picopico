@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef, useContext } from 'react'
 
 import { ProfileStats } from '@/features/profile/ui'
+import { ResponseGetUserProfile } from '@/services/profile'
 import { AuthContext, MyProfileContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
@@ -11,32 +12,30 @@ import { useRouter } from 'next/router'
 
 import s from './ProfileHeader.module.scss'
 
-type ProfileHeaderProps = ComponentPropsWithoutRef<'section'>
+type ProfileHeaderProps = {
+  profileData: ResponseGetUserProfile
+} & ComponentPropsWithoutRef<'section'>
 
-export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
+export const ProfileHeader = ({ className, profileData, ...props }: ProfileHeaderProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const { isAuth } = useContext(AuthContext)
   const { myProfileData } = useContext(MyProfileContext)
 
-  if (!myProfileData) {
-    return null
-  }
-
-  const showSettingsButton = isAuth && myProfileData.id === Number(router.query.id)
+  const showSettingsButton = isAuth && myProfileData?.id === Number(router.query.id)
 
   return (
     <section className={clsx(s.container, className)} {...props}>
       <Avatar
         className={s.avatar}
         showFallback
-        src={myProfileData.avatars[0]?.url ?? ''}
-        userName={myProfileData.userName}
+        src={profileData.avatars[0]?.url ?? ''}
+        userName={profileData.userName}
       />
       <div className={s.content}>
         <div className={s.titleBlock}>
           <Typography as={'h1'} variant={'h1'}>
-            {myProfileData.userName}
+            {profileData.userName}
           </Typography>
           {showSettingsButton && (
             <Button as={link} href={Paths.Settings} variant={'secondary'}>
@@ -44,8 +43,8 @@ export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
             </Button>
           )}
         </div>
-        <ProfileStats />
-        <Typography className={s.aboutMe}>{myProfileData.aboutMe}</Typography>
+        <ProfileStats metaData={profileData.userMetadata} />
+        <Typography className={s.aboutMe}>{profileData.aboutMe}</Typography>
       </div>
     </section>
   )

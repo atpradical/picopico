@@ -35,3 +35,21 @@ export type UpdateMyProfileArgs = {
 export type UploadAvatarArgs = {
   file: Nullable<File>
 }
+
+export type ResponseGetUserProfile = {
+  aboutMe: Nullable<string>
+  avatars: AvatarsData[]
+  id: number
+  userMetadata: UserMetadata
+  userName: string
+}
+
+export type UserMetadata = {
+  followers: number
+  following: number
+  publications: number
+}
+
+export type GetUserProfileArgs = {
+  profileId: string
+}
