@@ -1,5 +1,5 @@
 import { picoApi } from '@/services/picoApi'
-import { ResponseGetUserProfile, UpdateUserProfileArgs, UploadAvatarArgs } from '@/services/profile'
+import { ResponseGetMyProfile, UpdateMyProfileArgs, UploadAvatarArgs } from '@/services/profile'
 
 export const profileApi = picoApi.injectEndpoints({
   endpoints: builder => {
@@ -11,14 +11,14 @@ export const profileApi = picoApi.injectEndpoints({
           url: `/v1/users/profile/avatar`,
         }),
       }),
-      getUserProfile: builder.query<ResponseGetUserProfile, void>({
+      getMyProfile: builder.query<ResponseGetMyProfile, void>({
         providesTags: ['Profile'],
         query: () => ({
           method: 'GET',
           url: `v1/users/profile`,
         }),
       }),
-      updateUserProfile: builder.mutation<void, UpdateUserProfileArgs>({
+      updateMyProfile: builder.mutation<void, UpdateMyProfileArgs>({
         invalidatesTags: ['Profile'],
         query: body => ({
           body,
@@ -50,7 +50,7 @@ export const profileApi = picoApi.injectEndpoints({
 
 export const {
   useDeleteAvatarMutation,
-  useGetUserProfileQuery,
-  useUpdateUserProfileMutation,
+  useGetMyProfileQuery,
+  useUpdateMyProfileMutation,
   useUploadAvatarMutation,
 } = profileApi

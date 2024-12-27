@@ -1,6 +1,6 @@
 import { Nullable } from '@/shared/types'
 
-export type ResponseGetUserProfile = {
+export type ResponseGetMyProfile = {
   aboutMe: Nullable<string>
   avatars: AvatarsData[]
   city: Nullable<string>
@@ -21,7 +21,7 @@ export type AvatarsData = {
   width: number
 }
 
-export type UpdateUserProfileArgs = {
+export type UpdateMyProfileArgs = {
   aboutMe?: string
   city?: string
   country?: string

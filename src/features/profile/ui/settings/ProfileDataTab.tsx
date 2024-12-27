@@ -8,7 +8,7 @@ import { profileDataSchemeCreator } from '@/features/profile/model'
 import { ProfileFormFields } from '@/features/profile/model/profile.types'
 import { ProfileAvatarManager } from '@/features/profile/ui'
 import { useGetCountriesQuery, useLazyGetCitiesQuery } from '@/services/countries'
-import { ResponseGetUserProfile, useUpdateUserProfileMutation } from '@/services/profile'
+import { ResponseGetMyProfile, useUpdateMyProfileMutation } from '@/services/profile'
 import { useTranslation } from '@/shared/hooks'
 import {
   ControlledDatePicker,
@@ -26,7 +26,7 @@ import { enUS, ru } from 'date-fns/locale'
 import s from './ProfileDataTab.module.scss'
 
 type ProfileDataTabProps = {
-  myProfileData: ResponseGetUserProfile
+  myProfileData: ResponseGetMyProfile
 } & ComponentPropsWithoutRef<typeof TabsContent>
 
 export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDataTabProps) => {
@@ -41,7 +41,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
   const [selectedCountry, setSelectedCountry] = useState(myProfileData.country)
   const [tempFormData, setTempFormData] = useState<any>()
 
-  const [updateProfile] = useUpdateUserProfileMutation()
+  const [updateProfile] = useUpdateMyProfileMutation()
 
   const countrySelectValueChangeHandler = (value: string) => {
     setSelectedCountry(value)
@@ -144,7 +144,6 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
   useEffect(() => {
     if (isDirty) {
       return () => {
-        console.log('tempFormData', getValues())
         localStorage.setItem('tempFormData', JSON.stringify(getValues()))
       }
     }

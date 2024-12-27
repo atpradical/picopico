@@ -16,9 +16,9 @@ import s from './Publications.module.scss'
 export const Publications = () => {
   const dispatch = useAppDispatch()
   const { posts } = useSelector(selectPublicationsAllData)
+  const { pageNumber } = useSelector(selectPublicationsAllData)
 
   const { myProfileData } = useContext(MyProfileContext)
-  const { pageNumber } = useSelector(selectPublicationsAllData)
 
   const { data: postsData } = useGetPostsQuery({
     pageNumber,
@@ -63,17 +63,14 @@ export const Publications = () => {
   return (
     <div className={s.publicationsContainer}>
       {posts.map((post, index) => (
-        <Image
-          alt={'post image'}
-          className={s.image}
-          height={228}
+        <div
+          className={s.imageContainer}
           key={post.id}
           onClick={() => displayPost(post.id)}
           ref={posts.length === index + 1 ? lastPostRef : undefined}
-          src={post.images[0].url}
-          style={{ content: 'contain' }}
-          width={234}
-        />
+        >
+          <Image alt={'post image'} fill src={post.images[0].url} style={{ content: 'contain' }} />
+        </div>
       ))}
       <PostDialog />
     </div>

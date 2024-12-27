@@ -5,6 +5,9 @@
   justify-content: flex-start;
 }
 
-.image {
+.imageContainer {
   cursor: pointer;
+  position: relative;
+  width: 234px;
+  height: 228px;
 }
