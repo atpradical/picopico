@@ -37,7 +37,7 @@ export default function PasswordRecoveryPage() {
   }
 
   return (
-    <Page mt={'36px'}>
+    <Page pt={'36px'}>
       <div className={s.container}>
         {isSuccess ? (
           <CreateNewPasswordForm t={createNewPasswordForm} />

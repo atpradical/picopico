@@ -41,7 +41,7 @@ function SettingsPage() {
   }
 
   return (
-    <Page mt={'36px'}>
+    <Page pt={'36px'}>
       <div className={s.container}>
         <TabsRoot defaultValue={TAB_PROFILE_DATA} onValueChange={onTabChangeHandler}>
           <TabsList className={s.tabList}>

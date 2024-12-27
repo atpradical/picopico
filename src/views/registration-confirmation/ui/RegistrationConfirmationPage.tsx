@@ -39,7 +39,7 @@ function RegistrationConfirmationPage() {
   }
 
   return (
-    <Page mt={'36px'}>
+    <Page pt={'36px'}>
       <div className={s.container}>
         {isSuccess ? (
           <ConfirmedEmail t={t.confirmEmailPage.emailConfirmed} />

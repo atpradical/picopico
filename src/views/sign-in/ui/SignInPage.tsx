@@ -28,18 +28,20 @@ function SignInPage() {
   }, [isAuth, meData, router, token])
 
   return (
-    <Page className={s.container} mt={'36px'}>
-      <Card className={s.card}>
-        <Typography as={'h1'} variant={'h1'}>
-          {pageTitle}
-        </Typography>
-        <OAuth />
-        <SignInForm />
-        <Typography variant={'regular_16'}>{isAccount}</Typography>
-        <Button as={Link} href={Paths.signUp} variant={'nb-outlined'}>
-          {signUpLink}
-        </Button>
-      </Card>
+    <Page>
+      <div className={s.container}>
+        <Card className={s.card}>
+          <Typography as={'h1'} variant={'h1'}>
+            {pageTitle}
+          </Typography>
+          <OAuth />
+          <SignInForm />
+          <Typography variant={'regular_16'}>{isAccount}</Typography>
+          <Button as={Link} href={Paths.signUp} variant={'nb-outlined'}>
+            {signUpLink}
+          </Button>
+        </Card>
+      </div>
     </Page>
   )
 }

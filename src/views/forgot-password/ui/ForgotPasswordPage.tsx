@@ -11,7 +11,7 @@ export default function ForgotPasswordPage() {
   const { pageTitle } = t.forgotPasswordPage
 
   return (
-    <Page mt={'72px'}>
+    <Page pt={'72px'}>
       <div className={s.container}>
         <Card className={s.card}>
           <Typography as={'h1'} variant={'h1'}>
