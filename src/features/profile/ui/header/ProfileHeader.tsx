@@ -13,7 +13,7 @@ import { useRouter } from 'next/router'
 import s from './ProfileHeader.module.scss'
 
 type ProfileHeaderProps = {
-  profileData: ResponseGetUserProfile
+  profileData?: ResponseGetUserProfile
 } & ComponentPropsWithoutRef<'section'>
 
 export const ProfileHeader = ({ className, profileData, ...props }: ProfileHeaderProps) => {
@@ -23,6 +23,10 @@ export const ProfileHeader = ({ className, profileData, ...props }: ProfileHeade
   const { myProfileData } = useContext(MyProfileContext)
 
   const showSettingsButton = isAuth && myProfileData?.id === Number(router.query.id)
+
+  if (!profileData) {
+    return null
+  }
 
   return (
     <section className={clsx(s.container, className)} {...props}>
