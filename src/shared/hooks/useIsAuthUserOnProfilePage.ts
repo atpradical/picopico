@@ -9,7 +9,5 @@ export const useIsAuthUserOnProfilePage = (): boolean => {
   const { isAuth, meData } = useContext(AuthContext)
   const isMyProfilePage = id == meData?.userId
 
-  debugger
-
   return isAuth && isMyProfilePage
 }
