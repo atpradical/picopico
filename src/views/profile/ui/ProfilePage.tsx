@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
 
-import { publicationsActions } from '@/features/posts/api'
 import { POSTS_INITIAL_PAGE_NUMBER, POSTS_MAX_PAGE_SIZE } from '@/features/posts/config'
 import { ProfileHeader, Publications } from '@/features/profile/ui'
+import { publicationsActions } from '@/features/publication/api'
 import { useGetPostsQuery } from '@/services/posts'
 import { useGetUserProfileQuery } from '@/services/profile'
 import { useAppDispatch } from '@/shared/hooks'

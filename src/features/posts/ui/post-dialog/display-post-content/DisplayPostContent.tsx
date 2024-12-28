@@ -1,5 +1,5 @@
-import { publicationsActions } from '@/features/posts/api'
 import { PostActionsDropdown, PostDescription } from '@/features/posts/ui'
+import { publicationsActions } from '@/features/publication/api'
 import { GetPostsItems } from '@/services/posts'
 import { useAppDispatch, useIsAuthUserOnProfilePage, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'

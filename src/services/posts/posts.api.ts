@@ -1,4 +1,4 @@
-import { publicationsActions } from '@/features/posts/api'
+import { publicationsActions } from '@/features/publication/api'
 import { picoApi } from '@/services'
 import {
   CreatePostArgs,

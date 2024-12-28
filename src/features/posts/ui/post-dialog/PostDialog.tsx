@@ -1,9 +1,10 @@
 import { ComponentPropsWithoutRef, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { publicationsActions } from '@/features/posts/api'
-import { selectPostContent, selectPublicationsAllData } from '@/features/posts/model'
+import { selectPostContent } from '@/features/posts/model'
 import { DisplayPostContent } from '@/features/posts/ui'
+import { publicationsActions } from '@/features/publication/api'
+import { selectPublicationsAllData } from '@/features/publication/model'
 import { AppState } from '@/lib/store'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { AlertDialog } from '@/shared/ui/components'

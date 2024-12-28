@@ -1,7 +1,7 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 
-import { createPostActions, publicationsActions } from '@/features/posts/api'
+import { createPostActions } from '@/features/posts/api'
 import {
   POSTS_ALLOWED_UPLOAD_TYPES,
   POSTS_FILES_LIMIT,
@@ -15,6 +15,7 @@ import {
   CreatePostFilters,
   CreatePostHeader,
 } from '@/features/posts/ui'
+import { publicationsActions } from '@/features/publication/api'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'

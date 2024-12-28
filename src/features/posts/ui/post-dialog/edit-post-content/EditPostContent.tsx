@@ -1,8 +1,8 @@
 import { ChangeEvent, useEffect, useState } from 'react'
 
-import { publicationsActions } from '@/features/posts/api'
 import { POSTS_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
 import { postsDescriptionSchemeCreator } from '@/features/posts/model'
+import { publicationsActions } from '@/features/publication/api'
 import { GetPostsItems, useUpdatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'

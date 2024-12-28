@@ -1,6 +1,6 @@
-.publicationsContainer {
+.publicationContainer {
   display: flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   gap: 12px;
 }
 
@@ -9,4 +9,9 @@
   position: relative;
   width: 234px;
   height: 228px;
+}
+
+.publicationMeta {
+  display: flex;
+  flex-direction: column;
 }

@@ -1,12 +1,12 @@
 import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import { publicationsActions } from '@/features/posts/api'
-import { selectPublicationsAllData } from '@/features/posts/model'
 import { PostDialog } from '@/features/posts/ui'
+import { publicationsActions } from '@/features/publication/api'
+import { selectPublicationsAllData } from '@/features/publication/model'
+import { Publication } from '@/features/publication/ui'
 import { useAppDispatch } from '@/shared/hooks'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
-import Image from 'next/image'
 
 import s from './Publications.module.scss'
 
@@ -39,20 +39,13 @@ export const Publications = ({ updatePageNumber }: PublicationsProps) => {
   return (
     <section className={s.publicationsContainer} ref={sectionRef}>
       {posts.map((post, index) => (
-        <div
-          className={s.imageContainer}
+        <Publication
+          isLastPost={posts.length === index + 1}
           key={post.id}
           onClick={() => displayPost(post.id)}
-          ref={posts.length === index + 1 ? lastPostRef : undefined}
-        >
-          <Image
-            alt={'post image'}
-            fill
-            sizes={'(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
-            src={post.images[0].url}
-            style={{ content: 'contain' }}
-          />
-        </div>
+          post={post}
+          ref={lastPostRef}
+        />
       ))}
       <PostDialog />
     </section>
