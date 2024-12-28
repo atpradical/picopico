@@ -1,9 +1,7 @@
-import { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
+import { useEffect, useState } from 'react'
 
 import { publicationsActions } from '@/features/posts/api'
-import { POSTS_MAX_PAGE_SIZE } from '@/features/posts/config'
-import { selectPublicationsAllData } from '@/features/posts/model'
+import { POSTS_INITIAL_PAGE_NUMBER, POSTS_MAX_PAGE_SIZE } from '@/features/posts/config'
 import { ProfileHeader, Publications } from '@/features/profile/ui'
 import { useGetPostsQuery } from '@/services/posts'
 import { useGetUserProfileQuery } from '@/services/profile'
@@ -17,42 +15,21 @@ import s from './ProfilePage.module.scss'
 function ProfilePage() {
   const router = useRouter()
   const dispatch = useAppDispatch()
-  const { pageNumber } = useSelector(selectPublicationsAllData)
-  const requestIdRef = useRef<string[]>([])
+  const [page, setPage] = useState(POSTS_INITIAL_PAGE_NUMBER)
 
   const { data: profileData } = useGetUserProfileQuery(
     { profileId: router.query.id as string },
     { skip: !router.query.id }
   )
 
-  const {
-    data: postsData,
-    isSuccess: isPostsSuccess,
-    requestId,
-  } = useGetPostsQuery(
+  const { data: postsData } = useGetPostsQuery(
     {
-      pageNumber,
+      pageNumber: page,
       pageSize: POSTS_MAX_PAGE_SIZE,
       userName: profileData?.userName ?? '',
     },
     { skip: !profileData?.userName }
   )
-
-  useEffect(() => {
-    // Выходим если запрос за постами не успешен.
-    if (!isPostsSuccess || !postsData || !requestId) {
-      return
-    }
-
-    // Добавляем посты в стейт только если это новый запрос.
-    if (!requestIdRef.current.includes(requestId)) {
-      requestIdRef.current.push(requestId)
-      if (postsData.items.length > 0) {
-        dispatch(publicationsActions.setPublications({ posts: postsData.items }))
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [postsData])
 
   useEffect(() => {
     // очищаем стейт при выходе со страницы
@@ -63,8 +40,8 @@ function ProfilePage() {
   }, [])
 
   const updatePageNumber = () => {
-    if (postsData && pageNumber < postsData?.pagesCount) {
-      dispatch(publicationsActions.setPageNumber({ pageNumber: pageNumber + 1 }))
+    if (postsData && page < postsData?.pagesCount) {
+      setPage(prevPage => prevPage + 1)
     }
   }
 

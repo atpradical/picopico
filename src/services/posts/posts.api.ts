@@ -1,3 +1,4 @@
+import { publicationsActions } from '@/features/posts/api'
 import { picoApi } from '@/services'
 import {
   CreatePostArgs,
@@ -9,6 +10,7 @@ import {
   GetPostsResponse,
   UpdatePostArgs,
 } from '@/services/posts/posts.types'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 
 export const postsApi = picoApi.injectEndpoints({
   endpoints: builder => {
@@ -41,13 +43,37 @@ export const postsApi = picoApi.injectEndpoints({
         },
       }),
       deletePost: builder.mutation<void, DeletePostArgs>({
-        invalidatesTags: ['Posts'],
+        onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+          try {
+            await queryFulfilled
+            dispatch(publicationsActions.deletePublication({ postId: args.postId }))
+          } catch (e) {
+            const error = getErrorMessageData(e)
+
+            showErrorToast(error)
+          }
+        },
         query: ({ postId }) => ({
           method: 'DELETE',
           url: `/v1/posts/${postId}`,
         }),
       }),
       getPosts: builder.query<GetPostsResponse, GetPostsArgs>({
+        onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+          try {
+            const { data } = await queryFulfilled
+
+            dispatch(
+              publicationsActions.setPublications({
+                posts: data.items,
+              })
+            )
+          } catch (e) {
+            const error = getErrorMessageData(e)
+
+            showErrorToast(error)
+          }
+        },
         providesTags: ['Posts'],
         query: ({ userName, ...args }) => ({
           method: 'GET',
@@ -56,7 +82,21 @@ export const postsApi = picoApi.injectEndpoints({
         }),
       }),
       updatePost: builder.mutation<void, UpdatePostArgs>({
-        invalidatesTags: ['Posts'],
+        onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+          try {
+            await queryFulfilled
+            dispatch(
+              publicationsActions.updatePostDescription({
+                description: args.description,
+                postId: args.postId,
+              })
+            )
+          } catch (e) {
+            const error = getErrorMessageData(e)
+
+            showErrorToast(error)
+          }
+        },
         query: ({ description, postId }) => ({
           body: { description },
           method: 'PUT',

@@ -1,8 +1,7 @@
 import { useState } from 'react'
 
-import { publicationsActions } from '@/features/posts/api'
 import { useDeletePostMutation } from '@/services/posts'
-import { useAppDispatch, useTranslation } from '@/shared/hooks'
+import { useTranslation } from '@/shared/hooks'
 import { AlertDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
@@ -29,7 +28,6 @@ type EditPostDropdownProps = {
 
 export const PostActionsDropdown = ({ onConfirm, onEdit, postId }: EditPostDropdownProps) => {
   const { t } = useTranslation()
-  const dispatch = useAppDispatch()
   const [isDeleteAlertDialog, setIsDeleteAlertDialog] = useState(false)
   const [deletePost] = useDeletePostMutation()
 
@@ -39,8 +37,7 @@ export const PostActionsDropdown = ({ onConfirm, onEdit, postId }: EditPostDropd
 
   const deletePostHandler = async () => {
     try {
-      deletePost({ postId }).unwrap()
-      dispatch(publicationsActions.resetPublications())
+      await deletePost({ postId }).unwrap()
       onConfirm()
     } catch (e) {
       const errors = getErrorMessageData(e)

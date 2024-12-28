@@ -55,7 +55,6 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
   const savePostHandler = async () => {
     try {
       await updatePost({ description, postId: postData.id }).unwrap()
-      dispatch(publicationsActions.resetPublications())
       dispatch(publicationsActions.toggleEditMode({ isEdit: false }))
     } catch (e) {
       const errors = getErrorMessageData(e)

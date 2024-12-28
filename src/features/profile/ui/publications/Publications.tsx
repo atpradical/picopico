@@ -1,4 +1,4 @@
-import { useEffect } from 'react'
+import { useEffect, useRef } from 'react'
 import { useSelector } from 'react-redux'
 
 import { publicationsActions } from '@/features/posts/api'
@@ -17,11 +17,14 @@ type PublicationsProps = {
 export const Publications = ({ updatePageNumber }: PublicationsProps) => {
   const dispatch = useAppDispatch()
   const { posts } = useSelector(selectPublicationsAllData)
+  const sectionRef = useRef(null)
 
-  const [lastPostRef, entry] = useIntersectionObserver()
+  const [lastPostRef, entry] = useIntersectionObserver({ root: null, threshold: 1 })
 
   useEffect(() => {
-    updatePageNumber()
+    if (entry?.isIntersecting) {
+      updatePageNumber()
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entry?.isIntersecting])
 
@@ -34,7 +37,7 @@ export const Publications = ({ updatePageNumber }: PublicationsProps) => {
   }
 
   return (
-    <div className={s.publicationsContainer}>
+    <section className={s.publicationsContainer} ref={sectionRef}>
       {posts.map((post, index) => (
         <div
           className={s.imageContainer}
@@ -42,10 +45,16 @@ export const Publications = ({ updatePageNumber }: PublicationsProps) => {
           onClick={() => displayPost(post.id)}
           ref={posts.length === index + 1 ? lastPostRef : undefined}
         >
-          <Image alt={'post image'} fill src={post.images[0].url} style={{ content: 'contain' }} />
+          <Image
+            alt={'post image'}
+            fill
+            sizes={'(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
+            src={post.images[0].url}
+            style={{ content: 'contain' }}
+          />
         </div>
       ))}
       <PostDialog />
-    </div>
+    </section>
   )
 }

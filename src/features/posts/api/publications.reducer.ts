@@ -1,10 +1,8 @@
-import { POSTS_INITIAL_PAGE_NUMBER } from '@/features/posts/config'
 import { GetPostsItems } from '@/services/posts'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState = {
   editMode: false,
-  pageNumber: POSTS_INITIAL_PAGE_NUMBER,
   postId: 0,
   posts: [] as GetPostsItems[],
   showPost: false,
@@ -14,12 +12,13 @@ const slice = createSlice({
   initialState,
   name: 'publications',
   reducers: {
+    deletePublication: (state, action: PayloadAction<{ postId: number }>) => {
+      state.posts = state.posts.filter(post => post.id !== action.payload.postId)
+    },
     resetPublications: state => {
       state.posts = []
-      state.pageNumber = POSTS_INITIAL_PAGE_NUMBER
-    },
-    setPageNumber: (state, action: PayloadAction<{ pageNumber: number }>) => {
-      state.pageNumber = action.payload.pageNumber
+      state.showPost = false
+      state.postId = 0
     },
     setPublications: (state, action: PayloadAction<{ posts: GetPostsItems[] }>) => {
       state.posts.push(...action.payload.posts)
@@ -33,6 +32,16 @@ const slice = createSlice({
     ) => {
       state.showPost = action.payload.isOpen
       state.postId = action.payload.postId
+    },
+    updatePostDescription: (
+      state,
+      action: PayloadAction<{ description: string; postId: number }>
+    ) => {
+      state.posts.forEach(post => {
+        if (post.id === action.payload.postId) {
+          post.description = action.payload.description
+        }
+      })
     },
   },
 })
