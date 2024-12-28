@@ -8,6 +8,6 @@ export const MAX_PASSWORD_LENGTH = 20
 
 // validation regex:
 export const USERNAME_REGEX = /^[a-zA-Z0-9_-]*$/
-export const NAME_REGEX = /^[a-zA-Zа-яА-Я0]*$/
+export const NAME_REGEX = /^[a-zA-Zа-яА-Я\s]*$/
 export const PASSWORD_REGEX =
   /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,\-.:;<=>?@[\]^_`{|}~])/
