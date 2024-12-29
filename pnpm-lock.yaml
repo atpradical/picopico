@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@atpradical/picopico-ui-kit':
-        specifier: ^0.27.6
-        version: 0.27.6(@types/react-dom@18.3.1)(@types/react@18.3.11)(storybook@8.3.6)(typescript@5.6.3)(vite@5.4.9(@types/node@20.16.13)(sass@1.80.3))
+        specifier: ^0.28.0
+        version: 0.28.0(@types/react-dom@18.3.1)(@types/react@18.3.11)(storybook@8.3.6)(typescript@5.6.3)(vite@5.4.9(@types/node@20.16.13)(sass@1.80.3))
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.9.0(react-hook-form@7.53.1(react@18.3.1))
@@ -129,8 +129,8 @@ importers:
 
 packages:
 
-  '@atpradical/picopico-ui-kit@0.27.6':
-    resolution: {integrity: sha512-M0pb1zu3OjsbS598JePWUf5XMViw5y2tjqXCbLXvyUKRfEDsVu6HnJDcejpv1e2xxr5wbOO3N6BOTB2b9IOPwQ==}
+  '@atpradical/picopico-ui-kit@0.28.0':
+    resolution: {integrity: sha512-aFUHadg2E7XZe8xrn0EIRUku9hic8jVY5V/9q5ArzPyK+slQtgJYz8GnTEujdZeznVXwor8NEmZMT3J8yxQ+ng==}
 
   '@babel/code-frame@7.25.7':
     resolution: {integrity: sha512-0xZJFNE5XMpENsgfHYTw8FbX4kv53mFLn2i3XPoq69LyhYSCBJtitaHx9QnsVTrsogI4Z3+HtEfZ2/GFPOtf5g==}
@@ -3672,7 +3672,7 @@ packages:
 
 snapshots:
 
-  '@atpradical/picopico-ui-kit@0.27.6(@types/react-dom@18.3.1)(@types/react@18.3.11)(storybook@8.3.6)(typescript@5.6.3)(vite@5.4.9(@types/node@20.16.13)(sass@1.80.3))':
+  '@atpradical/picopico-ui-kit@0.28.0(@types/react-dom@18.3.1)(@types/react@18.3.11)(storybook@8.3.6)(typescript@5.6.3)(vite@5.4.9(@types/node@20.16.13)(sass@1.80.3))':
     dependencies:
       '@fontsource/inter': 5.1.0
       '@fontsource/roboto': 5.1.0
