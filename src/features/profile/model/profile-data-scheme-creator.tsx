@@ -1,6 +1,6 @@
-import { MIN_USER_AGE } from '@/features/profile/config'
 import { LocaleValidation } from '@/locales/en'
 import { aboutMeScheme, nameScheme, userNameScheme } from '@/shared/lib/validations'
+import { checkUserAge } from '@/shared/utils'
 import { PrivacyPolicyNotification } from '@/views/profile/ui/privacy-policy-notification'
 import { toaster } from '@atpradical/picopico-ui-kit'
 import { z } from 'zod'
@@ -19,8 +19,7 @@ export const profileDataSchemeCreator = (t: LocaleValidation) => {
     .refine(
       val => {
         if (val.dateOfBirth) {
-          const isOldEnough =
-            new Date().getFullYear() - new Date(val.dateOfBirth).getFullYear() >= MIN_USER_AGE
+          const isOldEnough = checkUserAge(val.dateOfBirth)
 
           if (!isOldEnough) {
             toaster(

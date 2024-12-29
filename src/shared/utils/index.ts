@@ -1,3 +1,4 @@
+export * from './checkUserAge'
 export * from './crop-image'
 export * from './get-error-message-data'
 export * from './set-form-errors'
