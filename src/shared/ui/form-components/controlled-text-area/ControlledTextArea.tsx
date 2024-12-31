@@ -33,7 +33,7 @@ export const ControlledTextArea = <T extends FieldValues>({
   return (
     <TextArea
       {...props}
-      counterValue={value.length}
+      counterValue={value?.length}
       errorText={errorText ?? error?.message}
       onChange={onChange}
       ref={ref}

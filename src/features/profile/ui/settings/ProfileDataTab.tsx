@@ -1,5 +1,3 @@
-'use client'
-
 import { ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { useForm } from 'react-hook-form'
 
@@ -39,7 +37,6 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
   } = useTranslation()
 
   const [selectedCountry, setSelectedCountry] = useState(myProfileData.country)
-  const [tempFormData, setTempFormData] = useState<any>()
 
   const [updateProfile] = useUpdateMyProfileMutation()
 
@@ -79,20 +76,12 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
         minPopulation: MAX_CITY_POPULATION,
       })
     }
-  }, [selectedCountry, getCities, locale])
-
-  useEffect(() => {
-    const tempFormDataString = localStorage.getItem('tempFormData')
-
-    if (tempFormDataString) {
-      setTempFormData(JSON.parse(tempFormDataString))
-    }
-  }, [])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedCountry, locale])
 
   const {
     control,
-    formState: { isDirty },
-    getValues,
+    formState: { isDirty, isValid },
     handleSubmit,
     setError,
     setValue,
@@ -101,7 +90,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
       aboutMe: myProfileData.aboutMe ?? '',
       city: myProfileData.city ?? '',
       country: myProfileData.country ?? '',
-      dateOfBirth: myProfileData?.dateOfBirth ? new Date(myProfileData.dateOfBirth) : null,
+      dateOfBirth: myProfileData?.dateOfBirth ? new Date(myProfileData.dateOfBirth) : undefined,
       firstName: myProfileData.firstName ?? '',
       lastName: myProfileData.lastName ?? '',
       userName: myProfileData.userName ?? '',
@@ -111,51 +100,12 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
     resolver: zodResolver(profileDataSchemeCreator(validation)),
   })
 
-  useEffect(() => {
-    if (tempFormData) {
-      if (tempFormData.aboutMe) {
-        setValue('aboutMe', tempFormData.aboutMe)
-      }
-      if (tempFormData.city) {
-        setValue('city', tempFormData.city)
-      }
-      if (tempFormData.country) {
-        setSelectedCountry(tempFormData.country)
-        setValue('country', tempFormData.country)
-      }
-
-      if (tempFormData.dateOfBirth) {
-        setValue('dateOfBirth', new Date(tempFormData.dateOfBirth))
-      }
-
-      if (tempFormData.firstName) {
-        setValue('firstName', tempFormData.firstName)
-      }
-      if (tempFormData.lastName) {
-        setValue('lastName', tempFormData.lastName)
-      }
-
-      if (tempFormData.userName) {
-        setValue('userName', tempFormData.userName)
-      }
-    }
-  }, [tempFormData, setValue])
-
-  useEffect(() => {
-    if (isDirty) {
-      return () => {
-        localStorage.setItem('tempFormData', JSON.stringify(getValues()))
-      }
-    }
-  }, [isDirty, getValues])
-
   const formHandler = handleSubmit(async data => {
     try {
       await updateProfile({
         ...data,
         dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toLocaleDateString() : '',
       }).unwrap()
-      localStorage.removeItem('tempFormData')
       toaster({ text: profileDataTab.successSettingsChangeMessage })
     } catch (e) {
       const errors = getErrorMessageData(e)
@@ -169,8 +119,10 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
   })
 
   const datePickerDefault = myProfileData.dateOfBirth
-    ? new Date(tempFormData?.dateOfBirth ?? myProfileData.dateOfBirth)
+    ? new Date(myProfileData.dateOfBirth)
     : undefined
+
+  const isDisabledConfirmButton = !isValid || !isDirty
 
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
@@ -210,7 +162,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
           <div className={s.selectContainer}>
             <ControlledSelect
               control={control}
-              defaultValue={tempFormData?.country ?? myProfileData.country}
+              defaultValue={myProfileData.country ?? undefined}
               label={profileDataTab.labels.country}
               name={'country'}
               onValueChange={countrySelectValueChangeHandler}
@@ -220,7 +172,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
             />
             <ControlledSelect
               control={control}
-              defaultValue={tempFormData?.city ?? myProfileData.city}
+              defaultValue={myProfileData.city ?? undefined}
               label={profileDataTab.labels.city}
               name={'city'}
               options={citiesDataOptions}
@@ -239,7 +191,12 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
         </form>
       </div>
       <Separator.Root className={s.separator} />
-      <Button className={s.submitButton} form={'profile-form'} type={'submit'}>
+      <Button
+        className={s.submitButton}
+        disabled={isDisabledConfirmButton}
+        form={'profile-form'}
+        type={'submit'}
+      >
         {profileDataTab.formSubmitButton}
       </Button>
     </TabsContent>

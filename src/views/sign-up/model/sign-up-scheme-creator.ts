@@ -1,33 +1,16 @@
 import { LocaleValidation } from '@/locales/en'
+import { createCustomErrorMap } from '@/shared/lib/custom-error-map'
 import {
   confirmPasswordScheme,
   emailScheme,
   passwordScheme,
   userNameScheme,
 } from '@/shared/lib/validations'
-import { ZodErrorMap, z } from 'zod'
+import { z } from 'zod'
 
-/**
- * Creates a custom errorMap for signUpForm
- */
-const createSignUpErrorMap =
-  (t: LocaleValidation): ZodErrorMap =>
-  (issue, ctx) => {
-    if (issue.code === z.ZodIssueCode.invalid_type) {
-      if (issue.expected === 'string' && issue.received === 'undefined') {
-        return { message: t.requiredField }
-      }
-    }
-
-    return { message: ctx.defaultError }
-  }
-
-/**
- * Creates a Zod schema for signUpForm
- */
 export const signUpSchemeCreator = (t: LocaleValidation) => {
-  // Create a custom errorMap taking into account localisation a
-  const signUpErrorMap = createSignUpErrorMap(t)
+  // Create a custom errorMap
+  const signUpErrorMap = createCustomErrorMap(t)
 
   // Set custom errorMap globally into Zod
   z.setErrorMap(signUpErrorMap)
