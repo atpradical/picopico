@@ -79,7 +79,13 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry, locale])
 
-  const { control, handleSubmit, setError, setValue } = useForm<ProfileFormFields>({
+  const {
+    control,
+    formState: { isDirty, isValid },
+    handleSubmit,
+    setError,
+    setValue,
+  } = useForm<ProfileFormFields>({
     defaultValues: {
       aboutMe: myProfileData.aboutMe ?? '',
       city: myProfileData.city ?? '',
@@ -115,6 +121,8 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
   const datePickerDefault = myProfileData.dateOfBirth
     ? new Date(myProfileData.dateOfBirth)
     : undefined
+
+  const isDisabledConfirmButton = !isValid || !isDirty
 
   return (
     <TabsContent className={clsx(s.content, className)} {...rest}>
@@ -183,7 +191,12 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
         </form>
       </div>
       <Separator.Root className={s.separator} />
-      <Button className={s.submitButton} form={'profile-form'} type={'submit'}>
+      <Button
+        className={s.submitButton}
+        disabled={isDisabledConfirmButton}
+        form={'profile-form'}
+        type={'submit'}
+      >
         {profileDataTab.formSubmitButton}
       </Button>
     </TabsContent>
