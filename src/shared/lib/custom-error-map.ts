@@ -5,7 +5,7 @@ export const createCustomErrorMap =
   (t: LocaleValidation): ZodErrorMap =>
   (issue, ctx) => {
     if (issue.code === z.ZodIssueCode.invalid_type) {
-      if (issue.expected === 'string' && issue.received === 'undefined') {
+      if ((issue.expected === 'string' || 'date') && issue.received === 'undefined') {
         return { message: t.requiredField }
       }
     }

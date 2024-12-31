@@ -79,7 +79,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [selectedCountry, locale])
 
-  const { control, handleSubmit, setError, setValue } = useForm<ProfileFormFields>({
+  const { control, getValues, handleSubmit, setError, setValue } = useForm<ProfileFormFields>({
     defaultValues: {
       aboutMe: myProfileData.aboutMe ?? '',
       city: myProfileData.city ?? '',
