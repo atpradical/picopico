@@ -1,14 +1,25 @@
-import { GetPostsItems } from '@/services/posts'
+import { PublicPostsItems } from '@/services/posts'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
+import { HYDRATE } from 'next-redux-wrapper'
 
 const initialState = {
   editMode: false,
   postId: 0,
-  posts: [] as GetPostsItems[],
+  posts: [] as PublicPostsItems[],
   showPost: false,
 }
 
 const slice = createSlice({
+  extraReducers: builder => {
+    builder.addCase(HYDRATE, (state, action: any) => {
+      // Сливаем состояние Redux с серверными данными при гидратации
+      // todo: CHECK
+      if (action.payload.publications) {
+        console.log('HYDRATE publications')
+        state.posts = action.payload.publications.posts || state.posts
+      }
+    })
+  },
   initialState,
   name: 'publications',
   reducers: {
@@ -20,7 +31,7 @@ const slice = createSlice({
       state.showPost = false
       state.postId = 0
     },
-    setPublications: (state, action: PayloadAction<{ posts: GetPostsItems[] }>) => {
+    setPublications: (state, action: PayloadAction<{ posts: PublicPostsItems[] }>) => {
       state.posts.push(...action.payload.posts)
     },
     toggleEditMode: (state, action: PayloadAction<{ isEdit: boolean }>) => {

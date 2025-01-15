@@ -11,10 +11,10 @@ import { useIntersectionObserver } from '@uidotdev/usehooks'
 import s from './Publications.module.scss'
 
 type PublicationsProps = {
-  updatePageNumber: () => void
+  updateCursor: (postId: number) => void
 }
 
-export const Publications = ({ updatePageNumber }: PublicationsProps) => {
+export const Publications = ({ updateCursor }: PublicationsProps) => {
   const dispatch = useAppDispatch()
   const { posts } = useSelector(selectPublicationsAllData)
   const sectionRef = useRef(null)
@@ -23,7 +23,7 @@ export const Publications = ({ updatePageNumber }: PublicationsProps) => {
 
   useEffect(() => {
     if (entry?.isIntersecting) {
-      updatePageNumber()
+      updateCursor(posts[posts.length - 1].id)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [entry?.isIntersecting])

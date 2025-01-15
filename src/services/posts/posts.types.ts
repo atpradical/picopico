@@ -1,3 +1,4 @@
+import { SortDirection } from '@/shared/enums/sort.enums'
 import { Nullable } from '@/shared/types'
 
 export type CreatePostArgs = {
@@ -52,7 +53,6 @@ export type ImagesData = {
   url: string
   width: number
 }
-
 export type GetPostsResponse = {
   items: GetPostsItems[]
   page: number
@@ -65,6 +65,7 @@ export type GetPostsItemsOwner = {
   firstName: string
   lastName: string
 }
+
 export type GetPostsItems = {
   avatarOwner: string
   createdAt: string
@@ -79,6 +80,7 @@ export type GetPostsItems = {
   updatedAt: string
   userName: string
 }
+
 export type GetPostsArgs = {
   pageNumber?: number
   pageSize?: number
@@ -94,4 +96,35 @@ export type DeletePostArgs = {
 export type UpdatePostArgs = {
   description: string
   postId: number
+}
+
+export type GetPostsAllPublicArgs = {
+  endCursorPostId?: number
+  pageSize?: number
+  sortBy?: string
+  sortDirection?: SortDirection
+  userId: number
+}
+
+export type GetPostsAllPublicResponse = {
+  items: PublicPostsItems[]
+  pageSize: number
+  totalCount: number
+  totalUsers: number
+}
+
+export type PublicPostsItems = {
+  avatarOwner: string
+  avatarWhoLikes: boolean
+  createdAt: string
+  description: string
+  id: number
+  images: ImagesData[]
+  isLiked: boolean
+  likesCount: number
+  location: string
+  owner: GetPostsItemsOwner
+  ownerId: number
+  updatedAt: string
+  userName: string
 }

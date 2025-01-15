@@ -6,6 +6,8 @@ import {
   CreatePostImageResponse,
   CreatePostResponse,
   DeletePostArgs,
+  GetPostsAllPublicArgs,
+  GetPostsAllPublicResponse,
   GetPostsArgs,
   GetPostsResponse,
   UpdatePostArgs,
@@ -59,6 +61,29 @@ export const postsApi = picoApi.injectEndpoints({
         }),
       }),
       getPosts: builder.query<GetPostsResponse, GetPostsArgs>({
+        // onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+        //   try {
+        //     const { data } = await queryFulfilled
+        //
+        //     dispatch(
+        //       publicationsActions.setPublications({
+        //         posts: data.items,
+        //       })
+        //     )
+        //   } catch (e) {
+        //     const error = getErrorMessageData(e)
+        //
+        //     showErrorToast(error)
+        //   }
+        // },
+        providesTags: ['Posts'],
+        query: ({ userName, ...args }) => ({
+          method: 'GET',
+          params: args ?? undefined,
+          url: `v1/posts/${userName}`,
+        }),
+      }),
+      getPostsAllPublic: builder.query<GetPostsAllPublicResponse, GetPostsAllPublicArgs>({
         onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
           try {
             const { data } = await queryFulfilled
@@ -74,11 +99,11 @@ export const postsApi = picoApi.injectEndpoints({
             showErrorToast(error)
           }
         },
-        providesTags: ['Posts'],
-        query: ({ userName, ...args }) => ({
+        providesTags: ['PublicPosts'],
+        query: ({ endCursorPostId, userId, ...args }) => ({
           method: 'GET',
           params: args ?? undefined,
-          url: `v1/posts/${userName}`,
+          url: `v1/public-posts/user/${userId}/${endCursorPostId}`,
         }),
       }),
       updatePost: builder.mutation<void, UpdatePostArgs>({
@@ -111,9 +136,10 @@ export const {
   useCreatePostImageMutation,
   useCreatePostMutation,
   useDeletePostMutation,
+  useGetPostsAllPublicQuery,
   useGetPostsQuery,
   useUpdatePostMutation,
 } = postsApi
 
 // export endpoints for use in SSR
-export const { getPosts } = postsApi.endpoints
+export const { getPostsAllPublic } = postsApi.endpoints
