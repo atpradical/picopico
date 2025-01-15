@@ -114,3 +114,6 @@ export const {
   useGetPostsQuery,
   useUpdatePostMutation,
 } = postsApi
+
+// export endpoints for use in SSR
+export const { getPosts } = postsApi.endpoints

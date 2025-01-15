@@ -68,3 +68,6 @@ export const {
   useUpdateMyProfileMutation,
   useUploadAvatarMutation,
 } = profileApi
+
+// export endpoints for use in SSR
+export const { getUserProfile } = profileApi.endpoints

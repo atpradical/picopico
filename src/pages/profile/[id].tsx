@@ -1,1 +1,1 @@
-export { default } from '@/views/profile/ui/ProfilePage'
+export { default, getServerSideProps } from '@/views/profile/ui/ProfilePage'
