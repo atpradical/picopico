@@ -128,13 +128,16 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
 
-      await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
+      const newPostData = await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
+
       dispatch(createPostActions.resetPost())
 
       setImagesList(null)
       // clearPostsDB()
-      dispatch(publicationsActions.resetPublications())
+      // todo: CHECK
       dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
+
+      dispatch(publicationsActions.addPublication({ post: newPostData }))
     } catch (e) {
       const errors = getErrorMessageData(e)
 

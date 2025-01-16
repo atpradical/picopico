@@ -29,7 +29,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
       const postsData = await store.dispatch(
         getPostsAllPublic.initiate({
           pageSize: POSTS_MAX_PAGE_SIZE,
-          sortDirection: SortDirection.ASC,
+          sortDirection: SortDirection.DESC,
           userId: Number(userId),
         })
       )
@@ -62,7 +62,7 @@ function ProfilePage({ profileData }: Props) {
     {
       endCursorPostId: cursor,
       pageSize: POSTS_MAX_PAGE_SIZE,
-      sortDirection: SortDirection.ASC,
+      sortDirection: SortDirection.DESC,
       userId: Number(profileData.id),
     },
     { skip: cursor === -1 }
@@ -70,7 +70,6 @@ function ProfilePage({ profileData }: Props) {
 
   useEffect(() => {
     // очищаем стейт при выходе со страницы
-
     return () => {
       dispatch(publicationsActions.resetPublications())
     }

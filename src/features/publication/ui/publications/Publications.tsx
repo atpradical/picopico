@@ -19,14 +19,14 @@ export const Publications = ({ updateCursor }: PublicationsProps) => {
   const { posts } = useSelector(selectPublicationsAllData)
   const sectionRef = useRef(null)
 
-  const [lastPostRef, entry] = useIntersectionObserver({ root: null, threshold: 1 })
+  const [lastPostRef, entry] = useIntersectionObserver({ root: null, threshold: 0.5 })
 
   useEffect(() => {
     if (entry?.isIntersecting) {
       updateCursor(posts[posts.length - 1].id)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entry?.isIntersecting])
+  }, [entry?.isIntersecting, posts.length])
 
   const displayPost = (postId: number) => {
     dispatch(publicationsActions.togglePostDisplayDialog({ isOpen: true, postId }))

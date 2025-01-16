@@ -10,7 +10,7 @@ const baseQuery = fetchBaseQuery({
   credentials: 'include',
   /* To use JWT -> add Header 'Authorization', `Bearer ${token}` to every request. */
   prepareHeaders: headers => {
-    // todo: исключаем заголовок на сервреной стороне.
+    // исключаем заголовоки на стороне сервера.
     if (typeof window !== 'undefined') {
       const token = localStorage.getItem('accessToken')
 

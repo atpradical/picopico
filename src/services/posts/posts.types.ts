@@ -11,13 +11,16 @@ export type ChildrenMetaData = {
 }
 
 export type CreatePostResponse = {
+  avatarOwner: string
+  // todo: CHECK typeof avatarWhoLikes and location
+  avatarWhoLikes: any[]
   createdAt: string
   description: string
   id: number
   images: ResponseImagesData[]
   isLiked: boolean
   likesCount: number
-  location?: any
+  location: any
   owner: OwnerData
   ownerId: number
   updatedAt: string
@@ -34,8 +37,8 @@ export type ResponseImagesData = {
 }
 
 export type OwnerData = {
-  firstName?: any
-  lastName?: any
+  firstName: string
+  lastName: string
 }
 
 export type CreatePostImageArgs = {
@@ -61,11 +64,6 @@ export type GetPostsResponse = {
   totalCount: number
 }
 
-export type GetPostsItemsOwner = {
-  firstName: string
-  lastName: string
-}
-
 export type GetPostsItems = {
   avatarOwner: string
   createdAt: string
@@ -75,7 +73,7 @@ export type GetPostsItems = {
   isLiked: boolean
   likesCount: number
   location: string
-  owner: GetPostsItemsOwner
+  owner: OwnerData
   ownerId: number
   updatedAt: string
   userName: string
@@ -115,15 +113,16 @@ export type GetPostsAllPublicResponse = {
 
 export type PublicPostsItems = {
   avatarOwner: string
-  avatarWhoLikes: boolean
+  // todo: CHECK type of avatarWhoLikes and location
+  avatarWhoLikes: any[]
   createdAt: string
   description: string
   id: number
   images: ImagesData[]
   isLiked: boolean
   likesCount: number
-  location: string
-  owner: GetPostsItemsOwner
+  location: any
+  owner: OwnerData
   ownerId: number
   updatedAt: string
   userName: string

@@ -15,7 +15,6 @@ const slice = createSlice({
       // Сливаем состояние Redux с серверными данными при гидратации
       // todo: CHECK
       if (action.payload.publications) {
-        console.log('HYDRATE publications')
         state.posts = action.payload.publications.posts || state.posts
       }
     })
@@ -23,6 +22,9 @@ const slice = createSlice({
   initialState,
   name: 'publications',
   reducers: {
+    addPublication: (state, action: PayloadAction<{ post: PublicPostsItems }>) => {
+      state.posts.unshift(action.payload.post)
+    },
     deletePublication: (state, action: PayloadAction<{ postId: number }>) => {
       state.posts = state.posts.filter(post => post.id !== action.payload.postId)
     },

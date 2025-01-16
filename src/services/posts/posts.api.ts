@@ -18,7 +18,6 @@ export const postsApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       createPost: builder.mutation<CreatePostResponse, CreatePostArgs>({
-        invalidatesTags: ['Posts'],
         query: body => ({
           body,
           method: 'POST',
@@ -26,7 +25,6 @@ export const postsApi = picoApi.injectEndpoints({
         }),
       }),
       createPostImage: builder.mutation<CreatePostImageResponse, CreatePostImageArgs>({
-        invalidatesTags: ['Posts'],
         query: body => {
           const { file } = body
           const formData = new FormData()
@@ -107,6 +105,7 @@ export const postsApi = picoApi.injectEndpoints({
         }),
       }),
       updatePost: builder.mutation<void, UpdatePostArgs>({
+        invalidatesTags: ['PublicPosts'],
         onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
           try {
             await queryFulfilled
