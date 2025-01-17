@@ -105,13 +105,13 @@ export type GetPostsAllPublicArgs = {
 }
 
 export type GetPostsAllPublicResponse = {
-  items: PublicPostsItems[]
+  items: PublicPostsItem[]
   pageSize: number
   totalCount: number
   totalUsers: number
 }
 
-export type PublicPostsItems = {
+export type PublicPostsItem = {
   avatarOwner: string
   // todo: CHECK type of avatarWhoLikes and location
   avatarWhoLikes: any[]

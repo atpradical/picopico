@@ -35,7 +35,7 @@
   justify-content: space-between;
 
   width: 100%;
-  padding: 24px;
+  padding-bottom: 24px;
 }
 
 .descriptionContainer {
@@ -44,17 +44,7 @@
   gap: 24px;
 }
 
-.textArea {
-  resize: none;
-
-  width: 100%;
-  max-width: 434px;
-  min-height: 120px;
-
-  // размытие фона https://stackoverflow.com/questions/54667653/text-blur-after-scroll-bar-hide-with-webkit
-  border-radius: unset;
-}
-
 .button {
   align-self: flex-end;
+  margin-right: 24px;
 }

@@ -1,4 +1,5 @@
 import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
 import { createPostActions } from '@/features/posts/api'
@@ -8,13 +9,14 @@ import {
   POSTS_MAX_FILE_SIZE,
   PostFilter,
 } from '@/features/posts/config'
-import { PostsStep, selectCreatePostAllData } from '@/features/posts/model'
 import {
-  CreatePostCarousel,
-  CreatePostDescription,
-  CreatePostFilters,
-  CreatePostHeader,
-} from '@/features/posts/ui'
+  PostsDescriptionField,
+  PostsStep,
+  postsDescriptionSchemeCreator,
+  selectCreatePostAllData,
+} from '@/features/posts/model'
+import { CreatePostCarousel, CreatePostFilters, CreatePostHeader } from '@/features/posts/ui'
+import { PostMetadataForm } from '@/features/posts/ui/post-meta-form'
 import { publicationsActions } from '@/features/publication/api'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
@@ -30,6 +32,7 @@ import {
   FileUploader,
   toasterModal,
 } from '@atpradical/picopico-ui-kit'
+import { zodResolver } from '@hookform/resolvers/zod'
 import clsx from 'clsx'
 
 import s from './create-post-dialog-styles.module.scss'
@@ -39,10 +42,22 @@ type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { description, dialogMeta, previewList } = useSelector(selectCreatePostAllData)
+  const { dialogMeta, previewList } = useSelector(selectCreatePostAllData)
   const [isAlertDialog, setIsAlertDialog] = useState(false)
   // todo: переделать на Redux + IndexedDB
   const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
+
+  const methods = useForm<PostsDescriptionField>({
+    mode: 'all',
+    reValidateMode: 'onChange',
+    resolver: zodResolver(postsDescriptionSchemeCreator(t.validation.postDescription.maxLength)),
+  })
+
+  const {
+    formState: { isValid },
+    handleSubmit,
+    reset,
+  } = methods
 
   useEffect(() => {
     if (imagesList && imagesList.length) {
@@ -104,13 +119,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const [createPostImage] = useCreatePostImageMutation()
   const [createPost] = useCreatePostMutation()
 
-  const publishPostsHandler = async () => {
-    if (dialogMeta.errorMessage) {
-      showErrorToast(dialogMeta.errorMessage)
-
-      return
-    }
-
+  const publishPostsHandler = handleSubmit(async ({ description }: PostsDescriptionField) => {
     if (!previewList?.length) {
       return
     }
@@ -143,15 +152,17 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       showErrorToast(errors)
     }
-  }
+  })
 
   const navigationButtonHandler = (step: PostsStep) => {
     dispatch(createPostActions.setPostCreationStep({ step }))
   }
 
   const closeDialogHandler = () => {
+    reset()
     dispatch(createPostActions.resetPost())
     setImagesList(null)
+    dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
   }
 
   const interruptDialogHandler = (event: Event) => {
@@ -185,6 +196,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             title={t.createPostDialog.accessibilityTitle}
           />
           <CreatePostHeader
+            isValid={isValid}
             onBack={navigationButtonHandler}
             onClose={closeDialogHandler}
             onNext={navigationButtonHandler}
@@ -217,7 +229,11 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             >
               <CreatePostCarousel onRemove={removeImageHandler} onUpload={uploadPostHandler} />
               {dialogMeta.currentStep === PostsStep.Filters && <CreatePostFilters />}
-              {dialogMeta.currentStep === PostsStep.Publish && <CreatePostDescription />}
+              {dialogMeta.currentStep === PostsStep.Publish && (
+                <FormProvider {...methods}>
+                  <PostMetadataForm />
+                </FormProvider>
+              )}
             </DialogBody>
           )}
         </DialogContent>
@@ -226,6 +242,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
         isOpen={isAlertDialog}
         onConfirm={() => {}} //todo: добавить возможность сохранять черновик в IndexedDB
         onOpenChange={setIsAlertDialog}
+        onReject={closeDialogHandler}
         t={t.createPostDialog.alertDialog}
       />
     </>

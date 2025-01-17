@@ -27,12 +27,17 @@ type AlertDialogProps = {
   isOpen: boolean
   onConfirm: () => void
   onOpenChange: (isOpen: boolean) => void
+  onReject?: () => void
   t: AlertDialogTranslations
 }
 
-export function AlertDialog({ isOpen, onConfirm, onOpenChange, t }: AlertDialogProps) {
+export function AlertDialog({ isOpen, onConfirm, onOpenChange, onReject, t }: AlertDialogProps) {
   const closeDialogHandler = () => {
     onOpenChange(false)
+
+    if (onReject) {
+      onReject()
+    }
   }
 
   return (

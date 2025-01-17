@@ -4,7 +4,6 @@ import { createSelector } from 'reselect'
 
 export const selectCreatePostAllData = (state: AppState) => state.createPost
 export const selectPostDialogMeta = (state: AppState) => state.createPost.dialogMeta
-export const selectPostDescription = (state: AppState) => state.createPost.description
 
 // Селектор для получения контента поста по его postId
 export const selectPostContent = createSelector(

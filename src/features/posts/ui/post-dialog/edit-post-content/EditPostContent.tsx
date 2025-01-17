@@ -1,14 +1,13 @@
-import { ChangeEvent, useEffect, useState } from 'react'
+import { FormProvider, useForm } from 'react-hook-form'
 
-import { POSTS_DESCRIPTION_MAX_LENGTH } from '@/features/posts/config'
-import { postsDescriptionSchemeCreator } from '@/features/posts/model'
+import { PostsDescriptionField, postsDescriptionSchemeCreator } from '@/features/posts/model'
+import { PostMetadataForm } from '@/features/posts/ui'
 import { publicationsActions } from '@/features/publication/api'
-import { GetPostsItems, useUpdatePostMutation } from '@/services/posts'
+import { PublicPostsItem, useUpdatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
-  Avatar,
   Button,
   Carousel,
   CloseOutlineIcon,
@@ -16,43 +15,38 @@ import {
   DialogClose,
   DialogContent,
   DialogHeader,
-  TextArea,
   Typography,
 } from '@atpradical/picopico-ui-kit'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 import s from './EditPostContent.module.scss'
 
 type EditPostContentProps = {
   onInterrupt: (event: Event) => void
-  postData: GetPostsItems
+  postData: PublicPostsItem
 }
 
 export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const [description, setDescription] = useState(postData.description)
-  const [descriptionError, setDescriptionError] = useState('')
   const [updatePost] = useUpdatePostMutation()
 
-  useEffect(() => {
-    if (description) {
-      const checkResult = postsDescriptionSchemeCreator(
-        t.validation.postDescription.maxLength
-      ).safeParse({
-        description,
-      })
+  const methods = useForm<PostsDescriptionField>({
+    defaultValues: {
+      description: postData.description,
+    },
+    mode: 'all',
+    reValidateMode: 'onChange',
+    resolver: zodResolver(postsDescriptionSchemeCreator(t.validation.postDescription.maxLength)),
+  })
 
-      if (checkResult.error) {
-        setDescriptionError(checkResult.error.errors[0].message)
-      }
-      if (checkResult.success) {
-        setDescriptionError('')
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [description])
+  const {
+    formState: { isValid },
+    handleSubmit,
+    reset,
+  } = methods
 
-  const savePostHandler = async () => {
+  const savePostHandler = handleSubmit(async ({ description }: PostsDescriptionField) => {
     try {
       await updatePost({ description, postId: postData.id }).unwrap()
       dispatch(publicationsActions.toggleEditMode({ isEdit: false }))
@@ -61,17 +55,18 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
 
       showErrorToast(errors)
     }
-  }
+  })
 
-  const newDescriptionHandler = (e: ChangeEvent<HTMLTextAreaElement>) => {
-    setDescription(e.currentTarget.value)
+  const interruptHandler = (event: Event) => {
+    reset()
+    onInterrupt(event)
   }
 
   return (
     <DialogContent
       className={s.dialogContent}
-      onEscapeKeyDown={onInterrupt}
-      onInteractOutside={onInterrupt}
+      onEscapeKeyDown={interruptHandler}
+      onInteractOutside={interruptHandler}
       overlayClassName={s.dialogOverlay}
     >
       <HiddenDialogComponents
@@ -84,7 +79,7 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
         </Typography>
         <DialogClose asChild>
           <Button
-            onClick={onInterrupt}
+            onClick={interruptHandler}
             title={t.postDialog.editPostDialog.closeIconTitle}
             variant={'icon'}
           >
@@ -95,26 +90,12 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
       <DialogBody className={s.dialogBody}>
         <Carousel className={s.carousel} slides={postData.images.map(el => el.url)} />
         <div className={s.formContainer}>
-          <div className={s.descriptionContainer}>
-            <Avatar
-              showUserName
-              size={'s'}
-              src={postData.avatarOwner}
-              userName={postData.userName}
+          <FormProvider {...methods}>
+            <PostMetadataForm
+              descriptionLabel={t.postDialog.editPostDialog.descriptionFieldPlaceholder}
             />
-            <TextArea
-              className={s.textArea}
-              counterLimit={POSTS_DESCRIPTION_MAX_LENGTH}
-              counterValue={description.length}
-              errorText={descriptionError}
-              label={t.postDialog.editPostDialog.descriptionFieldLabel}
-              onChange={newDescriptionHandler}
-              placeholder={t.postDialog.editPostDialog.descriptionFieldPlaceholder}
-              rows={6}
-              value={description}
-            />
-          </div>
-          <Button className={s.button} onClick={savePostHandler}>
+          </FormProvider>
+          <Button className={s.button} disabled={!isValid} onClick={savePostHandler}>
             {t.postDialog.editPostDialog.saveButton}
           </Button>
         </div>

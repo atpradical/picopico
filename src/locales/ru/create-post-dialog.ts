@@ -10,7 +10,7 @@ export const createPostDialog = {
     accessibilityTitle: 'Всплывающее окно, запрашивающее пользователя прервать текущий диалог',
     closeButton: 'закрыть',
     confirmButton: 'Сохранить',
-    rejectButton: 'Отменить',
+    rejectButton: 'Не сохранять',
     visibleBody:
       'Вы действительно хотите закрыть создание публикации?\n' +
       'Если вы закроете, все будет удалено',

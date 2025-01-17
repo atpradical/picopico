@@ -1,11 +1,11 @@
-import { PublicPostsItems } from '@/services/posts'
+import { PublicPostsItem } from '@/services/posts'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 import { HYDRATE } from 'next-redux-wrapper'
 
 const initialState = {
   editMode: false,
   postId: 0,
-  posts: [] as PublicPostsItems[],
+  posts: [] as PublicPostsItem[],
   showPost: false,
 }
 
@@ -22,7 +22,7 @@ const slice = createSlice({
   initialState,
   name: 'publications',
   reducers: {
-    addPublication: (state, action: PayloadAction<{ post: PublicPostsItems }>) => {
+    addPublication: (state, action: PayloadAction<{ post: PublicPostsItem }>) => {
       state.posts.unshift(action.payload.post)
     },
     deletePublication: (state, action: PayloadAction<{ postId: number }>) => {
@@ -33,7 +33,7 @@ const slice = createSlice({
       state.showPost = false
       state.postId = 0
     },
-    setPublications: (state, action: PayloadAction<{ posts: PublicPostsItems[] }>) => {
+    setPublications: (state, action: PayloadAction<{ posts: PublicPostsItem[] }>) => {
       state.posts.push(...action.payload.posts)
     },
     toggleEditMode: (state, action: PayloadAction<{ isEdit: boolean }>) => {
