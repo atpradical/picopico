@@ -69,7 +69,7 @@ function ProfilePage({ profileData }: Props) {
   )
 
   useEffect(() => {
-    // очищаем стейт при выходе со страницы
+    // очищаем state при выходе со страницы
     return () => {
       dispatch(publicationsActions.resetPublications())
     }
