@@ -48,6 +48,9 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
 
   const methods = useForm<PostsDescriptionField>({
+    defaultValues: {
+      description: '',
+    },
     mode: 'all',
     reValidateMode: 'onChange',
     resolver: zodResolver(postsDescriptionSchemeCreator(t.validation.postDescription.maxLength)),
