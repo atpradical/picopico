@@ -28,7 +28,7 @@ export const postDialog = {
       confirmButton: 'Yes',
       rejectButton: 'No',
       visibleBody:
-        'Do you really want to close the edition of the publication? If you close changes won’t be saved',
+        'Do you really want to finish editing? If you close the changes you have made will not be saved',
       visibleTitle: 'Close Post',
     },
     closeIconTitle: 'Close',
