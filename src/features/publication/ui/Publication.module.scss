@@ -4,14 +4,33 @@
   gap: 12px;
 }
 
+.layersIcon {
+  pointer-events: none;
+
+  position: absolute;
+  top: 8px;
+  right: 8px;
+
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
+
+  color: rgb(188 190 192 / 40%);
+}
+
 .imageContainer {
   cursor: pointer;
   position: relative;
   width: 234px;
   height: 228px;
+
+  &:hover .layersIcon {
+    color: #498de7;
+  }
 }
 
 .publicationMeta {
   display: flex;
   flex-direction: column;
 }
+
+

@@ -2,12 +2,13 @@ import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
 import { ONE_DAY_IN_MILLISECONDS } from '@/features/publication/config'
 import { GetPostsItems } from '@/services/posts'
-import { Avatar, Typography } from '@atpradical/picopico-ui-kit'
+import { Avatar, LayersOutlineIcon, Typography } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
 
 import s from './Publication.module.scss'
 
 type PublicationProps = {
+  isCarousel: boolean
   isLastPost: boolean
   onClick: () => void
   post: GetPostsItems
@@ -17,7 +18,7 @@ type PublicationProps = {
 type PublicationRef = ElementRef<'div'>
 
 export const Publication = forwardRef<PublicationRef, PublicationProps>(
-  ({ isLastPost, onClick, post, showDescription = false, ...rest }, ref) => {
+  ({ isCarousel, isLastPost, onClick, post, showDescription = false, ...rest }, ref) => {
     const currentDate = new Date()
     const postDate = new Date(post.updatedAt)
 
@@ -46,6 +47,7 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
             src={post.images[0].url}
             style={{ content: 'contain' }}
           />
+          {isCarousel && <LayersOutlineIcon className={s.layersIcon} />}
         </div>
         {showDescription && (
           <>

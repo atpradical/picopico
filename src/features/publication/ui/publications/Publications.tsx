@@ -40,6 +40,7 @@ export const Publications = ({ updateCursor }: PublicationsProps) => {
     <section className={s.publicationsContainer} ref={sectionRef}>
       {posts.map((post, index) => (
         <Publication
+          isCarousel={post.images.length > 1}
           isLastPost={posts.length === index + 1}
           key={post.id}
           onClick={() => displayPost(post.id)}
