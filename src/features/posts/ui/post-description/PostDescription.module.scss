@@ -7,4 +7,6 @@
 .descriptionWrapper {
   display: flex;
   flex-direction: column;
+  max-width: 380px;
+  overflow-wrap: break-word;
 }
