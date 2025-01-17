@@ -44,7 +44,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const dispatch = useAppDispatch()
   const { dialogMeta, previewList } = useSelector(selectCreatePostAllData)
   const [isAlertDialog, setIsAlertDialog] = useState(false)
-  // todo: переделать на Redux + IndexedDB
+  // todo: IndexedDB
   const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
 
   const methods = useForm<PostsDescriptionField>({
