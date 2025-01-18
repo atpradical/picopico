@@ -95,7 +95,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
       lastName: myProfileData.lastName ?? '',
       userName: myProfileData.userName ?? '',
     },
-    mode: 'onTouched',
+    mode: 'all',
     reValidateMode: 'onChange',
     resolver: zodResolver(profileDataSchemeCreator(validation)),
   })
@@ -155,7 +155,6 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
               defaultValue={datePickerDefault}
               isRequired
               label={profileDataTab.labels.dateOfBirth}
-              locale={locale === 'ru' ? ru : enUS}
               name={'dateOfBirth'}
             />
           }

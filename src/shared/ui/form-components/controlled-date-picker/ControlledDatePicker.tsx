@@ -1,10 +1,10 @@
-import { FieldValues, UseControllerProps, useController } from 'react-hook-form'
+import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
 
 import { DatePicker, DatePickerProps } from '@atpradical/picopico-ui-kit'
 
 export type ControlledDatePickerProps<T extends FieldValues> = Omit<
   DatePickerProps,
-  'disabled' | 'name' | 'onBlur' | 'onChange' | 'onSelectSingleDate' | 'ref' | 'selected' | 'value'
+  'disabled' | 'name' | 'onBlur' | 'onChange' | 'onSelect' | 'ref' | 'selected' | 'value'
 > &
   UseControllerProps<T>
 
@@ -12,31 +12,30 @@ export const ControlledDatePicker = <T extends FieldValues>({
   control,
   defaultValue,
   disabled,
+  errorText,
   name,
   rules,
   shouldUnregister,
   ...rest
 }: ControlledDatePickerProps<T>) => {
-  const {
-    field: { onChange, value, ...field },
-    fieldState: { error },
-  } = useController({
-    control,
-    defaultValue,
-    disabled,
-    name,
-    rules,
-    shouldUnregister,
-  })
-
   return (
-    <DatePicker
-      defaultValue={value}
-      errorText={error?.message}
-      onSelectSingleDate={onChange}
-      selected={value}
-      {...field}
+    <Controller
+      control={control}
+      defaultValue={defaultValue}
+      name={name}
       {...rest}
+      render={({ field: { ref, ...restField }, fieldState: { error } }) => {
+        return (
+          <DatePicker
+            errorText={error?.message}
+            onSelect={restField.onChange} // Передаём выбранную дату в React Hook Form
+            selected={restField.value}
+            {...restField}
+          />
+        )
+      }}
+      rules={rules}
+      shouldUnregister={shouldUnregister}
     />
   )
 }
