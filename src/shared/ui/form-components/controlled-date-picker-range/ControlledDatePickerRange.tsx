@@ -28,5 +28,7 @@ export const ControlledDatePickerRange = <T extends FieldValues>({
     shouldUnregister,
   })
 
-  return <DatePickerRange onSelectRangeDate={onChange} selected={value} {...field} {...rest} />
+  // todo: fix ControlledDatePickerRange
+  // return <DatePickerRange onSelectRangeDate={onChange} selected={value} {...field} {...rest} />
+  return <div>This is ControlledDatePickerRange Component</div>
 }
