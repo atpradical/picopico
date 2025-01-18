@@ -1,6 +1,7 @@
 import { Controller, FieldValues, UseControllerProps } from 'react-hook-form'
 
 import { DatePicker, DatePickerProps } from '@atpradical/picopico-ui-kit'
+import { useRouter } from 'next/router'
 
 export type ControlledDatePickerProps<T extends FieldValues> = Omit<
   DatePickerProps,
@@ -18,6 +19,8 @@ export const ControlledDatePicker = <T extends FieldValues>({
   shouldUnregister,
   ...rest
 }: ControlledDatePickerProps<T>) => {
+  const { locale } = useRouter()
+
   return (
     <Controller
       control={control}
@@ -28,6 +31,7 @@ export const ControlledDatePicker = <T extends FieldValues>({
         return (
           <DatePicker
             errorText={error?.message}
+            localeString={locale}
             onSelect={restField.onChange} // Передаём выбранную дату в React Hook Form
             selected={restField.value}
             {...restField}
