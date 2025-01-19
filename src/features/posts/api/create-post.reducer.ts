@@ -10,17 +10,17 @@ const initialState: PostsState = {
     currentStep: PostsStep.Start,
     isDialogOpen: false,
   },
-  previewList: null,
-  previewUrlsList: null,
+  previewList: [],
+  previewUrlsList: [],
 }
 
 const slice = createSlice({
   initialState,
   name: 'createPost',
   reducers: {
-    addPostPreview: (state, action: PayloadAction<{ preview: PostPreview[] }>) => {
-      state.previewList = action.payload.preview
-      state.previewUrlsList = action.payload.preview.map(el => el.previewUrlOrig)
+    addPostPreview: (state, action: PayloadAction<{ preview: PostPreview }>) => {
+      state.previewList.push(action.payload.preview)
+      state.previewUrlsList.push(action.payload.preview.previewUrlOrig)
     },
     applyFilterToPostPreview: (
       state,
@@ -31,9 +31,13 @@ const slice = createSlice({
         state.previewList[action.payload.index].appliedFilter = action.payload.filter
       }
     },
+    removePostPreview: (state, action: PayloadAction<{ index: number }>) => {
+      state.previewList = state.previewList.filter((_, i) => i !== action.payload.index)
+      state.previewUrlsList = state.previewUrlsList.filter((_, i) => i !== action.payload.index)
+    },
     resetPost: state => {
       state.dialogMeta.currentStep = PostsStep.Start
-      state.previewList = null
+      state.previewList = []
       state.activeSlideIndex = 0
     },
     setActiveSlideIndex: (state, action: PayloadAction<{ index: number }>) => {

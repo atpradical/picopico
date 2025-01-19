@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
@@ -20,7 +20,6 @@ import { PostMetadataForm } from '@/features/posts/ui/post-meta-form'
 import { publicationsActions } from '@/features/publication/api'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { Nullable } from '@/shared/types'
 import { AlertDialog, HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import getCroppedImg from '@/shared/utils/crop-image'
@@ -39,13 +38,12 @@ import s from './create-post-dialog-styles.module.scss'
 
 type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 
+// todo: IndexedDB
 export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
   const { dialogMeta, previewList } = useSelector(selectCreatePostAllData)
   const [isAlertDialog, setIsAlertDialog] = useState(false)
-  // todo: IndexedDB
-  const [imagesList, setImagesList] = useState<Nullable<File[]>>(null)
 
   const methods = useForm<PostsDescriptionField>({
     defaultValues: {
@@ -62,44 +60,14 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     reset,
   } = methods
 
-  useEffect(() => {
-    if (imagesList && imagesList.length) {
-      const newPreviews = imagesList.map(el => {
-        const previewUrl = URL.createObjectURL(el)
-
-        return {
-          appliedFilter: PostFilter.original,
-          appliedZoom: 1,
-          aspectModified: 1,
-          aspectOrig: 1,
-          crop: { x: 0, y: 0 },
-          croppedAreaPixels: null,
-          previewUrlModified: previewUrl,
-          previewUrlOrig: previewUrl,
-        }
-      })
-
-      if (previewList && previewList.length) {
-        previewList.forEach(el => URL.revokeObjectURL(el.previewUrlOrig ?? ''))
-      }
-
-      dispatch(createPostActions.addPostPreview({ preview: newPreviews }))
-
-      return () => newPreviews.forEach(el => URL.revokeObjectURL(el.previewUrlOrig))
-    } else {
-      dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Start }))
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [imagesList])
-
   const uploadPostHandler = (e: ChangeEvent<HTMLInputElement>) => {
+    if (previewList && previewList.length >= POSTS_FILES_LIMIT) {
+      toasterModal({ text: t.createPostDialog.tooManyFilesForUploading, variant: 'error' })
+
+      return
+    }
+
     if (e.target.files && e.target.files.length) {
-      if (imagesList && imagesList.length >= POSTS_FILES_LIMIT) {
-        toasterModal({ text: t.createPostDialog.tooManyFilesForUploading, variant: 'error' })
-
-        return
-      }
-
       const file = e.target.files[0]
 
       if (!POSTS_ALLOWED_UPLOAD_TYPES.includes(file.type)) {
@@ -113,12 +81,25 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
         return
       }
 
-      setImagesList(state => [...(state || []), file])
-      // addToPostsDB(file)
+      const previewUrl = URL.createObjectURL(file)
+
+      dispatch(
+        createPostActions.addPostPreview({
+          preview: {
+            appliedFilter: PostFilter.original,
+            appliedZoom: 1,
+            aspectModified: 1,
+            aspectOrig: 1,
+            crop: { x: 0, y: 0 },
+            croppedAreaPixels: null,
+            previewUrlModified: previewUrl,
+            previewUrlOrig: previewUrl,
+          },
+        })
+      )
       dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Crop }))
     }
   }
-
   const [createPostImage] = useCreatePostImageMutation()
   const [createPost] = useCreatePostMutation()
 
@@ -144,11 +125,9 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       dispatch(createPostActions.resetPost())
 
-      setImagesList(null)
-      // clearPostsDB()
       // todo: CHECK
+      // clearPostsDB()
       dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
-
       dispatch(publicationsActions.addPublication({ post: newPostData }))
     } catch (e) {
       const errors = getErrorMessageData(e)
@@ -162,9 +141,15 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   }
 
   const closeDialogHandler = () => {
+    // Очищаем все объектные URL-адреса
+    previewList?.forEach(preview => {
+      URL.revokeObjectURL(preview.previewUrlOrig)
+      URL.revokeObjectURL(preview.previewUrlModified)
+    })
+
+    // Сбрасываем состояние
     reset()
     dispatch(createPostActions.resetPost())
-    setImagesList(null)
     dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
   }
 
@@ -174,10 +159,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   }
 
   const removeImageHandler = (index: number) => {
-    if (imagesList?.length) {
-      const updatedImagesList = imagesList?.filter((_, i) => i !== index)
+    if (previewList?.length) {
+      // Очищаем объектный URL-адрес для удаляемого изображения
+      URL.revokeObjectURL(previewList[index].previewUrlOrig)
+      URL.revokeObjectURL(previewList[index].previewUrlModified)
 
-      setImagesList([...updatedImagesList])
+      // Удаляем изображение из состояния
+      dispatch(createPostActions.removePostPreview({ index }))
     }
   }
 

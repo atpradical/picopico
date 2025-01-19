@@ -11,8 +11,8 @@ export type PostsState = {
     currentStep: PostsStep
     isDialogOpen: boolean
   }
-  previewList: Nullable<PostPreview[]>
-  previewUrlsList: Nullable<string[]>
+  previewList: PostPreview[]
+  previewUrlsList: string[]
 }
 
 export type PostPreview = {
