@@ -218,7 +218,11 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
                 dialogMeta.currentStep === PostsStep.Crop && s.bodyCrop
               )}
             >
-              <CreatePostCarousel onRemove={removeImageHandler} onUpload={uploadPostHandler} />
+              <CreatePostCarousel
+                onRemove={removeImageHandler}
+                onUpload={uploadPostHandler}
+                previewList={previewList}
+              />
               {dialogMeta.currentStep === PostsStep.Filters && <CreatePostFilters />}
               {dialogMeta.currentStep === PostsStep.Publish && (
                 <FormProvider {...methods}>

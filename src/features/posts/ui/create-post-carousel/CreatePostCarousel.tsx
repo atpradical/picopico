@@ -2,7 +2,7 @@ import { ChangeEvent, useEffect } from 'react'
 import { useSelector } from 'react-redux'
 
 import { createPostActions } from '@/features/posts/api'
-import { selectCreatePostAllData } from '@/features/posts/model'
+import { PostPreview, selectCreatePostAllData } from '@/features/posts/model'
 import { CropItem } from '@/features/posts/ui'
 import { useAppDispatch } from '@/shared/hooks'
 import {
@@ -20,11 +20,14 @@ import s from './CreatePostCarousel.module.scss'
 type CreatePostCarouselProps = {
   onRemove: (index: number) => void
   onUpload: (e: ChangeEvent<HTMLInputElement>) => void
+  previewList: PostPreview[]
 }
 
-export const CreatePostCarousel = ({ onRemove, onUpload }: CreatePostCarouselProps) => {
-  const { previewList } = useSelector(selectCreatePostAllData)
-
+export const CreatePostCarousel = ({
+  onRemove,
+  onUpload,
+  previewList,
+}: CreatePostCarouselProps) => {
   if (!previewList || !previewList.length) {
     return null
   }
