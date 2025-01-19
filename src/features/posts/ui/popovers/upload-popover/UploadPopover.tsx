@@ -1,4 +1,4 @@
-import { ChangeEvent, useRef } from 'react'
+import { ChangeEvent } from 'react'
 import { useSelector } from 'react-redux'
 
 import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
@@ -32,7 +32,6 @@ type UploadPopoverProps = {
 export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopoverProps) => {
   const swiper = useSwiper()
   const { previewUrlsList } = useSelector(selectCreatePostAllData)
-  const scrollContainerRef = useRef<HTMLDivElement>(null) // Ссылка на контейнер с прокруткой
 
   const switchToSlideHandler = (index: number) => {
     swiper.slideTo(index)
@@ -52,15 +51,7 @@ export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopo
       </PopoverTrigger>
       <PopoverContent align={'end'} className={s.popoverContainer} side={'top'}>
         <ScrollArea type={'hover'}>
-          <div className={s.contentContainer} ref={scrollContainerRef}>
-            <FileUploader
-              accept={POSTS_ALLOWED_UPLOAD_TYPES}
-              className={s.addButton}
-              onChange={onUpload}
-              variant={'icon'}
-            >
-              <PlusCircleOutlineIcon className={s.plusIcon} />
-            </FileUploader>
+          <div className={s.contentContainer}>
             {previewUrlsList?.map((el, index) => {
               const isActiveSlide = swiper.activeIndex === index
 
@@ -90,6 +81,14 @@ export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopo
             <ScrollBar orientation={'horizontal'} />
           </div>
         </ScrollArea>
+        <FileUploader
+          accept={POSTS_ALLOWED_UPLOAD_TYPES}
+          className={s.addButton}
+          onChange={onUpload}
+          variant={'icon'}
+        >
+          <PlusCircleOutlineIcon className={s.plusIcon} />
+        </FileUploader>
       </PopoverContent>
     </Popover>
   )

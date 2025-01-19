@@ -13,8 +13,13 @@
 }
 
 .popoverContainer {
+  display: flex;
+  gap: 10px;
+  justify-content: flex-end;
+
   width: 100%;
   max-width: 465px;
+
   background-color: rgb(23 23 23 / 80%);
 
   &:focus {
@@ -58,9 +63,9 @@
 
   width: var(--icon-size-xs);
   height: var(--icon-size-xs);
+  border-radius: var(--border-radius-s);
 
   background-color: rgb(23 23 23 / 80%);
-  border-radius: var(--border-radius-s);
 }
 
 .addButton {
