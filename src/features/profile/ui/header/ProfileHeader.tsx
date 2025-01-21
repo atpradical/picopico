@@ -41,10 +41,15 @@ export const ProfileHeader = ({ className, profileData, ...props }: ProfileHeade
           <Typography as={'h1'} variant={'h1'}>
             {profileData.userName}
           </Typography>
-          {showSettingsButton && (
+          {showSettingsButton ? (
             <Button as={link} href={Paths.Settings} variant={'secondary'}>
               {t.profilePage.profileSettingsButton}
             </Button>
+          ) : (
+            <div className={s.actions}>
+              <Button>{t.profilePage.profileFollowButton}</Button>
+              <Button variant={'secondary'}>{t.profilePage.profileSendMessageButton}</Button>
+            </div>
           )}
         </div>
         <ProfileStats metaData={profileData.userMetadata} />

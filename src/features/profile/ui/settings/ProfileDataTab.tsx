@@ -19,7 +19,6 @@ import { Button, OptionsValue, TabsContent, toaster } from '@atpradical/picopico
 import { zodResolver } from '@hookform/resolvers/zod'
 import * as Separator from '@radix-ui/react-separator'
 import clsx from 'clsx'
-import { enUS, ru } from 'date-fns/locale'
 
 import s from './ProfileDataTab.module.scss'
 
