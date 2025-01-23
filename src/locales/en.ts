@@ -53,6 +53,7 @@ export const en = {
     en: 'English',
     ru: ' Russian',
   },
+  loading: 'Loading...',
   logoutDialog: logoutDialog,
   postDialog: postDialog,
   privacyPolicyPage: privacyPolicyPage,

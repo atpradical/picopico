@@ -13,10 +13,11 @@ import {
 } from '@/services/posts'
 import { ResponseGetUserProfile, getUserProfile } from '@/services/profile'
 import { SortDirection } from '@/shared/enums/sort.enums'
-import { useAppDispatch } from '@/shared/hooks'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { getSidebarLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { INITIAL_CURSOR } from '@/views/profile/config'
+import { Spinner } from '@atpradical/picopico-ui-kit'
 import { GetServerSideProps } from 'next'
 
 import s from './ProfilePage.module.scss'
@@ -57,7 +58,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
     return {
       props: {
-        prerenderedPostData,
+        prerenderedPostData: prerenderedPostData || null,
         profileData: profileData.data,
       },
     }
@@ -71,6 +72,7 @@ type Props = {
 
 function ProfilePage({ prerenderedPostData, profileData }: Props) {
   const dispatch = useAppDispatch()
+  const { t } = useTranslation()
 
   useEffect(() => {
     if (prerenderedPostData) {
@@ -87,7 +89,7 @@ function ProfilePage({ prerenderedPostData, profileData }: Props) {
 
   const [cursor, setCursor] = useState(INITIAL_CURSOR)
 
-  const { data } = useGetPostsAllPublicQuery({
+  const { data, isFetching } = useGetPostsAllPublicQuery({
     endCursorPostId: cursor,
     pageSize: POSTS_MAX_PAGE_SIZE,
     sortDirection: SortDirection.DESC,
@@ -107,6 +109,7 @@ function ProfilePage({ prerenderedPostData, profileData }: Props) {
       <div className={s.container}>
         <ProfileHeader className={s.header} profileData={profileData} />
         <Publications posts={data?.items} updateCursor={updateCursor} />
+        {isFetching && <Spinner containerClassName={s.spinner} label={t.loading} />}
       </div>
     </Page>
   )

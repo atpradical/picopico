@@ -44,6 +44,7 @@ export const ru: LocaleType = {
     en: 'Английский',
     ru: ' Русский',
   },
+  loading: 'Загрузка...',
   logoutDialog: logoutDialog,
   postDialog: postDialog,
   privacyPolicyPage: privacyPolicyPage,
