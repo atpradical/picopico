@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
@@ -99,8 +99,8 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       dispatch(createPostActions.setPostCreationStep({ step: PostsStep.Crop }))
     }
   }
-  const [createPostImage] = useCreatePostImageMutation()
-  const [createPost] = useCreatePostMutation()
+  const [createPostImage, { isLoading: isLoadingCreatePostImage }] = useCreatePostImageMutation()
+  const [createPost, { isLoading: isLoadingCreatePost }] = useCreatePostMutation()
 
   const publishPostsHandler = handleSubmit(async ({ description }: PostsDescriptionField) => {
     if (!previewList?.length) {
@@ -170,6 +170,8 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const isWide =
     dialogMeta.currentStep === PostsStep.Filters || dialogMeta.currentStep === PostsStep.Publish
 
+  const isPublishing = isLoadingCreatePost || isLoadingCreatePostImage
+
   return (
     <>
       <DialogRoot onOpenChange={onOpenChange} open={dialogMeta.isDialogOpen} {...rest}>
@@ -185,6 +187,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             title={t.createPostDialog.accessibilityTitle}
           />
           <CreatePostHeader
+            isPublishing={isPublishing}
             isValid={isValid}
             onBack={navigationButtonHandler}
             onClose={closeDialogHandler}

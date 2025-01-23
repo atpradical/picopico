@@ -16,6 +16,7 @@ import {
 import s from './create-post-dialog-styles.module.scss'
 
 type CreatePostHeaderProps = {
+  isPublishing?: boolean
   isValid: boolean
   onBack: (step: PostsStep) => void
   onClose: () => void
@@ -24,6 +25,7 @@ type CreatePostHeaderProps = {
 } & ComponentPropsWithoutRef<typeof DialogHeader>
 
 export const CreatePostHeader = ({
+  isPublishing,
   isValid,
   onBack,
   onClose,
@@ -68,6 +70,7 @@ export const CreatePostHeader = ({
         <Button
           className={s.confirmStepButton}
           disabled={isPusblishDisabled}
+          isLoading={isPublishing}
           onClick={() => confirmStepHandler(currentStep, onNext, onPublish)}
           ripple={false}
           type={'submit'}

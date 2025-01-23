@@ -28,7 +28,7 @@ type EditPostContentProps = {
 export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const [updatePost] = useUpdatePostMutation()
+  const [updatePost, { isLoading }] = useUpdatePostMutation()
 
   const methods = useForm<PostsDescriptionField>({
     defaultValues: {
@@ -89,7 +89,12 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
               descriptionLabel={t.postDialog.editPostDialog.descriptionFieldPlaceholder}
             />
           </FormProvider>
-          <Button className={s.button} disabled={!isValid} onClick={savePostHandler}>
+          <Button
+            className={s.button}
+            disabled={!isValid}
+            isLoading={isLoading}
+            onClick={savePostHandler}
+          >
             {t.postDialog.editPostDialog.saveButton}
           </Button>
         </div>

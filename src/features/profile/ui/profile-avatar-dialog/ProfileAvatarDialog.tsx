@@ -33,7 +33,7 @@ export const ProfileAvatarDialog = () => {
   const [zoom, setZoom] = useState(1)
   const [croppedAreaPixels, setCroppedAreaPixels] = useState<Nullable<Area>>(null)
 
-  const [uploadAvatar] = useUploadAvatarMutation()
+  const [uploadAvatar, { isLoading }] = useUploadAvatarMutation()
   const [newAvatar, setNewAvatar] = useState<Nullable<File | string>>(null)
 
   useEffect(() => {
@@ -131,7 +131,7 @@ export const ProfileAvatarDialog = () => {
                   zoom={zoom}
                 />
               </div>
-              <Button className={s.saveButton} onClick={saveImageHandler}>
+              <Button className={s.saveButton} isLoading={isLoading} onClick={saveImageHandler}>
                 {t.profileAvatarDialog.confirmButton}
               </Button>
             </>

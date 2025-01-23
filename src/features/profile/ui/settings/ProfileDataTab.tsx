@@ -37,7 +37,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
 
   const [selectedCountry, setSelectedCountry] = useState(myProfileData.country)
 
-  const [updateProfile] = useUpdateMyProfileMutation()
+  const [updateProfile, { isLoading }] = useUpdateMyProfileMutation()
 
   const countrySelectValueChangeHandler = (value: string) => {
     setSelectedCountry(value)
@@ -193,6 +193,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
         className={s.submitButton}
         disabled={isDisabledConfirmButton}
         form={'profile-form'}
+        isLoading={isLoading}
         type={'submit'}
       >
         {profileDataTab.formSubmitButton}
