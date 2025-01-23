@@ -5,6 +5,7 @@ import { publicationsActions } from '@/features/publication/api'
 import { Publication } from '@/features/publication/ui'
 import { PublicPostsItem } from '@/services/posts'
 import { useAppDispatch } from '@/shared/hooks'
+import { usePagesRouterQueryUpdate } from '@/shared/hooks/usePagesRouterQueryUpdate'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
 import s from './Publications.module.scss'
@@ -15,6 +16,7 @@ type PublicationsProps = {
 }
 
 export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
+  const { addRouterQueryParamShallow } = usePagesRouterQueryUpdate()
   const dispatch = useAppDispatch()
   const sectionRef = useRef(null)
 
@@ -28,6 +30,7 @@ export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
   }, [entry?.isIntersecting, posts.length])
 
   const displayPost = (postId: number) => {
+    addRouterQueryParamShallow({ postId: String(postId) })
     const postData = posts.find(item => item.id === postId)
 
     if (postData) {

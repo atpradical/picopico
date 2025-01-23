@@ -2,6 +2,7 @@ import { PostActionsDropdown, PostDescription } from '@/features/posts/ui'
 import { publicationsActions } from '@/features/publication/api'
 import { PublicPostsItem } from '@/services/posts'
 import { useAppDispatch, useIsAuthUserOnProfilePage, useTranslation } from '@/shared/hooks'
+import { usePagesRouterQueryUpdate } from '@/shared/hooks/usePagesRouterQueryUpdate'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Avatar,
@@ -21,6 +22,7 @@ type DisplayPostContentProps = {
 }
 export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContentProps) => {
   const { t } = useTranslation()
+  const { removeRouterQueryParam } = usePagesRouterQueryUpdate()
   const dispatch = useAppDispatch()
   const postsImages = postData.images.map(el => el.url)
 
@@ -28,6 +30,7 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
 
   const closePostDialogHandler = () => {
     dispatch(publicationsActions.togglePostDisplayDialog({ isOpen: false, postId: 0 }))
+    removeRouterQueryParam('postId')
   }
 
   return (

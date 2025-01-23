@@ -127,3 +127,8 @@ export type PublicPostsItem = {
   updatedAt: string
   userName: string
 }
+
+export type GetPublicPostByIdResponse = PublicPostsItem
+export type GetPublicPostByIdArgs = {
+  postId: number
+}

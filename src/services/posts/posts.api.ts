@@ -9,6 +9,8 @@ import {
   GetPostsAllPublicResponse,
   GetPostsArgs,
   GetPostsResponse,
+  GetPublicPostByIdArgs,
+  GetPublicPostByIdResponse,
   UpdatePostArgs,
 } from '@/services/posts/posts.types'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
@@ -132,6 +134,12 @@ export const postsApi = picoApi.injectEndpoints({
           return endpointName
         },
       }),
+      getPublicPostById: builder.mutation<GetPublicPostByIdResponse, GetPublicPostByIdArgs>({
+        query: ({ postId }) => ({
+          method: 'GET',
+          url: `v1/public-posts/${postId}`,
+        }),
+      }),
       updatePost: builder.mutation<void, UpdatePostArgs>({
         async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
           // Optimistic Update for Post Delete
@@ -187,4 +195,4 @@ export const {
 } = postsApi
 
 // export endpoints for use in SSR
-export const { getPostsAllPublic } = postsApi.endpoints
+export const { getPostsAllPublic, getPublicPostById } = postsApi.endpoints

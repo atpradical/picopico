@@ -14,6 +14,7 @@ type PostsDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 
 export const PostDialog = (props: PostsDialogProps) => {
   const { t } = useTranslation()
+
   const dispatch = useAppDispatch()
   const { editMode, postData, showPost } = useSelector(selectPublicationsAllData)
 
