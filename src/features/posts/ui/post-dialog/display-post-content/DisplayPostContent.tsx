@@ -1,6 +1,6 @@
 import { PostActionsDropdown, PostDescription } from '@/features/posts/ui'
 import { publicationsActions } from '@/features/publication/api'
-import { GetPostsItems } from '@/services/posts'
+import { PublicPostsItem } from '@/services/posts'
 import { useAppDispatch, useIsAuthUserOnProfilePage, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
@@ -16,7 +16,7 @@ import * as Separator from '@radix-ui/react-separator'
 import s from './DisplayPostContent.module.scss'
 
 type DisplayPostContentProps = {
-  postData: GetPostsItems
+  postData: PublicPostsItem
   setEditMode: () => void
 }
 export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContentProps) => {
@@ -47,7 +47,7 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
           <Avatar showUserName size={'s'} src={postData.avatarOwner} userName={postData.userName} />
           {isAuthUserOnProfilePage && (
             <PostActionsDropdown
-              onConfirm={closePostDialogHandler}
+              onDeleteConfirm={closePostDialogHandler}
               onEdit={setEditMode}
               postId={postData.id}
             />

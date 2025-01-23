@@ -1,40 +1,19 @@
 import { PublicPostsItem } from '@/services/posts'
 import { PayloadAction, createSlice } from '@reduxjs/toolkit'
-import { HYDRATE } from 'next-redux-wrapper'
 
 const initialState = {
   editMode: false,
+  postData: null as PublicPostsItem | null,
   postId: 0,
-  posts: [] as PublicPostsItem[],
   showPost: false,
 }
 
 const slice = createSlice({
-  extraReducers: builder => {
-    builder.addCase(HYDRATE, (state, action: any) => {
-      // Сливаем состояние Redux с серверными данными при гидратации
-      // todo: CHECK
-      if (action.payload.publications) {
-        state.posts = action.payload.publications.posts || state.posts
-      }
-    })
-  },
   initialState,
   name: 'publications',
   reducers: {
-    addPublication: (state, action: PayloadAction<{ post: PublicPostsItem }>) => {
-      state.posts.unshift(action.payload.post)
-    },
-    deletePublication: (state, action: PayloadAction<{ postId: number }>) => {
-      state.posts = state.posts.filter(post => post.id !== action.payload.postId)
-    },
-    resetPublications: state => {
-      state.posts = []
-      state.showPost = false
-      state.postId = 0
-    },
-    setPublications: (state, action: PayloadAction<{ posts: PublicPostsItem[] }>) => {
-      state.posts.push(...action.payload.posts)
+    setPostData: (state, action: PayloadAction<{ postData: PublicPostsItem }>) => {
+      state.postData = action.payload.postData
     },
     toggleEditMode: (state, action: PayloadAction<{ isEdit: boolean }>) => {
       state.editMode = action.payload.isEdit
@@ -46,15 +25,16 @@ const slice = createSlice({
       state.showPost = action.payload.isOpen
       state.postId = action.payload.postId
     },
-    updatePostDescription: (
-      state,
-      action: PayloadAction<{ description: string; postId: number }>
-    ) => {
-      state.posts.forEach(post => {
-        if (post.id === action.payload.postId) {
-          post.description = action.payload.description
-        }
-      })
+    updatePostData: (state, action: PayloadAction<{ description?: string }>) => {
+      if (!state.postData) {
+        return
+      }
+
+      const { description } = action.payload
+
+      if (description) {
+        state.postData.description = description
+      }
     },
   },
 })

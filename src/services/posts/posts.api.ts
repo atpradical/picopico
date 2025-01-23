@@ -1,4 +1,3 @@
-import { publicationsActions } from '@/features/publication/api'
 import { picoApi } from '@/services'
 import {
   CreatePostArgs,
@@ -18,6 +17,31 @@ export const postsApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       createPost: builder.mutation<CreatePostResponse, CreatePostArgs>({
+        // Pessimistic Update
+        async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
+          const cachedArgsForQuery = postsApi.util.selectCachedArgsForQuery(
+            getState(),
+            'getPostsAllPublic'
+          )
+
+          try {
+            // Ждем завершения запроса
+            const { data } = await queryFulfilled
+
+            // После успешного запроса обновляем кеш
+            cachedArgsForQuery.forEach(cachedArgs => {
+              dispatch(
+                postsApi.util.updateQueryData('getPostsAllPublic', cachedArgs, draft => {
+                  draft.items.unshift(data)
+                })
+              )
+            })
+          } catch (e) {
+            const error = getErrorMessageData(e)
+
+            showErrorToast(error)
+          }
+        },
         query: body => ({
           body,
           method: 'POST',
@@ -43,11 +67,32 @@ export const postsApi = picoApi.injectEndpoints({
         },
       }),
       deletePost: builder.mutation<void, DeletePostArgs>({
-        onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+        async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
+          // Optimistic Update for Post Delete
+          // читаем кеш постов
+          const cachedPublicPostsForQuery = postsApi.util.selectCachedArgsForQuery(
+            getState(),
+            'getPostsAllPublic'
+          )
+
+          // массив пустышка куда положим посты после удаления.
+          const patchedPublicPosts: any[] = []
+
+          cachedPublicPostsForQuery.forEach(cachedArgs => {
+            patchedPublicPosts.push(
+              dispatch(
+                postsApi.util.updateQueryData('getPostsAllPublic', cachedArgs, draft => {
+                  // Удаляем пост из draft
+                  draft.items = draft.items.filter(post => post.id !== args.postId)
+                })
+              )
+            )
+          })
           try {
             await queryFulfilled
-            dispatch(publicationsActions.deletePublication({ postId: args.postId }))
           } catch (e) {
+            // Если запрос завершился ошибкой, откатываем изменения и показываем нотификашку
+            patchedPublicPosts.forEach(patchResult => patchResult.undo())
             const error = getErrorMessageData(e)
 
             showErrorToast(error)
@@ -59,21 +104,6 @@ export const postsApi = picoApi.injectEndpoints({
         }),
       }),
       getPosts: builder.query<GetPostsResponse, GetPostsArgs>({
-        // onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
-        //   try {
-        //     const { data } = await queryFulfilled
-        //
-        //     dispatch(
-        //       publicationsActions.setPublications({
-        //         posts: data.items,
-        //       })
-        //     )
-        //   } catch (e) {
-        //     const error = getErrorMessageData(e)
-        //
-        //     showErrorToast(error)
-        //   }
-        // },
         providesTags: ['Posts'],
         query: ({ userName, ...args }) => ({
           method: 'GET',
@@ -82,20 +112,14 @@ export const postsApi = picoApi.injectEndpoints({
         }),
       }),
       getPostsAllPublic: builder.query<GetPostsAllPublicResponse, GetPostsAllPublicArgs>({
-        onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
-          try {
-            const { data } = await queryFulfilled
-
-            dispatch(
-              publicationsActions.setPublications({
-                posts: data.items,
-              })
-            )
-          } catch (e) {
-            const error = getErrorMessageData(e)
-
-            showErrorToast(error)
-          }
+        // Refetch when the page arg changes
+        forceRefetch({ currentArg, previousArg }) {
+          // Повторный запрос только если изменился endCursorPostId или другие ключевые параметры
+          return currentArg?.endCursorPostId !== previousArg?.endCursorPostId
+        },
+        // Always merge incoming data to the cache entry
+        merge: (currentCache, newItems) => {
+          currentCache.items.push(...newItems.items)
         },
         providesTags: ['PublicPosts'],
         query: ({ endCursorPostId, userId, ...args }) => ({
@@ -103,19 +127,41 @@ export const postsApi = picoApi.injectEndpoints({
           params: args ?? undefined,
           url: `v1/public-posts/user/${userId}/${endCursorPostId}`,
         }),
+        // Only have one cache entry because the arg always maps to one string
+        serializeQueryArgs: ({ endpointName }) => {
+          return endpointName
+        },
       }),
       updatePost: builder.mutation<void, UpdatePostArgs>({
-        invalidatesTags: ['PublicPosts'],
-        onQueryStarted: async (args, { dispatch, queryFulfilled }) => {
+        async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
+          // Optimistic Update for Post Delete
+          // читаем кеш постов
+          const cachedPublicPostsForQuery = postsApi.util.selectCachedArgsForQuery(
+            getState(),
+            'getPostsAllPublic'
+          )
+
+          // массив пустышка куда положим посты после удаления.
+          const patchedPublicPosts: any[] = []
+
+          cachedPublicPostsForQuery.forEach(cachedArgs => {
+            patchedPublicPosts.push(
+              dispatch(
+                postsApi.util.updateQueryData('getPostsAllPublic', cachedArgs, draft => {
+                  // Обновляем пост в draft
+                  const postToUpdateIndex = draft.items.findIndex(el => el.id === args.postId)
+
+                  draft.items[postToUpdateIndex].description = args.description
+                })
+              )
+            )
+          })
+
           try {
             await queryFulfilled
-            dispatch(
-              publicationsActions.updatePostDescription({
-                description: args.description,
-                postId: args.postId,
-              })
-            )
           } catch (e) {
+            // Если запрос завершился ошибкой, откатываем изменения и показываем нотификашку
+            patchedPublicPosts.forEach(patchResult => patchResult.undo())
             const error = getErrorMessageData(e)
 
             showErrorToast(error)

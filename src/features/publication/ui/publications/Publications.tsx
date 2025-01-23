@@ -1,25 +1,24 @@
 import { useEffect, useRef } from 'react'
-import { useSelector } from 'react-redux'
 
 import { PostDialog } from '@/features/posts/ui'
 import { publicationsActions } from '@/features/publication/api'
-import { selectPublicationsAllData } from '@/features/publication/model'
 import { Publication } from '@/features/publication/ui'
+import { PublicPostsItem } from '@/services/posts'
 import { useAppDispatch } from '@/shared/hooks'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
 import s from './Publications.module.scss'
 
 type PublicationsProps = {
+  posts: PublicPostsItem[]
   updateCursor: (postId: number) => void
 }
 
-export const Publications = ({ updateCursor }: PublicationsProps) => {
+export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
   const dispatch = useAppDispatch()
-  const { posts } = useSelector(selectPublicationsAllData)
   const sectionRef = useRef(null)
 
-  const [lastPostRef, entry] = useIntersectionObserver({ root: null, threshold: 0.5 })
+  const [lastPostRef, entry] = useIntersectionObserver({ root: null, threshold: 1 })
 
   useEffect(() => {
     if (entry?.isIntersecting) {
@@ -29,11 +28,12 @@ export const Publications = ({ updateCursor }: PublicationsProps) => {
   }, [entry?.isIntersecting, posts.length])
 
   const displayPost = (postId: number) => {
-    dispatch(publicationsActions.togglePostDisplayDialog({ isOpen: true, postId }))
-  }
+    const postData = posts.find(item => item.id === postId)
 
-  if (!posts.length) {
-    return <div>No posts to display</div>
+    if (postData) {
+      dispatch(publicationsActions.togglePostDisplayDialog({ isOpen: true, postId }))
+      dispatch(publicationsActions.setPostData({ postData }))
+    }
   }
 
   return (

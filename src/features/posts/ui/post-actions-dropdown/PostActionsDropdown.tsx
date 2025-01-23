@@ -3,7 +3,6 @@ import { useState } from 'react'
 import { useDeletePostMutation } from '@/services/posts'
 import { useTranslation } from '@/shared/hooks'
 import { AlertDialog } from '@/shared/ui/components'
-import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
   Button,
   DropdownMenu,
@@ -21,12 +20,12 @@ import {
 import s from './PostActionsDropdown.module.scss'
 
 type EditPostDropdownProps = {
-  onConfirm: () => void
+  onDeleteConfirm: () => void
   onEdit: () => void
   postId: number
 }
 
-export const PostActionsDropdown = ({ onConfirm, onEdit, postId }: EditPostDropdownProps) => {
+export const PostActionsDropdown = ({ onDeleteConfirm, onEdit, postId }: EditPostDropdownProps) => {
   const { t } = useTranslation()
   const [isDeleteAlertDialog, setIsDeleteAlertDialog] = useState(false)
   const [deletePost] = useDeletePostMutation()
@@ -37,12 +36,8 @@ export const PostActionsDropdown = ({ onConfirm, onEdit, postId }: EditPostDropd
 
   const deletePostHandler = async () => {
     try {
-      await deletePost({ postId }).unwrap()
-      onConfirm()
-    } catch (e) {
-      const errors = getErrorMessageData(e)
-
-      showErrorToast(errors)
+      await deletePost({ postId })
+      onDeleteConfirm()
     } finally {
       setIsDeleteAlertDialog(false)
     }

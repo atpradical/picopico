@@ -17,7 +17,6 @@ import {
 } from '@/features/posts/model'
 import { CreatePostCarousel, CreatePostFilters, CreatePostHeader } from '@/features/posts/ui'
 import { PostMetadataForm } from '@/features/posts/ui/post-meta-form'
-import { publicationsActions } from '@/features/publication/api'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { AlertDialog, HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
@@ -121,14 +120,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
 
       const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
 
-      const newPostData = await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
+      await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
 
       dispatch(createPostActions.resetPost())
 
       // todo: CHECK
       // clearPostsDB()
       dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
-      dispatch(publicationsActions.addPublication({ post: newPostData }))
     } catch (e) {
       const errors = getErrorMessageData(e)
 

@@ -6,7 +6,6 @@ import { publicationsActions } from '@/features/publication/api'
 import { PublicPostsItem, useUpdatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { HiddenDialogComponents } from '@/shared/ui/components'
-import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
   Button,
   Carousel,
@@ -47,14 +46,9 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
   } = methods
 
   const savePostHandler = handleSubmit(async ({ description }: PostsDescriptionField) => {
-    try {
-      await updatePost({ description, postId: postData.id }).unwrap()
-      dispatch(publicationsActions.toggleEditMode({ isEdit: false }))
-    } catch (e) {
-      const errors = getErrorMessageData(e)
-
-      showErrorToast(errors)
-    }
+    await updatePost({ description, postId: postData.id })
+    dispatch(publicationsActions.updatePostData({ description }))
+    dispatch(publicationsActions.toggleEditMode({ isEdit: false }))
   })
 
   const interruptHandler = (event: Event) => {
