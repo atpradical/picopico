@@ -6,6 +6,7 @@ import { Publication } from '@/features/publication/ui'
 import { PublicPostsItem } from '@/services/posts'
 import { useAppDispatch } from '@/shared/hooks'
 import { usePagesRouterQueryUpdate } from '@/shared/hooks/usePagesRouterQueryUpdate'
+import { Typography } from '@atpradical/picopico-ui-kit'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
 import s from './Publications.module.scss'
@@ -41,16 +42,22 @@ export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
 
   return (
     <section className={s.publicationsContainer} ref={sectionRef}>
-      {posts.map((post, index) => (
-        <Publication
-          isCarousel={post.images.length > 1}
-          isLastPost={posts.length === index + 1}
-          key={post.id}
-          onClick={() => displayPost(post.id)}
-          post={post}
-          ref={lastPostRef}
-        />
-      ))}
+      {posts.length ? (
+        posts.map((post, index) => (
+          <Publication
+            isCarousel={post.images.length > 1}
+            isLastPost={posts.length === index + 1}
+            key={post.id}
+            onClick={() => displayPost(post.id)}
+            post={post}
+            ref={lastPostRef}
+          />
+        ))
+      ) : (
+        <Typography as={'h3'} className={s.noPostText} variant={'h3'}>
+          No Post created yet
+        </Typography>
+      )}
       <PostDialog />
     </section>
   )
