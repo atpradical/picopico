@@ -44,6 +44,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const { dialogMeta, previewList } = useSelector(selectCreatePostAllData)
   const [isAlertDialog, setIsAlertDialog] = useState(false)
 
+  useEffect(() => {
+    if (!previewList.length) {
+      dispatch(createPostActions.resetPost())
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [previewList.length])
+
   const methods = useForm<PostsDescriptionField>({
     defaultValues: {
       description: '',
@@ -157,8 +164,9 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   }
 
   const removeImageHandler = (index: number) => {
+    debugger
     if (previewList?.length) {
-      // Очищаем объектный URL-адрес для удаляемого изображения
+      // Очищаем URL-адрес для удаляемого изображения
       URL.revokeObjectURL(previewList[index].previewUrlOrig)
       URL.revokeObjectURL(previewList[index].previewUrlModified)
 
