@@ -27,5 +27,6 @@ export const picoApi = createApi({
     'Profile',
     'PublicAllPostsByUserId',
     'PublicUsersAmount',
+    'PublicPostsAll',
   ],
 })

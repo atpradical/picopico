@@ -1,6 +1,10 @@
 import { picoApi } from '@/services/picoApi'
 
-import { GetCurrentUsersAmountResponse } from './public-user.types'
+import {
+  GetCurrentUsersAmountResponse,
+  GetPublicPostsAllArgs,
+  GetPublicPostsAllResponse,
+} from './public-user.types'
 
 export const publicUserApi = picoApi.injectEndpoints({
   endpoints: builder => {
@@ -12,11 +16,19 @@ export const publicUserApi = picoApi.injectEndpoints({
           url: `/v1/public-user`,
         }),
       }),
+      getPublicPostsAll: builder.query<GetPublicPostsAllResponse, GetPublicPostsAllArgs>({
+        providesTags: ['PublicPostsAll'],
+        query: ({ endCursorPostId, ...params }) => ({
+          method: 'GET',
+          params,
+          url: `v1/public-posts/all/${endCursorPostId}`,
+        }),
+      }),
     }
   },
 })
 
-export const { useGetCurrentUsersAmountQuery } = publicUserApi
+export const { useGetCurrentUsersAmountQuery, useGetPublicPostsAllQuery } = publicUserApi
 
 // export endpoints for use in SSR
-export const { getCurrentUsersAmount } = publicUserApi.endpoints
+export const { getCurrentUsersAmount, getPublicPostsAll } = publicUserApi.endpoints

@@ -9,7 +9,7 @@ import s from './Publication.module.scss'
 
 type PublicationProps = {
   isCarousel: boolean
-  isLastPost: boolean
+  isLastPost?: boolean
   onClick: () => void
   post: GetPostsItems
   showDescription?: boolean
