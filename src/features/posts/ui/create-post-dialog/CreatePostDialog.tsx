@@ -128,7 +128,6 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
 
       await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
-
       dispatch(createPostActions.resetPost())
 
       // todo: CHECK

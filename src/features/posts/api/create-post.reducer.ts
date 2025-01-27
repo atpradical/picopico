@@ -39,6 +39,7 @@ const slice = createSlice({
       state.dialogMeta.currentStep = PostsStep.Start
       state.previewList = []
       state.activeSlideIndex = 0
+      state.previewUrlsList = []
     },
     setActiveSlideIndex: (state, action: PayloadAction<{ index: number }>) => {
       state.activeSlideIndex = action.payload.index
