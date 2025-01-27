@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
 import { DevicesTab } from '@/features/devices/ui'
 import { ProfileDataTab } from '@/features/profile/ui/settings'
@@ -11,7 +11,7 @@ import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopi
 
 import s from './SettingsPage.module.scss'
 
-const TAB_PROFILE_DATA = 'profile_data'
+const TAB_PROFILE_DATA = 'general'
 const TAB_DEVICES = 'devices'
 const TAB_ACCOUNT = 'account'
 const TAB_PAYMENTS = 'payments'
@@ -22,8 +22,29 @@ function SettingsPage() {
   const { myProfileData } = useContext(MyProfileContext)
   const [getSessions, { data: sessionsData }] = useLazyGetSessionsQuery()
 
-  const onTabChangeHandler = async (value: string) => {
-    switch (value) {
+  // Состояние для отслеживания, рендерим ли мы на клиенте
+  const [isClient, setIsClient] = useState(false)
+
+  // Инициализация состояния с учетом значения из sessionStorage
+  const [activeTab, setActiveTab] = useState(TAB_PROFILE_DATA)
+
+  useEffect(() => {
+    // Устанавливаем isClient в true после монтирования компонента
+    setIsClient(true)
+
+    // Устанавливаем значение из sessionStorage только на клиенте
+    if (typeof window !== 'undefined') {
+      const tab = sessionStorage.getItem('activeTab') || TAB_PROFILE_DATA
+
+      setActiveTab(tab)
+    }
+  }, [])
+
+  const onTabChangeHandler = async (tabValue: string) => {
+    setActiveTab(tabValue)
+    sessionStorage.setItem('activeTab', tabValue)
+
+    switch (tabValue) {
       case TAB_DEVICES:
         try {
           await getSessions().unwrap()
@@ -40,10 +61,15 @@ function SettingsPage() {
     }
   }
 
+  // todo: CHECK использую isClient чтобы избавиться от миганий после первого рендера страницы на клиенте из-за sessionStorage.
+  if (!isClient) {
+    return null
+  }
+
   return (
     <Page pt={'36px'}>
       <div className={s.container}>
-        <TabsRoot defaultValue={TAB_PROFILE_DATA} onValueChange={onTabChangeHandler}>
+        <TabsRoot onValueChange={onTabChangeHandler} value={activeTab}>
           <TabsList className={s.tabList}>
             <TabsTrigger value={TAB_PROFILE_DATA}>{tabNames.generalInformation}</TabsTrigger>
             <TabsTrigger value={TAB_DEVICES}>{tabNames.devices}</TabsTrigger>
