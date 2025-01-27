@@ -7,9 +7,9 @@ import { wrapper } from '@/lib/store'
 import { picoApi } from '@/services'
 import {
   PublicPostsItem,
-  getPostsAllPublic,
+  getPostsAllPublicByUserId,
   getPublicPostById,
-  useGetPostsAllPublicQuery,
+  useGetPostsAllPublicByUserIdQuery,
 } from '@/services/posts'
 import { ResponseGetUserProfile, getUserProfile } from '@/services/profile'
 import { SortDirection } from '@/shared/enums/sort.enums'
@@ -33,7 +33,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     }
 
     const postsData = await store.dispatch(
-      getPostsAllPublic.initiate({
+      getPostsAllPublicByUserId.initiate({
         endCursorPostId: INITIAL_CURSOR,
         pageSize: POSTS_MAX_PAGE_SIZE,
         sortDirection: SortDirection.DESC,
@@ -89,7 +89,7 @@ function ProfilePage({ prerenderedPostData, profileData }: Props) {
 
   const [cursor, setCursor] = useState(INITIAL_CURSOR)
 
-  const { data, isFetching } = useGetPostsAllPublicQuery({
+  const { data, isFetching } = useGetPostsAllPublicByUserIdQuery({
     endCursorPostId: cursor,
     pageSize: POSTS_MAX_PAGE_SIZE,
     sortDirection: SortDirection.DESC,

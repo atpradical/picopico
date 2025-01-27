@@ -23,7 +23,7 @@ export const postsApi = picoApi.injectEndpoints({
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
           const cachedArgsForQuery = postsApi.util.selectCachedArgsForQuery(
             getState(),
-            'getPostsAllPublic'
+            'getPostsAllPublicByUserId'
           )
 
           try {
@@ -33,7 +33,7 @@ export const postsApi = picoApi.injectEndpoints({
             // После успешного запроса обновляем кеш
             cachedArgsForQuery.forEach(cachedArgs => {
               dispatch(
-                postsApi.util.updateQueryData('getPostsAllPublic', cachedArgs, draft => {
+                postsApi.util.updateQueryData('getPostsAllPublicByUserId', cachedArgs, draft => {
                   draft.items.unshift(data)
                 })
               )
@@ -74,7 +74,7 @@ export const postsApi = picoApi.injectEndpoints({
           // читаем кеш постов
           const cachedPublicPostsForQuery = postsApi.util.selectCachedArgsForQuery(
             getState(),
-            'getPostsAllPublic'
+            'getPostsAllPublicByUserId'
           )
 
           // массив пустышка куда положим посты после удаления.
@@ -83,7 +83,7 @@ export const postsApi = picoApi.injectEndpoints({
           cachedPublicPostsForQuery.forEach(cachedArgs => {
             patchedPublicPosts.push(
               dispatch(
-                postsApi.util.updateQueryData('getPostsAllPublic', cachedArgs, draft => {
+                postsApi.util.updateQueryData('getPostsAllPublicByUserId', cachedArgs, draft => {
                   // Удаляем пост из draft
                   draft.items = draft.items.filter(post => post.id !== args.postId)
                 })
@@ -113,7 +113,7 @@ export const postsApi = picoApi.injectEndpoints({
           url: `v1/posts/${userName}`,
         }),
       }),
-      getPostsAllPublic: builder.query<GetPostsAllPublicResponse, GetPostsAllPublicArgs>({
+      getPostsAllPublicByUserId: builder.query<GetPostsAllPublicResponse, GetPostsAllPublicArgs>({
         // Refetch when the page arg changes
         forceRefetch({ currentArg, previousArg }) {
           // Повторный запрос только если изменился endCursorPostId или другие ключевые параметры
@@ -123,7 +123,7 @@ export const postsApi = picoApi.injectEndpoints({
         merge: (currentCache, newItems) => {
           currentCache.items.push(...newItems.items)
         },
-        providesTags: ['PublicPosts'],
+        providesTags: ['PublicAllPostsByUserId'],
         query: ({ endCursorPostId, userId, ...args }) => ({
           method: 'GET',
           params: args ?? undefined,
@@ -146,7 +146,7 @@ export const postsApi = picoApi.injectEndpoints({
           // читаем кеш постов
           const cachedPublicPostsForQuery = postsApi.util.selectCachedArgsForQuery(
             getState(),
-            'getPostsAllPublic'
+            'getPostsAllPublicByUserId'
           )
 
           // массив пустышка куда положим посты после удаления.
@@ -155,7 +155,7 @@ export const postsApi = picoApi.injectEndpoints({
           cachedPublicPostsForQuery.forEach(cachedArgs => {
             patchedPublicPosts.push(
               dispatch(
-                postsApi.util.updateQueryData('getPostsAllPublic', cachedArgs, draft => {
+                postsApi.util.updateQueryData('getPostsAllPublicByUserId', cachedArgs, draft => {
                   // Обновляем пост в draft
                   const postToUpdateIndex = draft.items.findIndex(el => el.id === args.postId)
 
@@ -189,10 +189,10 @@ export const {
   useCreatePostImageMutation,
   useCreatePostMutation,
   useDeletePostMutation,
-  useGetPostsAllPublicQuery,
+  useGetPostsAllPublicByUserIdQuery,
   useGetPostsQuery,
   useUpdatePostMutation,
 } = postsApi
 
 // export endpoints for use in SSR
-export const { getPostsAllPublic, getPublicPostById } = postsApi.endpoints
+export const { getPostsAllPublicByUserId, getPublicPostById } = postsApi.endpoints

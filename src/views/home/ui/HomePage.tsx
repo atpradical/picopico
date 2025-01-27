@@ -17,6 +17,18 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => as
     return { notFound: true }
   }
 
+  // const postsData = await store.dispatch(
+  //   getPostsAllPublic.initiate({
+  //     endCursorPostId: INITIAL_CURSOR,
+  //     pageSize: POSTS_MAX_PAGE_SIZE,
+  //     sortDirection: SortDirection.DESC,
+  //   })
+  // )
+  //
+  // if (!postsData.data) {
+  //   return { notFound: true }
+  // }
+
   await Promise.all(store.dispatch(picoApi.util.getRunningQueriesThunk()))
 
   return {
