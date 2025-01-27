@@ -103,7 +103,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
     try {
       await updateProfile({
         ...data,
-        dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toLocaleDateString() : '',
+        dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toString() : undefined,
       }).unwrap()
       toaster({ text: profileDataTab.successSettingsChangeMessage })
     } catch (e) {
