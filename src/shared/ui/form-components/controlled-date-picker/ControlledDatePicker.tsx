@@ -32,7 +32,13 @@ export const ControlledDatePicker = <T extends FieldValues>({
           <DatePicker
             errorText={error?.message}
             localeString={locale}
-            onSelect={restField.onChange} // Передаём выбранную дату в React Hook Form
+            onSelect={date => {
+              if (date) {
+                restField.onChange(date) // Передаём выбранную дату в React Hook Form
+              } else {
+                restField.onChange(null) // Очищаем значение даты
+              }
+            }}
             selected={restField.value}
             {...restField}
           />
