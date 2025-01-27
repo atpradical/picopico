@@ -8,6 +8,7 @@ import { useTranslation } from '@/shared/hooks'
 import { Page, getSidebarLayout } from '@/shared/ui/layout'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
+import { useRouter } from 'next/router'
 
 import s from './SettingsPage.module.scss'
 
@@ -18,27 +19,22 @@ const TAB_PAYMENTS = 'payments'
 
 function SettingsPage() {
   const { t } = useTranslation()
+  const router = useRouter()
   const { tabNames } = t.profileSettings
   const { myProfileData } = useContext(MyProfileContext)
   const [getSessions, { data: sessionsData }] = useLazyGetSessionsQuery()
-
-  // Состояние для отслеживания, рендерим ли мы на клиенте
-  const [isClient, setIsClient] = useState(false)
 
   // Инициализация состояния с учетом значения из sessionStorage
   const [activeTab, setActiveTab] = useState(TAB_PROFILE_DATA)
 
   useEffect(() => {
-    // Устанавливаем isClient в true после монтирования компонента
-    setIsClient(true)
-
     // Устанавливаем значение из sessionStorage только на клиенте
-    if (typeof window !== 'undefined') {
+    if (router.isReady) {
       const tab = sessionStorage.getItem('activeTab') || TAB_PROFILE_DATA
 
       setActiveTab(tab)
     }
-  }, [])
+  }, [router.isReady])
 
   const onTabChangeHandler = async (tabValue: string) => {
     setActiveTab(tabValue)
@@ -61,8 +57,7 @@ function SettingsPage() {
     }
   }
 
-  // todo: CHECK использую isClient чтобы избавиться от миганий после первого рендера страницы на клиенте из-за sessionStorage.
-  if (!isClient) {
+  if (!router.isReady) {
     return null
   }
 
