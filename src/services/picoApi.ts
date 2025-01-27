@@ -19,5 +19,5 @@ export const picoApi = createApi({
     }
   },
   reducerPath: 'picoApi',
-  tagTypes: ['Me', 'Devices', 'MyProfile', 'Posts', 'Profile', 'PublicPosts'],
+  tagTypes: ['Me', 'Devices', 'MyProfile', 'Posts', 'Profile', 'PublicPosts', 'PublicUsersAmount'],
 })

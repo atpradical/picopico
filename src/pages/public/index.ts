@@ -1,1 +1,1 @@
-export {default} from '@/views/public/ui/PublicPage'
+export {default} from '@/views/home/ui/HomePage'
