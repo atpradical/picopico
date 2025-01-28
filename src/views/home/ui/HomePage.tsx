@@ -14,7 +14,7 @@ import { useRouter } from 'next/router'
 
 import s from './HomePage.module.scss'
 
-export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async context => {
+export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async () => {
   const totalUsersAmount = await store.dispatch(getCurrentUsersAmount.initiate())
 
   if (!totalUsersAmount.data) {
@@ -63,7 +63,6 @@ const HomePage = ({ postsData, totalUsersAmount }: PageProps) => {
     return <div>{`Error: ${errorMessage}`}</div>
   }
 
-  // todo: добавить просмотр постов, вынести диалог в общий компонент чтобы избежать дублирования с ProfilePage.
   return (
     <Page>
       <div className={s.container}>
