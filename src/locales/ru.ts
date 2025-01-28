@@ -46,6 +46,10 @@ export const ru: LocaleType = {
   },
   loading: 'Загрузка...',
   logoutDialog: logoutDialog,
+  postDescription: {
+    collapsePostDescriptionButton: 'Скрыть',
+    expandPostDescriptionButton: 'Подробнее',
+  },
   postDialog: postDialog,
   privacyPolicyPage: privacyPolicyPage,
   profileAvatarDialog: profileAvatarDialog,

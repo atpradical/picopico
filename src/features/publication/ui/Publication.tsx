@@ -1,8 +1,10 @@
-import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
+import { ComponentPropsWithoutRef, ElementRef, forwardRef, useState } from 'react'
 
+import { MAX_EXPANDED_POST_DESCRIPTION_CHAR_AMOUNT } from '@/features/publication/config'
 import { PublicPostsItem } from '@/services/posts'
+import { useTranslation } from '@/shared/hooks'
 import { getDateDistanceToNow } from '@/shared/utils'
-import { Avatar, LayersOutlineIcon, Typography } from '@atpradical/picopico-ui-kit'
+import { Avatar, Button, LayersOutlineIcon, Typography } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
 import { useRouter } from 'next/router'
 
@@ -21,8 +23,17 @@ type PublicationRef = ElementRef<'div'>
 export const Publication = forwardRef<PublicationRef, PublicationProps>(
   ({ isCarousel, isLastPost, onClick, post, showDescription = false, ...rest }, ref) => {
     const { locale } = useRouter()
-
+    const { t } = useTranslation()
     const formattedCreatedAt = getDateDistanceToNow(new Date(post.updatedAt), locale ?? 'en')
+
+    const [isDescriptionExpanded, setDescriptionExpanded] = useState(false)
+
+    const isDescriptionToggleButton =
+      post.description.length > MAX_EXPANDED_POST_DESCRIPTION_CHAR_AMOUNT
+
+    const toggleDescription = () => {
+      setDescriptionExpanded(!isDescriptionExpanded)
+    }
 
     return (
       <div className={s.publicationContainer} {...rest}>
@@ -48,7 +59,18 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
               <Typography grey variant={'small'}>
                 {formattedCreatedAt}
               </Typography>
-              <Typography>{post.description}</Typography>
+              <div className={s.descriptionContainer}>
+                <Typography className={isDescriptionExpanded ? s.expanded : s.collapsed}>
+                  {post.description}
+                </Typography>
+                {isDescriptionToggleButton && (
+                  <Button className={s.toggleButton} onClick={toggleDescription} variant={'link'}>
+                    {isDescriptionExpanded
+                      ? t.postDescription.collapsePostDescriptionButton
+                      : t.postDescription.expandPostDescriptionButton}
+                  </Button>
+                )}
+              </div>
             </div>
           </>
         )}

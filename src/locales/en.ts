@@ -55,6 +55,10 @@ export const en = {
   },
   loading: 'Loading...',
   logoutDialog: logoutDialog,
+  postDescription: {
+    collapsePostDescriptionButton: 'Hide',
+    expandPostDescriptionButton: 'Show more',
+  },
   postDialog: postDialog,
   privacyPolicyPage: privacyPolicyPage,
   profileAvatarDialog: profileAvatarDialog,
