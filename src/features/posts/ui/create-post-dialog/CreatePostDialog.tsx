@@ -163,7 +163,6 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   }
 
   const removeImageHandler = (index: number) => {
-    debugger
     if (previewList?.length) {
       // Очищаем URL-адрес для удаляемого изображения
       URL.revokeObjectURL(previewList[index].previewUrlOrig)

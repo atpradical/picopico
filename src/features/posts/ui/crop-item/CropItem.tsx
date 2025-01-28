@@ -21,6 +21,8 @@ export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
   const { currentStep } = useSelector(selectPostDialogMeta)
   const [isOpen, setIsOpen] = useState(false)
 
+  const disableCrop = currentStep !== PostsStep.Crop
+
   const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
     dispatch(createPostActions.setCroppedAreaPixels({ croppedAreaPixels, index: slideIndex }))
   }
@@ -63,8 +65,6 @@ export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
       createPostActions.updatePreviewModifiedAspect({ aspect: newAspect, index: slideIndex })
     )
   }
-
-  const disableCrop = currentStep !== PostsStep.Crop
 
   return (
     <div className={clsx(s.cropperContainer, disableCrop && s.cropperContainerDisabled)}>
