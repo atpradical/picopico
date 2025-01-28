@@ -121,6 +121,7 @@ export const {
   useCreatNewPasswordMutation,
   useCreateUserMutation,
   useGoogleLoginQuery,
+  useLazyMeQuery,
   useLoginMutation,
   useLogoutMutation,
   useMeQuery,
