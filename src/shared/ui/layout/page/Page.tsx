@@ -1,5 +1,6 @@
 import { CSSProperties, ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
+import { ScrollArea } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 
 import s from './Page.module.scss'
@@ -11,12 +12,18 @@ type PageProps = {
 
 type PageRef = ElementRef<'div'>
 
-export const Page = forwardRef<PageRef, PageProps>((props, ref) => {
+export const Page = forwardRef<PageRef, PageProps>(({ children, ...props }, ref) => {
   const { className, pb = '24px', pt = '24px', style, ...rest } = props
 
   const styles = { paddingBottom: pb, paddingTop: pt, ...style }
 
-  return <div className={clsx(s.page, className)} ref={ref} style={styles} {...rest} />
+  return (
+    <ScrollArea>
+      <div className={clsx(s.page, className)} ref={ref} style={styles} {...rest}>
+        {children}
+      </div>
+    </ScrollArea>
+  )
 })
 
 Page.displayName = 'Page'
