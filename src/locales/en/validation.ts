@@ -12,7 +12,7 @@ export const validation = {
     notification: 'A user under 13 cannot create a profile, please read the <1>Privacy Policy</1>',
   },
   name: {
-    allowedSymbols: 'Username may contain symbols: A-Z, a-z, А-Я or а-я',
+    allowedSymbols: 'Username may contain symbols: A-Z, a-z, А-Я, а-я',
     maxLength: 'Maximum number of characters 50',
     minLength: 'Minimum number of characters 1',
   },
@@ -31,7 +31,7 @@ export const validation = {
   recaptcha: 'Please complete the reCAPTCHA',
   requiredField: 'Required field',
   userName: {
-    allowedSymbols: 'Username may contain symbols: 0-9, A-Z, a-z, _ or -',
+    allowedSymbols: 'Username may contain symbols: 0-9, A-Z, a-z, _ -',
     maxLength: 'Maximum number of characters 30',
     minLength: 'Minimum number of characters 6',
   },
