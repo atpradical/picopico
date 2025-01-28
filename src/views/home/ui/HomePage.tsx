@@ -43,8 +43,8 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => as
       postsData: postsData.data.items,
       totalUsersAmount: totalUsersAmount.data.totalCount,
     },
-    // Регенерировать страницу каждые 60 секунд
-    revalidate: 60,
+    // // Регенерировать страницу каждые 60 секунд
+    // revalidate: 60,
   }
 })
 
