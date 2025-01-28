@@ -9,6 +9,7 @@ export const profileSettings = {
   },
   profileDataTab: {
     addProfilePhotoButton: 'Добавить аватар',
+    deleteProfileButton: 'Удалить аккаунт',
     formSubmitButton: 'Сохранить изменения',
     labels: {
       aboutMe: 'О себе',

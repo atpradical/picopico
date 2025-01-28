@@ -9,6 +9,7 @@ export const profileSettings = {
   },
   profileDataTab: {
     addProfilePhotoButton: 'Add a Profile Photo',
+    deleteProfileButton: 'Delete account',
     formSubmitButton: 'Save Changes',
     labels: {
       aboutMe: 'About Me',

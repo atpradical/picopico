@@ -17,6 +17,13 @@ export const profileApi = picoApi.injectEndpoints({
           url: `/v1/users/profile/avatar`,
         }),
       }),
+      deleteProfile: builder.mutation<void, void>({
+        invalidatesTags: ['MyProfile'],
+        query: () => ({
+          method: 'DELETE',
+          url: `/v1/users/profile`,
+        }),
+      }),
       getMyProfile: builder.query<ResponseGetMyProfile, void>({
         providesTags: ['MyProfile'],
         query: () => ({
@@ -63,6 +70,7 @@ export const profileApi = picoApi.injectEndpoints({
 
 export const {
   useDeleteAvatarMutation,
+  useDeleteProfileMutation,
   useGetMyProfileQuery,
   useGetUserProfileQuery,
   useUpdateMyProfileMutation,
