@@ -56,6 +56,7 @@ export const Publications = ({ posts, showDescription, updateCursor }: Publicati
           />
         ))
       ) : (
+        //   todo: добавить текст и переводы для отсутствия постов как в ТЗ
         <Typography as={'h3'} className={s.noPostText} variant={'h3'}>
           No Post created yet
         </Typography>
