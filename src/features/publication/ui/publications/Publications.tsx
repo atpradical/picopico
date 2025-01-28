@@ -13,11 +13,10 @@ import s from './Publications.module.scss'
 
 type PublicationsProps = {
   posts: PublicPostsItem[]
-  showDescription?: boolean
   updateCursor?: (postId: number) => void
 }
 
-export const Publications = ({ posts, showDescription, updateCursor }: PublicationsProps) => {
+export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
   const { addRouterQueryParamShallow } = usePagesRouterQueryUpdate()
   const dispatch = useAppDispatch()
   const sectionRef = useRef(null)
@@ -52,7 +51,6 @@ export const Publications = ({ posts, showDescription, updateCursor }: Publicati
             onClick={() => displayPost(post.id)}
             post={post}
             ref={lastPostRef}
-            showDescription={showDescription}
           />
         ))
       ) : (

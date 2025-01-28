@@ -4,8 +4,9 @@ import { MAX_EXPANDED_POST_DESCRIPTION_CHAR_AMOUNT } from '@/features/publicatio
 import { PublicPostsItem } from '@/services/posts'
 import { useTranslation } from '@/shared/hooks'
 import { getDateDistanceToNow } from '@/shared/utils'
-import { Avatar, Button, LayersOutlineIcon, Typography } from '@atpradical/picopico-ui-kit'
+import { Avatar, Button, Card, LayersOutlineIcon, Typography } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './Publication.module.scss'
@@ -13,7 +14,8 @@ import s from './Publication.module.scss'
 type PublicationProps = {
   isCarousel: boolean
   isLastPost?: boolean
-  onClick: () => void
+  isLink?: Boolean
+  onClick?: () => void
   post: PublicPostsItem
   showDescription?: boolean
 } & ComponentPropsWithoutRef<'div'>
@@ -21,7 +23,7 @@ type PublicationProps = {
 type PublicationRef = ElementRef<'div'>
 
 export const Publication = forwardRef<PublicationRef, PublicationProps>(
-  ({ isCarousel, isLastPost, onClick, post, showDescription = false, ...rest }, ref) => {
+  ({ isCarousel, isLastPost, isLink, onClick, post, showDescription = false, ...rest }, ref) => {
     const { locale } = useRouter()
     const { t } = useTranslation()
     const formattedCreatedAt = getDateDistanceToNow(new Date(post.updatedAt), locale ?? 'en')
@@ -37,8 +39,11 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
 
     return (
       <div className={s.publicationContainer} {...rest}>
-        <div
+        {/*todo: CHECK Хорошее ли решение использовать Link для редиректов?*/}
+        <Card
+          as={isLink ? Link : 'div'}
           className={s.imageContainer}
+          href={isLink ? `/profile/${post.ownerId}/?postId=${post.id}` : undefined}
           key={post.id}
           onClick={onClick}
           ref={isLastPost ? ref : undefined}
@@ -51,7 +56,7 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
             style={{ content: 'contain' }}
           />
           {isCarousel && <LayersOutlineIcon className={s.layersIcon} />}
-        </div>
+        </Card>
         {showDescription && (
           <>
             <Avatar showUserName size={'s'} src={post.avatarOwner} userName={post.userName} />

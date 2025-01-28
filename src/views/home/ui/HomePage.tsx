@@ -1,6 +1,6 @@
 import { POSTS_HOME_PAGE_SIZE } from '@/features/public-user/config'
 import { TotalUsers } from '@/features/public-user/ui'
-import { Publications } from '@/features/publication/ui/publications'
+import { Publication } from '@/features/publication/ui'
 import { wrapper } from '@/lib/store'
 import { picoApi } from '@/services'
 import { useGoogleLoginQuery } from '@/services/auth'
@@ -67,7 +67,19 @@ const HomePage = ({ postsData, totalUsersAmount }: PageProps) => {
     <Page>
       <div className={s.container}>
         <TotalUsers counter={`00${totalUsersAmount}`} />
-        <Publications posts={postsData} showDescription />
+        <section className={s.publicationsContainer}>
+          {postsData.map(post => {
+            return (
+              <Publication
+                isCarousel={post.images.length > 1}
+                isLink
+                key={post.id}
+                post={post}
+                showDescription
+              />
+            )
+          })}
+        </section>
       </div>
     </Page>
   )
