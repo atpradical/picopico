@@ -20,7 +20,7 @@ export const CreateNewPasswordForm = ({ t }: CreateNewPasswordFormProps) => {
   const router = useRouter()
   const code = Array.isArray(router.query.code) ? router.query.code[0] : router.query.code
   const { t: trans } = useTranslation()
-  const [createNewPassword] = useCreatNewPasswordMutation()
+  const [createNewPassword, { isLoading }] = useCreatNewPasswordMutation()
 
   const { control, handleSubmit, setError } = useForm<CreatePWDFields>({
     defaultValues: {
@@ -81,7 +81,9 @@ export const CreateNewPasswordForm = ({ t }: CreateNewPasswordFormProps) => {
         <Typography className={s.caption} variant={'regular_14'}>
           {t.captionText}
         </Typography>
-        <Button type={'submit'}>{t.submitButton}</Button>
+        <Button isLoading={isLoading} type={'submit'}>
+          {t.submitButton}
+        </Button>
       </form>
     </Card>
   )

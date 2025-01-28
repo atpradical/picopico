@@ -19,7 +19,7 @@ export const SignUpForm = () => {
 
   const [showDialog, setShowDialog] = useState(false)
   const emailRef = useRef('')
-  const [createUser] = useCreateUserMutation()
+  const [createUser, { isLoading }] = useCreateUserMutation()
 
   const {
     control,
@@ -108,7 +108,7 @@ export const SignUpForm = () => {
           }
           name={'TOS'}
         />
-        <Button disabled={isSubmitDisabled} type={'submit'}>
+        <Button disabled={isSubmitDisabled} isLoading={isLoading} type={'submit'}>
           {submitButton}
         </Button>
       </form>

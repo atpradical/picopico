@@ -92,7 +92,7 @@ export const ForgotPasswordForm = () => {
           {sentLinkText}
         </Typography>
       )}
-      <Button disabled={!isValid || isLoading} type={'submit'}>
+      <Button disabled={!isValid || isLoading} isLoading={isLoading} type={'submit'}>
         {submitButton}
       </Button>
       <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>

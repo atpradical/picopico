@@ -29,7 +29,7 @@ export const ResendLinkForm = () => {
     resolver: zodResolver(resendRegistrationEmailSchemeCreator(t.validation)),
   })
 
-  const [resendRegistrationEmail] = useResendRegistrationEmailMutation()
+  const [resendRegistrationEmail, { isLoading }] = useResendRegistrationEmailMutation()
 
   const formHandler = handleSubmit(async data => {
     try {
@@ -57,7 +57,9 @@ export const ResendLinkForm = () => {
           name={'email'}
           placeholder={placeholder}
         />
-        <Button type={'submit'}>{button}</Button>
+        <Button isLoading={isLoading} type={'submit'}>
+          {button}
+        </Button>
       </form>
     </>
   )
