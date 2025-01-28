@@ -1,1 +1,1 @@
-export {default} from '@/views/home/ui/HomePage'
+export {default, getStaticProps} from '@/views/home/ui/HomePage'

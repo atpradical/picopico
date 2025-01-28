@@ -1,10 +1,10 @@
 import { POSTS_HOME_PAGE_SIZE } from '@/features/public-user/config'
 import { TotalUsers } from '@/features/public-user/ui'
-import { Publication } from '@/features/publication/ui'
+import { Publications } from '@/features/publication/ui/publications'
 import { wrapper } from '@/lib/store'
 import { picoApi } from '@/services'
 import { useGoogleLoginQuery } from '@/services/auth'
-import { GetPostsItems } from '@/services/posts'
+import { PublicPostsItem } from '@/services/posts'
 import { getCurrentUsersAmount, getPublicPostsAll } from '@/services/public-user'
 import { SortDirection } from '@/shared/enums'
 import { Page, getSidebarLayout } from '@/shared/ui/layout'
@@ -18,7 +18,9 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => as
   const totalUsersAmount = await store.dispatch(getCurrentUsersAmount.initiate())
 
   if (!totalUsersAmount.data) {
-    return { notFound: true }
+    return {
+      notFound: true,
+    }
   }
 
   const postsData = await store.dispatch(
@@ -29,7 +31,9 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => as
   )
 
   if (!postsData.data) {
-    return { notFound: true }
+    return {
+      notFound: true,
+    }
   }
 
   await Promise.all(store.dispatch(picoApi.util.getRunningQueriesThunk()))
@@ -37,13 +41,15 @@ export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => as
   return {
     props: {
       postsData: postsData.data.items,
+      // Регенерировать страницу каждые 60 секунд
+      revalidate: 60,
       totalUsersAmount: totalUsersAmount.data.totalCount,
     },
   }
 })
 
 type PageProps = {
-  postsData: GetPostsItems[]
+  postsData: PublicPostsItem[]
   totalUsersAmount: number
 }
 
@@ -63,19 +69,7 @@ const HomePage = ({ postsData, totalUsersAmount }: PageProps) => {
     <Page>
       <div className={s.container}>
         <TotalUsers counter={`00${totalUsersAmount}`} />
-        <section className={s.publicationsContainer}>
-          {postsData.map(post => {
-            return (
-              <Publication
-                isCarousel={post.images.length > 1}
-                key={post.id}
-                onClick={() => {}}
-                post={post}
-                showDescription
-              />
-            )
-          })}
-        </section>
+        <Publications posts={postsData} showDescription />
       </div>
     </Page>
   )

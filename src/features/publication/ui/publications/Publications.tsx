@@ -13,10 +13,11 @@ import s from './Publications.module.scss'
 
 type PublicationsProps = {
   posts: PublicPostsItem[]
-  updateCursor: (postId: number) => void
+  showDescription?: boolean
+  updateCursor?: (postId: number) => void
 }
 
-export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
+export const Publications = ({ posts, showDescription, updateCursor }: PublicationsProps) => {
   const { addRouterQueryParamShallow } = usePagesRouterQueryUpdate()
   const dispatch = useAppDispatch()
   const sectionRef = useRef(null)
@@ -24,7 +25,7 @@ export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
   const [lastPostRef, entry] = useIntersectionObserver({ root: null, threshold: 1 })
 
   useEffect(() => {
-    if (entry?.isIntersecting) {
+    if (entry?.isIntersecting && updateCursor) {
       updateCursor(posts[posts.length - 1].id)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -51,6 +52,7 @@ export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
             onClick={() => displayPost(post.id)}
             post={post}
             ref={lastPostRef}
+            showDescription={showDescription}
           />
         ))
       ) : (
