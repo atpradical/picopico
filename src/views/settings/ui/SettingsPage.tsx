@@ -57,10 +57,6 @@ function SettingsPage() {
     }
   }
 
-  if (!router.isReady) {
-    return null
-  }
-
   return (
     <Page pt={'36px'}>
       <div className={s.container}>

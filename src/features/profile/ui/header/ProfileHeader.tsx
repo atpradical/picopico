@@ -2,7 +2,7 @@ import { ComponentPropsWithoutRef, useContext } from 'react'
 
 import { ProfileStats } from '@/features/profile/ui'
 import { ResponseGetUserProfile } from '@/services/profile'
-import { AuthContext, MyProfileContext } from '@/shared/contexts'
+import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { Avatar, Button, Typography } from '@atpradical/picopico-ui-kit'
@@ -19,10 +19,9 @@ type ProfileHeaderProps = {
 export const ProfileHeader = ({ className, profileData, ...props }: ProfileHeaderProps) => {
   const { t } = useTranslation()
   const router = useRouter()
-  const { isAuth } = useContext(AuthContext)
-  const { myProfileData } = useContext(MyProfileContext)
+  const { isAuth, meData } = useContext(AuthContext)
 
-  const showSettingsButton = isAuth && myProfileData?.id === Number(router.query.id)
+  const showSettingsButton = isAuth && meData?.userId === Number(router.query.id)
 
   if (!profileData) {
     return null

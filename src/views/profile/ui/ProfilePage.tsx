@@ -71,8 +71,8 @@ type Props = {
 }
 
 function ProfilePage({ prerenderedPostData, profileData }: Props) {
-  const dispatch = useAppDispatch()
   const { t } = useTranslation()
+  const dispatch = useAppDispatch()
 
   useEffect(() => {
     if (prerenderedPostData) {

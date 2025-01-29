@@ -55,7 +55,7 @@ type PageProps = {
 const HomePage = ({ postsData, totalUsersAmount }: PageProps) => {
   const router = useRouter()
   const code = router.query.code as string
-  const { error } = useGoogleLoginQuery({ code }, { skip: !code || typeof window === 'undefined' })
+  const { error } = useGoogleLoginQuery({ code }, { skip: !code })
 
   if (error) {
     const errorMessage = getErrorMessageData(error)
