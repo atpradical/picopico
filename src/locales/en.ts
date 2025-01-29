@@ -55,6 +55,7 @@ export const en = {
   },
   loading: 'Loading...',
   logoutDialog: logoutDialog,
+  noPostsCreatedYet: 'No posts have been created yet',
   postDescription: {
     collapsePostDescriptionButton: 'Hide',
     expandPostDescriptionButton: 'Show more',

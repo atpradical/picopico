@@ -46,6 +46,7 @@ export const ru: LocaleType = {
   },
   loading: 'Загрузка...',
   logoutDialog: logoutDialog,
+  noPostsCreatedYet: 'Еще не создано ни одного поста',
   postDescription: {
     collapsePostDescriptionButton: 'Скрыть',
     expandPostDescriptionButton: 'Подробнее',

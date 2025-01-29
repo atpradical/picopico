@@ -4,9 +4,9 @@ import { PostDialog } from '@/features/posts/ui'
 import { publicationsActions } from '@/features/publication/api'
 import { Publication } from '@/features/publication/ui'
 import { PublicPostsItem } from '@/services/posts'
-import { useAppDispatch } from '@/shared/hooks'
+import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { usePagesRouterQueryUpdate } from '@/shared/hooks/usePagesRouterQueryUpdate'
-import { Typography } from '@atpradical/picopico-ui-kit'
+import { PolaroidIllustration, Typography } from '@atpradical/picopico-ui-kit'
 import { useIntersectionObserver } from '@uidotdev/usehooks'
 
 import s from './Publications.module.scss'
@@ -17,6 +17,7 @@ type PublicationsProps = {
 }
 
 export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
+  const { t } = useTranslation()
   const { addRouterQueryParamShallow } = usePagesRouterQueryUpdate()
   const dispatch = useAppDispatch()
   const sectionRef = useRef(null)
@@ -41,23 +42,27 @@ export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
   }
 
   return (
-    <section className={s.publicationsContainer} ref={sectionRef}>
+    <section className={s.container} ref={sectionRef}>
       {posts.length ? (
-        posts.map((post, index) => (
-          <Publication
-            isCarousel={post.images.length > 1}
-            isLastPost={posts.length === index + 1}
-            key={post.id}
-            onClick={() => displayPost(post.id)}
-            post={post}
-            ref={lastPostRef}
-          />
-        ))
+        <div className={s.publicationsContainer}>
+          {posts.map((post, index) => (
+            <Publication
+              isCarousel={post.images.length > 1}
+              isLastPost={posts.length === index + 1}
+              key={post.id}
+              onClick={() => displayPost(post.id)}
+              post={post}
+              ref={lastPostRef}
+            />
+          ))}
+        </div>
       ) : (
-        //   todo: добавить текст и переводы для отсутствия постов как в ТЗ
-        <Typography as={'h3'} className={s.noPostText} variant={'h3'}>
-          No Post created yet
-        </Typography>
+        <>
+          <Typography as={'h2'} grey variant={'h2'}>
+            {t.noPostsCreatedYet}
+          </Typography>
+          <PolaroidIllustration className={s.noPost} />
+        </>
       )}
       <PostDialog />
     </section>

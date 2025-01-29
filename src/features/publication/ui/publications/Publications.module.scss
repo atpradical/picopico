@@ -1,5 +1,21 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
 .publicationsContainer {
   display: flex;
   flex-wrap: wrap;
   gap: 12px;
+}
+
+.noPost {
+  width: 100%;
+  max-width: 400px;
+  max-height: 400px;
+  margin-top: 12px;
 }
