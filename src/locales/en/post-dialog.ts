@@ -39,4 +39,6 @@ export const postDialog = {
 
     visibleTitle: 'Edit Post',
   },
+
+  notFoundPostDialog: 'Ooops! Post not found',
 }

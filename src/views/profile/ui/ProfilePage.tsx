@@ -46,18 +46,25 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     }
 
     const postId = context.query?.postId as string
+
     let prerenderedPostData
+    let postNotFound = false
 
     if (postId) {
       const result = await store.dispatch(getPublicPostById.initiate({ postId: +postId }))
 
-      prerenderedPostData = result.data
+      if (result.data) {
+        prerenderedPostData = result.data
+      } else {
+        postNotFound = true
+      }
     }
 
     await Promise.all(store.dispatch(picoApi.util.getRunningQueriesThunk()))
 
     return {
       props: {
+        postNotFound,
         prerenderedPostData: prerenderedPostData || null,
         profileData: profileData.data,
       },
@@ -66,11 +73,12 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 )
 
 type Props = {
+  postNotFound: boolean
   prerenderedPostData?: PublicPostsItem
   profileData: ResponseGetUserProfile
 }
 
-function ProfilePage({ prerenderedPostData, profileData }: Props) {
+function ProfilePage({ postNotFound, prerenderedPostData, profileData }: Props) {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
@@ -84,6 +92,7 @@ function ProfilePage({ prerenderedPostData, profileData }: Props) {
         })
       )
     }
+
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [prerenderedPostData])
 
@@ -108,7 +117,7 @@ function ProfilePage({ prerenderedPostData, profileData }: Props) {
     <Page>
       <div className={s.container}>
         <ProfileHeader className={s.header} />
-        <Publications posts={data?.items} updateCursor={updateCursor} />
+        <Publications postNotFound={postNotFound} posts={data?.items} updateCursor={updateCursor} />
         {isFetching && <Spinner containerClassName={s.spinner} label={t.loading} />}
       </div>
     </Page>

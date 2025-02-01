@@ -42,4 +42,5 @@ export const postDialog = {
 
     visibleTitle: 'Изменить пост',
   },
+  notFoundPostDialog: 'Ууупс, такого поста не существует!',
 }
