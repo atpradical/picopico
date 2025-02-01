@@ -24,12 +24,12 @@ export const SelectLanguage = forwardRef<SelectLanguageRef, SelectLanguageProps>
       () => [
         {
           icon: <FlagRussiaIcon className={s.icon} />,
-          option: t.language.ru,
+          label: t.language.ru,
           value: 'ru',
         },
         {
           icon: <FlagUnitedKingdomIcon className={s.icon} />,
-          option: t.language.en,
+          label: t.language.en,
           value: 'en',
         },
       ],

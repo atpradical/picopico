@@ -17,7 +17,7 @@ export const SignInForm = () => {
   const { t } = useTranslation()
   const { forgotPassword, labels, placeholders, submitButton } = t.signInPage.signInForm
 
-  const [login, { isLoading }] = useLoginMutation()
+  const [login, { isLoading, isSuccess }] = useLoginMutation()
 
   const {
     control,
@@ -73,7 +73,7 @@ export const SignInForm = () => {
         <Typography as={Link} className={s.forgotPassword} href={Paths.forgotPassword}>
           {forgotPassword}
         </Typography>
-        <Button disabled={isSubmitDisabled} isLoading={isLoading} type={'submit'}>
+        <Button disabled={isSubmitDisabled} isLoading={isLoading || isSuccess} type={'submit'}>
           {submitButton}
         </Button>
       </form>

@@ -1,14 +1,14 @@
 import { useContext, useEffect, useState } from 'react'
 
 import { DevicesTab } from '@/features/devices/ui'
-import { AccountManagementTab } from '@/features/payments/ui'
+import { AccountManagementTab, PaymentsTab } from '@/features/payments/ui'
 import { ProfileDataTab } from '@/features/profile/ui/settings'
 import { useLazyGetSessionsQuery } from '@/services/devices'
 import { MyProfileContext } from '@/shared/contexts'
 import { useTranslation } from '@/shared/hooks'
 import { Page, getSidebarLayout } from '@/shared/ui/layout'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { TabsContent, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
+import { TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
 
 import s from './SettingsPage.module.scss'
@@ -73,7 +73,7 @@ function SettingsPage() {
           )}
           {sessionsData && <DevicesTab data={sessionsData} value={TAB_DEVICES} />}
           <AccountManagementTab value={TAB_ACCOUNT} />
-          <TabsContent value={TAB_PAYMENTS}>Mock dataMy payments</TabsContent>
+          <PaymentsTab value={TAB_PAYMENTS} />
         </TabsRoot>
       </div>
     </Page>

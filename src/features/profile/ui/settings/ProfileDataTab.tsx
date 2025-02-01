@@ -55,14 +55,14 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
 
   if (countriesData) {
     countriesDataOptions = countriesData.geonames.map(country => ({
-      option: country.countryName,
+      label: country.countryName,
       value: country.countryCode,
     }))
   }
 
   if (citiesData) {
     citiesDataOptions = citiesData.geonames.map(city => ({
-      option: city.name,
+      label: city.name,
       value: city.geonameId.toString(), // City ID in geonames
     }))
   }

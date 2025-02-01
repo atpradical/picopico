@@ -5,9 +5,18 @@ export const profileSettings = {
     changeSubscription: 'Change your subscription',
     currentSubscription: 'Current subscription',
     or: 'or',
+    paymentType: {
+      business: 'Business',
+      personal: 'Personal',
+    },
     subscriptionDates: {
       expireAt: 'Expires at',
       nextPayment: 'Next payment',
+    },
+    subscriptionDescriptions: {
+      dollars_10: '$10 per 1 Day',
+      dollars_50: '$50 per 7 Day',
+      dollars_100: '$100 per month',
     },
   },
   devicesTab: {

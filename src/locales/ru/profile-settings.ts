@@ -5,9 +5,18 @@ export const profileSettings = {
     changeSubscription: 'Изменить подписку',
     currentSubscription: 'Текуща подписка',
     or: 'или',
+    paymentType: {
+      business: 'Бизнес',
+      personal: 'Индивидуальная',
+    },
     subscriptionDates: {
       expireAt: 'Действует до',
       nextPayment: 'Следующее списание',
+    },
+    subscriptionDescriptions: {
+      dollars_10: '$10 за 1 день',
+      dollars_50: '$50 за 7 дней',
+      dollars_100: '$100 в месяц',
     },
   },
   devicesTab: {
