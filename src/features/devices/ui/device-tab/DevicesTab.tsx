@@ -14,11 +14,11 @@ type DevicesTabProps = {
 
 export const DevicesTab = ({ data: { current, others }, ...rest }: DevicesTabProps) => {
   const { t } = useTranslation()
-  const { devicesTab } = t.profileSettings
 
   const [terminateAll] = useTerminateAllSessionsMutation()
 
   const killAllSessionsHandler = async () => {
+    // todo: вынести обработку ошибок в service
     try {
       await terminateAll().unwrap()
     } catch (e) {
@@ -34,18 +34,18 @@ export const DevicesTab = ({ data: { current, others }, ...rest }: DevicesTabPro
     <TabsContent className={s.container} {...rest}>
       <section className={s.section}>
         <Typography as={'h3'} variant={'h3'}>
-          {devicesTab.currentDevices}
+          {t.profileSettings.devicesTab.currentDevices}
         </Typography>
         <DeviceItem data={current} isCurrent />
       </section>
       {otherSessions.length ? (
         <>
           <Button className={s.button} onClick={killAllSessionsHandler} variant={'outlined'}>
-            {devicesTab.terminateAllOtherSessions}
+            {t.profileSettings.devicesTab.terminateAllOtherSessions}
           </Button>
           <section className={s.section}>
             <Typography as={'h3'} variant={'h3'}>
-              {devicesTab.activeSessions}
+              {t.profileSettings.devicesTab.activeSessions}
             </Typography>
             {otherSessions.map(el => (
               <DeviceItem data={el} key={el.deviceId} />
@@ -54,7 +54,7 @@ export const DevicesTab = ({ data: { current, others }, ...rest }: DevicesTabPro
         </>
       ) : (
         <div className={s.emptyText}>
-          <Typography variant={'h1'}>{devicesTab.noActiveSessions}</Typography>
+          <Typography variant={'h1'}>{t.profileSettings.devicesTab.noActiveSessions}</Typography>
         </div>
       )}
     </TabsContent>

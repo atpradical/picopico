@@ -1,4 +1,15 @@
 export const profileSettings = {
+  accountManagementTab: {
+    accountTypes: 'Тип подписки',
+    autoRenewal: 'Авто продление',
+    changeSubscription: 'Изменить подписку',
+    currentSubscription: 'Текуща подписка',
+    or: 'или',
+    subscriptionDates: {
+      expireAt: 'Действует до',
+      nextPayment: 'Следующее списание',
+    },
+  },
   devicesTab: {
     activeSessions: 'Активные сессии',
     currentDevices: 'Текущее устройство',

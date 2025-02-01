@@ -1,6 +1,7 @@
 import { useContext, useEffect, useState } from 'react'
 
 import { DevicesTab } from '@/features/devices/ui'
+import { AccountManagementTab } from '@/features/payments/ui'
 import { ProfileDataTab } from '@/features/profile/ui/settings'
 import { useLazyGetSessionsQuery } from '@/services/devices'
 import { MyProfileContext } from '@/shared/contexts'
@@ -71,7 +72,7 @@ function SettingsPage() {
             <ProfileDataTab myProfileData={myProfileData} value={TAB_PROFILE_DATA} />
           )}
           {sessionsData && <DevicesTab data={sessionsData} value={TAB_DEVICES} />}
-          <TabsContent value={TAB_ACCOUNT}>Mock data Account Management</TabsContent>
+          <AccountManagementTab value={TAB_ACCOUNT} />
           <TabsContent value={TAB_PAYMENTS}>Mock dataMy payments</TabsContent>
         </TabsRoot>
       </div>

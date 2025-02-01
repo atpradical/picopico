@@ -1,4 +1,15 @@
 export const profileSettings = {
+  accountManagementTab: {
+    accountTypes: 'Account Types',
+    autoRenewal: 'Auto renewal',
+    changeSubscription: 'Change your subscription',
+    currentSubscription: 'Current subscription',
+    or: 'or',
+    subscriptionDates: {
+      expireAt: 'Expires at',
+      nextPayment: 'Next payment',
+    },
+  },
   devicesTab: {
     activeSessions: 'Active sessions',
     currentDevices: 'Current devices',
