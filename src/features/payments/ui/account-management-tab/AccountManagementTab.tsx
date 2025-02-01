@@ -26,11 +26,11 @@ export const AccountManagementTab = ({ ...props }: AccountManagementTabProps) =>
       <ChangeSubscription />
       <div className={s.paymentButtons}>
         <Button variant={'icon'}>
-          <PaypalIcon className={s.paymentIcon} />
+          <PaypalIcon className={s.paymentIcon} isDark />
         </Button>
         <Typography grey>{t.profileSettings.accountManagementTab.or}</Typography>
         <Button variant={'icon'}>
-          <StripeIcon className={s.paymentIcon} />
+          <StripeIcon className={s.paymentIcon} isDark />
         </Button>
       </div>
       <Typography variant={'error'}>page in development</Typography>
