@@ -25,7 +25,7 @@ export const Publications = ({ posts, updateCursor }: PublicationsProps) => {
   const [lastPostRef, entry] = useIntersectionObserver({ root: null, threshold: 1 })
 
   useEffect(() => {
-    if (entry?.isIntersecting && updateCursor) {
+    if (posts.length && entry?.isIntersecting && updateCursor) {
       updateCursor(posts[posts.length - 1].id)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
