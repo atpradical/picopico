@@ -19,6 +19,7 @@ export const postsApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       createPost: builder.mutation<CreatePostResponse, CreatePostArgs>({
+        invalidatesTags: ['PublicUserProfile'],
         // Pessimistic Update
         async onQueryStarted(_, { dispatch, getState, queryFulfilled }) {
           const cachedArgsForQuery = postsApi.util.selectCachedArgsForQuery(

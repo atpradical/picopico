@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef, useContext } from 'react'
 
 import { ProfileStats } from '@/features/profile/ui'
-import { ResponseGetUserProfile } from '@/services/profile'
+import { useGetPublicUserProfileQuery } from '@/services/profile'
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
@@ -12,14 +12,15 @@ import { useRouter } from 'next/router'
 
 import s from './ProfileHeader.module.scss'
 
-type ProfileHeaderProps = {
-  profileData?: ResponseGetUserProfile
-} & ComponentPropsWithoutRef<'section'>
+type ProfileHeaderProps = ComponentPropsWithoutRef<'section'>
 
-export const ProfileHeader = ({ className, profileData, ...props }: ProfileHeaderProps) => {
+export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
   const { t } = useTranslation()
   const router = useRouter()
   const { isAuth, meData } = useContext(AuthContext)
+  const { data: profileData } = useGetPublicUserProfileQuery({
+    profileId: router.query.id as string,
+  })
 
   const showSettingsButton = isAuth && meData?.userId === Number(router.query.id)
 

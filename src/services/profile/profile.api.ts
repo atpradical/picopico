@@ -31,8 +31,8 @@ export const profileApi = picoApi.injectEndpoints({
           url: `v1/users/profile`,
         }),
       }),
-      getUserProfile: builder.query<ResponseGetUserProfile, GetUserProfileArgs>({
-        providesTags: ['Profile'],
+      getPublicUserProfile: builder.query<ResponseGetUserProfile, GetUserProfileArgs>({
+        providesTags: ['PublicUserProfile'],
         query: ({ profileId }) => ({
           method: 'GET',
           url: `v1/public-user/profile/${profileId}`,
@@ -72,10 +72,10 @@ export const {
   useDeleteAvatarMutation,
   useDeleteProfileMutation,
   useGetMyProfileQuery,
-  useGetUserProfileQuery,
+  useGetPublicUserProfileQuery,
   useUpdateMyProfileMutation,
   useUploadAvatarMutation,
 } = profileApi
 
 // export endpoints for use in SSR
-export const { getUserProfile } = profileApi.endpoints
+export const { getPublicUserProfile } = profileApi.endpoints

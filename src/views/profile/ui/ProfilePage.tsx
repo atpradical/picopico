@@ -11,7 +11,7 @@ import {
   getPublicPostById,
   useGetPostsAllPublicByUserIdQuery,
 } from '@/services/posts'
-import { ResponseGetUserProfile, getUserProfile } from '@/services/profile'
+import { ResponseGetUserProfile, getPublicUserProfile } from '@/services/profile'
 import { SortDirection } from '@/shared/enums/sort.enums'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { getSidebarLayout } from '@/shared/ui/layout'
@@ -26,7 +26,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
   store => async context => {
     const userId = context.params?.id as string
 
-    const profileData = await store.dispatch(getUserProfile.initiate({ profileId: userId }))
+    const profileData = await store.dispatch(getPublicUserProfile.initiate({ profileId: userId }))
 
     if (!profileData.data) {
       return { notFound: true }
@@ -107,7 +107,7 @@ function ProfilePage({ prerenderedPostData, profileData }: Props) {
   return (
     <Page>
       <div className={s.container}>
-        <ProfileHeader className={s.header} profileData={profileData} />
+        <ProfileHeader className={s.header} />
         <Publications posts={data?.items} updateCursor={updateCursor} />
         {isFetching && <Spinner containerClassName={s.spinner} label={t.loading} />}
       </div>
