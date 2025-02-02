@@ -2,6 +2,7 @@ import { ComponentPropsWithoutRef } from 'react'
 
 import { AccountType, ChangeSubscription, CurrentSubscription } from '@/features/payments/ui'
 import { useTranslation } from '@/shared/hooks'
+import { AlertDialog } from '@/shared/ui/components'
 import {
   Button,
   Checkbox,
@@ -33,6 +34,19 @@ export const AccountManagementTab = ({ ...props }: AccountManagementTabProps) =>
           <StripeIcon className={s.paymentIcon} isDark />
         </Button>
       </div>
+      <AlertDialog
+        isOpen
+        onConfirm={() => {}}
+        onOpenChange={() => {}}
+        t={{
+          accessibilityDescription: 'accessibilityDescription',
+          accessibilityTitle: 'accessibilityTitle',
+          closeButton: 'сlose',
+          confirmButton: 'confirmButton',
+          visibleBody: 'visibleBody',
+          visibleTitle: 'Success',
+        }}
+      />
       <Typography variant={'error'}>page in development</Typography>
     </TabsContent>
   )

@@ -1,0 +1,21 @@
+.content {
+  width: 100%;
+  max-width: 380px;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.footer {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.confirmButton {
+  width: 100%;
+}

@@ -1,3 +1,4 @@
+export * from './alert-dialog'
 export * from './confirm-dialog'
 export * from './docs-content'
 export * from './email-confirmation-dialog'
