@@ -35,7 +35,7 @@ export const AccountManagementTab = ({ ...props }: AccountManagementTabProps) =>
         </Button>
       </div>
       <AlertDialog
-        isOpen
+        isOpen={false}
         onConfirm={() => {}}
         onOpenChange={() => {}}
         t={{
