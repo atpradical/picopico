@@ -26,36 +26,36 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
         <Table className={s.tableRoot} {...tableProps}>
           <TableHeader>
             <TableRow>
-              <TableHead>Date of Payment</TableHead>
-              <TableHead>End date of subscription</TableHead>
-              <TableHead>Price</TableHead>
-              <TableHead>Subscription Type</TableHead>
-              <TableHead>Payment Type</TableHead>
+              <TableHead textAlign={'left'}>Date of Payment</TableHead>
+              <TableHead textAlign={'left'}>End date of subscription</TableHead>
+              <TableHead textAlign={'right'}>Price</TableHead>
+              <TableHead textAlign={'left'}>Subscription Type</TableHead>
+              <TableHead textAlign={'left'}>Payment Type</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             <TableRow>
-              <TableCell>{'12.31.9999'}</TableCell>
-              <TableCell>{'12.31.9999'}</TableCell>
-              <TableCell>{'$10'}</TableCell>
-              <TableCell>{'1 day'}</TableCell>
-              <TableCell>{'Stripe'}</TableCell>
+              <TableCell textAlign={'left'}>{'12.31.9999'}</TableCell>
+              <TableCell textAlign={'left'}>{'12.31.9999'}</TableCell>
+              <TableCell textAlign={'right'}>{'$10'}</TableCell>
+              <TableCell textAlign={'left'}>{'1 day'}</TableCell>
+              <TableCell textAlign={'left'}>{'Stripe'}</TableCell>
             </TableRow>
 
             <TableRow>
-              <TableCell>{'12.31.9999'}</TableCell>
-              <TableCell>{'12.31.9999'}</TableCell>
-              <TableCell>{'$10'}</TableCell>
-              <TableCell>{'1 day'}</TableCell>
-              <TableCell>{'Stripe'}</TableCell>
+              <TableCell textAlign={'left'}>{'12.31.9999'}</TableCell>
+              <TableCell textAlign={'left'}>{'12.31.9999'}</TableCell>
+              <TableCell textAlign={'right'}>{'$10'}</TableCell>
+              <TableCell textAlign={'left'}>{'1 day'}</TableCell>
+              <TableCell textAlign={'left'}>{'Stripe'}</TableCell>
             </TableRow>
 
             <TableRow>
-              <TableCell>{'12.31.9999'}</TableCell>
-              <TableCell>{'12.31.9999'}</TableCell>
-              <TableCell>{'$10'}</TableCell>
-              <TableCell>{'1 day'}</TableCell>
-              <TableCell>{'Stripe'}</TableCell>
+              <TableCell textAlign={'left'}>{'12.31.9999'}</TableCell>
+              <TableCell textAlign={'left'}>{'12.31.9999'}</TableCell>
+              <TableCell textAlign={'right'}>{'$10'}</TableCell>
+              <TableCell textAlign={'left'}>{'1 day'}</TableCell>
+              <TableCell textAlign={'left'}>{'Stripe'}</TableCell>
             </TableRow>
           </TableBody>
         </Table>
