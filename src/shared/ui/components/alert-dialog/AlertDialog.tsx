@@ -28,6 +28,7 @@ type AlertDialogProps = {
   onOpenChange: (isOpen: boolean) => void
   t: AlertDialogTranslations
 }
+// todo: вынести в ui-kit
 export const AlertDialog = ({ isOpen, onConfirm, onOpenChange, t }: AlertDialogProps) => {
   return (
     <DialogRoot onOpenChange={onOpenChange} open={isOpen}>

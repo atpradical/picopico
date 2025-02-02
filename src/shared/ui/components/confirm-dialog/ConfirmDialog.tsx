@@ -31,6 +31,7 @@ type ConfirmDialogProps = {
   t: ConfirmDialogTranslations
 }
 
+// todo: вынести в ui-kit
 export function ConfirmDialog({
   isOpen,
   onConfirm,

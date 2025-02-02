@@ -47,7 +47,12 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
       <Carousel className={s.carousel} slides={postsImages} />
       <div className={s.postDetails}>
         <DialogHeader className={s.dialogHeader}>
-          <Avatar showUserName size={'s'} src={postData.avatarOwner} userName={postData.userName} />
+          <Avatar
+            showUserName
+            size={'xs'}
+            src={postData.avatarOwner}
+            userName={postData.userName}
+          />
           {isAuthUserOnProfilePage && (
             <PostActionsDropdown
               onDeleteConfirm={closePostDialogHandler}

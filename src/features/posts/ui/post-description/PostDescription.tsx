@@ -18,7 +18,7 @@ export const PostDescription = ({ postData }: Props) => {
 
   return (
     <div className={s.container}>
-      <Avatar size={'s'} src={postData.avatarOwner} userName={postData.userName} />
+      <Avatar size={'xs'} src={postData.avatarOwner} userName={postData.userName} />
       <div className={s.descriptionWrapper}>
         <Typography variant={'regular_14'}>{postData.userName}</Typography>
         <Typography variant={'regular_14'}>{postData.description}</Typography>

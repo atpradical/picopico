@@ -11,6 +11,7 @@ import { privacyPolicyPage } from '@/locales/en/privacy-policy-page'
 import { profileAvatarDialog } from '@/locales/en/profile-avatar-dialog'
 import { profilePage } from '@/locales/en/profile-page'
 import { profileSettings } from '@/locales/en/profile-settings'
+import { searchPage } from '@/locales/en/search-page'
 import { signInPage } from '@/locales/en/sign-in-page'
 import { signUpPage } from '@/locales/en/sign-up-page'
 import { termsOfServicePage } from '@/locales/en/terms-of-service-page'
@@ -65,6 +66,7 @@ export const en = {
   profileAvatarDialog: profileAvatarDialog,
   profilePage: profilePage,
   profileSettings: profileSettings,
+  searchPage: searchPage,
   signInPage: signInPage,
   signUpPage: signUpPage,
   termsOfServicePage: termsOfServicePage,

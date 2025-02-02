@@ -59,7 +59,7 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
         </Card>
         {showDescription && (
           <>
-            <Avatar showUserName size={'s'} src={post.avatarOwner} userName={post.userName} />
+            <Avatar showUserName size={'xs'} src={post.avatarOwner} userName={post.userName} />
             <div className={s.publicationMeta}>
               <Typography grey variant={'small'}>
                 {formattedCreatedAt}

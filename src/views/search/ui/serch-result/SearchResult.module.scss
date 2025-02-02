@@ -1,0 +1,10 @@
+.card {
+  display: flex;
+  gap: var(--gap-l);
+
+  width: fit-content;
+  padding: 0;
+  border: none;
+
+  background: transparent;
+}

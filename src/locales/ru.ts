@@ -11,6 +11,7 @@ import { postDialog } from '@/locales/ru/post-dialog'
 import { privacyPolicyPage } from '@/locales/ru/privacy-policy-page'
 import { profileAvatarDialog } from '@/locales/ru/profile-avatar-dialog'
 import { profileSettings } from '@/locales/ru/profile-settings'
+import { searchPage } from '@/locales/ru/search-page'
 import { signInPage } from '@/locales/ru/sign-in-page'
 import { signUpPage } from '@/locales/ru/sign-up-page'
 import { termsOfServicePage } from '@/locales/ru/terms-of-service-page'
@@ -56,6 +57,7 @@ export const ru: LocaleType = {
   profileAvatarDialog: profileAvatarDialog,
   profilePage: profilePage,
   profileSettings: profileSettings,
+  searchPage: searchPage,
   signInPage: signInPage,
   signUpPage: signUpPage,
   termsOfServicePage: termsOfServicePage,
