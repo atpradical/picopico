@@ -26,6 +26,14 @@ function SearchPage() {
           <SearchResult />
           <SearchResult />
           <SearchResult />
+          <div className={s.noRequstFound}>
+            <Typography grey variant={'bold_14'}>
+              {t.searchPage.emptySearchTextOne}
+            </Typography>
+            <Typography grey variant={'small'}>
+              {t.searchPage.emptySearchTextTwo}
+            </Typography>
+          </div>
           <Typography variant={'error'}>Page in development</Typography>
         </section>
       </div>
