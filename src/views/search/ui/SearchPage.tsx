@@ -24,8 +24,6 @@ function SearchPage() {
           <SearchResult />
           <SearchResult />
           <SearchResult />
-          <SearchResult />
-          <SearchResult />
           <div className={s.noRequstFound}>
             <Typography grey variant={'bold_14'}>
               {t.searchPage.emptySearchTextOne}
