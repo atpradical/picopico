@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 import { useDeletePostMutation } from '@/services/posts'
 import { useTranslation } from '@/shared/hooks'
-import { AlertDialog } from '@/shared/ui/components'
+import { ConfirmDialog } from '@/shared/ui/components'
 import {
   Button,
   DropdownMenu,
@@ -66,7 +66,7 @@ export const PostActionsDropdown = ({ onDeleteConfirm, onEdit, postId }: EditPos
           </DropdownMenuContent>
         </DropdownMenuPortal>
       </DropdownMenu>
-      <AlertDialog
+      <ConfirmDialog
         isOpen={isDeleteAlertDialog}
         onConfirm={deletePostHandler}
         onOpenChange={setIsDeleteAlertDialog}

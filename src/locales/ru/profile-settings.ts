@@ -19,6 +19,7 @@ export const profileSettings = {
       dollars_100: '$100 в месяц',
     },
   },
+
   devicesTab: {
     activeSessions: 'Активные сессии',
     currentDevices: 'Текущее устройство',
@@ -27,6 +28,23 @@ export const profileSettings = {
     noActiveSessions: 'Вы еще не вошли в систему с других устройств',
     terminateAllOtherSessions: 'Завершить все другие сессии',
   },
+
+  paymentsTab: {
+    pagination: {
+      textPerPage: 'на странице',
+      textShow: 'Показать',
+    },
+    paymentsTable: {
+      header: {
+        dateEndOfSubscription: 'Дата окончания подписки',
+        dateOfPayment: 'Дата платежа',
+        paymentSystem: 'Платежная система',
+        price: 'Цена',
+        subscriptionDescription: 'Тип подписки',
+      },
+    },
+  },
+
   profileDataTab: {
     addProfilePhotoButton: 'Добавить аватар',
     deleteProfileButton: 'Удалить аккаунт',

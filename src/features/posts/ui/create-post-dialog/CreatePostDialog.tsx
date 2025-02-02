@@ -19,7 +19,7 @@ import { CreatePostCarousel, CreatePostFilters, CreatePostHeader } from '@/featu
 import { PostMetadataForm } from '@/features/posts/ui/post-meta-form'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { AlertDialog, HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
+import { ConfirmDialog, HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import getCroppedImg from '@/shared/utils/crop-image'
 import {
@@ -240,7 +240,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
           )}
         </DialogContent>
       </DialogRoot>
-      <AlertDialog
+      <ConfirmDialog
         isOpen={isAlertDialog}
         onConfirm={() => {}} //todo: добавить возможность сохранять черновик в IndexedDB
         onOpenChange={setIsAlertDialog}

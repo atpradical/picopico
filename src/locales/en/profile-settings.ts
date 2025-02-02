@@ -19,6 +19,7 @@ export const profileSettings = {
       dollars_100: '$100 per month',
     },
   },
+
   devicesTab: {
     activeSessions: 'Active sessions',
     currentDevices: 'Current devices',
@@ -27,6 +28,23 @@ export const profileSettings = {
     noActiveSessions: 'You have not yet logged in from other devices',
     terminateAllOtherSessions: 'Terminate all other session',
   },
+
+  paymentsTab: {
+    pagination: {
+      textPerPage: 'per page',
+      textShow: 'Show',
+    },
+    paymentsTable: {
+      header: {
+        dateEndOfSubscription: 'Date end of subscription',
+        dateOfPayment: 'Date of payment',
+        paymentSystem: 'Payment type',
+        price: 'Price',
+        subscriptionDescription: 'Subscription type',
+      },
+    },
+  },
+
   profileDataTab: {
     addProfilePhotoButton: 'Add a Profile Photo',
     deleteProfileButton: 'Delete account',

@@ -6,7 +6,7 @@ import { useDeleteAvatarMutation, useDeleteProfileMutation } from '@/services/pr
 import { MyProfileContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { AlertDialog } from '@/shared/ui/components'
+import { ConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { Avatar, Button, CloseOutlineIcon } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
@@ -82,7 +82,7 @@ export const ProfileAvatarManager = () => {
       </Button>
       <ProfileAvatarDialog />
       {alertDialog && (
-        <AlertDialog
+        <ConfirmDialog
           isOpen={alertDialog}
           onConfirm={deleteAvatarHandler}
           onOpenChange={setAlertDialog}

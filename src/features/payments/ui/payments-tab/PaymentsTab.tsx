@@ -1,6 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 
 import { paginationSelectOptions } from '@/features/payments/config'
+import { useTranslation } from '@/shared/hooks'
 import {
   Pagination,
   Table,
@@ -20,17 +21,29 @@ type AccountManagementTabProps = {
 } & ComponentPropsWithoutRef<typeof TabsContent>
 
 export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps) => {
+  const { t } = useTranslation()
+
   return (
     <>
       <TabsContent className={s.container} {...props}>
         <Table className={s.tableRoot} {...tableProps}>
           <TableHeader>
             <TableRow>
-              <TableHead textAlign={'left'}>Date of Payment</TableHead>
-              <TableHead textAlign={'left'}>End date of subscription</TableHead>
-              <TableHead textAlign={'right'}>Price</TableHead>
-              <TableHead textAlign={'left'}>Subscription Type</TableHead>
-              <TableHead textAlign={'left'}>Payment Type</TableHead>
+              <TableHead textAlign={'left'}>
+                {t.profileSettings.paymentsTab.paymentsTable.header.dateOfPayment}
+              </TableHead>
+              <TableHead textAlign={'left'}>
+                {t.profileSettings.paymentsTab.paymentsTable.header.dateEndOfSubscription}
+              </TableHead>
+              <TableHead textAlign={'right'}>
+                {t.profileSettings.paymentsTab.paymentsTable.header.price}
+              </TableHead>
+              <TableHead textAlign={'left'}>
+                {t.profileSettings.paymentsTab.paymentsTable.header.subscriptionDescription}
+              </TableHead>
+              <TableHead textAlign={'left'}>
+                {t.profileSettings.paymentsTab.paymentsTable.header.paymentSystem}
+              </TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -63,6 +76,8 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
           currentPage={5}
           pageSize={10}
           selectOptions={paginationSelectOptions}
+          textPerPage={t.profileSettings.paymentsTab.pagination.textPerPage}
+          textShow={t.profileSettings.paymentsTab.pagination.textShow}
           totalCount={90}
         />
         <Typography variant={'error'}>page in development</Typography>

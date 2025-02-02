@@ -5,7 +5,7 @@ import { DisplayPostContent } from '@/features/posts/ui'
 import { publicationsActions } from '@/features/publication/api'
 import { selectPublicationsAllData } from '@/features/publication/model'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { AlertDialog } from '@/shared/ui/components'
+import { ConfirmDialog } from '@/shared/ui/components'
 import { DialogRoot } from '@atpradical/picopico-ui-kit'
 
 import { EditPostContent } from './edit-post-content'
@@ -51,7 +51,7 @@ export const PostDialog = (props: PostsDialogProps) => {
           <DisplayPostContent postData={postData} setEditMode={toggleEditModeHandler} />
         )}
       </DialogRoot>
-      <AlertDialog
+      <ConfirmDialog
         isOpen={isAlertDialog}
         onConfirm={confirmExitEditModeHandler}
         onOpenChange={setIsAlertDialog}

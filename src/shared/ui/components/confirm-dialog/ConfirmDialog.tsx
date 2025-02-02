@@ -11,9 +11,9 @@ import {
   Typography,
 } from '@atpradical/picopico-ui-kit'
 
-import s from './AlertDialog.module.scss'
+import s from './ConfirmDialog.module.scss'
 
-type AlertDialogTranslations = {
+type ConfirmDialogTranslations = {
   accessibilityDescription: string
   accessibilityTitle: string
   closeButton: string
@@ -23,15 +23,21 @@ type AlertDialogTranslations = {
   visibleTitle: string
 }
 
-type AlertDialogProps = {
+type ConfirmDialogProps = {
   isOpen: boolean
   onConfirm: () => void
   onOpenChange: (isOpen: boolean) => void
   onReject?: () => void
-  t: AlertDialogTranslations
+  t: ConfirmDialogTranslations
 }
 
-export function AlertDialog({ isOpen, onConfirm, onOpenChange, onReject, t }: AlertDialogProps) {
+export function ConfirmDialog({
+  isOpen,
+  onConfirm,
+  onOpenChange,
+  onReject,
+  t,
+}: ConfirmDialogProps) {
   const closeDialogHandler = () => {
     onOpenChange(false)
 

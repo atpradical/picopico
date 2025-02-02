@@ -6,7 +6,7 @@ import { useLogoutMutation } from '@/services/auth'
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { AlertDialog } from '@/shared/ui/components'
+import { ConfirmDialog } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import {
   BookmarkIcon,
@@ -173,7 +173,7 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(({ className, ...res
         </Typography>
       </div>
       {openLogoutDialog && (
-        <AlertDialog
+        <ConfirmDialog
           isOpen={openLogoutDialog}
           onConfirm={logoutHandler}
           onOpenChange={setOpenLogoutDialog}
