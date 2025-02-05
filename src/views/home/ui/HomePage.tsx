@@ -1,9 +1,11 @@
+import { useEffect } from 'react'
+
 import { POSTS_HOME_PAGE_SIZE } from '@/features/public-user/config'
 import { TotalUsers } from '@/features/public-user/ui'
 import { Publication } from '@/features/publication/ui'
 import { wrapper } from '@/lib/store'
 import { picoApi } from '@/services'
-import { useGoogleLoginQuery } from '@/services/auth'
+import { useGoogleLoginMutation } from '@/services/auth'
 import { PublicPostsItem } from '@/services/posts'
 import { getCurrentUsersAmount, getPublicPostsAll } from '@/services/public-user'
 import { SortDirection } from '@/shared/enums'
@@ -55,9 +57,16 @@ type PageProps = {
 const HomePage = ({ postsData, totalUsersAmount }: PageProps) => {
   const router = useRouter()
   const code = router.query.code as string
-  const { error } = useGoogleLoginQuery({ code }, { skip: !code })
+  const [googleLogin, { error, isError }] = useGoogleLoginMutation()
 
-  if (error) {
+  useEffect(() => {
+    if (code) {
+      googleLogin({ code })
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [code])
+
+  if (isError) {
     const errorMessage = getErrorMessageData(error)
 
     return <div>{`Error: ${errorMessage}`}</div>

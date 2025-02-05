@@ -46,7 +46,7 @@ export const authApi = picoApi.injectEndpoints({
           url: '/v1/auth/registration',
         }),
       }),
-      googleLogin: builder.query<ResponseGoogleLogin, GoogleLoginArgs>({
+      googleLogin: builder.mutation<ResponseGoogleLogin, GoogleLoginArgs>({
         onQueryStarted: async (_, { dispatch, queryFulfilled }) => {
           try {
             const { data } = await queryFulfilled
@@ -120,7 +120,7 @@ export const {
   useConfirmEmailMutation,
   useCreatNewPasswordMutation,
   useCreateUserMutation,
-  useGoogleLoginQuery,
+  useGoogleLoginMutation,
   useLazyMeQuery,
   useLoginMutation,
   useLogoutMutation,
