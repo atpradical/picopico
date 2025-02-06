@@ -25,13 +25,9 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
   const { t } = useTranslation()
   const { data: paymentHistory } = useGetUserPaymentsHistoryQuery()
 
-  if (!paymentHistory) {
-    return null
-  }
-
   return (
     <>
-      {paymentHistory.length ? (
+      {paymentHistory && paymentHistory.length ? (
         <TabsContent className={s.container} {...props}>
           <Table className={s.tableRoot} {...tableProps}>
             <TableHeader>
