@@ -1,3 +1,5 @@
+import { picoApi } from '@/services/picoApi'
+
 import {
   CancelAutoRenewalArgs,
   CancelAutoRenewalResponse,
@@ -6,8 +8,7 @@ import {
   GetActiveSubscriptionInfoResponse,
   GetSubscriptionPricingDetailsResponse,
   GetUserPaymentsHistoryResponse,
-} from '@/services/payments/payments.types'
-import { picoApi } from '@/services/picoApi'
+} from './payments.types'
 
 export const paymentsApi = picoApi.injectEndpoints({
   endpoints: builder => {
