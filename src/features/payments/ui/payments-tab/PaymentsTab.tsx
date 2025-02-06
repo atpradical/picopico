@@ -26,9 +26,9 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
   const { data: paymentHistory } = useGetUserPaymentsHistoryQuery()
 
   return (
-    <>
+    <TabsContent className={s.container} {...props}>
       {paymentHistory && paymentHistory.length ? (
-        <TabsContent className={s.container} {...props}>
+        <>
           <Table className={s.tableRoot} {...tableProps}>
             <TableHeader>
               <TableRow>
@@ -71,13 +71,13 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
             textShow={t.profileSettings.paymentsTab.pagination.textShow}
             totalCount={90}
           />
-        </TabsContent>
+        </>
       ) : (
         <Typography className={s.noPaymentHistoryText} grey variant={'h3'}>
           {t.profileSettings.paymentsTab.noPayments}
         </Typography>
       )}
       <Typography variant={'error'}>page in development</Typography>
-    </>
+    </TabsContent>
   )
 }
