@@ -4,7 +4,6 @@ export const profileSettings = {
     autoRenewal: 'Авто продление',
     changeSubscription: 'Изменить подписку',
     currentSubscription: 'Текуща подписка',
-    or: 'или',
     paymentType: {
       business: 'Бизнес',
       personal: 'Индивидуальная',
@@ -27,6 +26,26 @@ export const profileSettings = {
     logout: 'Выйти',
     noActiveSessions: 'Вы еще не вошли в систему с других устройств',
     terminateAllOtherSessions: 'Завершить все другие сессии',
+  },
+
+  paymentAlert: {
+    fail: {
+      accessibilityDescription: 'Ошибка процесса оплаты',
+      accessibilityTitle: 'Ошибка оплаты',
+      closeButton: 'Закрыть',
+      confirmButton: 'Понятно',
+      visibleBody:
+        'Что-то пошло не так во время процесса оплаты. Пожалуйста, попробуйте снова или обратитесь в службу поддержки.',
+      visibleTitle: 'Ошибка',
+    },
+    success: {
+      accessibilityDescription: 'Оплата успешно завершена',
+      accessibilityTitle: 'Успешная оплата',
+      closeButton: 'Закрыть',
+      confirmButton: 'Продолжить',
+      visibleBody: 'Ваш платеж успешно обработан.',
+      visibleTitle: 'Успешно',
+    },
   },
 
   paymentsTab: {

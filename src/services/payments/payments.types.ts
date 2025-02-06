@@ -1,15 +1,15 @@
-import { PaymentType, Subscription } from '@/features/payments/config'
+import { BillingPeriod, PaymentSystem } from '@/shared/enums'
 
-export type SubscriptionOption = {
+export type SubscriptionPlanItem = {
   amount: number
-  typeDescription: Subscription
+  typeDescription: BillingPeriod
 }
 
-export type GetSubscriptionPricingDetailsResponse = {
-  data: SubscriptionOption[]
+export type GetSubscriptionPlansResponse = {
+  data: SubscriptionPlanItem[]
 }
 
-export type SubscriptionOptionDetails = {
+export type SubscriptionDetails = {
   autoRenewal: boolean
   dateOfPayment: string
   endDateOfSubscription: string
@@ -18,7 +18,7 @@ export type SubscriptionOptionDetails = {
 }
 
 export type GetActiveSubscriptionInfoResponse = {
-  data: SubscriptionOptionDetails[]
+  data: SubscriptionDetails[]
   hasAutoRenewal: boolean
 }
 
@@ -41,8 +41,8 @@ export type CreatePaymentSubscriptionResponse = {
 export type CreatePaymentSubscriptionArgs = {
   amount: number
   baseUrl: string
-  paymentType: PaymentType
-  typeSubscription: Subscription
+  paymentType: PaymentSystem
+  typeSubscription: BillingPeriod
 }
 
 export type CancelAutoRenewalArgs = {

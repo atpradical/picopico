@@ -4,7 +4,6 @@ export const profileSettings = {
     autoRenewal: 'Auto renewal',
     changeSubscription: 'Change your subscription',
     currentSubscription: 'Current subscription',
-    or: 'or',
     paymentType: {
       business: 'Business',
       personal: 'Personal',
@@ -27,6 +26,26 @@ export const profileSettings = {
     logout: 'Log out',
     noActiveSessions: 'You have not yet logged in from other devices',
     terminateAllOtherSessions: 'Terminate all other session',
+  },
+
+  paymentAlert: {
+    fail: {
+      accessibilityDescription: 'Payment process failed',
+      accessibilityTitle: 'Payment Error',
+      closeButton: 'Close',
+      confirmButton: 'Close',
+      visibleBody:
+        'Something went wrong during the payment process. Please try again or contact support.',
+      visibleTitle: 'Error',
+    },
+    success: {
+      accessibilityDescription: 'Payment completed successfully',
+      accessibilityTitle: 'Payment Success',
+      closeButton: 'Close',
+      confirmButton: 'Continue',
+      visibleBody: 'Your payment has been processed successfully.',
+      visibleTitle: 'Success',
+    },
   },
 
   paymentsTab: {

@@ -1,33 +1,23 @@
 import { picoApi } from '@/services/picoApi'
 
 import {
-  CancelAutoRenewalArgs,
-  CancelAutoRenewalResponse,
   CreatePaymentSubscriptionArgs,
   CreatePaymentSubscriptionResponse,
   GetActiveSubscriptionInfoResponse,
-  GetSubscriptionPricingDetailsResponse,
+  GetSubscriptionPlansResponse,
   GetUserPaymentsHistoryResponse,
 } from './payments.types'
 
 export const paymentsApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
-      cancelAutoRenewal: builder.mutation<CancelAutoRenewalResponse, CancelAutoRenewalArgs>({
-        // invalidatesTags: ['MyProfile'],
+      cancelAutoRenewal: builder.mutation<void, void>({
+        invalidatesTags: ['ActiveSubscriptionInfo'],
         query: body => {
-          // const { file } = body
-          //
-          // const formData = new FormData()
-          //
-          // if (file) {
-          //   formData.append('file', file)
-          // }
-
           return {
             body,
             method: 'POST',
-            url: `/v1/subscriptions/cancel-auto-renewal`,
+            url: `/v1/subscriptions/canceled-auto-renewal`,
           }
         },
       }),
@@ -35,16 +25,7 @@ export const paymentsApi = picoApi.injectEndpoints({
         CreatePaymentSubscriptionResponse,
         CreatePaymentSubscriptionArgs
       >({
-        // invalidatesTags: ['MyProfile'],
         query: body => {
-          // const { file } = body
-          //
-          // const formData = new FormData()
-          //
-          // if (file) {
-          //   formData.append('file', file)
-          // }
-
           return {
             body,
             method: 'POST',
@@ -56,10 +37,10 @@ export const paymentsApi = picoApi.injectEndpoints({
         providesTags: ['ActiveSubscriptionInfo'],
         query: () => ({
           method: 'GET',
-          url: `/v1/subscriptions/cost-of-payment-subscriptions`,
+          url: `/v1/subscriptions/current-payment-subscriptions`,
         }),
       }),
-      getSubscriptionPricingDetails: builder.query<GetSubscriptionPricingDetailsResponse, void>({
+      getSubscriptionPlans: builder.query<GetSubscriptionPlansResponse, void>({
         providesTags: ['SubscriptionPricingDetails'],
         query: () => ({
           method: 'GET',
@@ -81,6 +62,6 @@ export const {
   useCancelAutoRenewalMutation,
   useCreatePaymentSubscriptionMutation,
   useGetActiveSubscriptionInfoQuery,
-  useGetSubscriptionPricingDetailsQuery,
+  useGetSubscriptionPlansQuery,
   useGetUserPaymentsHistoryQuery,
 } = paymentsApi

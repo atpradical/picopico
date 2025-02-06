@@ -1,4 +1,5 @@
 export * from './paths.enum'
+export * from './payments.enum'
 export * from './request-status.enum'
 export * from './sort.enums'
 export * from './weekdays.enum'
