@@ -30,6 +30,7 @@ export const profileSettings = {
   },
 
   paymentsTab: {
+    noPayments: 'You have not yet made any payments',
     pagination: {
       textPerPage: 'per page',
       textShow: 'Show',
