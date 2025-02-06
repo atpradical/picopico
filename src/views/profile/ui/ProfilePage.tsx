@@ -47,14 +47,14 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
     const postId = context.query?.postId as string
 
-    let prerenderedPostData
+    let prefetchedPostData
     let postNotFound = false
 
     if (postId) {
       const result = await store.dispatch(getPublicPostById.initiate({ postId: +postId }))
 
       if (result.data) {
-        prerenderedPostData = result.data
+        prefetchedPostData = result.data
       } else {
         postNotFound = true
       }
@@ -65,7 +65,7 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
     return {
       props: {
         postNotFound,
-        prerenderedPostData: prerenderedPostData || null,
+        prefetchedPostData: prefetchedPostData || null,
         profileData: profileData.data,
       },
     }
@@ -74,27 +74,27 @@ export const getServerSideProps: GetServerSideProps = wrapper.getServerSideProps
 
 type Props = {
   postNotFound: boolean
-  prerenderedPostData?: PublicPostsItem
+  prefetchedPostData?: PublicPostsItem
   profileData: ResponseGetUserProfile
 }
 
-function ProfilePage({ postNotFound, prerenderedPostData, profileData }: Props) {
+function ProfilePage({ postNotFound, prefetchedPostData, profileData }: Props) {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
 
   useEffect(() => {
-    if (prerenderedPostData) {
-      dispatch(publicationsActions.setPostData({ postData: prerenderedPostData }))
+    if (prefetchedPostData) {
+      dispatch(publicationsActions.setPostData({ postData: prefetchedPostData }))
       dispatch(
         publicationsActions.togglePostDisplayDialog({
           isOpen: true,
-          postId: prerenderedPostData.id,
+          postId: prefetchedPostData.id,
         })
       )
     }
 
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [prerenderedPostData])
+  }, [prefetchedPostData])
 
   const [cursor, setCursor] = useState(INITIAL_CURSOR)
 
