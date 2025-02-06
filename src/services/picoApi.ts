@@ -28,5 +28,8 @@ export const picoApi = createApi({
     'PublicAllPostsByUserId',
     'PublicUsersAmount',
     'PublicPostsAll',
+    'SubscriptionPricingDetails',
+    'ActiveSubscriptionInfo',
+    'UserPaymentsHistory',
   ],
 })

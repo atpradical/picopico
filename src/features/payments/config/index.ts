@@ -76,3 +76,15 @@ export const paginationSelectOptions: OptionsValue[] = [
   { label: '50', value: '50' },
   { label: '100', value: '100' },
 ]
+
+export enum Subscription {
+  Day = 'DAY',
+  Monthly = 'MONTHLY',
+  Weekly = 'WEEKLY',
+}
+
+export enum PaymentType {
+  CreditCard = 'CREDIT_CARD',
+  Paypal = 'PAYPAL',
+  Stripe = 'STRIPE',
+}
