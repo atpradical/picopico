@@ -72,7 +72,12 @@ export const SignInForm = () => {
         <Typography as={Link} className={s.forgotPassword} href={Paths.forgotPassword}>
           {t.signInPage.signInForm.forgotPassword}
         </Typography>
-        <Button disabled={isSubmitDisabled} isLoading={isLoading || isSuccess} type={'submit'}>
+        <Button
+          className={s.submitButton}
+          disabled={isSubmitDisabled}
+          isLoading={isLoading || isSuccess}
+          type={'submit'}
+        >
           {t.signInPage.signInForm.submitButton}
         </Button>
       </form>

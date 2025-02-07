@@ -11,7 +11,7 @@ import { Button, Card, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 
-import s from './SignIn.module.scss'
+import s from './SignInPage.module.scss'
 
 function SignInPage() {
   const { isAuth, meData } = useContext(AuthContext)
@@ -37,7 +37,7 @@ function SignInPage() {
           <OAuth />
           <SignInForm />
           <Typography variant={'regular_16'}>{isAccount}</Typography>
-          <Button as={Link} href={Paths.signUp} variant={'nb-outlined'}>
+          <Button as={Link} className={s.linkButton} href={Paths.signUp} variant={'nb-outlined'}>
             {signUpLink}
           </Button>
         </Card>
