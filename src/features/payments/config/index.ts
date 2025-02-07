@@ -108,6 +108,7 @@ export const PaymentSystemDisplay: Record<string, string> = {
 }
 
 export const paginationSelectOptions: OptionsValue[] = [
+  { label: '2', value: '2' },
   { label: '5', value: '5' },
   { label: '10', value: '10' },
   { label: '20', value: '20' },

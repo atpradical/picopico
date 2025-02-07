@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef } from 'react'
+import { ComponentPropsWithoutRef, useMemo, useState } from 'react'
 
 import {
   PaymentSystemDisplay,
@@ -34,6 +34,39 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
   const { data: paymentHistory } = useGetUserPaymentsHistoryQuery()
   const dateLocale = locale === 'ru' ? ru : enUS
 
+  const [currentPage, setCurrentPage] = useState(1)
+  const [pageSize, setPageSize] = useState(10)
+
+  const paginatedData = useMemo(() => {
+    if (!paymentHistory) {
+      return []
+    }
+
+    const startIndex = (currentPage - 1) * pageSize
+    const endIndex = startIndex + pageSize
+
+    return paymentHistory.slice(startIndex, endIndex)
+  }, [paymentHistory, currentPage, pageSize])
+
+  const totalCount = paymentHistory?.length ?? 0
+
+  const nextPage = () => {
+    setCurrentPage(value => value + 1)
+  }
+
+  const prevPage = () => {
+    setCurrentPage(value => value - 1)
+  }
+
+  const changePage = (page: number) => {
+    setCurrentPage(page)
+  }
+
+  const changePageSize = (value: string) => {
+    setPageSize(+value)
+    setCurrentPage(1)
+  }
+
   return (
     <TabsContent className={s.container} {...props}>
       {paymentHistory && paymentHistory.length ? (
@@ -59,7 +92,7 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
               </TableRow>
             </TableHeader>
             <TableBody>
-              {paymentHistory.map((el, index) => {
+              {paginatedData.map((el, index) => {
                 const formattedDateOfPayment = longLocalizedDate(
                   new Date(el.dateOfPayment),
                   dateLocale
@@ -88,12 +121,16 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
             </TableBody>
           </Table>
           <Pagination
-            currentPage={5}
-            pageSize={10}
+            currentPage={currentPage}
+            onNextPage={nextPage}
+            onPageChange={changePage}
+            onPrevPage={prevPage}
+            onSelectValueChange={changePageSize}
+            pageSize={pageSize}
             selectOptions={paginationSelectOptions}
             textPerPage={t.profileSettings.paymentsTab.pagination.textPerPage}
             textShow={t.profileSettings.paymentsTab.pagination.textShow}
-            totalCount={90}
+            totalCount={totalCount}
           />
         </>
       ) : (
@@ -101,7 +138,6 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
           {t.profileSettings.paymentsTab.noPayments}
         </Typography>
       )}
-      <Typography variant={'error'}>page in development</Typography>
     </TabsContent>
   )
 }
