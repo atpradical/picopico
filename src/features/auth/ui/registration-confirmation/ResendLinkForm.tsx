@@ -51,12 +51,13 @@ export const ResendLinkForm = () => {
     <>
       <form className={s.form} onSubmit={formHandler}>
         <ControlledTextField
+          className={s.textField}
           control={control}
           label={label}
           name={'email'}
           placeholder={placeholder}
         />
-        <Button isLoading={isLoading} type={'submit'}>
+        <Button className={s.button} isLoading={isLoading} type={'submit'}>
           {button}
         </Button>
       </form>

@@ -1,28 +1,23 @@
-import { LocaleEmailConfirmed } from '@/locales/en'
 import { Paths } from '@/shared/enums'
+import { useTranslation } from '@/shared/hooks'
 import { Button, SignUpConfirmedIllustration, Typography } from '@atpradical/picopico-ui-kit'
 import link from 'next/link'
 
-import s from '@/views/registration-confirmation/RegistrationConfirmationPage.module.scss'
+import s from './ConfirmedEmail.module.scss'
 
-type ConfirmEmailProps = {
-  t: LocaleEmailConfirmed
-}
-export const ConfirmedEmail = ({ t }: ConfirmEmailProps) => {
-  const { caption, signInButton, title } = t
+export const ConfirmedEmail = () => {
+  const { t } = useTranslation()
 
   return (
-    <>
-      <Typography as={'h1'} className={s.title} variant={'h1'}>
-        {title}
+    <div className={s.container}>
+      <Typography as={'h1'} variant={'h1'}>
+        {t.confirmEmailPage.emailConfirmed.title}
       </Typography>
-      <Typography className={s.caption} variant={'regular_16'}>
-        {caption}
-      </Typography>
+      <Typography variant={'regular_16'}>{t.confirmEmailPage.emailConfirmed.caption}</Typography>
       <Button as={link} className={s.button} href={Paths.logIn}>
-        {signInButton}
+        {t.confirmEmailPage.emailConfirmed.signInButton}
       </Button>
       <SignUpConfirmedIllustration className={s.image} />
-    </>
+    </div>
   )
 }

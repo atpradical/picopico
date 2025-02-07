@@ -3,25 +3,42 @@
 .container {
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 12px;
   align-items: center;
   justify-content: center;
 
   width: 100%;
 }
 
+.title,
+.caption {
+  width: 100%;
+  max-width: 290px;
+  text-align: center;
+}
+
+.buttonsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  align-items: center;
+  justify-content: center;
+}
+
 .button {
   order: 1;
+  min-width: 180px;
 
   @media (max-width: $mobile-width) {
     order: 2;
     width: 100%;
+    max-width: 320px;
     padding: 12px;
   }
 }
 
 .image {
-  order: 2;
+  order: 3;
   width: 100%;
   max-width: 400px;
   max-height: 400px;
