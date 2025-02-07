@@ -1,7 +1,6 @@
-import { useContext, useEffect, useState } from 'react'
+import { useContext } from 'react'
 
-import { MAX_SCREEN_WIDTH_MOBILE } from '@/shared/constants'
-import { AuthContext } from '@/shared/contexts'
+import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
@@ -15,7 +14,7 @@ import {
 } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 import Link from 'next/link'
-import { useWindowSize } from 'usehooks-ts'
+import { useIsClient } from 'usehooks-ts'
 
 import s from './Header.module.scss'
 
@@ -26,17 +25,13 @@ export type HeaderProps = {
 export const Header = ({ countNotification }: HeaderProps) => {
   const { t } = useTranslation()
   const { isAuth } = useContext(AuthContext)
-  const [isMobile, setMobile] = useState(false)
+  const { isMobile } = useContext(AppMetaDataContext)
 
-  const { width } = useWindowSize()
+  const isClient = useIsClient()
 
-  useEffect(() => {
-    if (width < MAX_SCREEN_WIDTH_MOBILE) {
-      setMobile(true)
-    } else {
-      setMobile(false)
-    }
-  }, [width])
+  if (!isClient) {
+    return null
+  }
 
   return (
     <div className={clsx(s.wrapper, isMobile && s.wrapperMobile)}>
