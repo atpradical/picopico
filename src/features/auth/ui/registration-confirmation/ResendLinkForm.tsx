@@ -1,11 +1,10 @@
 import { useForm } from 'react-hook-form'
 
+import { ResendLinkFields, resendRegistrationEmailSchemeCreator } from '@/features/auth/model'
 import { useResendRegistrationEmailMutation } from '@/services/auth'
 import { useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components'
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
-import { resendRegistrationEmailSchemeCreator } from '@/views/registration-confirmation/model/resend-registration-email-scheme-creator'
-import { ResendLinkFields } from '@/views/registration-confirmation/model/types'
 import { Button, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'

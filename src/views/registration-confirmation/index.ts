@@ -1,1 +1,1 @@
-export { default } from '@/views/registration-confirmation/ui/RegistrationConfirmationPage'
+export { default } from '@/views/registration-confirmation/RegistrationConfirmationPage'

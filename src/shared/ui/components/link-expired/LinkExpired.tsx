@@ -1,7 +1,7 @@
 import { useState } from 'react'
 
+import { ResendLinkForm } from '@/features/auth/ui/registration-confirmation/ResendLinkForm'
 import { LocaleLinkExpired } from '@/locales/en'
-import { ResendLinkForm } from '@/views/registration-confirmation/ui/ResendLinkForm'
 import { Button, SignUpConfirmedIllustration, Typography } from '@atpradical/picopico-ui-kit'
 
 import s from './LinkExpired.module.scss'
@@ -14,7 +14,7 @@ export const LinkExpired = ({ t, variant }: LinkExpiredProps) => {
   const { caption, resendButton, title } = t
   const [showEmailForm, setShowEmailForm] = useState(false)
 
-  const resendEmailButtonHandler = (data: any) => {
+  const resendEmailButtonHandler = (_: any) => {
     setShowEmailForm(true)
   }
 

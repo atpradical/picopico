@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 
+import { ConfirmedEmail } from '@/features/auth/ui'
 import { useConfirmEmailMutation } from '@/services/auth'
 import { useTranslation } from '@/shared/hooks'
 import { LinkExpired } from '@/shared/ui/components/link-expired/LinkExpired'
@@ -7,7 +8,6 @@ import { getLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { showErrorToast } from '@/shared/utils'
 import { getErrorMessageData } from '@/shared/utils/get-error-message-data'
-import { ConfirmedEmail } from '@/views/registration-confirmation/ui/ConfirmedEmail'
 import { useRouter } from 'next/router'
 
 import s from './RegistrationConfirmationPage.module.scss'

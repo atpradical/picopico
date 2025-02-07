@@ -3,7 +3,7 @@ import { Paths } from '@/shared/enums'
 import { Button, SignUpConfirmedIllustration, Typography } from '@atpradical/picopico-ui-kit'
 import link from 'next/link'
 
-import s from '@/views/registration-confirmation/ui/RegistrationConfirmationPage.module.scss'
+import s from '@/views/registration-confirmation/RegistrationConfirmationPage.module.scss'
 
 type ConfirmEmailProps = {
   t: LocaleEmailConfirmed
