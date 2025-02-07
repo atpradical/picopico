@@ -24,7 +24,6 @@ export const ForgotPasswordForm = () => {
   const emailRef = useRef('')
   const recaptchaRef = useRef<Nullable<ReCAPTCHA>>(null)
   const { locale, t } = useTranslation()
-  const { formContent, pageLink, sentLinkText, submitButton } = t.forgotPasswordPage
 
   const [passwordRecovery, { isLoading }] = usePasswordRecoveryMutation()
 
@@ -85,28 +84,37 @@ export const ForgotPasswordForm = () => {
         placeholder={'Epam@epam.com'}
       />
       <Typography className={s.text} variant={'regular_14'}>
-        {formContent}
+        {t.forgotPasswordPage.formContent}
       </Typography>
       {isLinkSent && (
         <Typography className={s.sentMessage} variant={'regular_14'}>
-          {sentLinkText}
+          {t.forgotPasswordPage.sentLinkText}
         </Typography>
       )}
-      <Button disabled={!isValid || isLoading} isLoading={isLoading} type={'submit'}>
-        {submitButton}
-      </Button>
-      <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
-        {pageLink}
-      </Button>
-      <div className={clsx(s.recaptcha, errors.recaptcha && s.recaptchaError)}>
-        <ReCAPTCHA
-          hl={locale}
-          onChange={onRecaptchaChangeHandler}
-          ref={recaptchaRef}
-          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY ?? ''}
-          theme={'dark'}
-        />
-        {errors.recaptcha && <Typography variant={'error'}>{errors.recaptcha.message}</Typography>}
+      <div className={s.buttonsContainer}>
+        <Button
+          className={s.confirmButton}
+          disabled={!isValid || isLoading}
+          isLoading={isLoading}
+          type={'submit'}
+        >
+          {t.forgotPasswordPage.submitButton}
+        </Button>
+        <Button as={Link} className={s.linkButton} href={Paths.logIn} variant={'nb-outlined'}>
+          {t.forgotPasswordPage.pageLink}
+        </Button>
+        <div className={clsx(s.recaptcha, errors.recaptcha && s.recaptchaError)}>
+          <ReCAPTCHA
+            hl={locale}
+            onChange={onRecaptchaChangeHandler}
+            ref={recaptchaRef}
+            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY ?? ''}
+            theme={'dark'}
+          />
+          {errors.recaptcha && (
+            <Typography variant={'error'}>{errors.recaptcha.message}</Typography>
+          )}
+        </div>
       </div>
       <EmailConfirmationDialog
         email={emailRef.current}

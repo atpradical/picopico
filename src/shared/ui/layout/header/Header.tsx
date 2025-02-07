@@ -12,7 +12,6 @@ import {
   MoreHorizontalIcon,
   Typography,
 } from '@atpradical/picopico-ui-kit'
-import clsx from 'clsx'
 import Link from 'next/link'
 import { useIsClient } from 'usehooks-ts'
 
@@ -34,16 +33,16 @@ export const Header = ({ countNotification }: HeaderProps) => {
   }
 
   return (
-    <div className={clsx(s.wrapper, isMobile && s.wrapperMobile)}>
+    <div className={s.wrapper}>
       <Button as={Link} className={s.logoWrapper} href={Paths.Home} tabIndex={-1} variant={'link'}>
         <LogoLight className={s.logo} />
         <Typography as={'h1'} variant={'large'}>
           PicoPico
         </Typography>
       </Button>
-      <div className={clsx(s.container, isMobile && s.containerMobile)}>
+      <div className={s.container}>
         {isAuth && (
-          <Button className={clsx(s.buttonBell, isMobile && s.buttonBellMobile)} variant={'icon'}>
+          <Button className={s.buttonBell} variant={'icon'}>
             <Badge count={countNotification}>
               <BellOutlineIcon className={s.icon} />
             </Badge>
