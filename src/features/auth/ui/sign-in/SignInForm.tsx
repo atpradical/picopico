@@ -1,21 +1,20 @@
 import { useForm } from 'react-hook-form'
 
+import { signInSchemeCreator } from '@/features/auth/model'
+import { SignInFields } from '@/features/auth/model/sign-in/types'
 import { useLoginMutation } from '@/services/auth'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components'
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
-import { signInSchemeCreator } from '@/views/sign-in'
-import { SignInFields } from '@/views/sign-in/model/types'
 import { Button, Typography, toaster } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 
-import s from './SignIn.module.scss'
+import s from './SignInForm.module.scss'
 
 export const SignInForm = () => {
   const { t } = useTranslation()
-  const { forgotPassword, labels, placeholders, submitButton } = t.signInPage.signInForm
 
   const [login, { isLoading, isSuccess }] = useLoginMutation()
 
@@ -59,22 +58,22 @@ export const SignInForm = () => {
       <form className={s.form} onSubmit={formHandler}>
         <ControlledTextField
           control={control}
-          label={labels.email}
+          label={t.signInPage.signInForm.labels.email}
           name={'email'}
-          placeholder={placeholders.addEmail}
+          placeholder={t.signInPage.signInForm.placeholders.addEmail}
         />
         <ControlledTextField
           control={control}
-          label={labels.password}
+          label={t.signInPage.signInForm.labels.password}
           name={'password'}
-          placeholder={placeholders.addPassword}
+          placeholder={t.signInPage.signInForm.placeholders.addPassword}
           variant={'password'}
         />
         <Typography as={Link} className={s.forgotPassword} href={Paths.forgotPassword}>
-          {forgotPassword}
+          {t.signInPage.signInForm.forgotPassword}
         </Typography>
         <Button disabled={isSubmitDisabled} isLoading={isLoading || isSuccess} type={'submit'}>
-          {submitButton}
+          {t.signInPage.signInForm.submitButton}
         </Button>
       </form>
     </>

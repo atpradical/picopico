@@ -1,12 +1,12 @@
 import { useContext, useEffect } from 'react'
 
+import { SignInForm } from '@/features/auth/ui'
 import { OAuth } from '@/features/oAuth'
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { getLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
-import { SignInForm } from '@/views/sign-in'
 import { Button, Card, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
