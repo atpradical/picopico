@@ -1,4 +1,7 @@
+import { useContext } from 'react'
+
 import { LocaleEmailConfirmationDialog } from '@/locales/en'
+import { AppMetaDataContext } from '@/shared/contexts'
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Button,
@@ -26,6 +29,8 @@ export const EmailConfirmationDialog = ({
   onOpenChange,
   t,
 }: EmailConfirmationDialogProps) => {
+  const { isMobile } = useContext(AppMetaDataContext)
+
   const confirmButtonHandler = () => {
     onOpenChange(false)
   }
@@ -48,7 +53,9 @@ export const EmailConfirmationDialog = ({
           </DialogClose>
         </DialogHeader>
         <DialogBody>
-          <Typography variant={'regular_14'}>{`${t.visibleBodyText} ${email}`}</Typography>
+          <Typography
+            variant={isMobile ? 'regular_16' : 'regular_14'}
+          >{`${t.visibleBodyText} ${email}`}</Typography>
         </DialogBody>
         <DialogFooter className={s.footer}>
           <Button className={s.button} onClick={confirmButtonHandler} variant={'primary'}>

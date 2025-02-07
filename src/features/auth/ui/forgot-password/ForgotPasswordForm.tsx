@@ -93,7 +93,7 @@ export const ForgotPasswordForm = () => {
       )}
       <div className={s.buttonsContainer}>
         <Button
-          className={s.confirmButton}
+          className={s.submitButton}
           disabled={!isValid || isLoading}
           isLoading={isLoading}
           type={'submit'}

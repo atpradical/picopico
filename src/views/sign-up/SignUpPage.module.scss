@@ -1,3 +1,5 @@
+@import '@/styles/constants';
+
 .container {
   display: flex;
   align-items: center;
@@ -14,10 +16,27 @@
 
   width: 100%;
   max-width: 380px;
+
+  @media (max-width: $mobile-width) {
+    padding: 0;
+    border: none;
+    background: transparent;
+  }
 }
 
 .footer {
   display: flex;
   flex-direction: column;
   gap: 6px;
+  align-items: center;
+  justify-content: center;
+
+  width: 100%;
+}
+
+.linkButton {
+  @media (max-width: $mobile-width) {
+    width: 100%;
+    padding: 12px;
+  }
 }

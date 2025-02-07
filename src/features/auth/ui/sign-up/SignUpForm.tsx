@@ -1,12 +1,13 @@
 import { useRef, useState } from 'react'
 import { useForm, useWatch } from 'react-hook-form'
 
+import { SignUpFields, signUpSchemeCreator } from '@/features/auth/model'
+import { TermsAgreementLabel } from '@/features/auth/ui'
 import { useCreateUserMutation } from '@/services/auth'
 import { useCheckPasswordsMatch, useTranslation } from '@/shared/hooks'
 import { EmailConfirmationDialog } from '@/shared/ui/components'
 import { ControlledCheckbox, ControlledTextField } from '@/shared/ui/form-components'
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
-import { SignUpFields, TermsAgreementLabel, signUpSchemeCreator } from '@/views/sign-up'
 import { Button } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -14,8 +15,6 @@ import s from './SignUpFrom.module.scss'
 
 export const SignUpForm = () => {
   const { t } = useTranslation()
-  const { labels, placeholders, policy, submitButton, terms, termsAgreement } =
-    t.signUpPage.signUpForm
 
   const [showDialog, setShowDialog] = useState(false)
   const emailRef = useRef('')
@@ -76,40 +75,49 @@ export const SignUpForm = () => {
         <div className={s.textFieldContainer}>
           <ControlledTextField
             control={control}
-            label={labels.name}
+            label={t.signUpPage.signUpForm.labels.name}
             name={'userName'}
-            placeholder={placeholders.addUsername}
+            placeholder={t.signUpPage.signUpForm.placeholders.addUsername}
           />
           <ControlledTextField
             control={control}
-            label={labels.email}
+            label={t.signUpPage.signUpForm.labels.email}
             name={'email'}
-            placeholder={placeholders.addEmail}
+            placeholder={t.signUpPage.signUpForm.placeholders.addEmail}
           />
           <ControlledTextField
             control={control}
-            label={labels.password}
+            label={t.signUpPage.signUpForm.labels.password}
             name={'password'}
-            placeholder={placeholders.createPassword}
+            placeholder={t.signUpPage.signUpForm.placeholders.createPassword}
             variant={'password'}
           />
           <ControlledTextField
             control={control}
-            label={labels.confirmPassword}
+            label={t.signUpPage.signUpForm.labels.confirmPassword}
             name={'confirmPassword'}
-            placeholder={placeholders.repeatPassword}
+            placeholder={t.signUpPage.signUpForm.placeholders.repeatPassword}
             variant={'password'}
           />
         </div>
         <ControlledCheckbox
           control={control}
           label={
-            <TermsAgreementLabel policy={policy} terms={terms} termsAgreement={termsAgreement} />
+            <TermsAgreementLabel
+              policy={t.signUpPage.signUpForm.policy}
+              terms={t.signUpPage.signUpForm.terms}
+              termsAgreement={t.signUpPage.signUpForm.termsAgreement}
+            />
           }
           name={'TOS'}
         />
-        <Button disabled={isSubmitDisabled} isLoading={isLoading} type={'submit'}>
-          {submitButton}
+        <Button
+          className={s.submitButton}
+          disabled={isSubmitDisabled}
+          isLoading={isLoading}
+          type={'submit'}
+        >
+          {t.signUpPage.signUpForm.submitButton}
         </Button>
       </form>
       <EmailConfirmationDialog
