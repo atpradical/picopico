@@ -1,6 +1,3 @@
-import { useContext } from 'react'
-
-import { AppMetaDataContext } from '@/shared/contexts'
 import { useTranslation } from '@/shared/hooks'
 import { getLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
@@ -11,15 +8,13 @@ import s from './ForgotPasswordPage.module.scss'
 
 export default function ForgotPasswordPage() {
   const { t } = useTranslation()
-  const { pageTitle } = t.forgotPasswordPage
-  const { isMobile } = useContext(AppMetaDataContext)
 
   return (
-    <Page pt={isMobile ? '20px' : '72px'}>
+    <Page pt={'72px'}>
       <div className={s.container}>
-        <Card className={s.card} variant={isMobile ? 'transparent' : 'default'}>
+        <Card className={s.card}>
           <Typography as={'h1'} variant={'h1'}>
-            {pageTitle}
+            {t.forgotPasswordPage.pageTitle}
           </Typography>
           <ForgotPasswordForm />
         </Card>
