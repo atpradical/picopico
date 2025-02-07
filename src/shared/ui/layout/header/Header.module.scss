@@ -10,9 +10,13 @@
   width: 100%;
   height: var(--header-height);
   padding: 12px 60px;
+  border-bottom: 1px solid var(--color-dark-300);
 
   background-color: var(--color-dark-700);
-  border-bottom: 1px solid var(--color-dark-300);
+}
+
+.wrapperMobile {
+  padding: 12px;
 }
 
 .logoWrapper {
@@ -42,10 +46,23 @@
   justify-content: center;
 }
 
+.containerMobile {
+  gap: 12px;
+}
+
 .buttonBell {
   margin-right: 12px;
 }
 
+.buttonBellMobile {
+  margin-right: 0;
+}
+
 .button {
   text-wrap: nowrap;
+}
+
+.icon {
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
 }

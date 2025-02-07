@@ -1,11 +1,21 @@
-import { useContext } from 'react'
+import { useContext, useEffect, useState } from 'react'
 
+import { MAX_SCREEN_WIDTH_MOBILE } from '@/shared/constants'
 import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
-import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
+import {
+  Badge,
+  BellOutlineIcon,
+  Button,
+  LogoLight,
+  MoreHorizontalIcon,
+  Typography,
+} from '@atpradical/picopico-ui-kit'
+import clsx from 'clsx'
 import Link from 'next/link'
+import { useWindowSize } from 'usehooks-ts'
 
 import s from './Header.module.scss'
 
@@ -16,31 +26,49 @@ export type HeaderProps = {
 export const Header = ({ countNotification }: HeaderProps) => {
   const { t } = useTranslation()
   const { isAuth } = useContext(AuthContext)
+  const [isMobile, setMobile] = useState(false)
+
+  const { width } = useWindowSize()
+
+  useEffect(() => {
+    if (width < MAX_SCREEN_WIDTH_MOBILE) {
+      setMobile(true)
+    } else {
+      setMobile(false)
+    }
+  }, [width])
 
   return (
-    <div className={s.wrapper}>
+    <div className={clsx(s.wrapper, isMobile && s.wrapperMobile)}>
       <Button as={Link} className={s.logoWrapper} href={Paths.Home} tabIndex={-1} variant={'link'}>
         <LogoLight className={s.logo} />
         <Typography as={'h1'} variant={'large'}>
           PicoPico
         </Typography>
       </Button>
-      <div className={s.container}>
+      <div className={clsx(s.container, isMobile && s.containerMobile)}>
         {isAuth && (
-          <Button className={s.buttonBell} variant={'icon'}>
+          <Button className={clsx(s.buttonBell, isMobile && s.buttonBellMobile)} variant={'icon'}>
             <Badge count={countNotification}>
-              <BellOutlineIcon />
+              <BellOutlineIcon className={s.icon} />
             </Badge>
           </Button>
         )}
-        <SelectLanguage />
-        {!isAuth && (
+        <SelectLanguage isMobile={isMobile} />
+        {!isAuth && !isMobile && (
           <div className={s.buttonContainer}>
             <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
               {t.appHeader.signInButton}
             </Button>
             <Button as={Link} className={s.button} href={Paths.signUp} variant={'primary'}>
               {t.appHeader.signUpButton}
+            </Button>
+          </div>
+        )}
+        {isAuth && isMobile && (
+          <div className={s.buttonContainer}>
+            <Button className={s.button} variant={'icon'}>
+              <MoreHorizontalIcon className={s.icon} />
             </Button>
           </div>
         )}

@@ -12,11 +12,11 @@ import { useRouter } from 'next/router'
 
 import s from './SelectLanguage.module.scss'
 
-type SelectLanguageProps = ComponentPropsWithoutRef<typeof Select>
+type SelectLanguageProps = { isMobile: boolean } & ComponentPropsWithoutRef<typeof Select>
 type SelectLanguageRef = ElementRef<typeof Select>
 
 export const SelectLanguage = forwardRef<SelectLanguageRef, SelectLanguageProps>(
-  ({ className, ...rest }, ref) => {
+  ({ className, isMobile, ...rest }, ref) => {
     const { asPath, locale, pathname, push, query } = useRouter()
     const { t } = useTranslation()
 
@@ -33,7 +33,7 @@ export const SelectLanguage = forwardRef<SelectLanguageRef, SelectLanguageProps>
           value: 'en',
         },
       ],
-      [t.language.ru, t.language.en]
+      [t.language]
     )
 
     const changeLangHandler = (lang: string) => {
@@ -42,8 +42,9 @@ export const SelectLanguage = forwardRef<SelectLanguageRef, SelectLanguageProps>
 
     return (
       <Select
-        className={clsx(s.container, className)}
+        className={clsx(s.container, isMobile && s.containerMobile, className)}
         defaultValue={locale ?? 'en'}
+        isSmall={isMobile}
         onValueChange={changeLangHandler}
         options={languages}
         ref={ref}

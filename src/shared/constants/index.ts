@@ -11,3 +11,7 @@ export const USERNAME_REGEX = /^[a-zA-Z0-9_-]*$/
 export const NAME_REGEX = /^[a-zA-Zа-яА-Я\s]*$/
 export const PASSWORD_REGEX =
   /^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!"#$%&'()*+,\-.:;<=>?@[\]^_`{|}~])/
+
+// Screens nax widths in px
+export const MAX_SCREEN_WIDTH_MOBILE = 545
+export const MAX_SCREEN_WIDTH_TABLET = 991
