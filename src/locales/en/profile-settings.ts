@@ -17,6 +17,11 @@ export const profileSettings = {
       dollars_50: '$50 per 7 Day',
       dollars_100: '$100 per month',
     },
+    subscriptionShortDescriptions: {
+      day: '1 day',
+      month: '1 month',
+      week: '7 days',
+    },
   },
 
   devicesTab: {

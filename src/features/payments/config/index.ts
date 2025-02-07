@@ -5,6 +5,7 @@ import { RadioOption } from '@/shared/types'
 import { OptionsValue } from '@atpradical/picopico-ui-kit'
 
 type OptionsWithLocale = Record<string, RadioOption[]>
+type SubscriptionShortLabelWithLocale = Record<string, { label: string; period: BillingPeriod }[]>
 
 export const accountTypesOptions: OptionsWithLocale = {
   en: [
@@ -68,6 +69,42 @@ export const paymentOptions: OptionsWithLocale = {
       value: BillingPeriod.Monthly,
     },
   ],
+}
+
+export const SubscriptionShortLabel: SubscriptionShortLabelWithLocale = {
+  en: [
+    {
+      label: en.profileSettings.accountManagementTab.subscriptionShortDescriptions.day,
+      period: BillingPeriod.Day,
+    },
+    {
+      label: en.profileSettings.accountManagementTab.subscriptionShortDescriptions.week,
+      period: BillingPeriod.Weekly,
+    },
+    {
+      label: en.profileSettings.accountManagementTab.subscriptionShortDescriptions.month,
+      period: BillingPeriod.Monthly,
+    },
+  ],
+  ru: [
+    {
+      label: ru.profileSettings.accountManagementTab.subscriptionShortDescriptions.day,
+      period: BillingPeriod.Day,
+    },
+    {
+      label: ru.profileSettings.accountManagementTab.subscriptionShortDescriptions.week,
+      period: BillingPeriod.Weekly,
+    },
+    {
+      label: ru.profileSettings.accountManagementTab.subscriptionShortDescriptions.month,
+      period: BillingPeriod.Monthly,
+    },
+  ],
+}
+
+export const PaymentSystemDisplay: Record<string, string> = {
+  PAYPAL: 'PayPal',
+  STRIPE: 'Stripe',
 }
 
 export const paginationSelectOptions: OptionsValue[] = [

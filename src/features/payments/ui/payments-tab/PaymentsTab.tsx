@@ -1,8 +1,13 @@
 import { ComponentPropsWithoutRef } from 'react'
 
-import { paginationSelectOptions } from '@/features/payments/config'
+import {
+  PaymentSystemDisplay,
+  SubscriptionShortLabel,
+  paginationSelectOptions,
+} from '@/features/payments/config'
 import { useGetUserPaymentsHistoryQuery } from '@/services/payments'
 import { useTranslation } from '@/shared/hooks'
+import { longLocalizedDate } from '@/shared/utils/dates'
 import {
   Pagination,
   Table,
@@ -14,6 +19,8 @@ import {
   TabsContent,
   Typography,
 } from '@atpradical/picopico-ui-kit'
+import { enUS, ru } from 'date-fns/locale'
+import { useRouter } from 'next/router'
 
 import s from './PaymentsTab.module.scss'
 
@@ -23,7 +30,9 @@ type AccountManagementTabProps = {
 
 export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps) => {
   const { t } = useTranslation()
+  const { locale } = useRouter()
   const { data: paymentHistory } = useGetUserPaymentsHistoryQuery()
+  const dateLocale = locale === 'ru' ? ru : enUS
 
   return (
     <TabsContent className={s.container} {...props}>
@@ -51,13 +60,28 @@ export const PaymentsTab = ({ tableProps, ...props }: AccountManagementTabProps)
             </TableHeader>
             <TableBody>
               {paymentHistory.map((el, index) => {
+                const formattedDateOfPayment = longLocalizedDate(
+                  new Date(el.dateOfPayment),
+                  dateLocale
+                )
+                const formattedEndDateOfSubscription = longLocalizedDate(
+                  new Date(el.endDateOfSubscription),
+                  dateLocale
+                )
+
+                const subscriptionTextsWithTranslation = SubscriptionShortLabel[
+                  locale ?? 'en'
+                ].find(option => option.period === el.subscriptionType)
+
                 return (
                   <TableRow key={`${el.subscriptionId}_${index}`}>
-                    <TableCell textAlign={'left'}>{el.dateOfPayment}</TableCell>
-                    <TableCell textAlign={'left'}>{el.endDateOfSubscription}</TableCell>
-                    <TableCell textAlign={'right'}>{el.price}</TableCell>
-                    <TableCell textAlign={'left'}>{el.subscriptionType}</TableCell>
-                    <TableCell textAlign={'left'}>{el.paymentType}</TableCell>
+                    <TableCell textAlign={'left'}>{formattedDateOfPayment}</TableCell>
+                    <TableCell textAlign={'left'}>{formattedEndDateOfSubscription}</TableCell>
+                    <TableCell textAlign={'right'}>{`$${el.price}`}</TableCell>
+                    <TableCell textAlign={'left'}>
+                      {subscriptionTextsWithTranslation?.label}
+                    </TableCell>
+                    <TableCell textAlign={'left'}>{PaymentSystemDisplay[el.paymentType]}</TableCell>
                   </TableRow>
                 )
               })}

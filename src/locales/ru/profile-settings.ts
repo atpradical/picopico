@@ -17,6 +17,11 @@ export const profileSettings = {
       dollars_50: '$50 за 7 дней',
       dollars_100: '$100 в месяц',
     },
+    subscriptionShortDescriptions: {
+      day: '1 день',
+      month: '1 месяц',
+      week: '7 дней',
+    },
   },
 
   devicesTab: {
