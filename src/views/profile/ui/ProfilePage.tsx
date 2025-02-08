@@ -14,7 +14,7 @@ import {
 import { ResponseGetUserProfile, getPublicUserProfile } from '@/services/profile'
 import { SortDirection } from '@/shared/enums/sort.enums'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
-import { getSidebarLayout } from '@/shared/ui/layout'
+import { getNavigationLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
 import { INITIAL_CURSOR } from '@/views/profile/config'
 import { Spinner } from '@atpradical/picopico-ui-kit'
@@ -124,5 +124,5 @@ function ProfilePage({ postNotFound, prefetchedPostData, profileData }: Props) {
   )
 }
 
-ProfilePage.getLayout = getSidebarLayout
+ProfilePage.getLayout = getNavigationLayout
 export default ProfilePage

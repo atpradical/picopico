@@ -24,6 +24,7 @@ type ConfirmDialogTranslations = {
 }
 
 type ConfirmDialogProps = {
+  isLoading?: boolean
   isOpen: boolean
   onConfirm: () => void
   onOpenChange: (isOpen: boolean) => void
@@ -33,6 +34,7 @@ type ConfirmDialogProps = {
 
 // todo: вынести в ui-kit
 export function ConfirmDialog({
+  isLoading = false,
   isOpen,
   onConfirm,
   onOpenChange,
@@ -68,7 +70,7 @@ export function ConfirmDialog({
           <Typography variant={'regular_14'}>{t.visibleBody}</Typography>
         </DialogBody>
         <DialogFooter className={s.footer}>
-          <Button onClick={onConfirm} variant={'outlined'}>
+          <Button isLoading={isLoading} onClick={onConfirm} variant={'outlined'}>
             {t.confirmButton}
           </Button>
           <Button onClick={closeDialogHandler}>{t.rejectButton}</Button>

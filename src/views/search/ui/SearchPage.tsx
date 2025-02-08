@@ -1,5 +1,5 @@
 import { useTranslation } from '@/shared/hooks'
-import { Page, getSidebarLayout } from '@/shared/ui/layout'
+import { Page, getNavigationLayout } from '@/shared/ui/layout'
 import { SearchResult } from '@/views/search/ui/serch-result'
 import { TextField, Typography } from '@atpradical/picopico-ui-kit'
 
@@ -39,5 +39,5 @@ function SearchPage() {
   )
 }
 
-SearchPage.getLayout = getSidebarLayout
+SearchPage.getLayout = getNavigationLayout
 export default SearchPage

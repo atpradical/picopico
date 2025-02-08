@@ -9,7 +9,7 @@ import { useGoogleLoginMutation } from '@/services/auth'
 import { PublicPostsItem } from '@/services/posts'
 import { getCurrentUsersAmount, getPublicPostsAll } from '@/services/public-user'
 import { SortDirection } from '@/shared/enums'
-import { Page, getSidebarLayout } from '@/shared/ui/layout'
+import { Page, getNavigationLayout } from '@/shared/ui/layout'
 import { getErrorMessageData } from '@/shared/utils'
 import { GetStaticProps } from 'next'
 import { useRouter } from 'next/router'
@@ -94,5 +94,5 @@ const HomePage = ({ postsData, totalUsersAmount }: PageProps) => {
   )
 }
 
-HomePage.getLayout = getSidebarLayout
+HomePage.getLayout = getNavigationLayout
 export default HomePage

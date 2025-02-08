@@ -6,7 +6,7 @@ import { ProfileDataTab } from '@/features/profile/ui/settings'
 import { useLazyGetSessionsQuery } from '@/services/devices'
 import { MyProfileContext } from '@/shared/contexts'
 import { useTranslation } from '@/shared/hooks'
-import { Page, getSidebarLayout } from '@/shared/ui/layout'
+import { Page, getNavigationLayout } from '@/shared/ui/layout'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 import { TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
@@ -80,5 +80,5 @@ function SettingsPage() {
   )
 }
 
-SettingsPage.getLayout = getSidebarLayout
+SettingsPage.getLayout = getNavigationLayout
 export default SettingsPage
