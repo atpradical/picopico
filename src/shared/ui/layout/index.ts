@@ -1,3 +1,4 @@
+export * from './bottom-bar'
 export * from './head-meta'
 export * from './header'
 export * from './layout'

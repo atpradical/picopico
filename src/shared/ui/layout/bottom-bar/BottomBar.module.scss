@@ -1,31 +1,30 @@
-.group {
+@import '@/styles/constants';
+
+.bottomBar {
+  position: fixed;
+  right: 0;
+  bottom: 0;
+  left: 0;
+
   display: flex;
-  flex-direction: column;
-  gap: 24px;
+  gap: 36px;
+  align-items: center;
+  justify-content: center;
+
+
+  width: 100%;
+  height: var(--bottom-bar-height);
+  padding: 12px 60px;
+  border-top: 1px solid var(--color-dark-300);
+
+  background-color: var(--color-dark-700);
+
+  @media (max-width: $mobile-width) {
+    padding: 12px;
+  }
 }
 
-.sidebar {
-  top: var(--header-height);
-
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-
-  width: 220px;
-  min-height: calc(100vh - var(--header-height));
-  padding: 72px 30px 60px 36px;
-  border-right: 1px solid var(--color-dark-100);
-
-  .group:last-child {
-    margin-top: 180px;
-  }
-
-  .group:not(:first-child, :last-child) {
-    margin-top: 60px;
-  }
-}
-
-.title {
+.menuItem {
   display: flex;
   gap: 12px;
   align-items: center;
