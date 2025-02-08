@@ -1,0 +1,33 @@
+
+.navItem {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+
+  width: fit-content;
+
+  font-size: var(--font-size-s);
+  font-weight: var(--font-weight-medium);
+
+  &:focus-visible {
+    border-radius: var(--border-radius-xs);
+    color: var(--color-light-100);
+    outline: 2px solid var(--color-accent-700);
+  }
+
+  &:not([data-active='true']):hover {
+    cursor: pointer;
+    color: var(--color-accent-100);
+  }
+
+  &[data-active='true'] {
+    pointer-events: none;
+    font-weight: var(--font-weight-700);
+    color: var(--color-accent-700);
+  }
+
+  &[data-disabled='true'] {
+    pointer-events: none;
+    color: var(--color-dark-100);
+  }
+}
