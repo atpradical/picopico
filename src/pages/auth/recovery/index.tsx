@@ -1,1 +1,1 @@
-export { default } from '@/views/password-recovery/ui/PasswordRecoveryPage'
+export { default } from '@/views/password-recovery/PasswordRecoveryPage'

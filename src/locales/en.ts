@@ -24,7 +24,6 @@ export type LocaleValidationName = typeof en.validation.name
 export type LocaleValidationAboutMe = typeof en.validation.aboutMe
 export type LocaleValidationPassword = typeof en.validation.password
 export type LocaleEmailConfirmationDialog = typeof en.emailConfirmationDialog
-export type LocaleCreateNewPasswordForm = typeof en.createNewPasswordForm
 
 export const en = {
   appHeader: {

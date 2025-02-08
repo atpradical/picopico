@@ -1,25 +1,24 @@
 import { useForm, useWatch } from 'react-hook-form'
 
-import { LocaleCreateNewPasswordForm } from '@/locales/en'
+import { CreatePWDFields, createNewPasswordSchemeCreator } from '@/features/auth/model'
 import { useCreatNewPasswordMutation } from '@/services/auth'
 import { Paths } from '@/shared/enums'
 import { useCheckPasswordsMatch, useTranslation } from '@/shared/hooks'
 import { ControlledTextField } from '@/shared/ui/form-components'
 import { getErrorMessageData, setFormErrors } from '@/shared/utils'
-import { CreatePWDFields } from '@/views/password-recovery'
 import { Button, Card, Typography, toaster } from '@atpradical/picopico-ui-kit'
+import { zodResolver } from '@hookform/resolvers/zod'
 import { useRouter } from 'next/router'
 
 import s from './CreateNewPasswordForm.module.scss'
 
-type CreateNewPasswordFormProps = {
-  t: LocaleCreateNewPasswordForm
-}
+type CreateNewPasswordFormProps = {}
 
-export const CreateNewPasswordForm = ({ t }: CreateNewPasswordFormProps) => {
+export const CreateNewPasswordForm = ({}: CreateNewPasswordFormProps) => {
   const router = useRouter()
   const code = Array.isArray(router.query.code) ? router.query.code[0] : router.query.code
-  const { t: trans } = useTranslation()
+
+  const { t } = useTranslation()
   const [createNewPassword, { isLoading }] = useCreatNewPasswordMutation()
 
   const { control, handleSubmit, setError } = useForm<CreatePWDFields>({
@@ -29,14 +28,14 @@ export const CreateNewPasswordForm = ({ t }: CreateNewPasswordFormProps) => {
     },
     mode: 'onChange',
     reValidateMode: 'onSubmit',
-    // resolver: zodResolver(createNewPasswordSchemeCreator(t.validation)),
+    resolver: zodResolver(createNewPasswordSchemeCreator(t.validation)),
   })
 
   const formHandler = handleSubmit(async (data: CreatePWDFields) => {
     try {
       await createNewPassword({ newPassword: data.newPassword, recoveryCode: code ?? '' }).unwrap()
       router.push(Paths.logIn)
-      toaster({ text: t.successNotification })
+      toaster({ text: t.createNewPasswordForm.successNotification })
     } catch (e) {
       const errors = getErrorMessageData(e)
 
@@ -55,34 +54,34 @@ export const CreateNewPasswordForm = ({ t }: CreateNewPasswordFormProps) => {
     confirmPassword,
     password,
     setError,
-    validationMessage: trans.validation.passwordsMatch,
+    validationMessage: t.validation.passwordsMatch,
   })
 
   return (
     <Card className={s.card}>
       <Typography className={s.title} variant={'h1'}>
-        {t.formTitle}
+        {t.createNewPasswordForm.formTitle}
       </Typography>
       <form className={s.form} onSubmit={formHandler}>
         <ControlledTextField
           control={control}
-          label={t.labels.newPassword}
+          label={t.createNewPasswordForm.labels.newPassword}
           name={'newPassword'}
-          placeholder={t.placeholders.newPassword}
+          placeholder={t.createNewPasswordForm.placeholders.newPassword}
           variant={'password'}
         />
         <ControlledTextField
           control={control}
-          label={t.labels.confirmPassword}
+          label={t.createNewPasswordForm.labels.confirmPassword}
           name={'confirmPassword'}
-          placeholder={t.placeholders.confirmPassword}
+          placeholder={t.createNewPasswordForm.placeholders.confirmPassword}
           variant={'password'}
         />
         <Typography className={s.caption} variant={'regular_14'}>
-          {t.captionText}
+          {t.createNewPasswordForm.captionText}
         </Typography>
         <Button isLoading={isLoading} type={'submit'}>
-          {t.submitButton}
+          {t.createNewPasswordForm.submitButton}
         </Button>
       </form>
     </Card>
