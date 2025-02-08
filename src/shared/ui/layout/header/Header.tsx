@@ -4,7 +4,7 @@ import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
-import { MenuPopover } from '@/shared/ui/layout/navigation/menu-popover'
+import { HeaderMobileMenubar } from '@/shared/ui/layout'
 import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
 import { useIsClient } from 'usehooks-ts'
@@ -53,7 +53,7 @@ export const Header = ({ countNotification }: HeaderProps) => {
             </Button>
           </div>
         )}
-        {isMobile && <MenuPopover isAuth={isAuth} />}
+        {isMobile && <HeaderMobileMenubar isAuth={isAuth} />}
       </div>
     </div>
   )
