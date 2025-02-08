@@ -33,7 +33,7 @@ export const MenuPopover = ({ isAuth }: Props) => {
         </Button>
       </PopoverTrigger>
       <PopoverContent align={'end'} className={s.popoverContent} side={'bottom'} sideOffset={5}>
-        {!isAuth ? (
+        {isAuth ? (
           <nav>
             <NavItem
               activeIcon={<SettingsIcon className={s.icon} />}
