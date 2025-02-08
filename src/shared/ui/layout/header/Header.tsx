@@ -4,14 +4,8 @@ import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
-import {
-  Badge,
-  BellOutlineIcon,
-  Button,
-  LogoLight,
-  MoreHorizontalIcon,
-  Typography,
-} from '@atpradical/picopico-ui-kit'
+import { MenuPopover } from '@/shared/ui/layout/navigation/menu-popover'
+import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
 import { useIsClient } from 'usehooks-ts'
 
@@ -59,13 +53,7 @@ export const Header = ({ countNotification }: HeaderProps) => {
             </Button>
           </div>
         )}
-        {isAuth && isMobile && (
-          <div className={s.buttonContainer}>
-            <Button className={s.button} variant={'icon'}>
-              <MoreHorizontalIcon className={s.icon} />
-            </Button>
-          </div>
-        )}
+        {isMobile && <MenuPopover isAuth={isAuth} />}
       </div>
     </div>
   )

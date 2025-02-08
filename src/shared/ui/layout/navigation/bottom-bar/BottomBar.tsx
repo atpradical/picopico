@@ -14,6 +14,7 @@ import {
   SearchOutlineIcon,
 } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './BottomBar.module.scss'
@@ -34,31 +35,40 @@ export const BottomBar = forwardRef<BottomBarRef, BottomBarProps>(
       <nav className={clsx(s.bottomBar, className)} ref={ref} {...rest}>
         <NavItem
           activeIcon={<HomeIcon className={s.icon} />}
+          as={Link}
+          href={Paths.Home}
           inactiveIcon={<HomeOutlineIcon className={s.icon} />}
           isSelected={router.pathname === Paths.Home}
-          linkUrl={Paths.Home}
+          variant={'icon'}
         />
         <NavItem
           inactiveIcon={<PlusSquareIcon className={s.icon} />}
-          onItemClick={() => onOpenCreatePostDialog(true)}
+          onClick={() => onOpenCreatePostDialog(true)}
+          variant={'icon'}
         />
         <NavItem
           activeIcon={<MessageCircleIcon className={s.icon} />}
+          as={Link}
+          href={Paths.messages}
           inactiveIcon={<MessageCircleOutlineIcon className={s.icon} />}
           isSelected={router.pathname === Paths.messages}
-          linkUrl={Paths.messages}
+          variant={'icon'}
         />
         <NavItem
           activeIcon={<SearchIcon className={s.icon} />}
+          as={Link}
+          href={Paths.search}
           inactiveIcon={<SearchOutlineIcon className={s.icon} />}
           isSelected={router.pathname === Paths.search}
-          linkUrl={Paths.search}
+          variant={'icon'}
         />
         <NavItem
           activeIcon={<PersonIcon className={s.icon} />}
+          as={Link}
+          href={`${Paths.profile}/${userId}`}
           inactiveIcon={<PersonOutlineIcon className={s.icon} />}
           isSelected={router.asPath === `${Paths.profile}/${userId}`}
-          linkUrl={`${Paths.profile}/${userId}`}
+          variant={'icon'}
         />
       </nav>
     )

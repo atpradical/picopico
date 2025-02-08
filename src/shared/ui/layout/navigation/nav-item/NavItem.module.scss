@@ -3,10 +3,9 @@
   gap: 12px;
   align-items: center;
 
-  width: fit-content;
-
   font-size: var(--font-size-s);
   font-weight: var(--font-weight-medium);
+  color: var(--color-light-100);
 
   &:focus-visible {
     border-radius: var(--border-radius-xs);
@@ -29,4 +28,16 @@
     pointer-events: none;
     color: var(--color-dark-100);
   }
+}
+
+.start {
+  justify-content: flex-start;
+}
+
+.center {
+  justify-content: center;
+}
+
+.end {
+  justify-content: flex-end;
 }

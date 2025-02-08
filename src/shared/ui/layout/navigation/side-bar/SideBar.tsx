@@ -20,6 +20,7 @@ import {
   TrendingUpOutlineIcon,
 } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
+import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './SideBar.module.scss'
@@ -43,59 +44,81 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(
         <div className={s.group}>
           <NavItem
             activeIcon={<HomeIcon className={s.icon} />}
+            as={Link}
+            fullWidth
+            href={Paths.Home}
             inactiveIcon={<HomeOutlineIcon className={s.icon} />}
             isSelected={router.pathname === Paths.Home}
             label={t.appSidebar.homeLink}
-            linkUrl={Paths.Home}
+            variant={'icon'}
           />
           <NavItem
+            fullWidth
             inactiveIcon={<PlusSquareIcon className={s.icon} />}
             label={t.appSidebar.createButton}
-            onItemClick={() => onOpenCreatePostDialog(true)}
+            onClick={() => onOpenCreatePostDialog(true)}
+            variant={'icon'}
           />
           <NavItem
             activeIcon={<PersonIcon className={s.icon} />}
+            as={Link}
+            fullWidth
+            href={`${Paths.profile}/${userId}`}
             inactiveIcon={<PersonOutlineIcon className={s.icon} />}
             isSelected={router.asPath === `${Paths.profile}/${userId}`}
             label={t.appSidebar.profileLink}
-            linkUrl={`${Paths.profile}/${userId}`}
+            variant={'icon'}
           />
           <NavItem
             activeIcon={<MessageCircleIcon className={s.icon} />}
+            as={Link}
+            fullWidth
+            href={Paths.messages}
             inactiveIcon={<MessageCircleOutlineIcon className={s.icon} />}
             isSelected={router.pathname === Paths.messages}
             label={t.appSidebar.messagesLink}
-            linkUrl={Paths.messages}
+            variant={'icon'}
           />
           <NavItem
             activeIcon={<SearchIcon className={s.icon} />}
+            as={Link}
+            fullWidth
+            href={Paths.search}
             inactiveIcon={<SearchOutlineIcon className={s.icon} />}
             isSelected={router.pathname === Paths.search}
             label={t.appSidebar.searchButton}
-            linkUrl={Paths.search}
+            variant={'icon'}
           />
         </div>
         <div className={s.group}>
           <NavItem
             activeIcon={<TrendingUpIcon className={s.icon} />}
+            as={Link}
+            fullWidth
+            href={Paths.statistics}
             inactiveIcon={<TrendingUpOutlineIcon className={s.icon} />}
             isSelected={router.pathname === Paths.statistics}
             label={t.appSidebar.statisticsLink}
-            linkUrl={Paths.statistics}
+            variant={'icon'}
           />
           <NavItem
             activeIcon={<BookmarkIcon className={s.icon} />}
+            as={Link}
+            fullWidth
+            href={Paths.favourites}
             inactiveIcon={<BookmarkOutlineIcon className={s.icon} />}
             isSelected={router.pathname === Paths.favourites}
             label={t.appSidebar.favouritesLink}
-            linkUrl={Paths.favourites}
+            variant={'icon'}
           />
         </div>
         <div className={s.group}>
           <NavItem
+            fullWidth
             inactiveIcon={<LogOutOutlineIcon className={s.icon} />}
             label={t.appSidebar.logOutButton}
-            onItemClick={() => onOpenLogoutDialog(true)}
+            onClick={() => onOpenLogoutDialog(true)}
+            variant={'icon'}
           />
         </div>
       </nav>
