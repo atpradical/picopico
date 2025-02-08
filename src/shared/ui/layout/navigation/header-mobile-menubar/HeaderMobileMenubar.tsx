@@ -18,7 +18,6 @@ import {
   TrendingUpIcon,
   TrendingUpOutlineIcon,
 } from '@atpradical/picopico-ui-kit'
-import Link from 'next/link'
 import { useRouter } from 'next/router'
 
 import s from './HeaderMobileMenubar.module.scss'
@@ -45,33 +44,30 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                 <MenubarItem>
                   <NavItem
                     activeIcon={<SettingsIcon className={s.icon} />}
-                    as={Link}
-                    href={Paths.Settings}
                     inactiveIcon={<SettingsOutlineIcon className={s.icon} />}
                     isSelected={router.pathname === Paths.Settings}
                     label={'Profile Settings'}
+                    onClick={() => router.push(Paths.Settings)}
                     variant={'icon'}
                   />
                 </MenubarItem>
                 <MenubarItem>
                   <NavItem
                     activeIcon={<TrendingUpIcon className={s.icon} />}
-                    as={Link}
-                    href={Paths.statistics}
                     inactiveIcon={<TrendingUpOutlineIcon className={s.icon} />}
                     isSelected={router.pathname === Paths.statistics}
                     label={t.appSidebar.statisticsLink}
+                    onClick={() => router.push(Paths.statistics)}
                     variant={'icon'}
                   />
                 </MenubarItem>
                 <MenubarItem>
                   <NavItem
                     activeIcon={<BookmarkIcon className={s.icon} />}
-                    as={Link}
-                    href={Paths.favourites}
                     inactiveIcon={<BookmarkOutlineIcon className={s.icon} />}
                     isSelected={router.pathname === Paths.favourites}
                     label={t.appSidebar.favouritesLink}
+                    onClick={() => router.push(Paths.favourites)}
                     variant={'icon'}
                   />
                 </MenubarItem>
@@ -88,21 +84,19 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
               <>
                 <MenubarItem>
                   <NavItem
-                    as={Link}
                     fullWidth
-                    href={Paths.logIn}
                     isSelected={router.pathname === Paths.logIn}
-                    label={'Войти'}
+                    label={t.appSidebar.loginButton}
+                    onClick={() => router.push(Paths.logIn)}
                     variant={'icon'}
                   />
                 </MenubarItem>
                 <MenubarItem>
                   <NavItem
-                    as={Link}
                     fullWidth
-                    href={Paths.signUp}
                     isSelected={router.pathname === Paths.signUp}
-                    label={'Регистрация'}
+                    label={t.appSidebar.registerButton}
+                    onClick={() => router.push(Paths.signUp)}
                     variant={'icon'}
                   />
                 </MenubarItem>
