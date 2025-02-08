@@ -1,5 +1,6 @@
 import { Paths } from '@/shared/enums'
-import { useTranslation } from '@/shared/hooks'
+import { useLogout, useTranslation } from '@/shared/hooks'
+import { ConfirmDialog } from '@/shared/ui/components'
 import { NavItem } from '@/shared/ui/layout'
 import {
   BookmarkIcon,
@@ -24,6 +25,7 @@ type Props = { isAuth: boolean }
 export const MenuPopover = ({ isAuth }: Props) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { isLoading, isLogoutDialog, logoutHandler, setLogoutDialog } = useLogout()
 
   return (
     <Popover>
@@ -34,45 +36,56 @@ export const MenuPopover = ({ isAuth }: Props) => {
       </PopoverTrigger>
       <PopoverContent align={'end'} className={s.popoverContent} side={'bottom'} sideOffset={5}>
         {isAuth ? (
-          <nav>
-            <NavItem
-              activeIcon={<SettingsIcon className={s.icon} />}
-              as={Link}
-              className={s.popoverItem}
-              href={Paths.Settings}
-              inactiveIcon={<SettingsOutlineIcon className={s.icon} />}
-              isSelected={router.pathname === Paths.Settings}
-              label={'Profile Settings'}
-              variant={'icon'}
-            />
-            <NavItem
-              activeIcon={<TrendingUpIcon className={s.icon} />}
-              as={Link}
-              className={s.popoverItem}
-              href={Paths.statistics}
-              inactiveIcon={<TrendingUpOutlineIcon className={s.icon} />}
-              isSelected={router.pathname === Paths.statistics}
-              label={t.appSidebar.statisticsLink}
-              variant={'icon'}
-            />
-            <NavItem
-              activeIcon={<BookmarkIcon className={s.icon} />}
-              as={Link}
-              className={s.popoverItem}
-              href={Paths.favourites}
-              inactiveIcon={<BookmarkOutlineIcon className={s.icon} />}
-              isSelected={router.pathname === Paths.favourites}
-              label={t.appSidebar.favouritesLink}
-              variant={'icon'}
-            />
-            <NavItem
-              className={s.popoverItem}
-              inactiveIcon={<LogOutOutlineIcon className={s.icon} />}
-              label={t.appSidebar.logOutButton}
-              onClick={() => {}}
-              variant={'icon'}
-            />
-          </nav>
+          <>
+            <nav>
+              <NavItem
+                activeIcon={<SettingsIcon className={s.icon} />}
+                as={Link}
+                className={s.popoverItem}
+                href={Paths.Settings}
+                inactiveIcon={<SettingsOutlineIcon className={s.icon} />}
+                isSelected={router.pathname === Paths.Settings}
+                label={'Profile Settings'}
+                variant={'icon'}
+              />
+              <NavItem
+                activeIcon={<TrendingUpIcon className={s.icon} />}
+                as={Link}
+                className={s.popoverItem}
+                href={Paths.statistics}
+                inactiveIcon={<TrendingUpOutlineIcon className={s.icon} />}
+                isSelected={router.pathname === Paths.statistics}
+                label={t.appSidebar.statisticsLink}
+                variant={'icon'}
+              />
+              <NavItem
+                activeIcon={<BookmarkIcon className={s.icon} />}
+                as={Link}
+                className={s.popoverItem}
+                href={Paths.favourites}
+                inactiveIcon={<BookmarkOutlineIcon className={s.icon} />}
+                isSelected={router.pathname === Paths.favourites}
+                label={t.appSidebar.favouritesLink}
+                variant={'icon'}
+              />
+              <NavItem
+                className={s.popoverItem}
+                inactiveIcon={<LogOutOutlineIcon className={s.icon} />}
+                label={t.appSidebar.logOutButton}
+                onClick={() => setLogoutDialog(true)}
+                variant={'icon'}
+              />
+              {isLogoutDialog && (
+                <ConfirmDialog
+                  isLoading={isLoading}
+                  isOpen={isLogoutDialog}
+                  onConfirm={logoutHandler}
+                  onOpenChange={setLogoutDialog}
+                  t={t.logoutDialog}
+                />
+              )}
+            </nav>
+          </>
         ) : (
           <nav>
             <NavItem

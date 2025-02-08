@@ -1,27 +1,20 @@
-import { useContext, useState } from 'react'
+import { useContext } from 'react'
 
 import { createPostActions } from '@/features/posts/api'
 import { CreatePostDialog } from '@/features/posts/ui'
-import { useLogoutMutation } from '@/services/auth'
 import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
-import { Paths } from '@/shared/enums'
-import { useAppDispatch, useTranslation } from '@/shared/hooks'
+import { useAppDispatch, useLogout, useTranslation } from '@/shared/hooks'
 import { ConfirmDialog } from '@/shared/ui/components'
 import { SideBar } from '@/shared/ui/layout'
-import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { useRouter } from 'next/router'
 
 import { BottomBar } from './bottom-bar'
 
 type Props = {}
 export const Navigation = ({}: Props) => {
-  const router = useRouter()
   const { t } = useTranslation()
 
   const { isAuth, meData } = useContext(AuthContext)
   const { isMobile } = useContext(AppMetaDataContext)
-
-  const [openLogoutDialog, setOpenLogoutDialog] = useState(false)
 
   const dispatch = useAppDispatch()
 
@@ -29,20 +22,7 @@ export const Navigation = ({}: Props) => {
     dispatch(createPostActions.togglePostCreationDialog({ isOpen: open }))
   }
 
-  const [logout, { isLoading }] = useLogoutMutation()
-
-  const logoutHandler = async () => {
-    try {
-      await logout()
-      router.push(Paths.logIn)
-    } catch (e) {
-      const error = getErrorMessageData(e)
-
-      showErrorToast(error)
-    } finally {
-      setOpenLogoutDialog(false)
-    }
-  }
+  const { isLoading, isLogoutDialog, logoutHandler, setLogoutDialog } = useLogout()
 
   if (!isAuth) {
     return null
@@ -60,16 +40,16 @@ export const Navigation = ({}: Props) => {
         <SideBar
           isAuth={isAuth}
           onOpenCreatePostDialog={toggleCreatePostDialogHandler}
-          onOpenLogoutDialog={setOpenLogoutDialog}
+          onOpenLogoutDialog={setLogoutDialog}
           userId={String(meData?.userId)}
         />
       )}
-      {openLogoutDialog && (
+      {isLogoutDialog && (
         <ConfirmDialog
           isLoading={isLoading}
-          isOpen={openLogoutDialog}
+          isOpen={isLogoutDialog}
           onConfirm={logoutHandler}
-          onOpenChange={setOpenLogoutDialog}
+          onOpenChange={setLogoutDialog}
           t={t.logoutDialog}
         />
       )}

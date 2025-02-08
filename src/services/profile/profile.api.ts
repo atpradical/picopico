@@ -11,7 +11,7 @@ export const profileApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       deleteAvatar: builder.mutation<void, void>({
-        invalidatesTags: ['MyProfile'],
+        invalidatesTags: ['MyProfile', 'Me'],
         query: () => ({
           method: 'DELETE',
           url: `/v1/users/profile/avatar`,
