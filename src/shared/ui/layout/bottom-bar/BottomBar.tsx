@@ -39,7 +39,10 @@ export const BottomBar = forwardRef<BottomBarRef, BottomBarProps>(({ className, 
         isSelected={router.pathname === Paths.Home}
         linkUrl={Paths.Home}
       />
-      <NavItem inactiveIcon={<PlusSquareIcon className={s.icon} />} onItemClick={() => {}} />
+      <NavItem
+        inactiveIcon={<PlusSquareIcon className={s.icon} />}
+        onItemClick={() => console.log('bottom create btn!')}
+      />
       <NavItem
         activeIcon={<MessageCircleIcon className={s.icon} />}
         inactiveIcon={<MessageCircleOutlineIcon className={s.icon} />}
@@ -62,3 +65,5 @@ export const BottomBar = forwardRef<BottomBarRef, BottomBarProps>(({ className, 
     </nav>
   )
 })
+
+BottomBar.displayName = 'BottomBar'
