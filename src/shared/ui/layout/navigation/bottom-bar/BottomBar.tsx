@@ -12,7 +12,6 @@ import {
   PlusSquareIcon,
   SearchIcon,
   SearchOutlineIcon,
-  Typography,
 } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 import { useRouter } from 'next/router'
@@ -61,7 +60,6 @@ export const BottomBar = forwardRef<BottomBarRef, BottomBarProps>(
           isSelected={router.asPath === `${Paths.profile}/${userId}`}
           linkUrl={`${Paths.profile}/${userId}`}
         />
-        <Typography variant={'error'}>in dev...</Typography>
       </nav>
     )
   }
