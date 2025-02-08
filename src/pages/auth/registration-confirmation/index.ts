@@ -1,1 +1,1 @@
-export { default } from '@/views/registration-confirmation'
+export { default } from '@/views/auth/registration-confirmation'
