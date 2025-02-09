@@ -1,5 +1,6 @@
 export * from './useAppDispatch'
 export * from './useCheckPasswordsMatch'
+export * from './useGoBackLinkButton'
 export * from './useIsAuthUserOnProfilePage'
 export * from './useLoader'
 export * from './useLogout'

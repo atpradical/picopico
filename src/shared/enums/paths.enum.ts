@@ -12,3 +12,9 @@ export enum Paths {
   statistics = '/statistics',
   termsOfService = '/docs/terms-of-service',
 }
+
+export enum BackButtonPathFlags {
+  goBack = 'goBack',
+  toProfile = 'toProfile',
+  toSignUp = 'toSignUp',
+}

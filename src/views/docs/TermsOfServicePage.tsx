@@ -1,4 +1,3 @@
-import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { DocsContent } from '@/shared/ui/components'
 import { getLayout } from '@/shared/ui/layout'
@@ -10,9 +9,7 @@ function TermsOfServicePage() {
   return (
     <Page>
       <DocsContent
-        buttonText={t.termsOfServicePage.backButton}
         docsContent={t.termsOfServicePage.content}
-        href={Paths.signUp}
         title={t.termsOfServicePage.pageTitle}
       />
     </Page>

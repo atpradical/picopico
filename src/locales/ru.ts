@@ -3,6 +3,7 @@ import { confirmEmailPage } from '@/locales/ru/confirm-email-page'
 import { createNewPasswordForm } from '@/locales/ru/create-new-password-form'
 import { createPostDialog } from '@/locales/ru/create-post-dialog'
 import { deleteAvatarDialog } from '@/locales/ru/delete-avatar-dialog'
+import { docsBackButtons } from '@/locales/ru/docsBackButtons'
 import { emailConfirmationDialog } from '@/locales/ru/email-confirmation-dialog'
 import { expiredLink } from '@/locales/ru/expired-link'
 import { forgotPasswordPage } from '@/locales/ru/forgot-password-page'
@@ -40,13 +41,18 @@ export const ru: LocaleType = {
   createNewPasswordForm: createNewPasswordForm,
   createPostDialog: createPostDialog,
   deleteAvatarDialog: deleteAvatarDialog,
+
+  docsBackButtons: docsBackButtons,
+
   emailConfirmationDialog: emailConfirmationDialog,
   expiredLink: expiredLink,
   forgotPasswordPage: forgotPasswordPage,
+
   language: {
     en: 'Английский',
     ru: ' Русский',
   },
+
   loading: 'Загрузка...',
   logoutDialog: logoutDialog,
   noPostsCreatedYet: 'Еще не создано ни одного поста',

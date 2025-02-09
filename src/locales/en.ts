@@ -2,6 +2,7 @@ import { confirmEmailPage } from '@/locales/en/confirm-email-page'
 import { createNewPasswordForm } from '@/locales/en/create-new-password-form'
 import { createPostDialog } from '@/locales/en/create-post-dialog'
 import { deleteAvatarDialog } from '@/locales/en/delete-avatar-dialog'
+import { docsBackButtons } from '@/locales/en/docsBackButtons'
 import { emailConfirmationDialog } from '@/locales/en/email-confirmation-dialog'
 import { expiredLink } from '@/locales/en/expired-link'
 import { forgotPasswordPage } from '@/locales/en/forgot-password-page'
@@ -46,6 +47,9 @@ export const en = {
   createNewPasswordForm: createNewPasswordForm,
   createPostDialog: createPostDialog,
   deleteAvatarDialog: deleteAvatarDialog,
+
+  docsBackButtons: docsBackButtons,
+
   emailConfirmationDialog: emailConfirmationDialog,
   expiredLink: expiredLink,
   forgotPasswordPage: forgotPasswordPage,

@@ -1,4 +1,4 @@
-import { Paths } from '@/shared/enums'
+import { BackButtonPathFlags, Paths } from '@/shared/enums'
 import { Translate } from '@/shared/ui/components'
 import { Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
@@ -11,7 +11,8 @@ type Props = {
 }
 export const PrivacyPolicyNotification = ({ linkText, notificationMessage }: Props) => {
   const onClickHandler = () => {
-    localStorage.setItem('goBackLink', Paths.Settings)
+    sessionStorage.setItem('previousPath', Paths.Settings)
+    sessionStorage.setItem('backButtonPathFlags', BackButtonPathFlags.toProfile)
   }
 
   return (
