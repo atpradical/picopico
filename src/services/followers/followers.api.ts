@@ -22,8 +22,6 @@ export const followersApi = picoApi.injectEndpoints({
           try {
             // Ждем завершения запроса
             await queryFulfilled
-
-            debugger
             // После успешного запроса обновляем кеш
             CachedArgsForQuery.forEach(cachedArgs => {
               dispatch(
@@ -31,7 +29,6 @@ export const followersApi = picoApi.injectEndpoints({
                   'getUserProfileByUserNameWithFollowInfo',
                   cachedArgs,
                   draft => {
-                    debugger
                     draft.isFollowing = true
                   }
                 )
