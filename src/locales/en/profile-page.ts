@@ -4,5 +4,6 @@ export const profilePage = {
   profileFollowButton: 'Follow',
   profileSendMessageButton: 'Send Message',
   profileSettingsButton: 'Profile Settings',
+  profileUnfollowButton: 'Unfollow',
   publications: 'Publications',
 }

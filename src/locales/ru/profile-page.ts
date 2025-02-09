@@ -4,5 +4,6 @@ export const profilePage = {
   profileFollowButton: 'Подписаться',
   profileSendMessageButton: 'Отправить Сообщение',
   profileSettingsButton: 'Настройки',
+  profileUnfollowButton: 'Отписаться',
   publications: 'Публикаций',
 }
