@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
 
 import { POSTS_MAX_PAGE_SIZE } from '@/features/posts/config'
+import { INITIAL_CURSOR } from '@/features/profile/config'
 import { ProfileHeader, Publications } from '@/features/profile/ui'
 import { publicationsActions } from '@/features/publication/api'
 import { wrapper } from '@/lib/store'
@@ -16,7 +17,6 @@ import { SortDirection } from '@/shared/enums/sort.enums'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { getNavigationLayout } from '@/shared/ui/layout'
 import { Page } from '@/shared/ui/layout/page'
-import { INITIAL_CURSOR } from '@/views/profile/config'
 import { Spinner } from '@atpradical/picopico-ui-kit'
 import { GetServerSideProps } from 'next'
 

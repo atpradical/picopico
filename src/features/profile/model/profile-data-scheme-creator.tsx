@@ -1,8 +1,8 @@
+import { PrivacyPolicyNotification } from '@/features/profile/ui'
 import { LocaleValidation } from '@/locales/en'
 import { createCustomErrorMap } from '@/shared/lib/custom-error-map'
 import { aboutMeScheme, nameScheme, userNameScheme } from '@/shared/lib/validations'
 import { checkUserAge } from '@/shared/utils'
-import { PrivacyPolicyNotification } from '@/views/profile/ui/privacy-policy-notification'
 import { toaster } from '@atpradical/picopico-ui-kit'
 import { z } from 'zod'
 
