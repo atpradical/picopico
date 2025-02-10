@@ -50,7 +50,10 @@ export const Navigation = ({}: Props) => {
           isOpen={isLogoutDialog}
           onConfirm={logoutHandler}
           onOpenChange={setLogoutDialog}
-          t={t.logoutDialog}
+          t={{
+            ...t.logoutDialog,
+            visibleBody: `${t.logoutDialog.visibleBody}: ${meData?.email || ''}?`,
+          }}
         />
       )}
       <CreatePostDialog onOpenChange={toggleCreatePostDialogHandler} />

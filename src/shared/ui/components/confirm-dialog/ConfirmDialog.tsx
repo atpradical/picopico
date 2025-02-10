@@ -70,10 +70,17 @@ export function ConfirmDialog({
           <Typography variant={'regular_14'}>{t.visibleBody}</Typography>
         </DialogBody>
         <DialogFooter className={s.footer}>
-          <Button isLoading={isLoading} onClick={onConfirm} variant={'outlined'}>
+          <Button
+            className={s.button}
+            isLoading={isLoading}
+            onClick={onConfirm}
+            variant={'outlined'}
+          >
             {t.confirmButton}
           </Button>
-          <Button onClick={closeDialogHandler}>{t.rejectButton}</Button>
+          <Button className={s.button} onClick={closeDialogHandler}>
+            {t.rejectButton}
+          </Button>
         </DialogFooter>
       </DialogContent>
     </DialogRoot>

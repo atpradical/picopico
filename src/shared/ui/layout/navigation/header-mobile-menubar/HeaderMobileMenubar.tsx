@@ -1,3 +1,6 @@
+import { useContext } from 'react'
+
+import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useLogout, useTranslation } from '@/shared/hooks'
 import { ConfirmDialog } from '@/shared/ui/components'
@@ -27,13 +30,14 @@ type Props = { isAuth: boolean }
 export const HeaderMobileMenubar = ({ isAuth }: Props) => {
   const router = useRouter()
   const { t } = useTranslation()
+  const { meData } = useContext(AuthContext)
   const { isLoading, isLogoutDialog, logoutHandler, setLogoutDialog } = useLogout()
 
   return (
     <>
       <Menubar>
         <MenubarMenu>
-          <MenubarTrigger>
+          <MenubarTrigger asChild>
             <Button variant={'icon'}>
               <MoreHorizontalIcon className={s.icon} />
             </Button>
@@ -111,7 +115,10 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
           isOpen={isLogoutDialog}
           onConfirm={logoutHandler}
           onOpenChange={setLogoutDialog}
-          t={t.logoutDialog}
+          t={{
+            ...t.logoutDialog,
+            visibleBody: `${t.logoutDialog.visibleBody}: ${meData?.email || ''}?`,
+          }}
         />
       )}
     </>

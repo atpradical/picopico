@@ -5,6 +5,6 @@ export const logoutDialog = {
   closeButton: 'закрыть',
   confirmButton: 'Да',
   rejectButton: 'Нет',
-  visibleBody: 'Вы действительно хотите выйти из своей учетной записи?',
+  visibleBody: 'Вы действительно хотите выйти из своей учетной записи',
   visibleTitle: 'Выход',
 }
