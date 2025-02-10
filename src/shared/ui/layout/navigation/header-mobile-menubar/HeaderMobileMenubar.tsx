@@ -45,7 +45,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
           <MenubarContent align={'end'} className={s.menubarContent} side={'bottom'} sideOffset={5}>
             {isAuth ? (
               <>
-                <MenubarItem>
+                <MenubarItem className={s.menuItem}>
                   <NavItem
                     activeIcon={<SettingsIcon className={s.icon} />}
                     inactiveIcon={<SettingsOutlineIcon className={s.icon} />}
@@ -55,7 +55,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                     variant={'icon'}
                   />
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem className={s.menuItem}>
                   <NavItem
                     activeIcon={<TrendingUpIcon className={s.icon} />}
                     inactiveIcon={<TrendingUpOutlineIcon className={s.icon} />}
@@ -65,7 +65,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                     variant={'icon'}
                   />
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem className={s.menuItem}>
                   <NavItem
                     activeIcon={<BookmarkIcon className={s.icon} />}
                     inactiveIcon={<BookmarkOutlineIcon className={s.icon} />}
@@ -75,7 +75,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                     variant={'icon'}
                   />
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem className={s.menuItem}>
                   <NavItem
                     inactiveIcon={<LogOutOutlineIcon className={s.icon} />}
                     label={t.appSidebar.logOutButton}
@@ -86,7 +86,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
               </>
             ) : (
               <>
-                <MenubarItem>
+                <MenubarItem className={s.menuItem}>
                   <NavItem
                     fullWidth
                     isSelected={router.pathname === Paths.logIn}
@@ -95,7 +95,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                     variant={'icon'}
                   />
                 </MenubarItem>
-                <MenubarItem>
+                <MenubarItem className={s.menuItem}>
                   <NavItem
                     fullWidth
                     isSelected={router.pathname === Paths.signUp}
