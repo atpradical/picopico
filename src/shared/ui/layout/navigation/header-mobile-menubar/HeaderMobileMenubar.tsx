@@ -109,6 +109,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
           </MenubarContent>
         </MenubarMenu>
       </Menubar>
+      {/*todo: вынести в app ConfirmationDialog*/}
       {isLogoutDialog && (
         <ConfirmDialog
           isLoading={isLoading}
