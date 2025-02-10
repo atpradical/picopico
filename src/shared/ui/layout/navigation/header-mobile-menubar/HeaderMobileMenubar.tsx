@@ -50,7 +50,7 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                     activeIcon={<SettingsIcon className={s.icon} />}
                     inactiveIcon={<SettingsOutlineIcon className={s.icon} />}
                     isSelected={router.pathname === Paths.Settings}
-                    label={'Profile Settings'}
+                    label={t.appSidebar.profileSettings}
                     onClick={() => router.push(Paths.Settings)}
                     variant={'icon'}
                   />

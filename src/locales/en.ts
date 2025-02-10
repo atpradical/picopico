@@ -39,6 +39,7 @@ export const en = {
     loginButton: 'Sign in',
     messagesLink: 'Messenger',
     profileLink: 'My Profile',
+    profileSettings: 'Profile Settings',
     registerButton: 'Sign up',
     searchButton: 'Search',
     statisticsLink: 'Statistics',

@@ -33,6 +33,7 @@ export const ru: LocaleType = {
     loginButton: 'Войти',
     messagesLink: 'Сообщения',
     profileLink: 'Мой Профиль',
+    profileSettings: 'Настройки',
     registerButton: 'Зарегистрироваться',
     searchButton: 'Поиск',
     statisticsLink: 'Статистика',
