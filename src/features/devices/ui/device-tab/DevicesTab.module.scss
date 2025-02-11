@@ -1,3 +1,5 @@
+@import '@/styles/constants';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -16,6 +18,12 @@
 
 .button {
   align-self: flex-end;
+
+
+  @media (max-width: $mobile-width) {
+    width: 100%;
+    padding: 12px 24px;
+  }
 }
 
 .emptyText {
@@ -26,4 +34,6 @@
 
   width: 100%;
   margin-top: 84px;
+
+  text-align: center;
 }

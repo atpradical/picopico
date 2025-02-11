@@ -16,12 +16,7 @@ export const DeviceItem = ({
   data: { browserName, browserVersion, deviceId, ip, lastActive },
   isCurrent = false,
 }: DeviceItemProps) => {
-  const {
-    locale,
-    t: {
-      profileSettings: { devicesTab },
-    },
-  } = useTranslation()
+  const { locale, t } = useTranslation()
 
   const [terminateSession] = useTerminateSessionMutation()
 
@@ -43,12 +38,12 @@ export const DeviceItem = ({
         <Typography>{`IP: ${ip}`}</Typography>
         <Typography
           variant={'small'}
-        >{`${devicesTab.lastVisit}: ${new Date(lastActive).toLocaleString(locale, { dateStyle: 'short' })}`}</Typography>
+        >{`${t.profileSettings.devicesTab.lastVisit}: ${new Date(lastActive).toLocaleString(locale, { dateStyle: 'short' })}`}</Typography>
       </div>
       {!isCurrent && (
         <Button className={s.button} onClick={terminateSessionHandler} variant={'icon'}>
           <LogOutOutlineIcon />
-          {devicesTab.logout}
+          {t.profileSettings.devicesTab.logout}
         </Button>
       )}
     </Card>
