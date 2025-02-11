@@ -31,6 +31,7 @@ export const devicesApi = picoApi.injectEndpoints({
 })
 
 export const {
+  useGetSessionsQuery,
   useLazyGetSessionsQuery,
   useTerminateAllSessionsMutation,
   useTerminateSessionMutation,
