@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@atpradical/picopico-ui-kit':
-        specifier: ^0.39.1
-        version: 0.39.1(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.0(prettier@3.4.2))(vite@6.0.7(@types/node@20.17.14)(sass@1.83.4))
+        specifier: ^0.39.6
+        version: 0.39.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.0(prettier@3.4.2))(vite@6.0.7(@types/node@20.17.14)(sass@1.83.4))
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.54.2(react@18.3.1))
@@ -132,8 +132,8 @@ importers:
 
 packages:
 
-  '@atpradical/picopico-ui-kit@0.39.1':
-    resolution: {integrity: sha512-pZcU5M7QTaprO+VG1paR9kdL0V0MIByFuDAbY1a5EYbx0psdI53BS7Wayho2ZO5X5+4R0JPh8Rwb8wh8/sVuCw==}
+  '@atpradical/picopico-ui-kit@0.39.6':
+    resolution: {integrity: sha512-rv2BaJ8HZofAviyg2iyAPWQDj2Fbn/Erq/7eT0QoeDIFNtKV7TeIAL7uX+iEptTjyrgTZd+J8edomhqTABxCbg==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -1077,8 +1077,8 @@ packages:
       '@types/react-dom':
         optional: true
 
-  '@radix-ui/react-scroll-area@1.2.2':
-    resolution: {integrity: sha512-EFI1N/S3YxZEW/lJ/H1jY3njlvTd8tBmgKEn4GHi51+aMm94i6NmAJstsm5cu3yJwYqYc93gpCPm21FeAbFk6g==}
+  '@radix-ui/react-scroll-area@1.2.3':
+    resolution: {integrity: sha512-l7+NNBfBYYJa9tNqVcP2AGvxdE3lmE6kFTBXdvHgUaZuy+4wGCL1Cl2AfaR7RKyimj7lZURGLwFO59k4eBnDJQ==}
     peerDependencies:
       '@types/react': '*'
       '@types/react-dom': '*'
@@ -3469,7 +3469,7 @@ packages:
 
 snapshots:
 
-  '@atpradical/picopico-ui-kit@0.39.1(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.0(prettier@3.4.2))(vite@6.0.7(@types/node@20.17.14)(sass@1.83.4))':
+  '@atpradical/picopico-ui-kit@0.39.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.0(prettier@3.4.2))(vite@6.0.7(@types/node@20.17.14)(sass@1.83.4))':
     dependencies:
       '@fontsource/inter': 5.1.1
       '@fontsource/roboto': 5.1.1
@@ -3480,7 +3480,7 @@ snapshots:
       '@radix-ui/react-menubar': 1.1.6(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-popover': 1.1.4(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-radio-group': 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-scroll-area': 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-scroll-area': 1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-select': 2.1.4(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-slider': 1.2.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-tabs': 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
@@ -4396,7 +4396,7 @@ snapshots:
       '@types/react': 18.3.18
       '@types/react-dom': 18.3.5(@types/react@18.3.18)
 
-  '@radix-ui/react-scroll-area@1.2.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
+  '@radix-ui/react-scroll-area@1.2.3(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)':
     dependencies:
       '@radix-ui/number': 1.1.0
       '@radix-ui/primitive': 1.1.1
@@ -4404,7 +4404,7 @@ snapshots:
       '@radix-ui/react-context': 1.1.1(@types/react@18.3.18)(react@18.3.1)
       '@radix-ui/react-direction': 1.1.0(@types/react@18.3.18)(react@18.3.1)
       '@radix-ui/react-presence': 1.1.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
-      '@radix-ui/react-primitive': 2.0.1(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      '@radix-ui/react-primitive': 2.0.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       '@radix-ui/react-use-callback-ref': 1.1.0(@types/react@18.3.18)(react@18.3.1)
       '@radix-ui/react-use-layout-effect': 1.1.0(@types/react@18.3.18)(react@18.3.1)
       react: 18.3.1

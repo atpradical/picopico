@@ -19,9 +19,9 @@ export const Page = forwardRef<PageRef, PageProps>(({ children, ...props }, ref)
 
   return (
     <ScrollArea>
-      <div className={clsx(s.page, className)} ref={ref} style={styles} {...rest}>
+      <main className={clsx(s.page, className)} ref={ref} style={styles} {...rest}>
         {children}
-      </div>
+      </main>
     </ScrollArea>
   )
 })

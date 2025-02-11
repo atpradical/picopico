@@ -8,7 +8,7 @@ import { MyProfileContext } from '@/shared/contexts'
 import { useTranslation } from '@/shared/hooks'
 import { Page, getNavigationLayout } from '@/shared/ui/layout'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
-import { TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
+import { ScrollArea, ScrollBar, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
 
 import s from './SettingsPage.module.scss'
@@ -60,22 +60,21 @@ function SettingsPage() {
 
   return (
     <Page pt={'36px'}>
-      <div className={s.container}>
-        <TabsRoot onValueChange={onTabChangeHandler} value={activeTab}>
-          <TabsList className={s.tabList}>
+      <TabsRoot className={s.tabsRoot} onValueChange={onTabChangeHandler} value={activeTab}>
+        <ScrollArea>
+          <TabsList>
             <TabsTrigger value={TAB_PROFILE_DATA}>{tabNames.generalInformation}</TabsTrigger>
             <TabsTrigger value={TAB_DEVICES}>{tabNames.devices}</TabsTrigger>
             <TabsTrigger value={TAB_ACCOUNT}>{tabNames.accountManagement}</TabsTrigger>
             <TabsTrigger value={TAB_PAYMENTS}>{tabNames.payments}</TabsTrigger>
           </TabsList>
-          {myProfileData && (
-            <ProfileDataTab myProfileData={myProfileData} value={TAB_PROFILE_DATA} />
-          )}
-          {sessionsData && <DevicesTab data={sessionsData} value={TAB_DEVICES} />}
-          <AccountManagementTab value={TAB_ACCOUNT} />
-          <PaymentsTab value={TAB_PAYMENTS} />
-        </TabsRoot>
-      </div>
+          <ScrollBar orientation={'horizontal'} />
+        </ScrollArea>
+        {myProfileData && <ProfileDataTab myProfileData={myProfileData} value={TAB_PROFILE_DATA} />}
+        {sessionsData && <DevicesTab data={sessionsData} value={TAB_DEVICES} />}
+        <AccountManagementTab value={TAB_ACCOUNT} />
+        <PaymentsTab value={TAB_PAYMENTS} />
+      </TabsRoot>
     </Page>
   )
 }

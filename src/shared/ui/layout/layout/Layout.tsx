@@ -16,7 +16,7 @@ export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
         <MyProfileProvider>
           <HeadMeta />
           <Header />
-          <main className={s.layout}>{children}</main>
+          <div className={s.layout}>{children}</div>
           <CustomToastContainer />
         </MyProfileProvider>
       </AuthProvider>
