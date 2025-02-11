@@ -4,7 +4,8 @@ import { DevicesTab } from '@/features/devices/ui'
 import { AccountManagementTab, PaymentsTab } from '@/features/payments/ui'
 import { ProfileDataTab } from '@/features/profile/ui/settings'
 import { useGetSessionsQuery } from '@/services/devices'
-import { MyProfileContext } from '@/shared/contexts'
+import { AuthContext, MyProfileContext } from '@/shared/contexts'
+import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { Page, getNavigationLayout } from '@/shared/ui/layout'
 import { ScrollArea, ScrollBar, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
@@ -20,6 +21,7 @@ const TAB_PAYMENTS = 'payments'
 function SettingsPage() {
   const { t } = useTranslation()
   const router = useRouter()
+  const { isAuth } = useContext(AuthContext)
   const { myProfileData } = useContext(MyProfileContext)
   const { data: sessionsData, refetch } = useGetSessionsQuery()
   const [activeTab, setActiveTab] = useState(TAB_PROFILE_DATA)
@@ -39,6 +41,12 @@ function SettingsPage() {
     if (tabValue === TAB_DEVICES) {
       await refetch()
     }
+  }
+
+  if (!isAuth) {
+    router.push(Paths.logIn)
+
+    return null
   }
 
   return (
