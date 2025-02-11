@@ -83,7 +83,7 @@ export const ForgotPasswordForm = () => {
         name={'email'}
         placeholder={'Epam@epam.com'}
       />
-      <Typography className={s.text} variant={'regular_14'}>
+      <Typography grey variant={'regular_14'}>
         {t.forgotPasswordPage.formContent}
       </Typography>
       {isLinkSent && (
@@ -93,28 +93,26 @@ export const ForgotPasswordForm = () => {
       )}
       <div className={s.buttonsContainer}>
         <Button
-          className={s.submitButton}
+          className={s.button}
           disabled={!isValid || isLoading}
           isLoading={isLoading}
           type={'submit'}
         >
           {t.forgotPasswordPage.submitButton}
         </Button>
-        <Button as={Link} className={s.linkButton} href={Paths.logIn} variant={'nb-outlined'}>
+        <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
           {t.forgotPasswordPage.pageLink}
         </Button>
-        <div className={clsx(s.recaptcha, errors.recaptcha && s.recaptchaError)}>
-          <ReCAPTCHA
-            hl={locale}
-            onChange={onRecaptchaChangeHandler}
-            ref={recaptchaRef}
-            sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY ?? ''}
-            theme={'dark'}
-          />
-          {errors.recaptcha && (
-            <Typography variant={'error'}>{errors.recaptcha.message}</Typography>
-          )}
-        </div>
+      </div>
+      <div className={clsx(s.recaptcha, errors.recaptcha && s.recaptchaError)}>
+        <ReCAPTCHA
+          hl={locale}
+          onChange={onRecaptchaChangeHandler}
+          ref={recaptchaRef}
+          sitekey={process.env.NEXT_PUBLIC_RECAPTCHA_SITEKEY ?? ''}
+          theme={'dark'}
+        />
+        {errors.recaptcha && <Typography variant={'error'}>{errors.recaptcha.message}</Typography>}
       </div>
       <EmailConfirmationDialog
         email={emailRef.current}
