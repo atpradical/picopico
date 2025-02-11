@@ -6,7 +6,10 @@
   align-items: center;
   justify-content: center;
 
-  width: calc(100vw - var(--sidebar-width) - 40px); // Учитываем ширину сайдбара и паддинги для скролла
+  width: calc(
+    100vw - var(--sidebar-width) - 40px
+  ); // Учитываем ширину сайдбара и паддинги для скролла
+
   max-width: var(--max-screen-width);
   margin: 0 auto;
 
