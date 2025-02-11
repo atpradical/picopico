@@ -27,6 +27,7 @@ export const ProfileHeader = ({ className, ...props }: ProfileHeaderProps) => {
       <Avatar
         className={s.profileHeaderAvatar}
         showFallback
+        size={'l'}
         src={profileData.avatars[0]?.url ?? ''}
         userName={profileData.userName}
       />
