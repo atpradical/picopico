@@ -14,6 +14,7 @@ export const ControlledDatePicker = <T extends FieldValues>({
   defaultValue,
   disabled,
   errorText,
+  label,
   name,
   rules,
   shouldUnregister,
@@ -31,6 +32,7 @@ export const ControlledDatePicker = <T extends FieldValues>({
         return (
           <DatePicker
             errorText={error?.message}
+            label={label}
             localeString={locale}
             onSelect={date => {
               if (date) {

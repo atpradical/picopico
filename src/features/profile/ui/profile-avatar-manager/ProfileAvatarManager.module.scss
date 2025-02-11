@@ -1,3 +1,5 @@
+@import '@/styles/constants';
+
 .avatarBlock {
   display: flex;
   flex-direction: column;
@@ -7,6 +9,10 @@
   justify-content: flex-start;
 
   margin-top: 24px;
+
+  @media (max-width: $mobile-width) {
+    margin-top: 0;
+  }
 }
 
 .avatarWrapper {
@@ -24,14 +30,21 @@
 
   width: 28px;
   height: 28px;
+  border-radius: var(--border-radius-rounded);
 
   background-color: var(--color-dark-900);
-  border-radius: var(--border-radius-rounded);
+}
+
+.button {
+  @media (max-width: $mobile-width) {
+    width: 100%;
+    padding: 12px 24px;
+  }
 }
 
 .closeButton {
-  background-color: var(--color-danger-500);
   border-radius: var(--border-radius-rounded);
+  background-color: var(--color-danger-500);
 }
 
 .closeIcon {

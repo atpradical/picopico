@@ -70,10 +70,11 @@ export const ProfileAvatarManager = () => {
           </div>
         )}
       </div>
-      <Button onClick={openUploadDialogHandler} variant={'outlined'}>
+      <Button className={s.button} onClick={openUploadDialogHandler} variant={'outlined'}>
         {t.profileSettings.profileDataTab.addProfilePhotoButton}
       </Button>
       <Button
+        className={s.button}
         isLoading={isDeleteProfileLoading}
         onClick={deleteProfileHandler}
         variant={'danger-outlined'}

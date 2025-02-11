@@ -27,13 +27,7 @@ type ProfileDataTabProps = {
 } & ComponentPropsWithoutRef<typeof TabsContent>
 
 export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDataTabProps) => {
-  const {
-    locale,
-    t: {
-      profileSettings: { profileDataTab },
-      validation,
-    },
-  } = useTranslation()
+  const { locale, t } = useTranslation()
 
   const [selectedCountry, setSelectedCountry] = useState(myProfileData.country)
 
@@ -96,7 +90,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
     },
     mode: 'all',
     reValidateMode: 'onChange',
-    resolver: zodResolver(profileDataSchemeCreator(validation)),
+    resolver: zodResolver(profileDataSchemeCreator(t.validation)),
   })
 
   const formHandler = handleSubmit(async data => {
@@ -105,7 +99,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
         ...data,
         dateOfBirth: data.dateOfBirth ? new Date(data.dateOfBirth).toString() : undefined,
       }).unwrap()
-      toaster({ text: profileDataTab.successSettingsChangeMessage })
+      toaster({ text: t.profileSettings.profileDataTab.successSettingsChangeMessage })
     } catch (e) {
       const errors = getErrorMessageData(e)
 
@@ -131,29 +125,29 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
           <ControlledTextField
             control={control}
             isRequired
-            label={profileDataTab.labels.userName}
+            label={t.profileSettings.profileDataTab.labels.userName}
             name={'userName'}
           />
           <ControlledTextField
             control={control}
             isRequired
-            label={profileDataTab.labels.firstName}
+            label={t.profileSettings.profileDataTab.labels.firstName}
             name={'firstName'}
-            placeholder={profileDataTab.placeholders.firstName}
+            placeholder={t.profileSettings.profileDataTab.placeholders.firstName}
           />
           <ControlledTextField
             control={control}
             isRequired
-            label={profileDataTab.labels.lastName}
+            label={t.profileSettings.profileDataTab.labels.lastName}
             name={'lastName'}
-            placeholder={profileDataTab.placeholders.lastName}
+            placeholder={t.profileSettings.profileDataTab.placeholders.lastName}
           />
           {
             <ControlledDatePicker
               control={control}
               defaultValue={datePickerDefault}
               isRequired
-              label={profileDataTab.labels.dateOfBirth}
+              label={t.profileSettings.profileDataTab.labels.dateOfBirth}
               name={'dateOfBirth'}
             />
           }
@@ -161,20 +155,20 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
             <ControlledSelect
               control={control}
               defaultValue={myProfileData.country ?? undefined}
-              label={profileDataTab.labels.country}
+              label={t.profileSettings.profileDataTab.labels.country}
               name={'country'}
               onValueChange={countrySelectValueChangeHandler}
               options={countriesDataOptions}
-              placeholder={profileDataTab.placeholders.country}
+              placeholder={t.profileSettings.profileDataTab.placeholders.country}
               showScroll
             />
             <ControlledSelect
               control={control}
               defaultValue={myProfileData.city ?? undefined}
-              label={profileDataTab.labels.city}
+              label={t.profileSettings.profileDataTab.labels.city}
               name={'city'}
               options={citiesDataOptions}
-              placeholder={profileDataTab.placeholders.city}
+              placeholder={t.profileSettings.profileDataTab.placeholders.city}
               showScroll
             />
           </div>
@@ -182,9 +176,9 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
             className={s.textArea}
             control={control}
             counterLimit={MAX_ABOUT_ME_LENGTH}
-            label={profileDataTab.labels.aboutMe}
+            label={t.profileSettings.profileDataTab.labels.aboutMe}
             name={'aboutMe'}
-            placeholder={profileDataTab.placeholders.aboutMe}
+            placeholder={t.profileSettings.profileDataTab.placeholders.aboutMe}
           />
         </form>
       </div>
@@ -196,7 +190,7 @@ export const ProfileDataTab = ({ className, myProfileData, ...rest }: ProfileDat
         isLoading={isLoading}
         type={'submit'}
       >
-        {profileDataTab.formSubmitButton}
+        {t.profileSettings.profileDataTab.formSubmitButton}
       </Button>
     </TabsContent>
   )
