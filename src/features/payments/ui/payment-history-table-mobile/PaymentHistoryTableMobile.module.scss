@@ -1,0 +1,12 @@
+.itemContainer {
+  display: flex;
+  flex-direction: column;
+  gap: var(--gap-l);
+}
+
+.itemLine {
+  display: flex;
+  gap: var(--gap-l);
+  align-items: center;
+  justify-content: space-between;
+}

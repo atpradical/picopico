@@ -10,8 +10,10 @@
   margin: 0 auto;
 }
 
-.tableRoot {
-  width: 100%;
+.tableContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
 }
 
 .noPaymentHistoryText {
