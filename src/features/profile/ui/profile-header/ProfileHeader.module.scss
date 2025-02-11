@@ -1,38 +1,32 @@
-.container {
+.profileHeaderContainer {
   display: flex;
   gap: 40px;
   align-items: center;
   width: 100%;
 }
 
-.avatar {
+.profileHeaderAvatar {
   flex-shrink: 0;
 }
 
-.content {
+.profileHeaderContent {
   display: flex;
   flex-direction: column;
   gap: 20px;
-  align-items: center;
-  justify-content: center;
+  align-items: flex-start;
+  justify-content: flex-start;
 
   width: 100%;
 }
 
-.titleBlock {
+.profileHeaderTitleWrapper {
   display: flex;
   align-items: center;
   justify-content: space-between;
   width: 100%;
 }
 
-.aboutMe {
-  align-self: flex-start;
-  max-width: 500px;
+.profileHeaderDescription {
+  max-width: 100%;
   overflow-wrap: break-word;
-}
-
-.actions {
-  display: flex;
-  gap: 12px;
 }

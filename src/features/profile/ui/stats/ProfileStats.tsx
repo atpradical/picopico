@@ -13,15 +13,18 @@ export const ProfileStats = ({ metaData }: ProfileStatsProps) => {
   // todo: добавить плюрали для статистики: подписок, подписчиков, публикаций
   return (
     <div className={s.stats}>
-      <Typography
-        variant={'regular_14'}
-      >{`${metaData.following} ${t.profilePage.following}`}</Typography>
-      <Typography
-        variant={'regular_14'}
-      >{`${metaData.followers} ${t.profilePage.followers}`}</Typography>
-      <Typography
-        variant={'regular_14'}
-      >{`${metaData.publications} ${t.profilePage.publications}`}</Typography>
+      <div className={s.statsItem}>
+        <Typography variant={'regular_14'}>{metaData.following}</Typography>
+        <Typography variant={'regular_14'}>{t.profilePage.following}</Typography>
+      </div>
+      <div className={s.statsItem}>
+        <Typography variant={'regular_14'}>{metaData.followers}</Typography>
+        <Typography variant={'regular_14'}>{t.profilePage.followers}</Typography>
+      </div>
+      <div className={s.statsItem}>
+        <Typography variant={'regular_14'}>{metaData.publications}</Typography>
+        <Typography variant={'regular_14'}>{t.profilePage.publications}</Typography>
+      </div>
     </div>
   )
 }
