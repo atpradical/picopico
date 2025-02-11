@@ -21,7 +21,7 @@ function SettingsPage() {
   const { t } = useTranslation()
   const router = useRouter()
   const { myProfileData } = useContext(MyProfileContext)
-  const { data: sessionsData } = useGetSessionsQuery()
+  const { data: sessionsData, refetch } = useGetSessionsQuery()
   const [activeTab, setActiveTab] = useState(TAB_PROFILE_DATA)
 
   useEffect(() => {
@@ -35,6 +35,10 @@ function SettingsPage() {
   const onTabChangeHandler = async (tabValue: string) => {
     setActiveTab(tabValue)
     sessionStorage.setItem('activeTab', tabValue)
+
+    if (tabValue === TAB_DEVICES) {
+      await refetch()
+    }
   }
 
   return (
