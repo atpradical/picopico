@@ -10,6 +10,7 @@ import { useTranslation } from '@/shared/hooks'
 import { Page, getNavigationLayout } from '@/shared/ui/layout'
 import { ScrollArea, ScrollBar, TabsList, TabsRoot, TabsTrigger } from '@atpradical/picopico-ui-kit'
 import { useRouter } from 'next/router'
+import { useIsClient } from 'usehooks-ts'
 
 import s from './SettingsPage.module.scss'
 
@@ -22,6 +23,7 @@ function SettingsPage() {
   const { t } = useTranslation()
   const router = useRouter()
   const { isAuth } = useContext(AuthContext)
+  const isClient = useIsClient()
   const { myProfileData } = useContext(MyProfileContext)
   const { data: sessionsData, refetch } = useGetSessionsQuery()
   const [activeTab, setActiveTab] = useState(TAB_PROFILE_DATA)
@@ -44,7 +46,7 @@ function SettingsPage() {
   }
 
   if (!isAuth) {
-    router.push(Paths.logIn)
+    isClient && router.push(Paths.logIn)
 
     return null
   }
