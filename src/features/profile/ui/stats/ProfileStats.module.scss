@@ -11,6 +11,15 @@
   @media (max-width: $tablet-width) {
     gap: 33px;
   }
+
+  @media (max-width: $mobile-width) {
+    gap: 10px;
+  }
+
+  @media (max-width: $tiny-mobile-width) {
+    align-items: center;
+    justify-content: center;
+  }
 }
 
 .statsItem {

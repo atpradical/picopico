@@ -1,16 +1,33 @@
+@import '@/styles/constants';
+
 .actionButtonsContainer {
   display: flex;
   gap: 12px;
   align-items: center;
   justify-content: center;
 
+  @media (max-width: $mobile-width) {
+    flex-flow: column;
+    margin-top: 5px;
+  }
 }
 
 .followMessageContainer {
   display: flex;
   gap: 12px;
+
+  @media (max-width: $mobile-width) {
+    flex-flow: column;
+    width: 100%;
+    margin-top: 15px;
+  }
 }
 
 .button {
   white-space: nowrap;
+
+  @media (max-width: $mobile-width) {
+    width: 100%;
+    padding: 12px 24px;
+  }
 }

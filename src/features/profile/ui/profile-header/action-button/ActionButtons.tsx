@@ -1,4 +1,4 @@
-import { useContext } from 'react'
+import { ComponentPropsWithoutRef, useContext } from 'react'
 
 import {
   useFollowMutation,
@@ -10,6 +10,7 @@ import { AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { Button } from '@atpradical/picopico-ui-kit'
+import clsx from 'clsx'
 import link from 'next/link'
 import { useRouter } from 'next/router'
 
@@ -17,8 +18,9 @@ import s from './ActionButtons.module.scss'
 
 type Props = {
   profileData?: ResponseGetUserProfile
-}
-export const ActionButtons = ({ profileData }: Props) => {
+} & ComponentPropsWithoutRef<'div'>
+
+export const ActionButtons = ({ className, profileData, ...props }: Props) => {
   const { t } = useTranslation()
   const router = useRouter()
   const { isAuth, meData } = useContext(AuthContext)
@@ -44,7 +46,7 @@ export const ActionButtons = ({ profileData }: Props) => {
   }
 
   return (
-    <div className={s.actionButtonsContainer}>
+    <div className={clsx(s.actionButtonsContainer, className)} {...props}>
       {isUserPage ? (
         <Button as={link} className={s.button} href={Paths.Settings} variant={'secondary'}>
           {t.profilePage.profileSettingsButton}
