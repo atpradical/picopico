@@ -11,15 +11,15 @@
 
 .publicationsContainer {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(234px, 234px)); /* Адаптивные колонки */
+  grid-template-columns: repeat(auto-fill, 234px); /* Адаптивные колонки */
   gap: 12px;
   justify-content: center;
 
   width: 100%;
 
   @media (max-width: $mobile-width) {
-    grid-template-columns: repeat(auto-fill, minmax(108px, 128px)); /* Адаптивные колонки */
-    gap: 6px;
+    grid-template-columns: repeat(auto-fill, 128px); /* Адаптивные колонки */
+    gap: 0;
   }
 }
 
