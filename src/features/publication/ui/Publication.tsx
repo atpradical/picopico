@@ -26,6 +26,7 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
   ({ isCarousel, isLastPost, isLink, onClick, post, showDescription = false, ...rest }, ref) => {
     const { locale } = useRouter()
     const { t } = useTranslation()
+
     const formattedCreatedAt = getDateDistanceToNow(new Date(post.updatedAt), locale ?? 'en')
 
     const [isDescriptionExpanded, setDescriptionExpanded] = useState(false)
@@ -51,9 +52,9 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
           <Image
             alt={'post image'}
             fill
-            sizes={'(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw'}
+            sizes={'300px'}
             src={post.images[0].url}
-            style={{ content: 'contain' }}
+            style={{ objectFit: 'cover' }}
           />
           {isCarousel && <LayersOutlineIcon className={s.layersIcon} />}
         </Card>

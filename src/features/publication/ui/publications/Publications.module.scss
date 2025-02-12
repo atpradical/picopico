@@ -1,3 +1,5 @@
+@import '@/styles/constants';
+
 .container {
   display: flex;
   flex-direction: column;
@@ -8,10 +10,17 @@
 }
 
 .publicationsContainer {
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(234px, 234px)); /* Адаптивные колонки */
   gap: 12px;
+  justify-content: center;
+
   width: 100%;
+
+  @media (max-width: $mobile-width) {
+    grid-template-columns: repeat(auto-fill, minmax(108px, 108px)); /* Адаптивные колонки */
+    gap: 6px;
+  }
 }
 
 .noPost {
