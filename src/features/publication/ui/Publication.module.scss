@@ -36,9 +36,19 @@
     color: #498de7;
   }
 
-  @media (max-width: $mobile-width) {
+  @media (width <= $mobile-width) {
     width: 128px;
     height: 128px;
+  }
+
+  @media (width <= 405px) {
+    width: 118px;
+    height: 118px;
+  }
+
+  @media (width <= 375px) {
+    width: 108px;
+    height: 108px;
   }
 }
 

@@ -21,6 +21,16 @@
     grid-template-columns: repeat(auto-fill, 128px); /* Адаптивные колонки */
     gap: 0;
   }
+
+  @media (width <= 405px) {
+    grid-template-columns: repeat(auto-fill, 118px); /* Адаптивные колонки */
+    gap: 0;
+  }
+
+  @media (width <= 375px) {
+    grid-template-columns: repeat(auto-fill, 108px); /* Адаптивные колонки */
+    gap: 0;
+  }
 }
 
 .noPost {
