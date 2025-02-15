@@ -56,7 +56,7 @@ export const ProfileAvatarManager = () => {
   return (
     <div className={s.avatarBlock}>
       <div className={s.avatarWrapper}>
-        <Avatar size={'m'} src={avatarImage} />
+        <Avatar size={'l'} src={avatarImage} />
         {avatarImage && (
           <div className={s.buttonWrapper}>
             <Button
