@@ -94,6 +94,7 @@
 .gridItem5 {
   grid-column: 2 / 4;
   grid-row: 3 / 4;
+  overflow-wrap: anywhere;
 
   @media (max-width: $mobile-width) {
     grid-column: 1 / 3;
