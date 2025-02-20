@@ -9,12 +9,7 @@ import { useLoader } from '@/shared/hooks'
 import { NextPage } from 'next'
 
 import '@/styles/index.scss'
-/* eslint-enable import/extensions */
 import '@atpradical/picopico-ui-kit/dist/style.css'
-/* eslint-disable import/extensions */
-import 'swiper/css'
-import 'swiper/css/navigation'
-import 'swiper/css/pagination'
 
 export type NextPageWithLayout<P = object> = {
   getLayout?: (page: ReactElement) => ReactNode

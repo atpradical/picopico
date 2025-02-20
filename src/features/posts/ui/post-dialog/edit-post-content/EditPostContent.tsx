@@ -9,6 +9,11 @@ import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Button,
   Carousel,
+  CarouselContent,
+  CarouselDotButton,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
   CloseOutlineIcon,
   DialogBody,
   DialogClose,
@@ -17,6 +22,7 @@ import {
   Typography,
 } from '@atpradical/picopico-ui-kit'
 import { zodResolver } from '@hookform/resolvers/zod'
+import Image from 'next/image'
 
 import s from './EditPostContent.module.scss'
 
@@ -82,7 +88,27 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
         </DialogClose>
       </DialogHeader>
       <DialogBody className={s.dialogBody}>
-        <Carousel className={s.carousel} slides={postData.images.map(el => el.url)} />
+        {/*todo: fix carousel - export to component and reuse in DisplayPost comp*/}
+        <Carousel className={s.carousel}>
+          <CarouselContent>
+            {postData.images.map(el => {
+              return (
+                <CarouselItem className={s.carouselItem} key={el.uploadId}>
+                  <Image
+                    alt={'post image'}
+                    height={530}
+                    src={el.url}
+                    style={{ objectFit: 'cover' }}
+                    width={490}
+                  />
+                </CarouselItem>
+              )
+            })}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+          <CarouselDotButton />
+        </Carousel>
         <div className={s.formContainer}>
           <FormProvider {...methods}>
             <PostMetadataForm

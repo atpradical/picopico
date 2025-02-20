@@ -45,7 +45,7 @@ export const ProfileAvatarManager = () => {
     try {
       await deleteProfile().unwrap()
       localStorage.removeItem('accessToken')
-      router.push(Paths.logIn)
+      void router.push(Paths.logIn)
     } catch (e) {
       const errors = getErrorMessageData(e)
 

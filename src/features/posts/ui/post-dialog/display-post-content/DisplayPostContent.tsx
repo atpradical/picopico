@@ -7,12 +7,18 @@ import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Avatar,
   Carousel,
+  CarouselContent,
+  CarouselDotButton,
+  CarouselItem,
+  CarouselNext,
+  CarouselPrevious,
   DialogBody,
   DialogContent,
   DialogHeader,
   Typography,
 } from '@atpradical/picopico-ui-kit'
 import * as Separator from '@radix-ui/react-separator'
+import Image from 'next/image'
 
 import s from './DisplayPostContent.module.scss'
 
@@ -44,7 +50,26 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
         description={t.postDialog.accessibilityDescription}
         title={t.postDialog.accessibilityTitle}
       />
-      <Carousel className={s.carousel} slides={postsImages} />
+      <Carousel className={s.carousel}>
+        <CarouselContent>
+          {postsImages.map((el, index) => {
+            return (
+              <CarouselItem key={el + index}>
+                <Image
+                  alt={'post image'}
+                  height={530}
+                  src={el}
+                  style={{ objectFit: 'cover' }}
+                  width={490}
+                />
+              </CarouselItem>
+            )
+          })}
+        </CarouselContent>
+        <CarouselPrevious />
+        <CarouselNext />
+        <CarouselDotButton />
+      </Carousel>
       <div className={s.postDetails}>
         <DialogHeader className={s.dialogHeader}>
           <Avatar
