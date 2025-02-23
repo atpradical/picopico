@@ -10,7 +10,7 @@ import {
   Button,
   Carousel,
   CarouselContent,
-  CarouselDotButton,
+  CarouselDotButtons,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
@@ -107,7 +107,7 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
           </CarouselContent>
           <CarouselPrevious />
           <CarouselNext />
-          <CarouselDotButton />
+          <CarouselDotButtons />
         </Carousel>
         <div className={s.formContainer}>
           <FormProvider {...methods}>

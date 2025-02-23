@@ -15,6 +15,7 @@ import {
   PopoverTrigger,
   ScrollArea,
   ScrollBar,
+  useCarousel,
 } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 import Image from 'next/image'
@@ -29,13 +30,13 @@ type UploadPopoverProps = {
 }
 
 export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopoverProps) => {
-  // todo: fix carousel
-  // const swiper = useSwiper()
+  const { api, selectedIndex } = useCarousel()
   const { previewUrlsList } = useSelector(selectCreatePostAllData)
 
   const switchToSlideHandler = (index: number) => {
-    // todo: fix carousel
-    // swiper.slideTo(index)
+    if (api) {
+      api.scrollTo(index)
+    }
     onOpen(false)
   }
 
@@ -54,13 +55,9 @@ export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopo
         <ScrollArea type={'hover'}>
           <div className={s.contentContainer}>
             {previewUrlsList?.map((el, index) => {
-              // todo: fix carousel
-              // const isActiveSlide = swiper.activeIndex === index
-
               return (
                 <div
-                  // className={clsx(s.previewItem, isActiveSlide && s.activeSlide)}
-                  className={clsx(s.previewItem, s.activeSlide)}
+                  className={clsx(s.previewItem, selectedIndex === index && s.activeSlide)}
                   key={el + index}
                   onClick={() => switchToSlideHandler(index)}
                 >

@@ -8,7 +8,7 @@ import {
   Avatar,
   Carousel,
   CarouselContent,
-  CarouselDotButton,
+  CarouselDotButtons,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
@@ -68,7 +68,7 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
         </CarouselContent>
         <CarouselPrevious />
         <CarouselNext />
-        <CarouselDotButton />
+        <CarouselDotButtons />
       </Carousel>
       <div className={s.postDetails}>
         <DialogHeader className={s.dialogHeader}>
