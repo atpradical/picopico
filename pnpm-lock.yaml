@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@atpradical/picopico-ui-kit':
-        specifier: ^0.40.1
-        version: 0.40.1(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.8(prettier@3.5.1))(vite@6.1.1(@types/node@20.17.19)(sass@1.85.0))
+        specifier: ^0.40.2
+        version: 0.40.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.8(prettier@3.5.1))(vite@6.1.1(@types/node@20.17.19)(sass@1.85.0))
       '@hookform/resolvers':
         specifier: ^3.9.0
         version: 3.10.0(react-hook-form@7.54.2(react@18.3.1))
@@ -38,6 +38,9 @@ importers:
       date-fns:
         specifier: ^4.1.0
         version: 4.1.0
+      embla-carousel-fade:
+        specifier: ^8.5.2
+        version: 8.5.2(embla-carousel@8.5.2)
       idb:
         specifier: ^8.0.0
         version: 8.0.2
@@ -129,8 +132,8 @@ importers:
 
 packages:
 
-  '@atpradical/picopico-ui-kit@0.40.1':
-    resolution: {integrity: sha512-lhb7LtZ/GNjQ9ahD7Uq9yCS5zN2zalfY5FMFyKthOHdZFanhxrABRb718zqqRwkc7KjByQY8wwAWzLNtvapBWw==}
+  '@atpradical/picopico-ui-kit@0.40.2':
+    resolution: {integrity: sha512-o8wwdZJQ7Nw/E0/Rd9kCY31Lh19lU8DFSQvnebr4g93KjhZ3+osvgvnSKbPVvBo+1vgv5xX4jN6o62u0MpTfHQ==}
 
   '@babel/code-frame@7.26.2':
     resolution: {integrity: sha512-RJlIHRueQgwWitWgF8OdFYGZX328Ax5BCemNGlqHfplnRT9ESi8JkFlvaVYbS+UubVY6dpv87Fs2u5M29iNFVQ==}
@@ -1875,6 +1878,11 @@ packages:
   eastasianwidth@0.2.0:
     resolution: {integrity: sha512-I88TYZWc9XiYHRQ4/3c5rjjfgkjhLyW2luGIheGERbNQ6OY7yTybanSpDXZa8y7VUP9YmDcYa+eyq4ca7iLqWA==}
 
+  embla-carousel-fade@8.5.2:
+    resolution: {integrity: sha512-QJ46Xy+mpijjquQeIY0d0sPSy34XduREUnz7tn1K20hcKyZYTONNIXQZu3GGNwG59cvhMqYJMw9ki92Rjd14YA==}
+    peerDependencies:
+      embla-carousel: 8.5.2
+
   embla-carousel-react@8.5.2:
     resolution: {integrity: sha512-Tmx+uY3MqseIGdwp0ScyUuxpBgx5jX1f7od4Cm5mDwg/dptEiTKf9xp6tw0lZN2VA9JbnVMl/aikmbc53c6QFA==}
     peerDependencies:
@@ -3526,7 +3534,7 @@ packages:
 
 snapshots:
 
-  '@atpradical/picopico-ui-kit@0.40.1(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.8(prettier@3.5.1))(vite@6.1.1(@types/node@20.17.19)(sass@1.85.0))':
+  '@atpradical/picopico-ui-kit@0.40.2(@types/react-dom@18.3.5(@types/react@18.3.18))(@types/react@18.3.18)(storybook@8.5.8(prettier@3.5.1))(vite@6.1.1(@types/node@20.17.19)(sass@1.85.0))':
     dependencies:
       '@fontsource/inter': 5.1.1
       '@fontsource/roboto': 5.1.1
@@ -5193,6 +5201,10 @@ snapshots:
       gopd: 1.2.0
 
   eastasianwidth@0.2.0: {}
+
+  embla-carousel-fade@8.5.2(embla-carousel@8.5.2):
+    dependencies:
+      embla-carousel: 8.5.2
 
   embla-carousel-react@8.5.2(react@18.3.1):
     dependencies:

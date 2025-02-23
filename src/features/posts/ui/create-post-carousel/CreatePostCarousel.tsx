@@ -5,11 +5,12 @@ import { CropItem } from '@/features/posts/ui'
 import {
   Carousel,
   CarouselContent,
-  CarouselDotButton,
+  CarouselDotButtons,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
 } from '@atpradical/picopico-ui-kit'
+import Fade from 'embla-carousel-fade'
 
 import s from './CreatePostCarousel.module.scss'
 
@@ -29,7 +30,7 @@ export const CreatePostCarousel = ({
   }
 
   return (
-    <Carousel className={s.createPostCarousel}>
+    <Carousel className={s.createPostCarousel} plugins={[Fade()]}>
       <CarouselContent>
         {previewList.map((slide, index) => {
           return (
@@ -46,7 +47,7 @@ export const CreatePostCarousel = ({
       </CarouselContent>
       <CarouselPrevious />
       <CarouselNext />
-      <CarouselDotButton />
+      <CarouselDotButtons />
     </Carousel>
   )
 }

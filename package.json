@@ -11,7 +11,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@atpradical/picopico-ui-kit": "^0.40.1",
+    "@atpradical/picopico-ui-kit": "^0.40.2",
     "@hookform/resolvers": "^3.9.0",
     "@radix-ui/react-separator": "^1.1.0",
     "@radix-ui/react-visually-hidden": "^1.1.0",
@@ -21,6 +21,7 @@
     "axios": "^1.7.7",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
+    "embla-carousel-fade": "^8.5.2",
     "idb": "^8.0.0",
     "next": "14.2.15",
     "next-redux-wrapper": "^8.1.0",
