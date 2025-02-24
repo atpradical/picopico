@@ -201,7 +201,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             onPublish={publishPostsHandler}
           />
           {dialogMeta.currentStep === PostsStep.Start ? (
-            <DialogBody className={s.body}>
+            <DialogBody className={s.bodyStart}>
               <PlaceholderImage />
               <FileUploader
                 accept={POSTS_ALLOWED_UPLOAD_TYPES}
@@ -221,8 +221,8 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
           ) : (
             <DialogBody
               className={clsx(
-                s.bodyFilters,
-                dialogMeta.currentStep === PostsStep.Crop && s.bodyCrop
+                s.noPadding,
+                (dialogMeta.currentStep === PostsStep.Filters || PostsStep.Publish) && s.bodyWide
               )}
             >
               <CreatePostCarousel

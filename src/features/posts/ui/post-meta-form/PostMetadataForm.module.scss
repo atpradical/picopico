@@ -1,5 +1,6 @@
 .formContainer {
   display: flex;
+  grid-column: 2 / 3;
   flex: 1;
   flex-direction: column;
   gap: 24px;
