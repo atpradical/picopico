@@ -73,7 +73,7 @@ const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
   }, [filter, imageUrl])
 
   useEffect(() => {
-    fetchPreview()
+    void fetchPreview()
   }, [fetchPreview])
 
   return (

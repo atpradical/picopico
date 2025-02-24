@@ -6,6 +6,7 @@ import { createPostActions } from '@/features/posts/api'
 import { PostPreview, PostsStep, selectPostDialogMeta } from '@/features/posts/model'
 import { AspectPopover, UploadPopover, ZoomPopover } from '@/features/posts/ui/popovers'
 import { useAppDispatch } from '@/shared/hooks'
+import { useCarousel } from '@atpradical/picopico-ui-kit'
 import clsx from 'clsx'
 
 import s from './CropItem.module.scss'
@@ -23,9 +24,15 @@ export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
 
   const disableCrop = currentStep !== PostsStep.Crop
 
+  const { selectedIndex } = useCarousel()
+
   const onCropComplete = (croppedArea: Area, croppedAreaPixels: Area) => {
     dispatch(createPostActions.setCroppedAreaPixels({ croppedAreaPixels, index: slideIndex }))
   }
+
+  useEffect(() => {
+    dispatch(createPostActions.setActiveSlideIndex({ index: selectedIndex }))
+  }, [dispatch, selectedIndex])
 
   // Получаем Original Aspect изображения.
   useEffect(() => {
