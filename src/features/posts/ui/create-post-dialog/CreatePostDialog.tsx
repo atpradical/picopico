@@ -222,7 +222,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             <DialogBody
               className={clsx(
                 s.noPadding,
-                (dialogMeta.currentStep === PostsStep.Filters || PostsStep.Publish) && s.bodyWide
+                (dialogMeta.currentStep === PostsStep.Filters || PostsStep.Publish) && s.body
               )}
             >
               <CreatePostCarousel
