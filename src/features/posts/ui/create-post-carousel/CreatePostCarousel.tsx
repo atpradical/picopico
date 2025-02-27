@@ -30,7 +30,7 @@ export const CreatePostCarousel = ({
   }
 
   return (
-    <Carousel className={s.createPostCarousel} plugins={[Fade()]}>
+    <Carousel className={s.createPostCarousel} opts={{ duration: 0 }} plugins={[Fade()]}>
       <CarouselContent>
         {previewList.map((slide, index) => {
           return (
