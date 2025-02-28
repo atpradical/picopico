@@ -7,7 +7,7 @@ import { selectActiveSlideIndex, selectPreviewList } from '@/features/posts/mode
 import { applyFilter } from '@/features/posts/model/apply-filter'
 import { useAppDispatch } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { Typography, toaster } from '@atpradical/picopico-ui-kit'
+import { ScrollArea, ScrollBar, Typography, toaster } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
 
 import s from './CreatePostFilters.module.scss'
@@ -39,15 +39,20 @@ export const CreatePostFilters = () => {
   }
 
   return (
-    <div className={s.filtersContainer}>
-      {FILTERS_LIST.map(filter => (
-        <FilterItem
-          filter={filter}
-          imageUrl={previewList?.[activeSlideIndex].previewUrlOrig ?? ''}
-          key={filter}
-          onClick={setPostFilterHandler}
-        />
-      ))}
+    <div className={s.gridItemContainer}>
+      <ScrollArea>
+        <div className={s.filtersContainer}>
+          {FILTERS_LIST.map(filter => (
+            <FilterItem
+              filter={filter}
+              imageUrl={previewList?.[activeSlideIndex].previewUrlOrig ?? ''}
+              key={filter}
+              onClick={setPostFilterHandler}
+            />
+          ))}
+        </div>
+        <ScrollBar orientation={'horizontal'} />
+      </ScrollArea>
     </div>
   )
 }

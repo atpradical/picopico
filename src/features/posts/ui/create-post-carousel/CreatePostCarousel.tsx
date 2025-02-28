@@ -1,6 +1,7 @@
 import { ChangeEvent } from 'react'
+import { useSelector } from 'react-redux'
 
-import { PostPreview } from '@/features/posts/model'
+import { PostPreview, PostsStep, selectCurrentStep } from '@/features/posts/model'
 import { CropItem } from '@/features/posts/ui'
 import {
   Carousel,
@@ -10,6 +11,7 @@ import {
   CarouselNext,
   CarouselPrevious,
 } from '@atpradical/picopico-ui-kit'
+import clsx from 'clsx'
 import Fade from 'embla-carousel-fade'
 
 import s from './CreatePostCarousel.module.scss'
@@ -25,13 +27,19 @@ export const CreatePostCarousel = ({
   onUpload,
   previewList,
 }: CreatePostCarouselProps) => {
+  const currentStep = useSelector(selectCurrentStep)
+
   if (!previewList || !previewList.length) {
     return null
   }
 
   return (
-    <Carousel className={s.createPostCarousel} opts={{ duration: 0 }} plugins={[Fade()]}>
-      <CarouselContent>
+    <Carousel
+      className={clsx(s.createPostCarousel, currentStep === PostsStep.Crop && s.gridPosCol2)}
+      opts={{ duration: 0 }}
+      plugins={[Fade()]}
+    >
+      <CarouselContent className={s.noMargin}>
         {previewList.map((slide, index) => {
           return (
             <CarouselItem className={s.carouselItem} key={`slide-${index}`}>

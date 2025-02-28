@@ -1,7 +1,13 @@
+@import '@/styles/constants';
+
 // ---- CreatePostDialogContent start ----
 
 .content {
   overflow: hidden;
+  display: grid;
+  grid-template-columns: 1fr;
+  grid-template-rows: repeat(3, auto);
+
   width: 100%;
   max-width: 492px;
 }
@@ -41,23 +47,22 @@
 // ---- CreatePostDialogHeader end ----
 
 // ---- CreatePostDialogBody start ----
-.bodyStart {
+.body {
   display: flex;
+  grid-column: 1 / 3;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
+  //min-width: 492px;
   border-top: 1px solid var(--color-dark-100);
 }
 
-.noPadding {
-  padding: 0;
-}
-
-.body {
+.noPaddingBody {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  align-items: flex-start;
+  grid-template-rows: auto;
+  padding: 0;
 }
 
 .button {
