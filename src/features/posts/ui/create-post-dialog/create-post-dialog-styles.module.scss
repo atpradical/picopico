@@ -10,6 +10,19 @@
 
   width: 100%;
   max-width: 492px;
+
+  @media (max-width: $mobile-width) {
+    position: fixed;
+    inset: 0 0 60px;
+    transform: unset;
+    translate: unset;
+
+    overflow: auto;
+
+    max-width: 544px;
+    height: 100vh;
+    min-height: 100vh;
+  }
 }
 
 .wide {
@@ -54,7 +67,6 @@
   align-items: center;
   justify-content: center;
 
-  //min-width: 492px;
   border-top: 1px solid var(--color-dark-100);
 }
 
