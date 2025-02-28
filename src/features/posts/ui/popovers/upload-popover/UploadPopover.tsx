@@ -2,7 +2,7 @@ import { ChangeEvent } from 'react'
 import { useSelector } from 'react-redux'
 
 import { POSTS_ALLOWED_UPLOAD_TYPES } from '@/features/posts/config'
-import { selectCreatePostAllData } from '@/features/posts/model'
+import { selectPreviewUrlList } from '@/features/posts/model'
 import {
   Button,
   CloseOutlineIcon,
@@ -31,7 +31,7 @@ type UploadPopoverProps = {
 
 export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopoverProps) => {
   const { api, selectedIndex } = useCarousel()
-  const { previewUrlsList } = useSelector(selectCreatePostAllData)
+  const previewUrlsList = useSelector(selectPreviewUrlList)
 
   const switchToSlideHandler = (index: number) => {
     if (api) {

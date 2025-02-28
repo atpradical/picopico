@@ -7,10 +7,8 @@ import { z } from 'zod'
 
 export type PostsState = {
   activeSlideIndex: number
-  dialogMeta: {
-    currentStep: PostsStep
-    isDialogOpen: boolean
-  }
+  currentStep: PostsStep
+  isDialogOpen: boolean
   previewList: PostPreview[]
   previewUrlsList: string[]
 }

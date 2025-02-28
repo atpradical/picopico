@@ -13,7 +13,9 @@ import {
   PostsDescriptionField,
   PostsStep,
   postsDescriptionSchemeCreator,
-  selectCreatePostAllData,
+  selectCurrentStep,
+  selectIsDialogOpen,
+  selectPreviewList,
 } from '@/features/posts/model'
 import { CreatePostCarousel, CreatePostFilters, CreatePostHeader } from '@/features/posts/ui'
 import { PostMetadataForm } from '@/features/posts/ui/post-meta-form'
@@ -41,7 +43,11 @@ type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
-  const { dialogMeta, previewList } = useSelector(selectCreatePostAllData)
+
+  const currentStep = useSelector(selectCurrentStep)
+  const previewList = useSelector(selectPreviewList)
+  const isDialogOpen = useSelector(selectIsDialogOpen)
+
   const [isAlertDialog, setIsAlertDialog] = useState(false)
 
   useEffect(() => {
@@ -173,14 +179,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
     }
   }
 
-  const isWide =
-    dialogMeta.currentStep === PostsStep.Filters || dialogMeta.currentStep === PostsStep.Publish
+  const isWide = currentStep === PostsStep.Filters || currentStep === PostsStep.Publish
 
   const isPublishing = isLoadingCreatePost || isLoadingCreatePostImage
 
   return (
     <>
-      <DialogRoot onOpenChange={onOpenChange} open={dialogMeta.isDialogOpen} {...rest}>
+      <DialogRoot onOpenChange={onOpenChange} open={isDialogOpen} {...rest}>
         <DialogContent
           className={clsx(s.content, isWide && s.wide)}
           noBorder
@@ -200,7 +205,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             onNext={navigationButtonHandler}
             onPublish={publishPostsHandler}
           />
-          {dialogMeta.currentStep === PostsStep.Start ? (
+          {currentStep === PostsStep.Start ? (
             <DialogBody className={s.bodyStart}>
               <PlaceholderImage />
               <FileUploader
@@ -222,7 +227,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             <DialogBody
               className={clsx(
                 s.noPadding,
-                (dialogMeta.currentStep === PostsStep.Filters || PostsStep.Publish) && s.body
+                (currentStep === PostsStep.Filters || PostsStep.Publish) && s.body
               )}
             >
               <CreatePostCarousel
@@ -230,8 +235,8 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
                 onUpload={uploadPostHandler}
                 previewList={previewList}
               />
-              {dialogMeta.currentStep === PostsStep.Filters && <CreatePostFilters />}
-              {dialogMeta.currentStep === PostsStep.Publish && (
+              {currentStep === PostsStep.Filters && <CreatePostFilters />}
+              {currentStep === PostsStep.Publish && (
                 <FormProvider {...methods}>
                   <PostMetadataForm />
                 </FormProvider>

@@ -3,7 +3,7 @@ import { useSelector } from 'react-redux'
 
 import { createPostActions } from '@/features/posts/api'
 import { FILTERS_LIST, PostFilter } from '@/features/posts/config'
-import { selectCreatePostAllData } from '@/features/posts/model'
+import { selectActiveSlideIndex, selectPreviewList } from '@/features/posts/model'
 import { applyFilter } from '@/features/posts/model/apply-filter'
 import { useAppDispatch } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
@@ -14,7 +14,9 @@ import s from './CreatePostFilters.module.scss'
 
 export const CreatePostFilters = () => {
   const dispatch = useAppDispatch()
-  const { activeSlideIndex, previewList } = useSelector(selectCreatePostAllData)
+
+  const previewList = useSelector(selectPreviewList)
+  const activeSlideIndex = useSelector(selectActiveSlideIndex)
 
   const setPostFilterHandler = async (filter: PostFilter, index: number) => {
     if (!previewList) {
@@ -57,7 +59,8 @@ type FilterItemProps = {
 }
 
 const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
-  const { activeSlideIndex, previewList } = useSelector(selectCreatePostAllData)
+  const previewList = useSelector(selectPreviewList)
+  const activeSlideIndex = useSelector(selectActiveSlideIndex)
   const [preview, setPreview] = useState<Nullable<string>>(null)
 
   const isActiveFilter = previewList?.[activeSlideIndex].appliedFilter === filter

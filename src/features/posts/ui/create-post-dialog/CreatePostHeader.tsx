@@ -1,7 +1,7 @@
 import { ComponentPropsWithoutRef } from 'react'
 import { useSelector } from 'react-redux'
 
-import { PostsStep, selectPostDialogMeta } from '@/features/posts/model'
+import { PostsStep, selectCurrentStep } from '@/features/posts/model'
 import { LocaleType } from '@/locales/en'
 import { useTranslation } from '@/shared/hooks'
 import {
@@ -35,7 +35,7 @@ export const CreatePostHeader = ({
 }: CreatePostHeaderProps) => {
   const { t } = useTranslation()
 
-  const { currentStep } = useSelector(selectPostDialogMeta)
+  const currentStep = useSelector(selectCurrentStep)
 
   const title = getDialogTitle(currentStep, t)
 

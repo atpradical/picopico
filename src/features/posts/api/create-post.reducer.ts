@@ -6,10 +6,8 @@ import { PayloadAction, createSlice } from '@reduxjs/toolkit'
 
 const initialState: PostsState = {
   activeSlideIndex: 0,
-  dialogMeta: {
-    currentStep: PostsStep.Start,
-    isDialogOpen: false,
-  },
+  currentStep: PostsStep.Start,
+  isDialogOpen: false,
   previewList: [],
   previewUrlsList: [],
 }
@@ -36,7 +34,7 @@ const slice = createSlice({
       state.previewUrlsList = state.previewUrlsList.filter((_, i) => i !== action.payload.index)
     },
     resetPost: state => {
-      state.dialogMeta.currentStep = PostsStep.Start
+      state.currentStep = PostsStep.Start
       state.previewList = []
       state.activeSlideIndex = 0
       state.previewUrlsList = []
@@ -58,7 +56,7 @@ const slice = createSlice({
       }
     },
     setPostCreationStep: (state, action: PayloadAction<{ step: PostsStep }>) => {
-      state.dialogMeta.currentStep = action.payload.step
+      state.currentStep = action.payload.step
     },
     setZoom: (state, action: PayloadAction<{ index: number; zoom: number }>) => {
       if (state.previewList) {
@@ -66,7 +64,7 @@ const slice = createSlice({
       }
     },
     togglePostCreationDialog: (state, action: PayloadAction<{ isOpen: boolean }>) => {
-      state.dialogMeta.isDialogOpen = action.payload.isOpen
+      state.isDialogOpen = action.payload.isOpen
     },
     updatePreviewModifiedAspect: (
       state,

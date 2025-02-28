@@ -3,7 +3,7 @@ import Cropper, { Area, Point } from 'react-easy-crop'
 import { useSelector } from 'react-redux'
 
 import { createPostActions } from '@/features/posts/api'
-import { PostPreview, PostsStep, selectPostDialogMeta } from '@/features/posts/model'
+import { PostPreview, PostsStep, selectCurrentStep } from '@/features/posts/model'
 import { AspectPopover, UploadPopover, ZoomPopover } from '@/features/posts/ui/popovers'
 import { useAppDispatch } from '@/shared/hooks'
 import { useCarousel } from '@atpradical/picopico-ui-kit'
@@ -19,7 +19,7 @@ type Props = {
 }
 export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
   const dispatch = useAppDispatch()
-  const { currentStep } = useSelector(selectPostDialogMeta)
+  const currentStep = useSelector(selectCurrentStep)
   const [isOpen, setIsOpen] = useState(false)
 
   const disableCrop = currentStep !== PostsStep.Crop
