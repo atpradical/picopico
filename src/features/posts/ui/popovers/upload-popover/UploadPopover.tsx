@@ -37,7 +37,6 @@ export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopo
     if (api) {
       api.scrollTo(index)
     }
-    onOpen(false)
   }
 
   return (
