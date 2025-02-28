@@ -33,10 +33,11 @@ export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopo
   const { api, selectedIndex } = useCarousel()
   const previewUrlsList = useSelector(selectPreviewUrlList)
 
-  const switchToSlideHandler = (index: number) => {
+  const scrollToSlideHandler = (index: number) => {
     if (api) {
       api.scrollTo(index)
     }
+    onOpen(false)
   }
 
   return (
@@ -58,7 +59,9 @@ export const UploadPopover = ({ isOpen, onOpen, onRemove, onUpload }: UploadPopo
                 <div
                   className={clsx(s.previewItem, selectedIndex === index && s.activeSlide)}
                   key={el + index}
-                  onClick={() => switchToSlideHandler(index)}
+                  onClick={() => {
+                    scrollToSlideHandler(index)
+                  }}
                 >
                   <Image
                     alt={'description'}

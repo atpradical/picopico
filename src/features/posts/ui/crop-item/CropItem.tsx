@@ -106,6 +106,7 @@ export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
           </div>
           <UploadPopover
             isOpen={isOpen}
+            key={selectedIndex}
             onOpen={setIsOpen}
             onRemove={onRemove}
             onUpload={onUpload}

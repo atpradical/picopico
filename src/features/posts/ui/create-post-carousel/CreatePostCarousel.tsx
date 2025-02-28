@@ -37,7 +37,7 @@ export const CreatePostCarousel = ({
             <CarouselItem className={s.carouselItem} key={`slide-${index}`}>
               <CropItem
                 data={slide}
-                onRemove={() => onRemove(index)}
+                onRemove={onRemove}
                 onUpload={e => onUpload(e)}
                 slideIndex={index}
               />
