@@ -7,7 +7,6 @@ import { PostPreview, PostsStep, selectCurrentStep } from '@/features/posts/mode
 import { AspectPopover, UploadPopover, ZoomPopover } from '@/features/posts/ui/popovers'
 import { useAppDispatch } from '@/shared/hooks'
 import { useCarousel } from '@atpradical/picopico-ui-kit'
-import clsx from 'clsx'
 
 import s from './CropItem.module.scss'
 
@@ -74,7 +73,7 @@ export const CropItem = ({ data, onRemove, onUpload, slideIndex }: Props) => {
   }
 
   return (
-    <div className={clsx(s.cropperContainer, disableCrop && s.cropperContainerDisabled)}>
+    <div className={s.cropperContainer}>
       <Cropper
         aspect={data.aspectModified}
         crop={data.crop}
