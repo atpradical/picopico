@@ -1,8 +1,24 @@
+@import '@/styles/constants';
+
 .dialogContent {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   width: 100%;
   max-width: 972px;
+
+  @media (max-width: $mobile-width) {
+    position: fixed;
+    top: 60px;
+    right: 0;
+    left: 0;
+    transform: unset;
+    translate: unset;
+
+    display: block;
+
+    height: calc(100vh - 120px);
+    max-height: unset;
+  }
 }
 
 .dialogOverlay {
@@ -11,29 +27,79 @@
   }
 }
 
-.carousel {
-  flex: 1;
-  width: 490px;
-  height: 530px;
+.gridContainer {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-template-rows: 60px 1fr 1fr;
+  width: 100%;
+
+  @media (max-width: $mobile-width) {
+    grid-template-rows: 60px 1fr 1fr;
+  }
 }
 
-.postDetails {
-  flex: 1;
+.carousel {
+  grid-column: 1 / 2;
+  grid-row: 1 / 4;
+  width: 100%;
+  max-width: 492px;
+
+  @media (max-width: $mobile-width) {
+    grid-column: 1 / 3;
+    grid-row: 2 / 3;
+    max-width: unset;
+  }
+}
+
+.carouselItem {
+  width: 100%;
+  height: 530px;
+  margin: 0;
+  padding: 0;
 }
 
 .dialogHeader {
   display: flex;
+  grid-column: 2 / 3;
   justify-content: space-between;
+
+  height: 60px;
   padding: 12px 24px;
+
+  @media (max-width: $mobile-width) {
+    grid-column: 1 / 3;
+    grid-row: 1 / 2;
+    background-color: var(--color-dark-900);
+  }
 }
 
 .dialogBody {
   display: flex;
+  grid-column: 2 / 3;
   flex-direction: column;
+  flex-grow: 10;
+
   padding: 24px 24px 12px;
+
+  @media (max-width: $mobile-width) {
+    grid-column: 1 / 3;
+    grid-row: 3 / 4;
+    background-color: var(--color-dark-900);
+  }
 }
 
 .dialogSeparator {
   height: 1px;
   background-color: var(--color-light-900);
+}
+
+.actionButtonsContainer {
+  display: flex;
+  gap: 24px;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.closeButton {
+  padding: 6px 0;
 }

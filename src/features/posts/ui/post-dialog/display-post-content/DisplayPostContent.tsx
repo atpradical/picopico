@@ -6,13 +6,16 @@ import { usePagesRouterQueryUpdate } from '@/shared/hooks/usePagesRouterQueryUpd
 import { HiddenDialogComponents } from '@/shared/ui/components'
 import {
   Avatar,
+  Button,
   Carousel,
   CarouselContent,
   CarouselDotButtons,
   CarouselItem,
   CarouselNext,
   CarouselPrevious,
+  CloseOutlineIcon,
   DialogBody,
+  DialogClose,
   DialogContent,
   DialogHeader,
   Typography,
@@ -44,33 +47,28 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
       className={s.dialogContent}
       onClose={closePostDialogHandler}
       overlayClassName={s.dialogOverlay}
-      withCloseButton
     >
       <HiddenDialogComponents
         description={t.postDialog.accessibilityDescription}
         title={t.postDialog.accessibilityTitle}
       />
-      <Carousel className={s.carousel}>
-        <CarouselContent>
-          {postsImages.map((el, index) => {
-            return (
-              <CarouselItem key={el + index}>
-                <Image
-                  alt={'post image'}
-                  height={530}
-                  src={el}
-                  style={{ objectFit: 'cover' }}
-                  width={490}
-                />
-              </CarouselItem>
-            )
-          })}
-        </CarouselContent>
-        <CarouselPrevious />
-        <CarouselNext />
-        <CarouselDotButtons />
-      </Carousel>
-      <div className={s.postDetails}>
+      <div className={s.gridContainer}>
+        <Carousel className={s.carousel}>
+          <CarouselContent>
+            {postsImages.map((el, index) => {
+              return (
+                <CarouselItem className={s.carouselItem} key={el + index}>
+                  <div style={{ height: '530px', position: 'relative', width: '100%' }}>
+                    <Image alt={'post image'} layout={'fill'} objectFit={'cover'} src={el} />
+                  </div>
+                </CarouselItem>
+              )
+            })}
+          </CarouselContent>
+          <CarouselPrevious />
+          <CarouselNext />
+          <CarouselDotButtons />
+        </Carousel>
         <DialogHeader className={s.dialogHeader}>
           <Avatar
             showUserName
@@ -78,13 +76,25 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
             src={postData.avatarOwner}
             userName={postData.userName}
           />
-          {isAuthUserOnProfilePage && (
-            <PostActionsDropdown
-              onDeleteConfirm={closePostDialogHandler}
-              onEdit={setEditMode}
-              postId={postData.id}
-            />
-          )}
+          <div className={s.actionButtonsContainer}>
+            {isAuthUserOnProfilePage && (
+              <PostActionsDropdown
+                onDeleteConfirm={closePostDialogHandler}
+                onEdit={setEditMode}
+                postId={postData.id}
+              />
+            )}
+            <DialogClose asChild>
+              <Button
+                className={s.closeButton}
+                onClick={closePostDialogHandler}
+                title={'close'}
+                variant={'icon'}
+              >
+                <CloseOutlineIcon />
+              </Button>
+            </DialogClose>
+          </div>
         </DialogHeader>
         <DialogBody className={s.dialogBody}>
           <PostDescription postData={postData} />

@@ -73,34 +73,35 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
         description={t.postDialog.editPostDialog.accessibilityDescription}
         title={t.postDialog.editPostDialog.accessibilityTitle}
       />
-      <DialogHeader className={s.dialogHeader}>
-        <Typography as={'h1'} variant={'h1'}>
-          {t.postDialog.editPostDialog.visibleTitle}
-        </Typography>
-        <DialogClose asChild>
-          <Button
-            onClick={interruptHandler}
-            title={t.postDialog.editPostDialog.closeIconTitle}
-            variant={'icon'}
-          >
-            <CloseOutlineIcon />
-          </Button>
-        </DialogClose>
-      </DialogHeader>
-      <DialogBody className={s.dialogBody}>
+      <div className={s.gridContainer}>
+        <DialogHeader className={s.dialogHeader}>
+          <Typography as={'h1'} variant={'h1'}>
+            {t.postDialog.editPostDialog.visibleTitle}
+          </Typography>
+          <DialogClose asChild>
+            <Button
+              onClick={interruptHandler}
+              title={t.postDialog.editPostDialog.closeIconTitle}
+              variant={'icon'}
+            >
+              <CloseOutlineIcon />
+            </Button>
+          </DialogClose>
+        </DialogHeader>
         {/*todo: fix carousel - export to component and reuse in DisplayPost comp*/}
         <Carousel className={s.carousel}>
           <CarouselContent>
             {postData.images.map(el => {
               return (
                 <CarouselItem className={s.carouselItem} key={el.uploadId}>
-                  <Image
-                    alt={'post image'}
-                    height={530}
-                    src={el.url}
-                    style={{ objectFit: 'cover' }}
-                    width={490}
-                  />
+                  <div style={{ height: '530px', position: 'relative', width: '100%' }}>
+                    <Image
+                      alt={'post image'}
+                      layout={'responsive'}
+                      objectFit={'cover'}
+                      src={el.url}
+                    />
+                  </div>
                 </CarouselItem>
               )
             })}
@@ -109,22 +110,24 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
           <CarouselNext />
           <CarouselDotButtons />
         </Carousel>
-        <div className={s.formContainer}>
+        <DialogBody className={s.dialogBody}>
           <FormProvider {...methods}>
             <PostMetadataForm
               descriptionLabel={t.postDialog.editPostDialog.descriptionFieldPlaceholder}
             />
           </FormProvider>
-          <Button
-            className={s.button}
-            disabled={!isValid}
-            isLoading={isLoading}
-            onClick={savePostHandler}
-          >
-            {t.postDialog.editPostDialog.saveButton}
-          </Button>
-        </div>
-      </DialogBody>
+          <div className={s.submitButton}>
+            <Button
+              className={s.button}
+              disabled={!isValid}
+              isLoading={isLoading}
+              onClick={savePostHandler}
+            >
+              {t.postDialog.editPostDialog.saveButton}
+            </Button>
+          </div>
+        </DialogBody>
+      </div>
     </DialogContent>
   )
 }
