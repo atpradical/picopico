@@ -40,7 +40,7 @@ export const CreatePostFilters = () => {
 
   return (
     <div className={s.gridItemContainer}>
-      <ScrollArea>
+      <ScrollArea type={'always'}>
         <div className={s.filtersContainer}>
           {FILTERS_LIST.map(filter => (
             <FilterItem

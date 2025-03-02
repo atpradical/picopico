@@ -1,4 +1,4 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useEffect, useState } from 'react'
+import { ChangeEvent, ComponentPropsWithoutRef, useContext, useEffect, useState } from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
@@ -20,6 +20,7 @@ import {
 import { CreatePostCarousel, CreatePostFilters, CreatePostHeader } from '@/features/posts/ui'
 import { PostMetadataForm } from '@/features/posts/ui/post-meta-form'
 import { useCreatePostImageMutation, useCreatePostMutation } from '@/services/posts'
+import { AppMetaDataContext } from '@/shared/contexts'
 import { useAppDispatch, useTranslation } from '@/shared/hooks'
 import { ConfirmDialog, HiddenDialogComponents, PlaceholderImage } from '@/shared/ui/components'
 import { getErrorMessageData, showErrorToast } from '@/shared/utils'
@@ -43,6 +44,7 @@ type CreateNewPostDialogProps = ComponentPropsWithoutRef<typeof DialogRoot>
 export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogProps) => {
   const { t } = useTranslation()
   const dispatch = useAppDispatch()
+  const { isMobile } = useContext(AppMetaDataContext)
 
   const currentStep = useSelector(selectCurrentStep)
   const previewList = useSelector(selectPreviewList)
@@ -225,11 +227,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
             </DialogBody>
           ) : (
             <DialogBody className={s.noPaddingBody}>
-              <CreatePostCarousel
-                onRemove={removeImageHandler}
-                onUpload={uploadPostHandler}
-                previewList={previewList}
-              />
+              {!(isMobile && currentStep === PostsStep.Publish) && (
+                <CreatePostCarousel
+                  onRemove={removeImageHandler}
+                  onUpload={uploadPostHandler}
+                  previewList={previewList}
+                />
+              )}
               {currentStep === PostsStep.Filters && <CreatePostFilters />}
               {currentStep === PostsStep.Publish && (
                 <FormProvider {...methods}>

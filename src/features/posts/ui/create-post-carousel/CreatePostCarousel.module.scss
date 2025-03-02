@@ -25,6 +25,6 @@
   padding: 0;
 
   @media (max-width: $mobile-width) {
-    height: 50vh;
+    max-height: 55vh;
   }
 }
