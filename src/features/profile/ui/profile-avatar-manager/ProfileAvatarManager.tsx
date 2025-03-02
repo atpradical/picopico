@@ -20,7 +20,7 @@ export const ProfileAvatarManager = () => {
   const dispatch = useAppDispatch()
 
   const [alertDialog, setAlertDialog] = useState(false)
-  const [deleteAvatar] = useDeleteAvatarMutation()
+  const [deleteAvatar, { isLoading: isDeleteAvatarLoading }] = useDeleteAvatarMutation()
   const [deleteProfile, { isLoading: isDeleteProfileLoading }] = useDeleteProfileMutation()
 
   const avatarImage = myProfileData?.avatars.length ? myProfileData?.avatars[0].url : ''
@@ -84,6 +84,7 @@ export const ProfileAvatarManager = () => {
       <ProfileAvatarDialog />
       {alertDialog && (
         <ConfirmDialog
+          isLoading={isDeleteAvatarLoading}
           isOpen={alertDialog}
           onConfirm={deleteAvatarHandler}
           onOpenChange={setAlertDialog}
