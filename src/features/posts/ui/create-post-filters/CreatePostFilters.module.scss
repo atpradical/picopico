@@ -45,3 +45,23 @@
 .image {
   object-fit: cover;
 }
+
+.Clarendon {
+  filter: brightness(1.35) contrast(1.25);
+}
+
+.Gingham {
+  filter: brightness(1.05) contrast(1.25);
+}
+
+.Lark {
+  filter: brightness(1.35) contrast(1.15);
+}
+
+.Sepia {
+  filter: sepia(100%);
+}
+
+.Moon {
+  filter: grayscale(100%) brightness(0.8);
+}

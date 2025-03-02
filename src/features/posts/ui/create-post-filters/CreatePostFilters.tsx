@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react'
+import { useState } from 'react'
 import { useSelector } from 'react-redux'
 
 import { createPostActions } from '@/features/posts/api'
@@ -7,7 +7,7 @@ import { selectActiveSlideIndex, selectPreviewList } from '@/features/posts/mode
 import { applyFilter } from '@/features/posts/model/apply-filter'
 import { useAppDispatch } from '@/shared/hooks'
 import { Nullable } from '@/shared/types'
-import { ScrollArea, ScrollBar, Typography, toaster } from '@atpradical/picopico-ui-kit'
+import { ScrollArea, ScrollBar, Typography, clsx } from '@atpradical/picopico-ui-kit'
 import Image from 'next/image'
 
 import s from './CreatePostFilters.module.scss'
@@ -66,23 +66,9 @@ type FilterItemProps = {
 const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
   const previewList = useSelector(selectPreviewList)
   const activeSlideIndex = useSelector(selectActiveSlideIndex)
-  const [preview, setPreview] = useState<Nullable<string>>(null)
+  const [preview] = useState<Nullable<string>>(null)
 
   const isActiveFilter = previewList?.[activeSlideIndex].appliedFilter === filter
-
-  const fetchPreview = useCallback(async () => {
-    try {
-      const previewUrl = await applyFilter(imageUrl, filter)
-
-      setPreview(previewUrl)
-    } catch (error) {
-      toaster({ text: `Failed to apply filter: ${error}`, variant: 'error' })
-    }
-  }, [filter, imageUrl])
-
-  useEffect(() => {
-    void fetchPreview()
-  }, [fetchPreview])
 
   return (
     <div
@@ -92,7 +78,7 @@ const FilterItem = ({ filter, imageUrl, onClick }: FilterItemProps) => {
     >
       <Image
         alt={'preview'}
-        className={s.image}
+        className={clsx(s.image, s[filter])}
         height={108}
         src={preview ?? imageUrl}
         width={108}
