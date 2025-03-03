@@ -1,0 +1,40 @@
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  width: var(--icon-size-m);
+  height: var(--icon-size-m);
+}
+
+.buttonTrigger {
+  padding: 5px;
+}
+
+.arrow {
+  fill: var(--color-dark-500)
+}
+
+.notificationContainer {
+  width: 354px;
+  max-height: 424px;
+}
+
+.separator {
+  margin: 12px 0;
+}
+
+.title {
+  display: inline-block;
+
+  font-family: Roboto, sans-serif;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0;
+}
+
+.popoverContent {
+  padding: 16px;
+  background-color: var(--color-dark-500);
+}

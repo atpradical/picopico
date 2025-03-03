@@ -7,13 +7,13 @@ export type GetNotificationsArgs = {
 }
 
 export type GetNotificationsResponse = {
-  items: Notification[]
+  items: NotificationType[]
   notReadCount: number
   pageSize: number
   totalCount: number
 }
 
-export type Notification = {
+export type NotificationType = {
   createdAt: string
   id: number
   isRead: boolean

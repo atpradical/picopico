@@ -3,19 +3,18 @@ import { useContext } from 'react'
 import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
+import { NotificationPopover } from '@/shared/ui/components'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
 import { HeaderMobileMenubar } from '@/shared/ui/layout'
-import { Badge, BellOutlineIcon, Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
+import { Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
 import Link from 'next/link'
 import { useIsClient } from 'usehooks-ts'
 
 import s from './Header.module.scss'
 
-export type HeaderProps = {
-  countNotification?: number
-}
+export type HeaderProps = {}
 
-export const Header = ({ countNotification }: HeaderProps) => {
+export const Header = ({}: HeaderProps) => {
   const { t } = useTranslation()
   const { isAuth } = useContext(AuthContext)
   const { isMobile } = useContext(AppMetaDataContext)
@@ -35,13 +34,7 @@ export const Header = ({ countNotification }: HeaderProps) => {
         </Typography>
       </Button>
       <div className={s.container}>
-        {isAuth && (
-          <Button className={s.buttonBell} variant={'icon'}>
-            <Badge count={countNotification}>
-              <BellOutlineIcon className={s.icon} />
-            </Badge>
-          </Button>
-        )}
+        {isAuth && <NotificationPopover />}
         <SelectLanguage isMobile={isMobile} />
         {!isAuth && !isMobile && (
           <div className={s.buttonContainer}>
