@@ -1,4 +1,4 @@
-import { ReactNode, createContext } from 'react'
+import { ReactNode, createContext, useContext } from 'react'
 
 import {
   GetActiveSubscriptionInfoResponse,
@@ -6,6 +6,8 @@ import {
 } from '@/services/payments'
 import { ResponseGetMyProfile, useGetMyProfileQuery } from '@/services/profile'
 import { Nullable } from '@/shared/types'
+
+import { AuthContext } from './AuthContext'
 
 type MyProfileContextType = {
   activeSubscriptionInfo: Nullable<GetActiveSubscriptionInfoResponse>
@@ -24,8 +26,13 @@ type AuthProviderProps = {
 }
 
 export const MyProfileProvider = ({ children }: AuthProviderProps) => {
-  const { data: myProfileData } = useGetMyProfileQuery()
-  const { data: activeSubscriptionInfo } = useGetActiveSubscriptionInfoQuery()
+  const { isAuth } = useContext(AuthContext)
+  const { data: myProfileData } = useGetMyProfileQuery(undefined, { skip: !isAuth })
+
+  const { data: activeSubscriptionInfo } = useGetActiveSubscriptionInfoQuery(undefined, {
+    skip: !isAuth,
+  })
+
   const isBusinessAccount = !!activeSubscriptionInfo?.data.length
 
   return (
