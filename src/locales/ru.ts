@@ -8,6 +8,7 @@ import { emailConfirmationDialog } from '@/locales/ru/email-confirmation-dialog'
 import { expiredLink } from '@/locales/ru/expired-link'
 import { forgotPasswordPage } from '@/locales/ru/forgot-password-page'
 import { logoutDialog } from '@/locales/ru/logout-dialog'
+import { notifications } from '@/locales/ru/notifications'
 import { postDialog } from '@/locales/ru/post-dialog'
 import { privacyPolicyPage } from '@/locales/ru/privacy-policy-page'
 import { profileAvatarDialog } from '@/locales/ru/profile-avatar-dialog'
@@ -57,6 +58,7 @@ export const ru: LocaleType = {
   loading: 'Загрузка...',
   logoutDialog: logoutDialog,
   noPostsCreatedYet: 'Еще не создано ни одного поста',
+  notifications: notifications,
   postDescription: {
     collapsePostDescriptionButton: 'Скрыть',
     expandPostDescriptionButton: 'Подробнее',

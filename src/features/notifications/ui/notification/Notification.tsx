@@ -1,5 +1,6 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
+import { useTranslation } from '@/shared/hooks'
 import {
   Button,
   EyeOutlineIcon,
@@ -21,26 +22,36 @@ type NotificationRef = ElementRef<'div'>
 
 export const Notification = forwardRef<NotificationRef, NotificationProps>(
   ({ createdAt, isLastNotification, isRead, message, ...rest }, ref) => {
+    const { t } = useTranslation()
+
     return (
       <div ref={isLastNotification ? ref : undefined} {...rest}>
         <div className={s.notificationTopRow}>
           <div>
             <Typography as={'span'} variant={'bold_14'}>
-              Новое уведомление!
+              {t.notifications.newNotification}
             </Typography>
             {!isRead && (
               <Typography as={'span'} className={s.newLabel} variant={'small'}>
-                New
+                {t.notifications.new}
               </Typography>
             )}
           </div>
           <div className={s.notificationControls}>
             {!isRead && (
-              <Button className={s.readButton} title={'mark as read'} variant={'icon'}>
+              <Button
+                className={s.readButton}
+                title={t.notifications.markAsReadButtonTitle}
+                variant={'icon'}
+              >
                 <EyeOutlineIcon className={s.controlsIcon} />
               </Button>
             )}
-            <Button className={s.deleteButton} title={'delete'} variant={'icon'}>
+            <Button
+              className={s.deleteButton}
+              title={t.notifications.deleteButtonTitle}
+              variant={'icon'}
+            >
               <TrashOutlineIcon className={s.controlsIcon} />
             </Button>
           </div>

@@ -8,6 +8,7 @@ import { Notification } from '@/features/notifications/ui/notification'
 import { useGetNotificationsQuery } from '@/services/notofications'
 import { AuthContext } from '@/shared/contexts'
 import { SortDirection } from '@/shared/enums'
+import { useTranslation } from '@/shared/hooks'
 import {
   Badge,
   BellIcon,
@@ -28,6 +29,7 @@ import s from './NotificationPopover.module.scss'
 
 type Props = {}
 export const NotificationPopover = ({}: Props) => {
+  const { t } = useTranslation()
   const isAuth = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
   const sectionRef = useRef(null)
@@ -57,8 +59,11 @@ export const NotificationPopover = ({}: Props) => {
   return (
     <Popover modal onOpenChange={onOpenChange} open={isOpen}>
       <PopoverTrigger asChild>
-        {/*todo: add translations to title*/}
-        <Button className={s.buttonTrigger} title={'notifications'} variant={'icon'}>
+        <Button
+          className={s.buttonTrigger}
+          title={t.notifications.showNotificationsButtonTitle}
+          variant={'icon'}
+        >
           <Badge count={data?.notReadCount}>
             {isOpen ? <BellIcon className={s.icon} /> : <BellOutlineIcon className={s.icon} />}
           </Badge>
@@ -67,7 +72,7 @@ export const NotificationPopover = ({}: Props) => {
 
       <PopoverContent align={'end'} className={s.popoverContent} ref={sectionRef}>
         <PopoverArrow className={s.arrow} height={8} width={16} />
-        <Typography className={s.title}>Notifications</Typography>
+        <Typography className={s.title}>{t.notifications.popoverTitle}</Typography>
         <Separator className={s.separator} />
         <ScrollArea>
           <div className={s.scrollContainer}>

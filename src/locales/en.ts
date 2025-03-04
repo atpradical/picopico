@@ -7,6 +7,7 @@ import { emailConfirmationDialog } from '@/locales/en/email-confirmation-dialog'
 import { expiredLink } from '@/locales/en/expired-link'
 import { forgotPasswordPage } from '@/locales/en/forgot-password-page'
 import { logoutDialog } from '@/locales/en/logout-dialog'
+import { notifications } from '@/locales/en/notifications'
 import { postDialog } from '@/locales/en/post-dialog'
 import { privacyPolicyPage } from '@/locales/en/privacy-policy-page'
 import { profileAvatarDialog } from '@/locales/en/profile-avatar-dialog'
@@ -61,6 +62,7 @@ export const en = {
   loading: 'Loading...',
   logoutDialog: logoutDialog,
   noPostsCreatedYet: 'No posts have been created yet',
+  notifications: notifications,
   postDescription: {
     collapsePostDescriptionButton: 'Hide',
     expandPostDescriptionButton: 'Show more',
