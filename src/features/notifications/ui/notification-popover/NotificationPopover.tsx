@@ -74,7 +74,7 @@ export const NotificationPopover = ({}: Props) => {
         <PopoverArrow className={s.arrow} height={8} width={16} />
         <Typography className={s.title}>{t.notifications.popoverTitle}</Typography>
         <Separator className={s.separator} />
-        <ScrollArea>
+        <ScrollArea type={'scroll'}>
           <div className={s.scrollContainer}>
             {data?.items.map((el, index) => (
               <Notification
@@ -86,8 +86,8 @@ export const NotificationPopover = ({}: Props) => {
                 ref={lastNotificationRef}
               />
             ))}
+            <ScrollBar />
           </div>
-          <ScrollBar />
         </ScrollArea>
       </PopoverContent>
     </Popover>
