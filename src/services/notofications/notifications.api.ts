@@ -18,12 +18,21 @@ export const notificationsApi = picoApi.injectEndpoints({
         }),
       }),
       getNotifications: builder.query<GetNotificationsResponse, GetNotificationsArgs>({
+        forceRefetch({ currentArg, previousArg }) {
+          return currentArg?.cursor !== previousArg?.cursor
+        },
+        merge: (currentCache, newItems) => {
+          currentCache.items.push(...newItems.items)
+        },
         providesTags: ['Notifications'],
-        query: body => ({
-          body,
+        query: ({ cursor, ...args }) => ({
           method: 'GET',
-          url: '/v1/notifications',
+          params: args,
+          url: `/v1/notifications/${cursor}`,
         }),
+        serializeQueryArgs: ({ endpointName }) => {
+          return endpointName
+        },
       }),
       markNotificationAsRead: builder.mutation<void, MarkNotificationAsReadArgs>({
         invalidatesTags: ['Notifications'],

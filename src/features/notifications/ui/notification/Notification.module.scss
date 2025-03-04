@@ -1,0 +1,60 @@
+.notificationTopRow {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 6px;
+}
+
+.newLabel {
+  margin-left: 5px;
+  color: var(--color-accent-500);
+  
+
+  &:hover {
+    cursor: pointer;
+  }
+}
+
+.notificationControls {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+  margin-right: 12px;
+}
+
+.controlsIcon {
+  width: var(--icon-size-s);
+  height: var(--icon-size-s);
+}
+
+.readButton {
+  &:hover {
+    color: var(--color-warning-300);
+  }
+
+  &:active {
+    color: var(--color-warning-500);
+  }
+
+  &:disabled {
+    color: var(--color-warning-900);
+  }
+}
+
+.deleteButton {
+  &:hover {
+    color: var(--color-danger-300);
+  }
+
+  &:active {
+    color: var(--color-danger-500);
+  }
+
+  &:disabled {
+    color: var(--color-danger-900);
+  }
+}
+
+.separator {
+  margin: 12px 0;
+}

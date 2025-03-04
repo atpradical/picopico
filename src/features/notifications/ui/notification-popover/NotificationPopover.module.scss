@@ -12,16 +12,12 @@
 }
 
 .arrow {
-  fill: var(--color-dark-500)
+  fill: var(--color-dark-500);
 }
 
-.notificationContainer {
-  width: 354px;
-  max-height: 424px;
-}
-
-.separator {
-  margin: 12px 0;
+.popoverContent {
+  padding: 16px;
+  background-color: var(--color-dark-500);
 }
 
 .title {
@@ -34,7 +30,11 @@
   letter-spacing: 0;
 }
 
-.popoverContent {
-  padding: 16px;
-  background-color: var(--color-dark-500);
+.separator {
+  margin: 12px 0;
+}
+
+.scrollContainer {
+  width: 354px;
+  max-height: 424px;
 }

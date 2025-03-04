@@ -1,9 +1,9 @@
 import { useContext } from 'react'
 
+import { NotificationPopover } from '@/features/notifications/ui'
 import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
 import { Paths } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
-import { NotificationPopover } from '@/shared/ui/components'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
 import { HeaderMobileMenubar } from '@/shared/ui/layout'
 import { Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
