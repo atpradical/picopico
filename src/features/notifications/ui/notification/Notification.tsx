@@ -1,6 +1,9 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
-import { useMarkNotificationAsReadMutation } from '@/services/notofications'
+import {
+  useDeleteNotificationMutation,
+  useMarkNotificationAsReadMutation,
+} from '@/services/notofications'
 import { useTranslation } from '@/shared/hooks'
 import { getDateDistanceToNow } from '@/shared/utils'
 import {
@@ -27,13 +30,18 @@ export const Notification = forwardRef<NotificationRef, NotificationProps>(
   ({ createdAt, id, isRead, message, ...rest }, ref) => {
     const { t } = useTranslation()
     const { locale } = useRouter()
-    //todo: не проходит инвалидация после установки уведомления в read!
+
     const [markAsRead, { isLoading: isMarkAsReadLoading }] = useMarkNotificationAsReadMutation()
+    const [deleteNotification, { isLoading: isDeleteLoading }] = useDeleteNotificationMutation()
 
     const formattedCreatedAt = getDateDistanceToNow(new Date(createdAt), locale ?? 'en')
 
     const markAsReadHandler = async (id: number) => {
       void (await markAsRead({ ids: [id] }))
+    }
+
+    const deleteNotificationHandler = async (id: number) => {
+      void (await deleteNotification({ id }))
     }
 
     return (
@@ -63,6 +71,8 @@ export const Notification = forwardRef<NotificationRef, NotificationProps>(
             )}
             <Button
               className={s.deleteButton}
+              isLoading={isDeleteLoading}
+              onClick={() => deleteNotificationHandler(id)}
               title={t.notifications.deleteButtonTitle}
               variant={'icon'}
             >

@@ -25,8 +25,14 @@ type Props = {
   notReadCount?: number
   notifications?: NotificationType[]
   onScroll: (cursor: number) => void
+  totalCount?: number
 }
-export const NotificationPopover = ({ notReadCount, notifications = [], onScroll }: Props) => {
+export const NotificationPopover = ({
+  notReadCount,
+  notifications = [],
+  onScroll,
+  totalCount,
+}: Props) => {
   const { t } = useTranslation()
   const [isOpen, setIsOpen] = useState(false)
 
@@ -60,7 +66,9 @@ export const NotificationPopover = ({ notReadCount, notifications = [], onScroll
 
       <PopoverContent align={'end'} className={s.popoverContent} ref={sectionRef}>
         <PopoverArrow className={s.arrow} height={8} width={16} />
-        <Typography className={s.title}>{t.notifications.popoverTitle}</Typography>
+        <Typography className={s.title}>
+          {t.notifications.popoverTitle} {`(${totalCount})`}
+        </Typography>
         <Separator className={s.separator} />
         <ScrollArea type={'scroll'}>
           <div className={s.scrollContainer}>

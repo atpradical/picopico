@@ -58,6 +58,7 @@ export const Header = ({}: HeaderProps) => {
             notReadCount={data?.notReadCount}
             notifications={data?.items}
             onScroll={updateCursorHandler}
+            totalCount={data?.totalCount}
           />
         )}
         <SelectLanguage isMobile={isMobile} />

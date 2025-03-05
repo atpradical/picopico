@@ -11,7 +11,35 @@ export const notificationsApi = picoApi.injectEndpoints({
   endpoints: builder => {
     return {
       deleteNotification: builder.mutation<void, DeleteNotificationArgs>({
-        invalidatesTags: ['Notifications'],
+        async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
+          const cachedNotificationsForQuery = notificationsApi.util.selectCachedArgsForQuery(
+            getState(),
+            'getNotifications'
+          )
+
+          const patchedNotifications: any[] = []
+
+          cachedNotificationsForQuery.forEach(cachedArgs => {
+            patchedNotifications.push(
+              dispatch(
+                notificationsApi.util.updateQueryData('getNotifications', cachedArgs, draft => {
+                  draft.items = draft.items.filter(el => el.id !== args.id)
+                  draft.totalCount = draft.totalCount - 1
+                })
+              )
+            )
+          })
+
+          try {
+            await queryFulfilled
+          } catch (e) {
+            patchedNotifications.forEach(patchResult => patchResult.undo())
+            //todo: Бекенд возвращает не консистентные ошибки, задал вопрос, нужно вернуться к этому позже.
+            const error = getErrorMessageData(e)
+
+            showErrorToast(error)
+          }
+        },
         query: ({ id, ...body }) => ({
           body,
           method: 'DELETE',
