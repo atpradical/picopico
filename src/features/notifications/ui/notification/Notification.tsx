@@ -37,10 +37,9 @@ export const Notification = forwardRef<NotificationRef, NotificationProps>(
     }
 
     return (
-      <div {...rest} className={s.notificationItem}>
+      <div {...rest}>
         <div className={s.notificationTopRow} ref={ref}>
           <div>
-            {id}
             <Typography as={'span'} variant={'bold_14'}>
               {t.notifications.newNotification}
             </Typography>
