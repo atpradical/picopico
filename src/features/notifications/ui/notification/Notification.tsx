@@ -1,6 +1,8 @@
 import { ComponentPropsWithoutRef, ElementRef, forwardRef } from 'react'
 
+import { useMarkNotificationAsReadMutation } from '@/services/notofications'
 import { useTranslation } from '@/shared/hooks'
+import { getDateDistanceToNow } from '@/shared/utils'
 import {
   Button,
   EyeOutlineIcon,
@@ -8,26 +10,37 @@ import {
   TrashOutlineIcon,
   Typography,
 } from '@atpradical/picopico-ui-kit'
+import { useRouter } from 'next/router'
 
 import s from './Notification.module.scss'
 
 type NotificationProps = {
   createdAt: string
-  isLastNotification: boolean
+  id: number
   isRead: boolean
   message: string
-} & ComponentPropsWithoutRef<'div'>
+} & Omit<ComponentPropsWithoutRef<'div'>, 'id'>
 
 type NotificationRef = ElementRef<'div'>
 
 export const Notification = forwardRef<NotificationRef, NotificationProps>(
-  ({ createdAt, isLastNotification, isRead, message, ...rest }, ref) => {
+  ({ createdAt, id, isRead, message, ...rest }, ref) => {
     const { t } = useTranslation()
+    const { locale } = useRouter()
+    //todo: не проходит инвалидация после установки уведомления в read!
+    const [markAsRead, { isLoading: isMarkAsReadLoading }] = useMarkNotificationAsReadMutation()
+
+    const formattedCreatedAt = getDateDistanceToNow(new Date(createdAt), locale ?? 'en')
+
+    const markAsReadHandler = async (id: number) => {
+      void (await markAsRead({ ids: [id] }))
+    }
 
     return (
-      <div ref={isLastNotification ? ref : undefined} {...rest}>
-        <div className={s.notificationTopRow}>
+      <div {...rest}>
+        <div className={s.notificationTopRow} ref={ref}>
           <div>
+            {id}
             <Typography as={'span'} variant={'bold_14'}>
               {t.notifications.newNotification}
             </Typography>
@@ -41,6 +54,8 @@ export const Notification = forwardRef<NotificationRef, NotificationProps>(
             {!isRead && (
               <Button
                 className={s.readButton}
+                isLoading={isMarkAsReadLoading}
+                onClick={() => markAsReadHandler(id)}
                 title={t.notifications.markAsReadButtonTitle}
                 variant={'icon'}
               >
@@ -58,7 +73,7 @@ export const Notification = forwardRef<NotificationRef, NotificationProps>(
         </div>
         <Typography>{message}</Typography>
         <Typography grey variant={'small'}>
-          {createdAt}
+          {formattedCreatedAt}
         </Typography>
         <Separator className={s.separator} />
       </div>

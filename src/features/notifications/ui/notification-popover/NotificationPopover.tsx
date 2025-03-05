@@ -1,13 +1,7 @@
-import { useContext, useEffect, useRef, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
-import {
-  NOTIFICATION_INITIAL_CURSOR,
-  NOTIFICATION_MAX_PAGE_SIZE,
-} from '@/features/notifications/config'
 import { Notification } from '@/features/notifications/ui/notification'
-import { useGetNotificationsQuery } from '@/services/notofications'
-import { AuthContext } from '@/shared/contexts'
-import { SortDirection } from '@/shared/enums'
+import { NotificationType } from '@/services/notofications'
 import { useTranslation } from '@/shared/hooks'
 import {
   Badge,
@@ -27,30 +21,24 @@ import { useIntersectionObserver } from '@uidotdev/usehooks'
 
 import s from './NotificationPopover.module.scss'
 
-type Props = {}
-export const NotificationPopover = ({}: Props) => {
+type Props = {
+  notReadCount?: number
+  notifications?: NotificationType[]
+  onScroll: (cursor: number) => void
+}
+export const NotificationPopover = ({ notReadCount, notifications = [], onScroll }: Props) => {
   const { t } = useTranslation()
-  const isAuth = useContext(AuthContext)
   const [isOpen, setIsOpen] = useState(false)
-  const sectionRef = useRef(null)
-  const [cursor, setCursor] = useState(NOTIFICATION_INITIAL_CURSOR)
-  const [lastNotificationRef, entry] = useIntersectionObserver({ root: null, threshold: 0.5 })
 
-  const { data } = useGetNotificationsQuery(
-    {
-      cursor,
-      pageSize: NOTIFICATION_MAX_PAGE_SIZE,
-      sortDirection: SortDirection.DESC,
-    },
-    { skip: !isAuth }
-  )
+  const sectionRef = useRef(null)
+  const [lastNotificationRef, entry] = useIntersectionObserver({ root: null, threshold: 1 })
 
   useEffect(() => {
-    if (data?.items.length && entry?.isIntersecting) {
-      setCursor(data.items[data.items.length - 1].id)
+    if (notifications.length && entry?.isIntersecting) {
+      onScroll(notifications[notifications.length - 1].id)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [entry?.isIntersecting, data?.items.length])
+  }, [entry?.isIntersecting])
 
   const onOpenChange = (isOpen: boolean) => {
     setIsOpen(isOpen)
@@ -64,7 +52,7 @@ export const NotificationPopover = ({}: Props) => {
           title={t.notifications.showNotificationsButtonTitle}
           variant={'icon'}
         >
-          <Badge count={data?.notReadCount}>
+          <Badge count={notReadCount}>
             {isOpen ? <BellIcon className={s.icon} /> : <BellOutlineIcon className={s.icon} />}
           </Badge>
         </Button>
@@ -76,14 +64,14 @@ export const NotificationPopover = ({}: Props) => {
         <Separator className={s.separator} />
         <ScrollArea type={'scroll'}>
           <div className={s.scrollContainer}>
-            {data?.items.map((el, index) => (
+            {notifications.map((el, index) => (
               <Notification
                 createdAt={el.createdAt}
-                isLastNotification={data.items.length === index + 1}
+                id={el.id}
                 isRead={el.isRead}
-                key={el.id}
+                key={`${el.id} + ${index}`}
                 message={el.message}
-                ref={lastNotificationRef}
+                ref={notifications.length === index + 1 ? lastNotificationRef : null}
               />
             ))}
             <ScrollBar />

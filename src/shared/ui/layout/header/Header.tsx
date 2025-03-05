@@ -1,8 +1,13 @@
-import { useContext } from 'react'
+import { useContext, useState } from 'react'
 
+import {
+  NOTIFICATION_INITIAL_CURSOR,
+  NOTIFICATION_MAX_PAGE_SIZE,
+} from '@/features/notifications/config'
 import { NotificationPopover } from '@/features/notifications/ui'
+import { useGetNotificationsQuery } from '@/services/notofications'
 import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
-import { Paths } from '@/shared/enums'
+import { Paths, SortDirection } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
 import { SelectLanguage } from '@/shared/ui/components/select-language'
 import { HeaderMobileMenubar } from '@/shared/ui/layout'
@@ -15,11 +20,25 @@ import s from './Header.module.scss'
 export type HeaderProps = {}
 
 export const Header = ({}: HeaderProps) => {
+  const isClient = useIsClient()
   const { t } = useTranslation()
   const { isAuth } = useContext(AuthContext)
   const { isMobile } = useContext(AppMetaDataContext)
 
-  const isClient = useIsClient()
+  const [cursor, setCursor] = useState(NOTIFICATION_INITIAL_CURSOR)
+
+  const { data } = useGetNotificationsQuery(
+    {
+      cursor,
+      pageSize: NOTIFICATION_MAX_PAGE_SIZE,
+      sortDirection: SortDirection.DESC,
+    },
+    { skip: !isAuth }
+  )
+
+  const updateCursorHandler = (cursor: number) => {
+    setCursor(cursor)
+  }
 
   if (!isClient) {
     return null
@@ -34,7 +53,13 @@ export const Header = ({}: HeaderProps) => {
         </Typography>
       </Button>
       <div className={s.container}>
-        {isAuth && <NotificationPopover />}
+        {isAuth && (
+          <NotificationPopover
+            notReadCount={data?.notReadCount}
+            notifications={data?.items}
+            onScroll={updateCursorHandler}
+          />
+        )}
         <SelectLanguage isMobile={isMobile} />
         {!isAuth && !isMobile && (
           <div className={s.buttonContainer}>

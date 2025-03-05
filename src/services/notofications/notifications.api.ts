@@ -5,6 +5,7 @@ import {
   GetNotificationsResponse,
   MarkNotificationAsReadArgs,
 } from '@/services/notofications/notifications.types'
+import { getErrorMessageData, showErrorToast } from '@/shared/utils'
 
 export const notificationsApi = picoApi.injectEndpoints({
   endpoints: builder => {
@@ -35,7 +36,43 @@ export const notificationsApi = picoApi.injectEndpoints({
         },
       }),
       markNotificationAsRead: builder.mutation<void, MarkNotificationAsReadArgs>({
-        invalidatesTags: ['Notifications'],
+        async onQueryStarted(args, { dispatch, getState, queryFulfilled }) {
+          const cachedNotificationsForQuery = notificationsApi.util.selectCachedArgsForQuery(
+            getState(),
+            'getNotifications'
+          )
+
+          const patchedNotifications: any[] = []
+
+          cachedNotificationsForQuery.forEach(cachedArgs => {
+            patchedNotifications.push(
+              dispatch(
+                notificationsApi.util.updateQueryData('getNotifications', cachedArgs, draft => {
+                  args.ids.forEach(notificationId => {
+                    const notificationToUpdateIndex = draft.items.findIndex(
+                      el => el.id === notificationId
+                    )
+
+                    if (notificationToUpdateIndex !== -1) {
+                      draft.items[notificationToUpdateIndex].isRead = true
+                      draft.notReadCount = draft.notReadCount - 1
+                    }
+                  })
+                })
+              )
+            )
+          })
+
+          try {
+            await queryFulfilled
+          } catch (e) {
+            patchedNotifications.forEach(patchResult => patchResult.undo())
+            //todo: Бекенд возвращает не консистентные ошибки, задал вопрос, нужно вернуться к этому позже.
+            const error = getErrorMessageData(e)
+
+            showErrorToast(error)
+          }
+        },
         query: body => ({
           body,
           method: 'PUT',

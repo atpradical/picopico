@@ -23,6 +23,8 @@
 }
 
 .readButton {
+  color: var(--color-dark-300);
+
   &:hover {
     color: var(--color-warning-300);
   }
@@ -37,6 +39,8 @@
 }
 
 .deleteButton {
+  color: var(--color-dark-300);
+
   &:hover {
     color: var(--color-danger-300);
   }
