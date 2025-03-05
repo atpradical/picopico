@@ -63,7 +63,7 @@ export const NotificationPopover = ({
           </Badge>
         </Button>
       </PopoverTrigger>
-
+      {/*todo: Если новых уведомление нет, тогда показать заглушку*/}
       <PopoverContent align={'end'} className={s.popoverContent} ref={sectionRef}>
         <PopoverArrow className={s.arrow} height={8} width={16} />
         <Typography className={s.title}>

@@ -25,6 +25,7 @@ export const notificationsApi = picoApi.injectEndpoints({
                 notificationsApi.util.updateQueryData('getNotifications', cachedArgs, draft => {
                   draft.items = draft.items.filter(el => el.id !== args.id)
                   draft.totalCount = draft.totalCount - 1
+                  // todo: уменьшить notReadCount в случае если удаляется не прочитанное уведомление.
                 })
               )
             )

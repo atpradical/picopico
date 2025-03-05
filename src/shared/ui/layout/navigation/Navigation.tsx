@@ -4,6 +4,7 @@ import { createPostActions } from '@/features/posts/api'
 import { CreatePostDialog } from '@/features/posts/ui'
 import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
 import { useAppDispatch, useLogout, useTranslation } from '@/shared/hooks'
+import { useConnectSocket } from '@/shared/hooks/useConnectSocket'
 import { ConfirmDialog } from '@/shared/ui/components'
 import { SideBar } from '@/shared/ui/layout'
 
@@ -17,6 +18,8 @@ export const Navigation = ({}: Props) => {
   const { isMobile } = useContext(AppMetaDataContext)
 
   const dispatch = useAppDispatch()
+
+  useConnectSocket({ dispatch, isAuth })
 
   const toggleCreatePostDialogHandler = (open: boolean) => {
     dispatch(createPostActions.togglePostCreationDialog({ isOpen: open }))
