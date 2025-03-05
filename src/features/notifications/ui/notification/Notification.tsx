@@ -37,7 +37,7 @@ export const Notification = forwardRef<NotificationRef, NotificationProps>(
     }
 
     return (
-      <div {...rest}>
+      <div {...rest} className={s.notificationItem}>
         <div className={s.notificationTopRow} ref={ref}>
           <div>
             {id}
