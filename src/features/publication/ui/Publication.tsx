@@ -53,7 +53,7 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
             alt={'post image'}
             fill
             sizes={'300px'}
-            src={post.images[0].url}
+            src={post.images[0]?.url ?? '/apple-touch-icon-dark.png'}
             style={{ objectFit: 'cover' }}
           />
           {isCarousel && <LayersOutlineIcon className={s.layersIcon} />}

@@ -63,7 +63,7 @@ export const NotificationPopover = ({
           </Badge>
         </Button>
       </PopoverTrigger>
-      {/*todo: Если новых уведомление нет, тогда показать заглушку*/}
+
       <PopoverContent align={'end'} className={s.popoverContent} ref={sectionRef}>
         <PopoverArrow className={s.arrow} height={8} width={16} />
         <Typography className={s.title}>
@@ -72,16 +72,20 @@ export const NotificationPopover = ({
         <Separator className={s.separator} />
         <ScrollArea type={'scroll'}>
           <div className={s.scrollContainer}>
-            {notifications.map((el, index) => (
-              <Notification
-                createdAt={el.createdAt}
-                id={el.id}
-                isRead={el.isRead}
-                key={`${el.id} + ${index}`}
-                message={el.message}
-                ref={notifications.length === index + 1 ? lastNotificationRef : null}
-              />
-            ))}
+            {notifications.length ? (
+              notifications.map((el, index) => (
+                <Notification
+                  createdAt={el.createdAt}
+                  id={el.id}
+                  isRead={el.isRead}
+                  key={`${el.id} + ${index}`}
+                  message={el.message}
+                  ref={notifications.length === index + 1 ? lastNotificationRef : null}
+                />
+              ))
+            ) : (
+              <Typography grey>{t.notifications.emptyList}</Typography>
+            )}
             <ScrollBar />
           </div>
         </ScrollArea>
