@@ -67,7 +67,7 @@ export const NotificationPopover = ({
       <PopoverContent align={'end'} className={s.popoverContent} ref={sectionRef}>
         <PopoverArrow className={s.arrow} height={8} width={16} />
         <Typography className={s.title}>
-          {t.notifications.popoverTitle} {`(${totalCount})`}
+          {t.notifications.popoverTitle} {!!totalCount && `(${totalCount})`}
         </Typography>
         <Separator className={s.separator} />
         <ScrollArea type={'scroll'}>
