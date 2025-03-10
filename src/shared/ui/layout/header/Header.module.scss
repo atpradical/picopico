@@ -52,6 +52,14 @@
   }
 }
 
+.select {
+  min-width: 160px;
+
+  @media (max-width: $mobile-width) {
+    min-width: fit-content;
+  }
+}
+
 .buttonBell {
   margin-right: 12px;
 

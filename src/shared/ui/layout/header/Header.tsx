@@ -19,7 +19,6 @@ import {
   Select,
   Typography,
 } from '@atpradical/picopico-ui-kit'
-import clsx from 'clsx'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import { useIsClient } from 'usehooks-ts'
@@ -92,7 +91,7 @@ export const Header = ({}: HeaderProps) => {
           />
         )}
         <Select
-          className={clsx(s.container, isMobile && s.containerMobile)}
+          className={s.select}
           defaultValue={locale ?? 'en'}
           isSmall={isMobile}
           onValueChange={changeLangHandler}
