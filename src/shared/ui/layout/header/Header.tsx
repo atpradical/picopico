@@ -1,4 +1,4 @@
-import { useContext, useState } from 'react'
+import { useContext, useMemo, useState } from 'react'
 
 import {
   NOTIFICATION_INITIAL_CURSOR,
@@ -9,10 +9,19 @@ import { useGetNotificationsQuery } from '@/services/notofications'
 import { AppMetaDataContext, AuthContext } from '@/shared/contexts'
 import { Paths, SortDirection } from '@/shared/enums'
 import { useTranslation } from '@/shared/hooks'
-import { SelectLanguage } from '@/shared/ui/components/select-language'
 import { HeaderMobileMenubar } from '@/shared/ui/layout'
-import { Button, LogoLight, Typography } from '@atpradical/picopico-ui-kit'
+import {
+  Button,
+  FlagRussiaIcon,
+  FlagUnitedKingdomIcon,
+  LogoLight,
+  OptionsValue,
+  Select,
+  Typography,
+} from '@atpradical/picopico-ui-kit'
+import clsx from 'clsx'
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 import { useIsClient } from 'usehooks-ts'
 
 import s from './Header.module.scss'
@@ -22,6 +31,7 @@ export type HeaderProps = {}
 export const Header = ({}: HeaderProps) => {
   const isClient = useIsClient()
   const { t } = useTranslation()
+  const { asPath, locale, pathname, push, query } = useRouter()
   const { isAuth } = useContext(AuthContext)
   const { isMobile } = useContext(AppMetaDataContext)
 
@@ -35,6 +45,26 @@ export const Header = ({}: HeaderProps) => {
     },
     { skip: !isAuth }
   )
+
+  const languages: OptionsValue[] = useMemo(
+    () => [
+      {
+        icon: <FlagRussiaIcon className={s.icon} />,
+        label: t.language.ru,
+        value: 'ru',
+      },
+      {
+        icon: <FlagUnitedKingdomIcon className={s.icon} />,
+        label: t.language.en,
+        value: 'en',
+      },
+    ],
+    [t.language]
+  )
+
+  const changeLangHandler = (lang: string) => {
+    push({ pathname, query }, asPath, { locale: lang })
+  }
 
   const updateCursorHandler = (cursor: number) => {
     setCursor(cursor)
@@ -61,7 +91,13 @@ export const Header = ({}: HeaderProps) => {
             totalCount={data?.totalCount}
           />
         )}
-        <SelectLanguage isMobile={isMobile} />
+        <Select
+          className={clsx(s.container, isMobile && s.containerMobile)}
+          defaultValue={locale ?? 'en'}
+          isSmall={isMobile}
+          onValueChange={changeLangHandler}
+          options={languages}
+        />
         {!isAuth && !isMobile && (
           <div className={s.buttonContainer}>
             <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
