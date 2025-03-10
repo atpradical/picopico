@@ -5,8 +5,6 @@ import { HeadMeta, Header } from '@/shared/ui/layout'
 import { CustomToastContainer } from '@atpradical/picopico-ui-kit'
 import { NextPage } from 'next'
 
-import '@atpradical/picopico-ui-kit/dist/style.css'
-
 import s from './Layout.module.scss'
 
 export const Layout: NextPage<PropsWithChildren> = ({ children }) => {
