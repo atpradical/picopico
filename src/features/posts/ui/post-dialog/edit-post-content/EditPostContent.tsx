@@ -53,7 +53,7 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
 
   const savePostHandler = handleSubmit(async ({ description }: PostsDescriptionField) => {
     await updatePost({ description, postId: postData.id })
-    dispatch(publicationsActions.updatePostData({ description }))
+    dispatch(publicationsActions.updatePostDescription({ description }))
     dispatch(publicationsActions.toggleEditMode({ isEdit: false }))
   })
 
@@ -95,12 +95,7 @@ export const EditPostContent = ({ onInterrupt, postData }: EditPostContentProps)
               return (
                 <CarouselItem className={s.carouselItem} key={el.uploadId}>
                   <div style={{ height: '530px', position: 'relative', width: '100%' }}>
-                    <Image
-                      alt={'post image'}
-                      layout={'responsive'}
-                      objectFit={'cover'}
-                      src={el.url}
-                    />
+                    <Image alt={'post image'} fill sizes={'300px'} src={el.url} />
                   </div>
                 </CarouselItem>
               )

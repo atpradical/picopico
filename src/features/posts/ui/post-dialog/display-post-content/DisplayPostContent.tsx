@@ -59,7 +59,7 @@ export const DisplayPostContent = ({ postData, setEditMode }: DisplayPostContent
               return (
                 <CarouselItem className={s.carouselItem} key={el + index}>
                   <div style={{ height: '530px', position: 'relative', width: '100%' }}>
-                    <Image alt={'post image'} layout={'fill'} objectFit={'cover'} src={el} />
+                    <Image alt={'post image'} fill sizes={'300px'} src={el} />
                   </div>
                 </CarouselItem>
               )

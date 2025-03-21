@@ -40,7 +40,6 @@ export const Publication = forwardRef<PublicationRef, PublicationProps>(
 
     return (
       <div className={s.publicationContainer} {...rest}>
-        {/*todo: CHECK Хорошее ли решение использовать Link для редиректов?*/}
         <Card
           as={isLink ? Link : 'div'}
           className={s.imageContainer}

@@ -25,16 +25,12 @@ const slice = createSlice({
       state.showPost = action.payload.isOpen
       state.postId = action.payload.postId
     },
-    updatePostData: (state, action: PayloadAction<{ description?: string }>) => {
+    updatePostDescription: (state, action: PayloadAction<{ description: string }>) => {
       if (!state.postData) {
         return
       }
 
-      const { description } = action.payload
-
-      if (description) {
-        state.postData.description = description
-      }
+      state.postData.description = action.payload.description
     },
   },
 })
