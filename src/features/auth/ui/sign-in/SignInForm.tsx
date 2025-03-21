@@ -24,10 +24,6 @@ export const SignInForm = () => {
     handleSubmit,
     setError,
   } = useForm<SignInFields>({
-    defaultValues: {
-      email: '',
-      password: '',
-    },
     mode: 'onTouched',
     reValidateMode: 'onChange',
     resolver: zodResolver(signInSchemeCreator(t.validation)),
