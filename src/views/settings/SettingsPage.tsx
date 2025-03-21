@@ -22,7 +22,7 @@ const TAB_PAYMENTS = 'payments'
 function SettingsPage() {
   const { t } = useTranslation()
   const router = useRouter()
-  const { isAuth } = useContext(AuthContext)
+  const { isAuth, isAuthLoading } = useContext(AuthContext)
   const isClient = useIsClient()
   const { myProfileData } = useContext(MyProfileContext)
   const { data: sessionsData, refetch } = useGetSessionsQuery()
@@ -45,10 +45,8 @@ function SettingsPage() {
     }
   }
 
-  if (!isAuth) {
-    isClient && router.push(Paths.logIn)
-
-    return null
+  if (isClient && !isAuth && !isAuthLoading) {
+    router.push(Paths.logIn)
   }
 
   return (
