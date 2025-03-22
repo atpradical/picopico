@@ -46,7 +46,7 @@ function SettingsPage() {
   }
 
   if (isClient && !isAuth && !isAuthLoading) {
-    router.push(Paths.LogIn)
+    void router.push(Paths.LogIn)
   }
 
   return (
