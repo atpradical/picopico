@@ -1,4 +1,4 @@
-import { PrivacyPolicyNotification } from '@/features/profile/ui'
+import { PrivacyPolicyNotification } from '@/features/profile/ui/settings'
 import { LocaleValidation } from '@/locales/en'
 import { createCustomErrorMap } from '@/shared/lib/custom-error-map'
 import { aboutMeScheme, nameScheme, userNameScheme } from '@/shared/lib/validations'
