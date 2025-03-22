@@ -14,7 +14,7 @@ export const ConfirmedEmail = () => {
         {t.confirmEmailPage.emailConfirmed.title}
       </Typography>
       <Typography variant={'regular_16'}>{t.confirmEmailPage.emailConfirmed.caption}</Typography>
-      <Button as={link} className={s.button} href={Paths.logIn}>
+      <Button as={link} className={s.button} href={Paths.LogIn}>
         {t.confirmEmailPage.emailConfirmed.signInButton}
       </Button>
       <SignUpConfirmedIllustration className={s.image} />

@@ -9,8 +9,8 @@ export const useGoBackLinkButton = () => {
 
   const href: string = isClient ? (sessionStorage.getItem('previousPath') ?? '') : ''
   const hrefFlag: string = isClient
-    ? (sessionStorage.getItem('backButtonPathFlags') ?? BackButtonPathFlags.goBack)
-    : BackButtonPathFlags.goBack
+    ? (sessionStorage.getItem('backButtonPathFlags') ?? BackButtonPathFlags.GoBack)
+    : BackButtonPathFlags.GoBack
 
   const buttonTitle = t.docsBackButtons[hrefFlag as keyof typeof t.docsBackButtons]
 

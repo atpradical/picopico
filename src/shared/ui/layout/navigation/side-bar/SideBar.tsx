@@ -63,9 +63,9 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(
             activeIcon={<PersonIcon className={s.icon} />}
             as={Link}
             fullWidth
-            href={`${Paths.profile}/${userId}`}
+            href={`${Paths.Profile}/${userId}`}
             inactiveIcon={<PersonOutlineIcon className={s.icon} />}
-            isSelected={router.asPath === `${Paths.profile}/${userId}`}
+            isSelected={router.asPath === `${Paths.Profile}/${userId}`}
             label={t.appSidebar.profileLink}
             variant={'icon'}
           />
@@ -73,9 +73,9 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(
             activeIcon={<MessageCircleIcon className={s.icon} />}
             as={Link}
             fullWidth
-            href={Paths.messages}
+            href={Paths.Messages}
             inactiveIcon={<MessageCircleOutlineIcon className={s.icon} />}
-            isSelected={router.pathname === Paths.messages}
+            isSelected={router.pathname === Paths.Messages}
             label={t.appSidebar.messagesLink}
             variant={'icon'}
           />
@@ -83,9 +83,9 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(
             activeIcon={<SearchIcon className={s.icon} />}
             as={Link}
             fullWidth
-            href={Paths.search}
+            href={Paths.Search}
             inactiveIcon={<SearchOutlineIcon className={s.icon} />}
-            isSelected={router.pathname === Paths.search}
+            isSelected={router.pathname === Paths.Search}
             label={t.appSidebar.searchButton}
             variant={'icon'}
           />
@@ -95,9 +95,9 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(
             activeIcon={<TrendingUpIcon className={s.icon} />}
             as={Link}
             fullWidth
-            href={Paths.statistics}
+            href={Paths.Statistics}
             inactiveIcon={<TrendingUpOutlineIcon className={s.icon} />}
-            isSelected={router.pathname === Paths.statistics}
+            isSelected={router.pathname === Paths.Statistics}
             label={t.appSidebar.statisticsLink}
             variant={'icon'}
           />
@@ -105,9 +105,9 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(
             activeIcon={<BookmarkIcon className={s.icon} />}
             as={Link}
             fullWidth
-            href={Paths.favourites}
+            href={Paths.Favourites}
             inactiveIcon={<BookmarkOutlineIcon className={s.icon} />}
-            isSelected={router.pathname === Paths.favourites}
+            isSelected={router.pathname === Paths.Favourites}
             label={t.appSidebar.favouritesLink}
             variant={'icon'}
           />

@@ -12,7 +12,7 @@ type Props = {
 export const PrivacyPolicyNotification = ({ linkText, notificationMessage }: Props) => {
   const onClickHandler = () => {
     sessionStorage.setItem('previousPath', Paths.Settings)
-    sessionStorage.setItem('backButtonPathFlags', BackButtonPathFlags.toProfile)
+    sessionStorage.setItem('backButtonPathFlags', BackButtonPathFlags.ToProfile)
   }
 
   return (
@@ -23,7 +23,7 @@ export const PrivacyPolicyNotification = ({ linkText, notificationMessage }: Pro
             <Typography
               as={Link}
               className={s.link}
-              href={Paths.privacyPolicy}
+              href={Paths.PrivacyPolicy}
               onClick={onClickHandler}
               variant={'small_link'}
             >

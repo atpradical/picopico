@@ -34,7 +34,7 @@ export const CreateNewPasswordForm = ({}: CreateNewPasswordFormProps) => {
   const formHandler = handleSubmit(async (data: CreatePWDFields) => {
     try {
       await createNewPassword({ newPassword: data.newPassword, recoveryCode: code ?? '' }).unwrap()
-      router.push(Paths.logIn)
+      router.push(Paths.LogIn)
       toaster({ text: t.createNewPasswordForm.successNotification })
     } catch (e) {
       const errors = getErrorMessageData(e)

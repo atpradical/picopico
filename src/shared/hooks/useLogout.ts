@@ -13,7 +13,7 @@ export const useLogout = () => {
   const logoutHandler = async () => {
     try {
       await logoutQuery()
-      router.push(Paths.logIn)
+      router.push(Paths.LogIn)
     } catch (e) {
       const error = getErrorMessageData(e)
 

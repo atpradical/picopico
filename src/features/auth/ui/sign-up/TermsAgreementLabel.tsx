@@ -15,8 +15,8 @@ export const TermsAgreementLabel = ({
   termsAgreement,
 }: TermsAgreementLabelProps) => {
   const onClickHandler = () => {
-    sessionStorage.setItem('previousPath', Paths.signUp)
-    sessionStorage.setItem('backButtonPathFlags', BackButtonPathFlags.toSignUp)
+    sessionStorage.setItem('previousPath', Paths.SignUp)
+    sessionStorage.setItem('backButtonPathFlags', BackButtonPathFlags.ToSignUp)
   }
 
   return (
@@ -26,7 +26,7 @@ export const TermsAgreementLabel = ({
           1: () => (
             <Typography
               as={Link}
-              href={Paths.termsOfService}
+              href={Paths.TermsOfService}
               onClick={onClickHandler}
               variant={'small_link'}
             >
@@ -36,7 +36,7 @@ export const TermsAgreementLabel = ({
           2: () => (
             <Typography
               as={Link}
-              href={Paths.privacyPolicy}
+              href={Paths.PrivacyPolicy}
               onClick={onClickHandler}
               variant={'small_link'}
             >

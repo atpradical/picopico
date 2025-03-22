@@ -23,7 +23,7 @@ function SignInPage() {
 
   useEffect(() => {
     if (isAuth && meData?.userId && !!token) {
-      router.push(Paths.profile + '/' + meData.userId)
+      router.push(Paths.Profile + '/' + meData.userId)
     }
   }, [isAuth, meData, router, token])
 
@@ -37,7 +37,7 @@ function SignInPage() {
           <OAuth />
           <SignInForm />
           <Typography variant={'regular_16'}>{isAccount}</Typography>
-          <Button as={Link} className={s.linkButton} href={Paths.signUp} variant={'nb-outlined'}>
+          <Button as={Link} className={s.linkButton} href={Paths.SignUp} variant={'nb-outlined'}>
             {signUpLink}
           </Button>
         </Card>

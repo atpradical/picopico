@@ -23,7 +23,7 @@ function SignUpPage() {
           <SignUpForm />
           <div className={s.footer}>
             <Typography variant={'regular_16'}>{t.signUpPage.isAccount}</Typography>
-            <Button as={Link} className={s.linkButton} href={Paths.logIn} variant={'nb-outlined'}>
+            <Button as={Link} className={s.linkButton} href={Paths.LogIn} variant={'nb-outlined'}>
               {t.signUpPage.linkToSignIn}
             </Button>
           </div>

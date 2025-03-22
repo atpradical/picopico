@@ -65,7 +65,7 @@ export const SignInForm = () => {
           placeholder={t.signInPage.signInForm.placeholders.addPassword}
           variant={'password'}
         />
-        <Typography as={Link} className={s.forgotPassword} href={Paths.forgotPassword}>
+        <Typography as={Link} className={s.forgotPassword} href={Paths.ForgotPassword}>
           {t.signInPage.signInForm.forgotPassword}
         </Typography>
         <Button

@@ -100,7 +100,7 @@ export const ForgotPasswordForm = () => {
         >
           {t.forgotPasswordPage.submitButton}
         </Button>
-        <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
+        <Button as={Link} className={s.button} href={Paths.LogIn} variant={'nb-outlined'}>
           {t.forgotPasswordPage.pageLink}
         </Button>
       </div>

@@ -59,9 +59,9 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                   <NavItem
                     activeIcon={<TrendingUpIcon className={s.icon} />}
                     inactiveIcon={<TrendingUpOutlineIcon className={s.icon} />}
-                    isSelected={router.pathname === Paths.statistics}
+                    isSelected={router.pathname === Paths.Statistics}
                     label={t.appSidebar.statisticsLink}
-                    onClick={() => router.push(Paths.statistics)}
+                    onClick={() => router.push(Paths.Statistics)}
                     variant={'icon'}
                   />
                 </MenubarItem>
@@ -69,9 +69,9 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                   <NavItem
                     activeIcon={<BookmarkIcon className={s.icon} />}
                     inactiveIcon={<BookmarkOutlineIcon className={s.icon} />}
-                    isSelected={router.pathname === Paths.favourites}
+                    isSelected={router.pathname === Paths.Favourites}
                     label={t.appSidebar.favouritesLink}
-                    onClick={() => router.push(Paths.favourites)}
+                    onClick={() => router.push(Paths.Favourites)}
                     variant={'icon'}
                   />
                 </MenubarItem>
@@ -89,18 +89,18 @@ export const HeaderMobileMenubar = ({ isAuth }: Props) => {
                 <MenubarItem className={s.menuItem}>
                   <NavItem
                     fullWidth
-                    isSelected={router.pathname === Paths.logIn}
+                    isSelected={router.pathname === Paths.LogIn}
                     label={t.appSidebar.loginButton}
-                    onClick={() => router.push(Paths.logIn)}
+                    onClick={() => router.push(Paths.LogIn)}
                     variant={'icon'}
                   />
                 </MenubarItem>
                 <MenubarItem className={s.menuItem}>
                   <NavItem
                     fullWidth
-                    isSelected={router.pathname === Paths.signUp}
+                    isSelected={router.pathname === Paths.SignUp}
                     label={t.appSidebar.registerButton}
-                    onClick={() => router.push(Paths.signUp)}
+                    onClick={() => router.push(Paths.SignUp)}
                     variant={'icon'}
                   />
                 </MenubarItem>

@@ -49,25 +49,25 @@ export const BottomBar = forwardRef<BottomBarRef, BottomBarProps>(
         <NavItem
           activeIcon={<MessageCircleIcon className={s.icon} />}
           as={Link}
-          href={Paths.messages}
+          href={Paths.Messages}
           inactiveIcon={<MessageCircleOutlineIcon className={s.icon} />}
-          isSelected={router.pathname === Paths.messages}
+          isSelected={router.pathname === Paths.Messages}
           variant={'icon'}
         />
         <NavItem
           activeIcon={<SearchIcon className={s.icon} />}
           as={Link}
-          href={Paths.search}
+          href={Paths.Search}
           inactiveIcon={<SearchOutlineIcon className={s.icon} />}
-          isSelected={router.pathname === Paths.search}
+          isSelected={router.pathname === Paths.Search}
           variant={'icon'}
         />
         <NavItem
           activeIcon={<PersonIcon className={s.icon} />}
           as={Link}
-          href={`${Paths.profile}/${userId}`}
+          href={`${Paths.Profile}/${userId}`}
           inactiveIcon={<PersonOutlineIcon className={s.icon} />}
-          isSelected={router.asPath === `${Paths.profile}/${userId}`}
+          isSelected={router.asPath === `${Paths.Profile}/${userId}`}
           variant={'icon'}
         />
       </nav>
