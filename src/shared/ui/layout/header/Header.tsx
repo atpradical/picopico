@@ -99,10 +99,10 @@ export const Header = ({}: HeaderProps) => {
         />
         {!isAuth && !isMobile && (
           <div className={s.buttonContainer}>
-            <Button as={Link} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
+            <Button as={'a'} className={s.button} href={Paths.logIn} variant={'nb-outlined'}>
               {t.appHeader.signInButton}
             </Button>
-            <Button as={Link} className={s.button} href={Paths.signUp} variant={'primary'}>
+            <Button as={'a'} className={s.button} href={Paths.signUp} variant={'primary'}>
               {t.appHeader.signUpButton}
             </Button>
           </div>
