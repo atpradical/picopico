@@ -1,4 +1,11 @@
-import { ChangeEvent, ComponentPropsWithoutRef, useContext, useEffect, useState } from 'react'
+import {
+  ChangeEvent,
+  ComponentPropsWithoutRef,
+  useCallback,
+  useContext,
+  useEffect,
+  useState,
+} from 'react'
 import { FormProvider, useForm } from 'react-hook-form'
 import { useSelector } from 'react-redux'
 
@@ -117,6 +124,13 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
   const [createPostImage, { isLoading: isLoadingCreatePostImage }] = useCreatePostImageMutation()
   const [createPost, { isLoading: isLoadingCreatePost }] = useCreatePostMutation()
 
+  const resetCreatePostStateHandler = useCallback(() => {
+    // Сбрасываем состояние
+    reset()
+    dispatch(createPostActions.resetPost())
+    dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
+  }, [dispatch, reset])
+
   const publishPostsHandler = handleSubmit(async ({ description }: PostsDescriptionField) => {
     if (!previewList?.length) {
       return
@@ -136,11 +150,9 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       const uploadIdList = images.map(el => ({ uploadId: el.uploadId }))
 
       await createPost({ childrenMetadata: uploadIdList, description }).unwrap()
-      dispatch(createPostActions.resetPost())
-
       // todo: CHECK
       // clearPostsDB()
-      dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
+      resetCreatePostStateHandler()
     } catch (e) {
       const errors = getErrorMessageData(e)
 
@@ -158,11 +170,7 @@ export const CreatePostDialog = ({ onOpenChange, ...rest }: CreateNewPostDialogP
       URL.revokeObjectURL(preview.previewUrlOrig)
       URL.revokeObjectURL(preview.previewUrlModified)
     })
-
-    // Сбрасываем состояние
-    reset()
-    dispatch(createPostActions.resetPost())
-    dispatch(createPostActions.togglePostCreationDialog({ isOpen: false }))
+    resetCreatePostStateHandler()
   }
 
   const interruptDialogHandler = (event: Event) => {
