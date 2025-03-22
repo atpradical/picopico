@@ -1,4 +1,4 @@
-import { ComponentPropsWithoutRef, useContext, useEffect, useState } from 'react'
+import { ComponentPropsWithoutRef, useContext, useEffect, useId, useState } from 'react'
 
 import { AccountTypeRadioGroup, SubscriptionPlansRadioGroup } from '@/features/payments/ui'
 import { ActiveSubscription } from '@/features/payments/ui/active-subscription'
@@ -27,6 +27,8 @@ export const AccountManagementTab = ({ ...props }: AccountManagementTabProps) =>
   const [isPlansDescription, setPlansDescription] = useState(false)
   const [newSubscription, setNewSubscription] = useState<BillingPeriod>(BillingPeriod.Day)
   const [isAlertOpen, setAlertOpen] = useState(false)
+
+  const id = useId()
 
   useEffect(() => {
     if (isBusinessAccount) {
@@ -74,7 +76,7 @@ export const AccountManagementTab = ({ ...props }: AccountManagementTabProps) =>
 
   return (
     <TabsContent className={s.container} {...props}>
-      <ActiveSubscription />
+      <ActiveSubscription key={id} />
       <AccountTypeRadioGroup onChange={changeAccountType} />
       {isPlansDescription && (
         <>
