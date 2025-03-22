@@ -16,7 +16,7 @@ import s from './SignInForm.module.scss'
 export const SignInForm = () => {
   const { t } = useTranslation()
 
-  const [login, { isLoading, isSuccess }] = useLoginMutation()
+  const [login, { isLoading }] = useLoginMutation()
 
   const {
     control,
@@ -51,7 +51,7 @@ export const SignInForm = () => {
 
   return (
     <>
-      <form className={s.form} onSubmit={formHandler}>
+      <form autoComplete={'on'} className={s.form} onSubmit={formHandler}>
         <ControlledTextField
           control={control}
           label={t.signInPage.signInForm.labels.email}
@@ -71,7 +71,7 @@ export const SignInForm = () => {
         <Button
           className={s.submitButton}
           disabled={isSubmitDisabled}
-          isLoading={isLoading || isSuccess}
+          isLoading={isLoading}
           type={'submit'}
         >
           {t.signInPage.signInForm.submitButton}
