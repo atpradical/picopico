@@ -1,38 +1,72 @@
-import { useEffect } from 'react'
-
-import { useGoogleLoginMutation } from '@/services/auth'
+import { POSTS_HOME_PAGE_SIZE } from '@/features/public-user/config'
+import { TotalUsers } from '@/features/public-user/ui'
+import { Publication } from '@/features/publication/ui'
+import { wrapper } from '@/lib/store'
+import { picoApi } from '@/services'
+import { PublicPostsItem } from '@/services/posts'
+import { getCurrentUsersAmount, getPublicPostsAll } from '@/services/public-user'
+import { SortDirection } from '@/shared/enums'
 import { Page, getNavigationLayout } from '@/shared/ui/layout'
-import { getErrorMessageData } from '@/shared/utils'
-import { Typography } from '@atpradical/picopico-ui-kit'
-import { useRouter } from 'next/router'
+import { GetStaticProps } from 'next'
 
 import s from './HomePage.module.scss'
 
-const HomePage = () => {
-  const router = useRouter()
-  const code = router.query.code as string
-  const [googleLogin, { error, isError }] = useGoogleLoginMutation()
+export const getStaticProps: GetStaticProps = wrapper.getStaticProps(store => async () => {
+  const totalUsersAmount = await store.dispatch(getCurrentUsersAmount.initiate())
 
-  useEffect(() => {
-    if (code) {
-      googleLogin({ code })
+  if (!totalUsersAmount.data) {
+    return {
+      notFound: true,
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [code])
-
-  if (isError) {
-    const errorMessage = getErrorMessageData(error)
-
-    return <div>{`Error: ${errorMessage}`}</div>
   }
 
+  const postsData = await store.dispatch(
+    getPublicPostsAll.initiate({
+      pageSize: POSTS_HOME_PAGE_SIZE,
+      sortDirection: SortDirection.DESC,
+    })
+  )
+
+  if (!postsData.data) {
+    return {
+      notFound: true,
+    }
+  }
+
+  await Promise.all(store.dispatch(picoApi.util.getRunningQueriesThunk()))
+
+  return {
+    props: {
+      postsData: postsData.data.items || [],
+      totalUsersAmount: totalUsersAmount.data.totalCount || 0,
+    },
+    revalidate: 60,
+  }
+})
+
+type PageProps = {
+  postsData: PublicPostsItem[]
+  totalUsersAmount: number
+}
+
+const HomePage = ({ postsData, totalUsersAmount }: PageProps) => {
   return (
     <Page>
       <div className={s.container}>
-        <Typography grey variant={'large'}>
-          Home Page
-        </Typography>
-        <Typography variant={'error'}>Page in development...</Typography>
+        <TotalUsers counter={`00${totalUsersAmount}`} />
+        <section className={s.publicationsContainer}>
+          {postsData.map(post => {
+            return (
+              <Publication
+                isCarousel={post.images.length > 1}
+                isLink
+                key={post.id}
+                post={post}
+                showDescription
+              />
+            )
+          })}
+        </section>
       </div>
     </Page>
   )

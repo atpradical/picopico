@@ -1,5 +1,6 @@
 export enum Paths {
   Favourites = '/favourites',
+  Feed = '/feed',
   ForgotPassword = '/auth/forgot-password',
   Home = '/',
   LogIn = '/auth/sign-in',

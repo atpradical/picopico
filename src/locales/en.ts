@@ -35,7 +35,7 @@ export const en = {
   appSidebar: {
     createButton: 'Create',
     favouritesLink: 'Favourites',
-    homeLink: 'Home',
+    feedLink: 'Feed',
     logOutButton: 'Log Out',
     loginButton: 'Sign in',
     messagesLink: 'Messenger',

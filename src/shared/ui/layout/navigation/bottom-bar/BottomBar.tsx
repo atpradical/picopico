@@ -36,9 +36,9 @@ export const BottomBar = forwardRef<BottomBarRef, BottomBarProps>(
         <NavItem
           activeIcon={<HomeIcon className={s.icon} />}
           as={Link}
-          href={Paths.Home}
+          href={Paths.Feed}
           inactiveIcon={<HomeOutlineIcon className={s.icon} />}
-          isSelected={router.pathname === Paths.Home}
+          isSelected={router.pathname === Paths.Feed}
           variant={'icon'}
         />
         <NavItem

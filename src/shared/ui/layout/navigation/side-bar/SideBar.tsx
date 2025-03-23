@@ -46,10 +46,10 @@ export const SideBar = forwardRef<SideBarRef, SideBarProps>(
             activeIcon={<HomeIcon className={s.icon} />}
             as={Link}
             fullWidth
-            href={Paths.Home}
+            href={Paths.Feed}
             inactiveIcon={<HomeOutlineIcon className={s.icon} />}
-            isSelected={router.pathname === Paths.Home}
-            label={t.appSidebar.homeLink}
+            isSelected={router.pathname === Paths.Feed}
+            label={t.appSidebar.feedLink}
             variant={'icon'}
           />
           <NavItem

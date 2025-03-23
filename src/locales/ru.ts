@@ -29,7 +29,7 @@ export const ru: LocaleType = {
   appSidebar: {
     createButton: 'Создать',
     favouritesLink: 'Избранное',
-    homeLink: 'Главная',
+    feedLink: 'Лента',
     logOutButton: 'Выйти',
     loginButton: 'Войти',
     messagesLink: 'Сообщения',
