@@ -33,5 +33,6 @@ export const picoApi = createApi({
     'UserPaymentsHistory',
     'UserProfileByUserNameWithFollowInfo',
     'Notifications',
+    'Users',
   ],
 })

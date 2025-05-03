@@ -3,5 +3,4 @@ export const searchPage = {
   emptySearchTextTwo: 'No recent requests',
   pageTitle: 'Search',
   searchFieldPlaceholder: 'Search',
-  searchHistoryTitle: 'Recent requests',
 }

@@ -8,3 +8,13 @@
 
   background: transparent;
 }
+
+.userName {
+  text-decoration: underline;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+}
